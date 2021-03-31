@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class Cell {
+public abstract class Cell {
     int index;
 
     public Cell() {
