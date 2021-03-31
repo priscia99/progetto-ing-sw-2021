@@ -4,7 +4,7 @@ import java.util.List;
 
 public class LeaderCardsDeck {
 
-    private List<LeaderCard> leaderCards;
+    private final List<LeaderCard> leaderCards;
 
     public LeaderCardsDeck(List<LeaderCard> leaderCards) {
         this.leaderCards = leaderCards;
