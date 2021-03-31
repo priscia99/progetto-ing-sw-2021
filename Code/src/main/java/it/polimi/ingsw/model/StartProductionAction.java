@@ -7,6 +7,9 @@ import it.polimi.ingsw.model.Player;
 public class StartProductionAction extends TurnAction {
     final TurnActionType turnActionType = TurnActionType.START_PRODUCTION;
 
+    public StartProductionAction() {
+    }
+
     @Override
     public void execute(Player currentPlayer, Game currentGame) {
 

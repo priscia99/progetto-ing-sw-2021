@@ -7,6 +7,9 @@ import it.polimi.ingsw.model.Player;
 public class PickResourcesAction extends TurnAction {
     final TurnActionType turnActionType = TurnActionType.PICK_RESOURCES;
 
+    public PickResourcesAction() {
+    }
+
     @Override
     public void execute(Player currentPlayer, Game currentGame) {
 
