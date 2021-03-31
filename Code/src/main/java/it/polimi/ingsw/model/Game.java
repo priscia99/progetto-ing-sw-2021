@@ -9,7 +9,7 @@ public class Game {
 
     public void nextTurn(){}
     public void start(){}
-    private Player extractFirstPlayer(){}
+    private Player extractFirstPlayer(){ return null;}
     void giveResources(){}
 
     public void setup(){
