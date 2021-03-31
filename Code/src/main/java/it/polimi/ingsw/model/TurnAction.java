@@ -1,12 +1,10 @@
 package it.polimi.ingsw.model;
+import it.polimi.ingsw.model.TurnActionType;
 
-
-import src.main.java.it.polimi.ingsw.model.TurnActionType;
-
-abstract class TurnAction {
+public abstract class TurnAction {
     private TurnActionType actionType;
 
-    public abstract execute(Player currentPlayer, it.polimi.ingsw.model.Game currentGame);
+    abstract public void execute(Player currentPlayer, it.polimi.ingsw.model.Game currentGame);
 
     public TurnActionType getActionType() {
         return actionType;
