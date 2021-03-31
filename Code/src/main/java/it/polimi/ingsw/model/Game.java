@@ -1,8 +1,11 @@
 package it.polimi.ingsw.model;
 
+import java.util.Stack;
+
 public class Game {
     private String id;
-    private leaderCardsDeck: Stack<LeaderCard>;
+    private Stack<LeaderCard> leaderCardsDeck;
+    private CardMarket cardMarket;
 
     public void nextTurn(){}
     public void start(){}
