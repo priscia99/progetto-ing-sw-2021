@@ -6,14 +6,14 @@ import java.util.List;
 
 public class DevelopmentCardsDeck {
 
-    private final List<DevelopmentCard> decks;
+    private final List<DevelopmentCard> deck;
 
-    public DevelopmentCardsDeck(List<DevelopmentCard> decks) {
-        this.decks = decks;
+    public DevelopmentCardsDeck(List<DevelopmentCard> deck) {
+        this.deck = deck;
     }
 
-    public List<DevelopmentCard> getDecks() {
-        return decks;
+    public List<DevelopmentCard> getDeck() {
+        return deck;
     }
 
     public void addCard(DevelopmentCard developmentCard) {

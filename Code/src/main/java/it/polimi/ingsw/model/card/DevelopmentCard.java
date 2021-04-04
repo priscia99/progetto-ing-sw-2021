@@ -1,16 +1,23 @@
 package it.polimi.ingsw.model.card;
 
+import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.ProductionEffect;
 
 public class DevelopmentCard extends Card{
 
     private final int level;
     private final ProductionEffect effect;
+    private final Color color;
 
-    public DevelopmentCard(boolean active, int victoryPoints, int level, ProductionEffect effect) {
+    public DevelopmentCard(boolean active, int victoryPoints, int level, ProductionEffect effect, Color color) {
         super(active, victoryPoints);
         this.level = level;
         this.effect = effect;
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public int getLevel() {

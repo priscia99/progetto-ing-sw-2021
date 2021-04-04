@@ -42,7 +42,7 @@ public class Depot extends Storage{
 
     }
 
-    public void getResourceType() {
-
+    public ResourceType getResourceType() {
+        return ResourceType.BLANK; // TODO temporary
     }
 }
