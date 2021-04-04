@@ -2,17 +2,17 @@ package it.polimi.ingsw.model.player_board;
 
 import it.polimi.ingsw.model.card.DevelopmentCard;
 
-import java.util.Stack;
+import java.util.List;
 
-public class DevelopmentCardsDecks {
+public class DevelopmentCardsDeck {
 
-    private final Stack<DevelopmentCard>[] decks;
+    private final List<DevelopmentCard> decks;
 
-    public DevelopmentCardsDecks(Stack<DevelopmentCard>[] decks) {
+    public DevelopmentCardsDeck(List<DevelopmentCard> decks) {
         this.decks = decks;
     }
 
-    public Stack<DevelopmentCard>[] getDecks() {
+    public List<DevelopmentCard> getDecks() {
         return decks;
     }
 

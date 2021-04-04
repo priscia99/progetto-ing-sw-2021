@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.game;
 import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
 
 import java.util.List;
-import java.util.Stack;
 
 public class Game {
 

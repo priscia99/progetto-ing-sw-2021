@@ -13,12 +13,12 @@ public class PlayerBoard {
 
     private final FaithPath faithPath;
     private final ProductionEffect basicProduction;
-    private final Stack<DevelopmentCard>[] developmentCardsDeck;
+    private final DevelopmentCardsDeck[] developmentCardsDeck;
     private final LeaderCardsDeck leaderCardsDeck;
     private final Warehouse warehouse;
     private final Strongbox strongbox;
 
-    public PlayerBoard(FaithPath faithPath, ProductionEffect basicProduction, Stack<DevelopmentCard>[] developmentCardsDeck, LeaderCardsDeck leaderCardsDeck, Warehouse warehouse, Strongbox strongbox) {
+    public PlayerBoard(FaithPath faithPath, ProductionEffect basicProduction, DevelopmentCardsDeck[] developmentCardsDeck, LeaderCardsDeck leaderCardsDeck, Warehouse warehouse, Strongbox strongbox) {
         this.faithPath = faithPath;
         this.basicProduction = basicProduction;
         this.developmentCardsDeck = developmentCardsDeck;
@@ -35,7 +35,7 @@ public class PlayerBoard {
         return basicProduction;
     }
 
-    public Stack<DevelopmentCard>[] getDevelopmentCardsDeck() {
+    public DevelopmentCardsDeck[] getDevelopmentCardsDeck() {
         return developmentCardsDeck;
     }
 
