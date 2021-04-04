@@ -18,7 +18,7 @@ public abstract class Card {
         return victoryPoints;
     }
 
-    public void setActive(boolean active) {
+    public void play(boolean active) {
         this.active = active;
     }
 }

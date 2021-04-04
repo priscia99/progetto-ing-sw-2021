@@ -26,7 +26,7 @@ public class LeaderCard extends Card{
     }
 
     @Override
-    public void setActive(boolean active) {
-        super.setActive(active);
+    public void play(boolean active) {
+        super.play(active);
     }
 }
