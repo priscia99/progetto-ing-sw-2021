@@ -1,0 +1,30 @@
+package it.polimi.ingsw.utils;
+import java.util.Date;
+import java.util.logging.*;
+
+public class CustomLogger {
+    static private Logger customLogger;
+
+    static public Logger getLogger(){
+        if(customLogger==null){
+            customLogger = Logger.getLogger(CustomLogger.class.getName());
+            customLogger.setUseParentHandlers(false);
+            ConsoleHandler handler = new ConsoleHandler();
+            handler.setFormatter(new SimpleFormatter() {
+                private static final String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
+
+                @Override
+                public synchronized String format(LogRecord logRecord) {
+                    return String.format(format,
+                            new Date(logRecord.getMillis()),
+                            logRecord.getLevel().getLocalizedName(),
+                            logRecord.getMessage()
+                    );
+                }
+            });
+            customLogger.addHandler(handler);
+            customLogger.setLevel(Level.ALL);
+        }
+        return customLogger;
+    }
+}
