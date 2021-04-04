@@ -9,9 +9,7 @@ public class TurnManager {
     private Player player;
     private final Game game;
 
-    public TurnManager(boolean mainActionDone, Player player, Game game) {
-        this.mainActionDone = mainActionDone;
-        this.player = player;
+    public TurnManager(Game game) {
         this.game = game;
     }
 
