@@ -4,10 +4,11 @@ import it.polimi.ingsw.model.resource.ConsumableResource;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Storage {
 
-    private final List<ConsumableResource> consumableResources;
+    protected List<ConsumableResource> consumableResources;
 
     public Storage(List<ConsumableResource> consumableResources) {
         this.consumableResources = consumableResources;
@@ -18,10 +19,14 @@ public abstract class Storage {
     }
 
     public boolean isEmpty() {
-        return false;
+        return (consumableResources == null || consumableResources.isEmpty());
     }
 
     public abstract void addResource(ResourceType resourceType);
 
-    public abstract void removeResource();
+    public void removeConsumedResources(){
+        consumableResources =
+                consumableResources.stream().filter(elem -> !elem.isToConsume()).collect(Collectors.toList());
+    }
+
 }

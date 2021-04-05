@@ -52,10 +52,10 @@ public class PlayerBoard {
     }
 
     public void addToDepot(int depot, ResourceType resourceType) {
-
+        warehouse.addToDepot(depot, resourceType);
     }
 
     public void removeFromDepot(int depot) {
-
+        warehouse.removeFromDepot(depot);
     }
 }
