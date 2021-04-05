@@ -12,20 +12,16 @@ public class Game {
 
     private final String id;
     private List<Player> players;
-    private final int numberOfPlayers;
     private LeaderCardsDeck leaderCardsDeck;
     private CardMarket cardMarket;
     private MarbleMarket marbleMarket;
     private TurnManager turnManager;
 
-    public Game(String id, int numberOfPlayers) {
+    public Game(String id, List<Player> players) {
         CustomLogger.getLogger().info("Creating Game");
         this.id = id;
-        this.numberOfPlayers = numberOfPlayers;
-        setupLeaderCards();
-        setupCardsMarket();
-        setupMarbleMarket();
-        setupTurnManager();
+        this.players = players;
+        this.setup();
         CustomLogger.getLogger().info("Game created");
     }
 
@@ -35,10 +31,6 @@ public class Game {
 
     public String getId() {
         return id;
-    }
-
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
     }
 
     public LeaderCardsDeck getLeaderCardsDeck() {
@@ -58,7 +50,10 @@ public class Game {
     }
 
     public void setup() {
-
+        setupLeaderCards();
+        setupCardsMarket();
+        setupMarbleMarket();
+        setupTurnManager();
     }
 
     private int extractFirstPlayer() {

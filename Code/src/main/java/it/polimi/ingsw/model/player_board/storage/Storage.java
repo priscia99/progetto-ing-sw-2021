@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.player_board.storage;
 import it.polimi.ingsw.model.resource.ConsumableResource;
 import it.polimi.ingsw.model.resource.ResourceType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,8 +11,8 @@ public abstract class Storage {
 
     protected List<ConsumableResource> consumableResources;
 
-    public Storage(List<ConsumableResource> consumableResources) {
-        this.consumableResources = consumableResources;
+    public Storage() {
+        this.consumableResources = new ArrayList<>();
     }
 
     public List<ConsumableResource> getConsumableResources() {

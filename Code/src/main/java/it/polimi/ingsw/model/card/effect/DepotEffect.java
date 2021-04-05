@@ -8,8 +8,8 @@ public class DepotEffect extends Effect{
     private final ResourceType resourceType;
     private final Depot depot;
 
-    public DepotEffect(EffectType effectType, ResourceType resourceType, Depot depot) {
-        super(effectType);
+    public DepotEffect( ResourceType resourceType, Depot depot) {
+        this.effectType = EffectType.DEPOT;
         this.resourceType = resourceType;
         this.depot = depot;
     }

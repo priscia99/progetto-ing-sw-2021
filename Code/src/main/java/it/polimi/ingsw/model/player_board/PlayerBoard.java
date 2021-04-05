@@ -11,20 +11,44 @@ import java.util.Stack;
 
 public class PlayerBoard {
 
-    private final FaithPath faithPath;
-    private final ProductionEffect basicProduction;
-    private final DevelopmentCardsDeck[] developmentCardsDecks;
-    private final LeaderCardsDeck leaderCardsDeck;
-    private final Warehouse warehouse;
-    private final Strongbox strongbox;
+    private  FaithPath faithPath;
+    private  ProductionEffect basicProduction;
+    private  DevelopmentCardsDeck[] developmentCardsDecks;
+    private  LeaderCardsDeck leaderCardsDeck;
+    private  Warehouse warehouse;
+    private  Strongbox strongbox;
 
-    public PlayerBoard(FaithPath faithPath, ProductionEffect basicProduction, DevelopmentCardsDeck[] developmentCardsDecks, LeaderCardsDeck leaderCardsDeck, Warehouse warehouse, Strongbox strongbox) {
-        this.faithPath = faithPath;
-        this.basicProduction = basicProduction;
-        this.developmentCardsDecks = developmentCardsDecks;
-        this.leaderCardsDeck = leaderCardsDeck;
-        this.warehouse = warehouse;
-        this.strongbox = strongbox;
+    public PlayerBoard() {
+        setupFaithPath();
+        setupBasicProduction();
+        setupDevelopmentCardDeck();
+        setupLeaderCards();
+        setupWarehouse();
+        setupStrongBox();
+    }
+
+    private void setupStrongBox() {
+        this.strongbox = new Strongbox();
+    }
+
+    private void setupWarehouse() {
+        this.warehouse = new Warehouse();
+    }
+
+    private void setupLeaderCards() {
+        this.leaderCardsDeck = new LeaderCardsDeck();
+    }
+
+    private void setupDevelopmentCardDeck() {
+        this.developmentCardsDecks = new DevelopmentCardsDeck[3];
+    }
+
+    private void setupBasicProduction() {
+        this.basicProduction = ProductionEffect.getBasicProduction();
+    }
+
+    private void setupFaithPath() {
+        this.faithPath = FaithPath.getStandardFaithPath();
     }
 
     public FaithPath getFaithPath() {

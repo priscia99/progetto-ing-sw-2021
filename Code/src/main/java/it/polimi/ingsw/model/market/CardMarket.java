@@ -16,7 +16,7 @@ public class CardMarket {
     static public CardMarket getStartingMarket(){
         final Stack<DevelopmentCard> levelOneBlueCards = new Stack<>();
         //TODO: complete all development cards stacks
-        levelOneBlueCards.push(new DevelopmentCard(false, 3, 1, new ProductionEffect(EffectType.PRODUCTION, null, null), Color.BLUE));
+        levelOneBlueCards.push(new DevelopmentCard(false, 3, 1, new ProductionEffect(null, null), Color.BLUE));
 
         final Stack<DevelopmentCard>[][] initialDecks = (Stack<DevelopmentCard>[][]) new Stack[1][1];
         initialDecks[0][0] = levelOneBlueCards;

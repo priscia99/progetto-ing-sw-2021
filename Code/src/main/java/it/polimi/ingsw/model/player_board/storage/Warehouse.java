@@ -5,12 +5,14 @@ import it.polimi.ingsw.exceptions.FullDepotException;
 import it.polimi.ingsw.exceptions.IllegalResourceException;
 import it.polimi.ingsw.model.resource.ResourceType;
 
+import java.util.ArrayList;
+
 public class Warehouse {
 
-    private final Depot[] depots;
+    private Depot[] depots;
 
-    public Warehouse(Depot[] depots) {
-        this.depots = depots;
+    public Warehouse() {
+        this.depots = new Depot[3];
     }
 
     public Depot[] getDepots() {

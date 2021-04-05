@@ -2,10 +2,10 @@ package it.polimi.ingsw.model.card.effect;
 
 public abstract class Effect {
 
-    private final EffectType effectType;
+    protected EffectType effectType;
 
-    public Effect(EffectType effectType) {
-        this.effectType = effectType;
+    public Effect() {
+
     }
 
     public EffectType getEffectType() {

@@ -8,28 +8,26 @@ import it.polimi.ingsw.model.player_board.PlayerBoard;
 import it.polimi.ingsw.model.player_board.storage.Depot;
 import it.polimi.ingsw.model.resource.ResourcePile;
 import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.List;
 
 public class Player {
 
     private String nickname;
-    private Game game;
     private final PlayerBoard playerBoard;
 
-    public Player(String nickname, Game game, PlayerBoard playerBoard) {
+    public Player(String nickname) {
+        CustomLogger.getLogger().info("Creating player");
         this.nickname = nickname;
-        this.game = game;
-        this.playerBoard = playerBoard;
+        this.playerBoard = new PlayerBoard();
+        CustomLogger.getLogger().info("Player created");
     }
 
     public String getNickname() {
         return nickname;
     }
 
-    public Game getGame() {
-        return game;
-    }
 
     public PlayerBoard playerBoard() {
         return playerBoard;
@@ -39,9 +37,6 @@ public class Player {
         this.nickname = nickname;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
 
     public void pickCard(List<Card> cards) {
 

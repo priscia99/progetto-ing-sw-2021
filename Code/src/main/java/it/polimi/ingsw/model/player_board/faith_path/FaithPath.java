@@ -12,6 +12,12 @@ public class FaithPath {
         this.faithPoints = 0;
     }
 
+    public static FaithPath getStandardFaithPath(){
+        //TODO: init with correct FaithPath data
+        Cell[] standardCells = new Cell[20];
+        return new FaithPath(standardCells);
+    }
+
     public Cell[] getCells() {
         return cells;
     }

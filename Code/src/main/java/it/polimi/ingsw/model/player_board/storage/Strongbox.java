@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class Strongbox extends Storage{
 
-    public Strongbox(List<ConsumableResource> consumableResources) {
-        super(consumableResources);
+    public Strongbox() {
+        super();
     }
 
     @Override

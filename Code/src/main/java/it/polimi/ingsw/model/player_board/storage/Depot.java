@@ -12,8 +12,8 @@ public class Depot extends Storage{
 
     private int capacity;
 
-    public Depot(List<ConsumableResource> consumableResources, int capacity) {
-        super(consumableResources);
+    public Depot(int capacity) {
+        super();
         this.capacity = capacity;
     }
 
@@ -22,7 +22,7 @@ public class Depot extends Storage{
     }
 
     public Depot(List<ConsumableResource> consumableResources) {
-        super(consumableResources);
+        super();
     }
 
     @Override

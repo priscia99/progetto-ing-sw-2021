@@ -6,8 +6,8 @@ public class DiscountEffect extends Effect {
 
     private final ResourceType resourceType;
 
-    public DiscountEffect(EffectType effectType, ResourceType resourceType) {
-        super(effectType);
+    public DiscountEffect(ResourceType resourceType) {
+        this.effectType = EffectType.DISCOUNT;
         this.resourceType = resourceType;
     }
 

@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.card.effect.EffectType;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,9 +17,9 @@ public class LeaderCardsDeck {
     static public LeaderCardsDeck getStartingDeck(){
         final LeaderCard[] defaultDeckArray = {
                 //TODO: complete default array deck with correct leader cards data
-                new LeaderCard(false, 3,new DiscountEffect(EffectType.DISCOUNT, ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(EffectType.DISCOUNT, ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(EffectType.DISCOUNT, ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
         };
 
         final List<LeaderCard> defaultDeck = Arrays.asList(defaultDeckArray);
@@ -27,6 +28,10 @@ public class LeaderCardsDeck {
 
     public LeaderCardsDeck(List<LeaderCard> leaderCards) {
         this.leaderCards = leaderCards;
+    }
+
+    public LeaderCardsDeck(){
+        this.leaderCards = new ArrayList<>();
     }
 
 

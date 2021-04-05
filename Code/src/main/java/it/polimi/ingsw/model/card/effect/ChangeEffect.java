@@ -6,8 +6,8 @@ public class ChangeEffect extends Effect{
 
     private final ResourceType resourceType;
 
-    public ChangeEffect(EffectType effectType, ResourceType resourceType) {
-        super(effectType);
+    public ChangeEffect(ResourceType resourceType) {
+        this.effectType = EffectType.CHANGE;
         this.resourceType = resourceType;
     }
 
