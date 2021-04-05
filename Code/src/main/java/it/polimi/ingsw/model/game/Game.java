@@ -26,7 +26,7 @@ public class Game {
         this.players = players;
         this.setup();
         CustomLogger.getLogger().info("Game created");
-        this.start();
+        CustomLogger.getLogger().info("Waiting for all players to choose leader cards");
     }
 
     public List<Player> getPlayers() {
@@ -71,6 +71,7 @@ public class Game {
     private void giveLeaderCardsToPlayers() {
         final int numberCardsToGive = 4;
         for(Player player : players){
+            CustomLogger.getLogger().info(String.format("Giving %s initial leader cards", player.getNickname()));
             List<LeaderCard> cardsToGive = new ArrayList<>();
             for(int i = 0; i<numberCardsToGive; i++){
                 cardsToGive.add(this.leaderCardsDeck.pop());

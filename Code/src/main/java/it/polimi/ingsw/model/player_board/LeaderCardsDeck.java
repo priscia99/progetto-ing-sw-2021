@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LeaderCardsDeck {
 
-    private final List<LeaderCard> leaderCards;
+    private final ArrayList<LeaderCard> leaderCards;
 
     static public LeaderCardsDeck getStartingDeck(){
         final LeaderCard[] defaultDeckArray = {
@@ -21,13 +21,25 @@ public class LeaderCardsDeck {
                 new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
                 new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
                 new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
+
         };
 
-        final List<LeaderCard> defaultDeck = Arrays.asList(defaultDeckArray);
+        ArrayList<LeaderCard> defaultDeck = new ArrayList<>(Arrays.asList(defaultDeckArray));
         return new LeaderCardsDeck(defaultDeck);
     }
 
-    public LeaderCardsDeck(List<LeaderCard> leaderCards) {
+    public LeaderCardsDeck(ArrayList<LeaderCard> leaderCards) {
         this.leaderCards = leaderCards;
     }
 
