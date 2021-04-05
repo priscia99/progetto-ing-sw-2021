@@ -1,0 +1,330 @@
+[
+	{
+		"victory_points" : 4,
+		"requirement" : {
+			"requirement_type" : "LEVEL",
+			"color" : "GREEN"
+		},
+		"effect" : {
+			"effect_type" : "PRODUCTION",
+			"input_piles" : [
+				{
+					"resource_type" : "COIN",
+					"resource_quantity": 1
+				}
+			],
+			"output_piles": [
+				{
+					"resource_type" : "GENERIC",
+					"resource_quantity" : 1
+				},
+				{
+					"resource_type" : "FAITH",
+					"resource_quantity" : 1
+				}
+			]
+		}
+	},
+	{
+		"victory_points" : 4,
+		"requirement" : {
+			"requirement_type" : "LEVEL",
+			"color" : "PURPLE"
+		},
+		"effect" : {
+				"effect_type" : "PRODUCTION",
+				"input_piles" : [
+					{
+						"resource_type" : "STONE",
+						"resource_quantity": 1
+					}
+				],
+				"output_piles": [
+					{
+						"resource_type" : "GENERIC",
+						"resource_quantity" : 1
+					},
+					{
+						"resource_type" : "FAITH",
+						"resource_quantity" : 1
+					}
+				]
+			}
+	},
+	{
+		"victory_points" : 4,
+		"requirement" : {
+			"requirement_type" : "LEVEL",
+			"color" : "BLUE"
+		},
+		"effect" : {
+				"effect_type" : "PRODUCTION",
+				"input_piles" : [
+					{
+						"resource_type" : "SERVANT",
+						"resource_quantity": 1
+					}
+				],
+				"output_piles": [
+					{
+						"resource_type" : "GENERIC",
+						"resource_quantity" : 1
+					},
+					{
+						"resource_type" : "FAITH",
+						"resource_quantity" : 1
+					}
+				]
+			}
+	},
+	{
+		"victory_points" : 4,
+		"requirement" : {
+			"requirement_type" : "LEVEL",
+			"color" : "YELLOW"
+		},
+		"effect" : {
+				"effect_type" : "PRODUCTION",
+				"input_piles" : [
+					{
+						"resource_type" : "SHIELD",
+						"resource_quantity": 1
+					}
+				],
+				"output_piles": [
+					{
+						"resource_type" : "GENERIC",
+						"resource_quantity" : 1
+					},
+					{
+						"resource_type" : "FAITH",
+						"resource_quantity" : 1
+					}
+				]
+			}
+	},
+	{
+		"victory_points" : 5,
+		"requirement" : {
+			"requirement_type" : "COLOR",
+			"content" : [
+				{
+					"color" : "PURPLE",
+					"quantity" : 2
+				},
+				{
+					"color" : "GREEN",
+					"quantity" : 1
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "CHANGE",
+				"marble_value" : "COIN"
+			}
+	},
+	{
+		"victory_points" : 5,
+		"requirement" : {
+			"requirement_type" : "COLOR",
+			"content" : [
+				{
+					"color" : "BLUE",
+					"quantity" : 2
+				},
+				{
+					"color" : "YELLOW",
+					"quantity" : 1
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "CHANGE",
+				"marble_value" : "STONE"
+			}
+	},
+	{
+		"victory_points" : 5,
+		"requirement" : {
+			"requirement_type" : "COLOR",
+			"content" : [
+				{
+					"color" : "GREEN",
+					"quantity" : 2
+				},
+				{
+					"color" : "PURPLE",
+					"quantity" : 1
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "CHANGE",
+				"marble_value" : "SHIELD"
+			}
+	},
+	{
+		"victory_points" : 5,
+		"requirement" : {
+			"requirement_type" : "COLOR",
+			"content" : [
+				{
+					"color" : "YELLOW",
+					"quantity" : 2
+				},
+				{
+					"color" : "BLUE",
+					"quantity" : 1
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "CHANGE",
+				"marble_value" : "SERVANT"
+			}
+	},
+	{
+		"victory_points" : 3,
+		"requirement" : {
+			"requirement_type" : "RESOURCE",
+			"content" : [
+				{
+					"resource_type" : "SHIELD",
+					"quantity" : 5
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "DEPOT",
+				"depot_type" : "COIN"
+			}
+	},
+	{
+		"victory_points" : 3,
+		"requirement" : {
+			"requirement_type" : "RESOURCE",
+			"content" : [
+				{
+					"resource_type" : "SERVANT",
+					"quantity" : 5
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "DEPOT",
+				"depot_type" : "SHIELD"
+			}
+	},
+	{
+		"victory_points" : 3,
+		"requirement" : {
+			"requirement_type" : "RESOURCE",
+			"content" : [
+				{
+					"resource_type" : "STONE",
+					"quantity" : 5
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "DEPOT",
+				"depot_type" : "SERVANT"
+			}
+	},
+	{
+		"victory_points" : 3,
+		"requirement" : {
+			"requirement_type" : "RESOURCE",
+			"content" : [
+				{
+					"resource_type" : "COIN",
+					"quantity" : 5
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "DEPOT",
+				"depot_type" : "STONE"
+			}
+	},
+	{
+		"victory_points" : 2,
+		"requirement" : {
+			"requirement_type" : "COLOR",
+			"content" : [
+				{
+					"color" : "YELLOW",
+					"quantity" : 1
+				},
+				{
+					"color" : "PURPLE",
+					"quantity" : 1
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "DISCOUNT",
+				"discount_type" : "COIN"
+			}
+	},
+	{
+		"victory_points" : 2,
+		"requirement" : {
+			"requirement_type" : "COLOR",
+			"content" : [
+				{
+					"color" : "GREEN",
+					"quantity" : 1
+				},
+				{
+					"color" : "BLUE",
+					"quantity" : 1
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "DISCOUNT",
+				"discount_type" : "STONE"
+			}
+	},
+	{
+		"victory_points" : 2,
+		"requirement" : {
+			"requirement_type" : "COLOR",
+			"content" : [
+				{
+					"color" : "BLUE",
+					"quantity" : 1
+				},
+				{
+					"color" : "PURPLE",
+					"quantity" : 1
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "DISCOUNT",
+				"discount_type" : "SHIELD"
+			}
+	},
+	{
+		"victory_points" : 2,
+		"requirement" : {
+			"requirement_type" : "COLOR",
+			"content" : [
+				{
+					"color" : "YELLOW",
+					"quantity" : 1
+				},
+				{
+					"color" : "GREEN",
+					"quantity" : 1
+				}
+			]
+		},
+		"effect" : {
+				"effect_type" : "DISCOUNT",
+				"discount_type" : "SERVANT"
+			}
+	}
+]
