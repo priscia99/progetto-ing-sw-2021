@@ -6,12 +6,15 @@ import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.model.turn_manager.TurnManager;
 import it.polimi.ingsw.utils.CustomLogger;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 public class Game {
 
     private final String id;
     private List<Player> players;
+    private ListIterator<Player> playerIterator;
     private LeaderCardsDeck leaderCardsDeck;
     private CardMarket cardMarket;
     private MarbleMarket marbleMarket;
@@ -23,6 +26,7 @@ public class Game {
         this.players = players;
         this.setup();
         CustomLogger.getLogger().info("Game created");
+        this.start();
     }
 
     public List<Player> getPlayers() {
@@ -37,8 +41,11 @@ public class Game {
         return leaderCardsDeck;
     }
 
-    public void nextTurn() {
-
+    private void nextTurn() {
+        if (!playerIterator.hasNext()) {
+            playerIterator = players.listIterator();
+        }
+        turnManager.startTurn(playerIterator.next());
     }
 
     public boolean checkVictory() {
@@ -46,7 +53,10 @@ public class Game {
     }
 
     public void start() {
-
+        Collections.shuffle(this.players);
+        players.get(0).setIsFirst(true);
+        playerIterator = players.listIterator();
+        nextTurn();
     }
 
     public void setup() {

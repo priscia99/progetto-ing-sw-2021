@@ -16,6 +16,7 @@ public class Player {
 
     private String nickname;
     private final PlayerBoard playerBoard;
+    private boolean isFirst;
 
     public Player(String nickname) {
         CustomLogger.getLogger().info("Creating player");
@@ -23,6 +24,9 @@ public class Player {
         this.playerBoard = new PlayerBoard();
         CustomLogger.getLogger().info("Player created");
     }
+
+    public boolean getIsFirst() { return isFirst;}
+    public void setIsFirst(boolean value) { isFirst = value;}
 
     public String getNickname() {
         return nickname;

@@ -2,11 +2,12 @@ package it.polimi.ingsw.model.turn_manager;
 
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
+import it.polimi.ingsw.utils.CustomLogger;
 
 public class TurnManager {
 
     private boolean mainActionDone;
-    private Player player;
+    private Player currentPlayer;
     private final Game game;
 
     public TurnManager(Game game) {
@@ -21,19 +22,17 @@ public class TurnManager {
         this.mainActionDone = mainActionDone;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
 
     public Game getGame() {
         return game;
     }
 
     public void startTurn(Player player) {
-
+        this.currentPlayer = player;
+        CustomLogger.getLogger().info(String.format("%s has started the turn.", currentPlayer.getNickname()));
     }
 }
