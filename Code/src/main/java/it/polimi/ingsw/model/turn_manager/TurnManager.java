@@ -26,13 +26,13 @@ public class TurnManager {
         return currentPlayer;
     }
 
-
     public Game getGame() {
         return game;
     }
 
     public void startTurn(Player player) {
         this.currentPlayer = player;
+        this.mainActionDone = false;
         CustomLogger.getLogger().info(String.format("%s has started the turn.", currentPlayer.getNickname()));
     }
 }

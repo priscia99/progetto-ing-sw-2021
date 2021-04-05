@@ -1,12 +1,14 @@
 package it.polimi.ingsw.model.player_board;
 
 import it.polimi.ingsw.model.card.DevelopmentCard;
+import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.model.resource.ResourceType;
 
+import java.util.List;
 import java.util.Stack;
 
 public class PlayerBoard {
@@ -73,6 +75,16 @@ public class PlayerBoard {
 
     public Strongbox getStrongbox() {
         return strongbox;
+    }
+
+    public void addToLeaderCardsDeck(List<LeaderCard> leadersToAdd){
+        for(LeaderCard card : leadersToAdd){
+            this.leaderCardsDeck.addLeader(card);
+        }
+    }
+
+    public boolean leaderCardsArePresent(){
+        return this.leaderCardsDeck.getLeaderCards().size() > 0;
     }
 
     public void addToDepot(int depot, ResourceType resourceType) {

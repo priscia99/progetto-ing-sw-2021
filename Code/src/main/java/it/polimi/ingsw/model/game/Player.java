@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.game;
 
 import it.polimi.ingsw.model.card.Card;
+import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.player_board.DevelopmentCardsDeck;
 import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
@@ -11,22 +12,32 @@ import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Player {
 
     private String nickname;
+    private String id;
     private final PlayerBoard playerBoard;
     private boolean isFirst;
+    private List<? extends Card> cardsToChoose;
 
     public Player(String nickname) {
         CustomLogger.getLogger().info("Creating player");
         this.nickname = nickname;
+        this.id = UUID.randomUUID().toString();
         this.playerBoard = new PlayerBoard();
         CustomLogger.getLogger().info("Player created");
     }
 
+    public void receiveCardsToChoose(List<? extends Card> cards){
+        this.cardsToChoose = cards;
+    }
+
     public boolean getIsFirst() { return isFirst;}
     public void setIsFirst(boolean value) { isFirst = value;}
+
+    public String getId(){ return id;}
 
     public String getNickname() {
         return nickname;
@@ -42,8 +53,13 @@ public class Player {
     }
 
 
-    public void pickCard(List<Card> cards) {
+    public void pickedLeaderCards(List<LeaderCard> cards){
+        this.cardsToChoose.clear();
+        this.playerBoard.addToLeaderCardsDeck(cards);
+    }
 
+    public boolean hasLeaderCards(){
+        return playerBoard.leaderCardsArePresent();
     }
 
     public void addResource(ResourcePile resourcePile) {

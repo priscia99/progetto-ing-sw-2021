@@ -1,14 +1,14 @@
 package it.polimi.ingsw.model.game;
 
+import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.market.CardMarket;
 import it.polimi.ingsw.model.market.MarbleMarket;
 import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.model.turn_manager.TurnManager;
 import it.polimi.ingsw.utils.CustomLogger;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Game {
 
@@ -55,6 +55,7 @@ public class Game {
     public void start() {
         Collections.shuffle(this.players);
         players.get(0).setIsFirst(true);
+        giveInitialResources();
         playerIterator = players.listIterator();
         nextTurn();
     }
@@ -64,13 +65,34 @@ public class Game {
         setupCardsMarket();
         setupMarbleMarket();
         setupTurnManager();
+        giveLeaderCardsToPlayers();
     }
 
-    private int extractFirstPlayer() {
-        return 0;
+    private void giveLeaderCardsToPlayers() {
+        final int numberCardsToGive = 4;
+        for(Player player : players){
+            List<LeaderCard> cardsToGive = new ArrayList<>();
+            for(int i = 0; i<numberCardsToGive; i++){
+                cardsToGive.add(this.leaderCardsDeck.pop());
+            }
+            player.receiveCardsToChoose(cardsToGive);
+        }
     }
 
-    private void giveResources() {
+    public void playerHasChoosenLeaderCards(String playerId, List<LeaderCard> leaderCards){
+        players.get(players.indexOf(playerId)).pickedLeaderCards(leaderCards);
+        if(allPlayersHaveLeaderCards()) start();
+    }
+
+
+    private boolean allPlayersHaveLeaderCards(){
+        return !players.stream()
+                .map(Player::hasLeaderCards)
+                .collect(Collectors.toList())
+                .contains(false);
+    }
+
+    private void giveInitialResources() {
 
     }
 
@@ -87,18 +109,11 @@ public class Game {
     private void setupLeaderCards() {
         CustomLogger.getLogger().info("Setting up leader cards");
         this.leaderCardsDeck = LeaderCardsDeck.getStartingDeck();
+        this.leaderCardsDeck.shuffle();
     }
 
     private void setupTurnManager(){
         CustomLogger.getLogger().info("Setting up turn manager");
         this.turnManager = new TurnManager(this);
-    }
-
-    private void setupPlayerBoards() {
-
-    }
-
-    private void addPlayer(Player player) {
-
     }
 }

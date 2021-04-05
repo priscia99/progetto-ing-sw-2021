@@ -8,6 +8,7 @@ import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class LeaderCardsDeck {
@@ -34,6 +35,14 @@ public class LeaderCardsDeck {
         this.leaderCards = new ArrayList<>();
     }
 
+    public void shuffle(){
+        Collections.shuffle(this.leaderCards);
+    }
+
+    public LeaderCard pop(){
+        //TODO: add error if deck is empty
+        return this.leaderCards.remove(0);
+    }
 
 
     public List<LeaderCard> getLeaderCards() {
