@@ -9,21 +9,21 @@ import java.util.List;
 
 public class ProductionEffect extends Effect{
 
-    private final List<ResourcePile> inPiles;
-    private final List<ResourcePile> outPiles;
+    private final ArrayList<ResourcePile> inPiles;
+    private final ArrayList<ResourcePile> outPiles;
 
-    public ProductionEffect(List<ResourcePile> inPiles, List<ResourcePile> outPiles) {
+    public ProductionEffect(ArrayList<ResourcePile> inPiles, ArrayList<ResourcePile> outPiles) {
         this.effectType = EffectType.PRODUCTION;
         this.inPiles = inPiles;
         this.outPiles = outPiles;
     }
 
-    static public ProductionEffect getBasicProduction(){
-        List<ResourcePile> inResources = new ArrayList<>(Arrays.asList(new ResourcePile(2, ResourceType.GENERIC)));
-        List<ResourcePile> outResources = new ArrayList<>(Arrays.asList(new ResourcePile(1, ResourceType.GENERIC)));
+    static public ProductionEffect getBasicProduction() {
+        // TODO: builder needed
+        ArrayList<ResourcePile> inResources = new ArrayList<>(Arrays.asList(new ResourcePile(2, ResourceType.GENERIC)));
+        ArrayList<ResourcePile> outResources = new ArrayList<>(Arrays.asList(new ResourcePile(1, ResourceType.GENERIC)));
         return new ProductionEffect(inResources, outResources);
     }
-
 
     public List<ResourcePile> getInPiles() {
         return inPiles;
@@ -39,7 +39,7 @@ public class ProductionEffect extends Effect{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder buffer = new StringBuilder();
         buffer.append("Effect type: PRODUCTION\n");
         buffer.append("\tRequired resources: \n");

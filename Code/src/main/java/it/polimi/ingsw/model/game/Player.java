@@ -3,6 +3,8 @@ package it.polimi.ingsw.model.game;
 import it.polimi.ingsw.model.card.Card;
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.color.Color;
+import it.polimi.ingsw.model.card.effect.DepotEffect;
+import it.polimi.ingsw.model.card.effect.EffectType;
 import it.polimi.ingsw.model.player_board.DevelopmentCardsDeck;
 import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.model.player_board.PlayerBoard;
@@ -85,12 +87,25 @@ public class Player {
             }
         }
 
+        this.playerBoard.getLeaderCardsDeck().getLeaderCards()
+                .stream()
+                .filter(LeaderCard::isActive)
+                .filter(leaderCard -> leaderCard.getEffect().getEffectType().equals(EffectType.DEPOT))
+                .forEach(leaderCard -> {
+                    if (leaderCard.getEffect() instanceof DepotEffect) {
+                        DepotEffect effect = (DepotEffect)leaderCard.getEffect();
+
+                    }
+                    else {
+                        throw new IllegalArgumentException("leaderCard.getEffect() is not an instance of DepotEffect");
+                    }
+                });
         // TODO : Add additionary depot from leader cards in count
 
         return result;
     }
 
-    // count in developmentcardsDecks where cards' color is equal to the given color
+    // count in developmentCardsDecks where cards' color is equal to the given color
     public int countByColor(Color color) {
         int result = 0;
 

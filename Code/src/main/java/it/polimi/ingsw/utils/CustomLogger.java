@@ -12,7 +12,7 @@ public class CustomLogger {
         ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(new SimpleFormatter() {
 
-            //Sample output: [2021-04-04 23:48:24] [INFO   ] test
+            // sample output: [2021-04-04 23:48:24] [INFO   ] test
             private static final String format = "[%1$tF %1$tT] [%2$-7s] %3$s %n";
 
             @Override

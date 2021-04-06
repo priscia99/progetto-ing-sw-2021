@@ -80,7 +80,7 @@ public class Game {
         }
     }
 
-    public void playerHasChoosenLeaderCards(String playerId, List<LeaderCard> leaderCards){
+    public void playerHasChosenLeaderCards(String playerId, List<LeaderCard> leaderCards){
         players.get(players.indexOf(playerId)).pickedLeaderCards(leaderCards);
         if(allPlayersHaveLeaderCards()) start();
     }
