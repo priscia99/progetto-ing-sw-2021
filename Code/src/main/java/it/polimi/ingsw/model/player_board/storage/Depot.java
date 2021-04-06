@@ -21,7 +21,7 @@ public class Depot extends Storage{
         return capacity;
     }
 
-    public Depot(List<ConsumableResource> consumableResources) {
+    public Depot() {
         super();
     }
 

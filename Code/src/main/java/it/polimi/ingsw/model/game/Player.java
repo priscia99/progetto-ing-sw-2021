@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.game;
 
 import it.polimi.ingsw.model.card.Card;
+import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.DepotEffect;
@@ -13,8 +14,10 @@ import it.polimi.ingsw.model.resource.ResourcePile;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Player {
 
@@ -87,20 +90,24 @@ public class Player {
             }
         }
 
-        this.playerBoard.getLeaderCardsDeck().getLeaderCards()
+        result += this.playerBoard.getLeaderCardsDeck().getLeaderCards()
                 .stream()
                 .filter(LeaderCard::isActive)
                 .filter(leaderCard -> leaderCard.getEffect().getEffectType().equals(EffectType.DEPOT))
-                .forEach(leaderCard -> {
+                .map(leaderCard -> {
+                    int tempCount = 0;
                     if (leaderCard.getEffect() instanceof DepotEffect) {
-                        DepotEffect effect = (DepotEffect)leaderCard.getEffect();
-
+                        DepotEffect effect = (DepotEffect) leaderCard.getEffect();
+                        Depot depot = effect.getDepot();
+                        tempCount = depot.getConsumableResources().size();
                     }
                     else {
-                        throw new IllegalArgumentException("leaderCard.getEffect() is not an instance of DepotEffect");
+                        throw new IllegalArgumentException("leaderCard.getEffect() is not instance of DepotEffect");
                     }
-                });
-        // TODO : Add additionary depot from leader cards in count
+                    return tempCount;
+                })
+                .mapToInt(Integer::intValue)
+                .sum();
 
         return result;
     }
@@ -133,7 +140,18 @@ public class Player {
         return 0;
     }
 
-    public void colorByLevel(int level) {
-        // TODO: colorByLevel return type is ArrayList<Color> - implement function
+    public ArrayList<Color> colorByLevel(int level) {
+        ArrayList<Color> colors = new ArrayList<Color>();
+
+        for(DevelopmentCardsDeck deck: this.playerBoard.getDevelopmentCardsDecks()) {
+            ArrayList<Color> tempColors = deck.getDeck()
+                    .stream()
+                    .filter(developmentCard -> developmentCard.getLevel() == level)
+                    .map(DevelopmentCard::getColor).collect(Collectors.toCollection(ArrayList::new));
+
+            colors.addAll(tempColors);
+        }
+
+        return colors;
     }
 }
