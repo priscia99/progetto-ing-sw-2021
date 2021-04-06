@@ -85,6 +85,8 @@ public class Player {
             }
         }
 
+        // TODO : Add additionary depot from leader cards in count
+
         return result;
     }
 
@@ -117,6 +119,6 @@ public class Player {
     }
 
     public void colorByLevel(int level) {
-
+        // TODO: colorByLevel return type is ArrayList<Color> - implement function
     }
 }

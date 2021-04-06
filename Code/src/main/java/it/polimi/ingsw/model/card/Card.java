@@ -6,15 +6,13 @@ public abstract class Card {
 
     private boolean active;
     private final int victoryPoints;
-    private Requirement requirement;
+    private final Requirement requirement;
 
     public Card(boolean active, int victoryPoints, Requirement requirement) {
         this.active = active;
         this.victoryPoints = victoryPoints;
         this.requirement = requirement;
     }
-
-    public void setRequirement(Requirement requirement){ this.requirement = requirement; }
 
     public Requirement getRequirement(){ return requirement; }
 

@@ -41,7 +41,9 @@ public class Depot extends Storage{
             if(getResourceType() != resourceType){
                 throw new IllegalResourceException("Requested type is " + resourceType.name() + ", but this depot is " + getResourceType().name() + " only.");
             }
-        }catch (EmptyDepotException e){}
+        }catch (EmptyDepotException e){
+            e.printStackTrace();
+        }
         if(isFull())
             throw new FullDepotException("Full depot");
         else

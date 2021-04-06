@@ -16,29 +16,8 @@ public class LeaderCardsDeck {
 
     private final ArrayList<LeaderCard> leaderCards;
 
+    // TODO: Remove this function and call builder in setupLeaderCards()
     static public LeaderCardsDeck getStartingDeck(){
-       /* final LeaderCard[] defaultDeckArray = {
-                //TODO: complete default array deck with correct leader cards data
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-                new LeaderCard(false, 3,new DiscountEffect(ResourceType.COIN)),
-
-        };
-        ArrayList<LeaderCard> defaultDeck = new ArrayList<>(Arrays.asList(defaultDeckArray));
-        return new LeaderCardsDeck(defaultDeck);
-
-        */
         return new LeaderCardsDeck((ArrayList<LeaderCard>)LeaderCardsBuilder.getDeck());
     }
 
@@ -60,15 +39,15 @@ public class LeaderCardsDeck {
     }
 
 
-    public List<LeaderCard> getLeaderCards() {
+    public ArrayList<LeaderCard> getLeaderCards() {
         return leaderCards;
     }
 
     public void addLeader(LeaderCard leaderCard) {
-
+        // TODO: implement addLeader();
     }
 
     public void removeLeaderCard(LeaderCard leaderCard) {
-
+        // TODO: implement removeLeaderCard();
     }
 }

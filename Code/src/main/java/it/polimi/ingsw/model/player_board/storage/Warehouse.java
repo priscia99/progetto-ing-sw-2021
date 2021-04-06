@@ -30,9 +30,11 @@ public class Warehouse {
         try{
             depots[depotIndex].addResource(resourceType);
         }catch (IllegalResourceException e){
+            e.printStackTrace();
             // TODO: Manage code behaviour when player is trying to add a resource of a wrong type in a warehouse depot
         }
         catch (FullDepotException e){
+            e.printStackTrace();
             // TODO: Manage code behaviour when player is trying to add a resource in a full warehouse depot
         }
     }
@@ -41,6 +43,7 @@ public class Warehouse {
         try{
             depots[depotIndex].removeResource();
         }catch (EmptyDepotException e){
+            e.printStackTrace();
             // TODO: Manage code bahviour when player is trying to remove a resource from an empty warehouse depot
         }
     }
