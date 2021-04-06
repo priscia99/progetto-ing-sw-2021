@@ -1,13 +1,14 @@
 package it.polimi.ingsw.model.card;
 
 import it.polimi.ingsw.model.card.effect.Effect;
+import it.polimi.ingsw.model.card.requirement.Requirement;
 
 public class LeaderCard extends Card{
 
     private final Effect effect;
 
-    public LeaderCard(boolean active, int victoryPoints, Effect effect) {
-        super(active, victoryPoints);
+    public LeaderCard(boolean active, int victoryPoints, Effect effect, Requirement requirement) {
+        super(active, victoryPoints, requirement);
         this.effect = effect;
     }
 
