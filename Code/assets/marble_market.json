@@ -1,0 +1,26 @@
+[
+	{
+		"type" : "BLANK",
+		"quantity" : 4
+	},
+	{
+		"type" : "SHIELD",
+		"quantity" : 2
+	},
+	{
+		"type" : "STONE",
+		"quantity" : 2
+	},
+	{
+		"type" : "COIN",
+		"quantity" : 2
+	},
+	{
+		"type" : "SERVANT",
+		"quantity" : 2
+	},
+	{
+		"type" : "FAITH",
+		"quantity" : 1
+	}
+]
