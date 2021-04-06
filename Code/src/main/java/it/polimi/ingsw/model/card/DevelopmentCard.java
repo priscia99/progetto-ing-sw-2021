@@ -43,4 +43,12 @@ public class DevelopmentCard extends Card{
     public void play(boolean active) {
         super.play(active);
     }
+
+    @Override
+    public String toString(){
+        return super.toString() +
+                getRequirement().toString() +
+                getEffect().toString() +
+                "\n";
+    }
 }

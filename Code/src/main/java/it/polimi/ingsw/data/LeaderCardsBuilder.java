@@ -21,11 +21,8 @@ import it.polimi.ingsw.utils.CustomLogger;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.net.ResponseCache;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
 
 public class LeaderCardsBuilder{
     static private ArrayList<LeaderCard> leaderCardList;
