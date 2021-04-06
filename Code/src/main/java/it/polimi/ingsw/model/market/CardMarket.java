@@ -18,6 +18,8 @@ public class CardMarket {
         // lv2 row [purple, yellow, green, blue]
         // lv1 row [purple, yellow, green, blue]
 
+        // TODO: wait for builder
+        // Stack<DevelopmentCard>[][] decks = new Stack<DevelopmentCard>[4][3]
         // CardMarketBuilder builder = new CardMarketBuilder();
         // for (int column = 0; column<4; column++) {
         //  for (int lv = 0; lv<3; lv++) {
@@ -35,13 +37,14 @@ public class CardMarket {
         //              color = Color.BLUE;
         //              break;
         //          default:
-        //              TODO: lanciare eccezione
+        //              throws new IllegalArgumentException("column must be in [0;3]")
         //              break;
         //      }
-        //      builder.getStack(color, lv);
+        //      decks[column][lv] = builder.getStack(color, lv);
         //  }
         // }
-        return null;    // TODO: rimuovere
+        // return new CardMarket(decks);
+        return null;
     }
 
     public CardMarket(Stack<DevelopmentCard>[][] decks) {
