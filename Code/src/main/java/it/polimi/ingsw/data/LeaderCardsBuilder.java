@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class LeaderCardsBuilder{
-    List<LeaderCard> leaderCardList;
+    ArrayList<LeaderCard> leaderCardList;
 
     private void initBuilder(){
         // TODO: Code LeaderCardsBuilder init function

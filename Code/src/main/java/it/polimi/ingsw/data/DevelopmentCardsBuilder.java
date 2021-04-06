@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class DevelopmentCardsBuilder {
-    List<DevelopmentCard> developmentCardList;
+    ArrayList<DevelopmentCard> developmentCardList;
 
     private void initBuilder(){
         // TODO: Code DevelopmentCardsBuilder init function
@@ -16,6 +16,7 @@ public class DevelopmentCardsBuilder {
 
     public List<DevelopmentCard> getDeck(){
         if(Objects.isNull(developmentCardList)) initBuilder();
+
         return new ArrayList<>(developmentCardList);
     }
 }
