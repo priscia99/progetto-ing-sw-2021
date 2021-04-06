@@ -22,11 +22,12 @@ public class DevelopmentCardsDeck {
     }
 
     public int getCardNumber() {
-        // TODO: implement getCardNumber();
-        return 0;
+        // TODO: check getCardNumber();
+        return deck.size();
     }
 
-    public void getTopCard(int slot) {
-        // TODO: implement getTopCard();
+    public DevelopmentCard getTopCard(int slot) {
+        // TODO: check getTopCard();
+        return deck.get(0);
     }
 }
