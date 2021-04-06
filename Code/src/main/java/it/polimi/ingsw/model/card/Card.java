@@ -29,4 +29,18 @@ public abstract class Card {
     public void play(boolean active) {
         this.active = active;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("Status: ");
+        if(isActive())
+            buffer.append("ACTIVE");
+        else
+            buffer.append("NOT ACTIVE");
+        buffer.append("\n");
+
+        buffer.append("Victory points: ").append(victoryPoints).append("\n");
+        return buffer.toString();
+    }
 }

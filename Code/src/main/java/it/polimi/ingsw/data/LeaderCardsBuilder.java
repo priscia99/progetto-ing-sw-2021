@@ -143,7 +143,7 @@ public class LeaderCardsBuilder{
 
     }
 
-    static public List<LeaderCard> getDeck(){
+    static public ArrayList<LeaderCard> getDeck(){
         if(Objects.isNull(leaderCardList)) initBuilder();
         return new ArrayList<>(leaderCardList);
     }

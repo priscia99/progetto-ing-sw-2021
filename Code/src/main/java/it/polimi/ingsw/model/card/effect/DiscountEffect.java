@@ -19,4 +19,9 @@ public class DiscountEffect extends Effect {
     public EffectType getEffectType() {
         return super.getEffectType();
     }
+
+    public String toString(){
+        return "Effect type: DISCOUNT\n" +
+                "\tSpecial discount for resource " + resourceType.name();
+    }
 }

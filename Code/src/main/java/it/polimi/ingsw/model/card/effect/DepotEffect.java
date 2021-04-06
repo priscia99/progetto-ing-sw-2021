@@ -26,4 +26,9 @@ public class DepotEffect extends Effect{
     public EffectType getEffectType() {
         return super.getEffectType();
     }
+
+    public String toString(){
+        return "Effect type: ADDITIONARY DEPOT \n" +
+                "\tCreate a 2-resources capacity depot containing " + resourceType.name() + "S";
+    }
 }

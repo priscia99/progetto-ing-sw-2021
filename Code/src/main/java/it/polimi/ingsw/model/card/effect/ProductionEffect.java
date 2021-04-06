@@ -37,4 +37,21 @@ public class ProductionEffect extends Effect{
     public EffectType getEffectType() {
         return super.getEffectType();
     }
+
+    @Override
+    public String toString(){
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("Effect type: PRODUCTION\n");
+        buffer.append("\tRequired resources: \n");
+        for(ResourcePile pile : inPiles){
+            buffer.append("\t\tType: ").append(pile.getResourceType().name());
+            buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
+        }
+        buffer.append("\tOutput resources: \n");
+        for(ResourcePile pile : outPiles){
+            buffer.append("\t\tType: ").append(pile.getResourceType().name());
+            buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
+        }
+        return buffer.toString();
+    }
 }

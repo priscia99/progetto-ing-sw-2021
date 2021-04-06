@@ -19,4 +19,10 @@ public class ChangeEffect extends Effect{
     public EffectType getEffectType() {
         return super.getEffectType();
     }
+
+    @Override
+    public String toString(){
+        return "Effect type: CHANGE\n" +
+                "\tAny white marble become a " + resourceType.name();
+    }
 }

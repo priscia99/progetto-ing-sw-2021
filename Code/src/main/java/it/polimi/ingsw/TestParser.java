@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.data.LeaderCardsBuilder;
+import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -13,6 +14,9 @@ public class TestParser
 {
     public static void main( String[] args )
     {
-        LeaderCardsBuilder.getDeck();
+       ArrayList<LeaderCard> deck = LeaderCardsBuilder.getDeck();
+       for(int i=0; i<deck.size(); i++){
+           System.out.println("--- CARD " + (i+1) + " ---\n" + deck.get(i));
+       }
     }
 }

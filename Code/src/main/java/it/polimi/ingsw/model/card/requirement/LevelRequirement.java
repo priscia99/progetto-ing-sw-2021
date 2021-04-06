@@ -18,4 +18,10 @@ public class LevelRequirement extends Requirement{
     public boolean isFulfilled() {
         return false;
     }
+
+    @Override
+    public String toString(){
+        return "Requirement type: LEVEL 2 DEVELOPMENT CARD\n" +
+                "\tRequired color: " + color.name() + "\n";
+    }
 }

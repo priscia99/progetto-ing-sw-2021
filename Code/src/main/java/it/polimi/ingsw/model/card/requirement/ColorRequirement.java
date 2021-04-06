@@ -20,4 +20,15 @@ public class ColorRequirement extends Requirement{
     public boolean isFulfilled() {
         return false;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("Requirement type: COLOR\n");
+        for(ColorPile pile : colorPiles){
+            buffer.append("\tColor: ").append(pile.getColor().name());
+            buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
+        }
+        return buffer.toString();
+    }
 }
