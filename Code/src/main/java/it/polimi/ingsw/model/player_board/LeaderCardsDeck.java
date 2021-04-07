@@ -32,7 +32,7 @@ public class LeaderCardsDeck {
 
     public LeaderCard pop(){
         if(leaderCards.isEmpty()) throw new EmptyDeckException("This player's leader cards deck is empty.");
-        return this.leaderCards.remove(0);
+        return this.leaderCards.remove(this.leaderCards.size()-1);
     }
 
 
