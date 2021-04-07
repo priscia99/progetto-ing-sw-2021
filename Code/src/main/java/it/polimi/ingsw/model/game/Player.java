@@ -141,13 +141,18 @@ public class Player {
     }
 
     public ArrayList<Color> colorByLevel(int level) {
+        if (level < 0 || level > 3) {
+            throw new IllegalArgumentException("level must be in [0;3]");
+        }
+
         ArrayList<Color> colors = new ArrayList<Color>();
 
         for(DevelopmentCardsDeck deck: this.playerBoard.getDevelopmentCardsDecks()) {
             ArrayList<Color> tempColors = deck.getDeck()
                     .stream()
                     .filter(developmentCard -> developmentCard.getLevel() == level)
-                    .map(DevelopmentCard::getColor).collect(Collectors.toCollection(ArrayList::new));
+                    .map(DevelopmentCard::getColor)
+                    .collect(Collectors.toCollection(ArrayList::new));
 
             colors.addAll(tempColors);
         }
