@@ -46,7 +46,7 @@ public class DevelopmentCard extends Card{
 
     @Override
     public String toString(){
-        return super.toString() +
+        return super.toString() + "Level: " + getLevel() + "\nColor: " + getColor().name() + "\n" +
                 getRequirement().toString() +
                 getEffect().toString() +
                 "\n";

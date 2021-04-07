@@ -1,10 +1,12 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.data.DevCardMarketBuilder;
 import it.polimi.ingsw.data.DevelopmentCardsBuilder;
 import it.polimi.ingsw.data.LeaderCardsBuilder;
 import it.polimi.ingsw.data.MarbleMarketBuilder;
 import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.LeaderCard;
+import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.marble.Marble;
@@ -14,6 +16,7 @@ import it.polimi.ingsw.utils.CustomLogger;
 import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.logging.Level;
 
 public class TestParser
@@ -72,5 +75,9 @@ public class TestParser
         }
         System.out.println("Not for sale marble: " + anotherNotForSale.getResourceType().name());
 
+        // HOW TO GET A STACK OF DEV CARDS GIVEN LEVEL AND COLOR
+        Stack<DevelopmentCard> deck = DevCardMarketBuilder.getStackByLevelColor(1, Color.GREEN);    // Call the builder
+        while(deck.size() > 0)
+            System.out.println(deck.pop()); // Use pop() to take the first top card
     }
 }
