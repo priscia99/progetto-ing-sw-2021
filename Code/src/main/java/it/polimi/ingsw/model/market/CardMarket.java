@@ -18,7 +18,7 @@ public class CardMarket {
         // lv2 row [purple, yellow, green, blue]
         // lv1 row [purple, yellow, green, blue]
 
-        // TODO: wait for builder
+        // FIXME: wait for builder
         // Stack<DevelopmentCard>[][] decks = new Stack<DevelopmentCard>[4][3]
         // CardMarketBuilder builder = new CardMarketBuilder();
         // for (int column = 0; column<4; column++) {
@@ -55,7 +55,7 @@ public class CardMarket {
         return decks;
     }
 
-    public void buyCard(DevelopmentCard toRemove) {
-        // TODO: fill the function
+    public DevelopmentCard sell(int row, int column) {
+        return this.decks[row][column].pop();
     }
 }

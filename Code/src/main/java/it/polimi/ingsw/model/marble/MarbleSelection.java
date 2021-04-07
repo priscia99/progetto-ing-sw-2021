@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model.marble;
 
-public class MarbleChoice {
+public class MarbleSelection {
 
     private final Orientation orientation;
     private final int index;
 
-    public MarbleChoice(Orientation orientation, int index) {
+    public MarbleSelection(Orientation orientation, int index) {
         this.orientation = orientation;
         this.index = index;
     }
