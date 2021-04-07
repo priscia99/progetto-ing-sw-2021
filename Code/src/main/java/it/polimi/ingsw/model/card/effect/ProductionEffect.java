@@ -19,8 +19,9 @@ public class ProductionEffect extends Effect{
     }
 
     static public ProductionEffect getBasicProduction() {
-        // FIXME: wait for builder
-        ArrayList<ResourcePile> inResources = new ArrayList<>(Arrays.asList(new ResourcePile(2, ResourceType.GENERIC)));
+        ArrayList<ResourcePile> inResources = new ArrayList<>(Arrays.asList(
+                new ResourcePile(1, ResourceType.GENERIC),
+                new ResourcePile(1, ResourceType.GENERIC)));
         ArrayList<ResourcePile> outResources = new ArrayList<>(Arrays.asList(new ResourcePile(1, ResourceType.GENERIC)));
         return new ProductionEffect(inResources, outResources);
     }
