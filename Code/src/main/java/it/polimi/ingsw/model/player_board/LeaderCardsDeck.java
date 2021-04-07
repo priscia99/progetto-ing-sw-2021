@@ -46,7 +46,7 @@ public class LeaderCardsDeck {
 
     public void removeLeaderCard(LeaderCard leaderCard) {
         if(leaderCards.isEmpty()) throw new EmptyDeckException("This player's leader cards deck is empty.");
-        if(leaderCards.remove(leaderCard) == false)
+        if(!leaderCards.remove(leaderCard))
             throw new IllegalArgumentException("LeaderCard not present this player's deck");
     }
 }
