@@ -95,8 +95,15 @@ public class PlayerBoard {
         warehouse.removeFromDepot(depot);
     }
 
-    public void addDevelopmentCard(DevelopmentCard card, int deck){
-        // TODO: non più di 3 carte e la carta in cima o non c'è oppure ha livello inferiore di 1
+    public void addDevelopmentCard(DevelopmentCard card, int deck) throws IllegalArgumentException{
+        // Controllo dell'indice deck ricevuto in ingresso
+        if(deck<0 || deck>2) throw new IllegalArgumentException("Invalid deck number");
+        try{
+            // I controlli dello specifico deck sono rilegati alla funzione interna di DevelopmentCardDeck
+            developmentCardsDecks[deck].addCard(card);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 }
