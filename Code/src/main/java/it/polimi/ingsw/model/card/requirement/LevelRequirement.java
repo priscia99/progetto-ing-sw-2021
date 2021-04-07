@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.card.requirement;
 
 import it.polimi.ingsw.model.card.color.Color;
+import it.polimi.ingsw.model.game.Player;
 
 public class LevelRequirement extends Requirement{
 
@@ -15,8 +16,8 @@ public class LevelRequirement extends Requirement{
     }
 
     @Override
-    public boolean isFulfilled() {
-        return false;
+    public boolean isFulfilled(Player player) {
+        return player.colorByLevel(2).contains(this.color);
     }
 
     @Override

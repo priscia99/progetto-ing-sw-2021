@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.card.requirement;
 
+import it.polimi.ingsw.model.game.Player;
+
 public abstract class Requirement {
-    // TODO: Fill isFulfilled() method in all sub-classes
-    public abstract boolean isFulfilled();
+    public abstract boolean isFulfilled(Player player);
 }

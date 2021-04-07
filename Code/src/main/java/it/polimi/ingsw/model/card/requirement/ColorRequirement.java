@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.card.requirement;
 
 import it.polimi.ingsw.model.card.color.ColorPile;
+import it.polimi.ingsw.model.game.Player;
 
 import java.util.List;
 
@@ -17,8 +18,10 @@ public class ColorRequirement extends Requirement{
     }
 
     @Override
-    public boolean isFulfilled() {
-        return false;
+    public boolean isFulfilled(Player player) {
+        return this.colorPiles
+                .stream()
+                .allMatch(colorPile -> player.countByColor(colorPile.getColor()) == colorPile.getQuantity());
     }
 
     @Override

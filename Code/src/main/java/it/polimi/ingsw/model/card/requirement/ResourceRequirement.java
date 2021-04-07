@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model.card.requirement;
 
-import it.polimi.ingsw.model.card.color.ColorPile;
+import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.resource.ResourcePile;
-import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResourceRequirement extends Requirement{
 
@@ -19,8 +19,11 @@ public class ResourceRequirement extends Requirement{
     }
 
     @Override
-    public boolean isFulfilled() {
-        return false;
+    public boolean isFulfilled(Player player) {
+         return this.resourcePiles
+                 .stream()
+                 .allMatch(resourcePile ->
+                         player.countByResource(resourcePile.getResourceType()) == resourcePile.getQuantity());
     }
 
     @Override

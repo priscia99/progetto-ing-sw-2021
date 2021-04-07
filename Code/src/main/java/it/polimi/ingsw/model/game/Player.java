@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class Player {
 
     private String nickname;
-    private String id;
+    private final String id;
     private final PlayerBoard playerBoard;
     private boolean isFirst;
     private List<? extends Card> cardsToChoose;
