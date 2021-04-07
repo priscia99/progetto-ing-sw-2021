@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model.card.color;
 
 public enum Color {
-    GREEN,
-    BLUE,
+    PURPLE,
     YELLOW,
-    PURPLE
+    GREEN,
+    BLUE
 }

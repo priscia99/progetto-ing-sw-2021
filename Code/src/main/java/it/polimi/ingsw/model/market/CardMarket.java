@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.market;
 
+import it.polimi.ingsw.data.DevCardMarketBuilder;
 import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.EffectType;
@@ -18,33 +19,30 @@ public class CardMarket {
         // lv2 row [purple, yellow, green, blue]
         // lv1 row [purple, yellow, green, blue]
 
-        // FIXME: wait for builder
-        // Stack<DevelopmentCard>[][] decks = new Stack<DevelopmentCard>[4][3]
-        // CardMarketBuilder builder = new CardMarketBuilder();
-        // for (int column = 0; column<4; column++) {
-        //  for (int lv = 0; lv<3; lv++) {
-        //      switch (column) {
-        //          case 0:
-        //              color = Color.PURPLE;
-        //              break;
-        //          case 1:
-        //              color = Color.YELLOW;
-        //              break;
-        //          case 2:
-        //              color = Color.GREEN;
-        //              break;
-        //          case 3:
-        //              color = Color.BLUE;
-        //              break;
-        //          default:
-        //              throws new IllegalArgumentException("column must be in [0;3]")
-        //              break;
-        //      }
-        //      decks[column][lv] = builder.getStack(color, lv);
-        //  }
-        // }
-        // return new CardMarket(decks);
-        return null;
+        Stack[][] decks = new Stack[4][3];
+        for (int column = 0; column<4; column++) {
+            for (int lv = 0; lv<3; lv++) {
+                Color color;
+                switch (column) {
+                    case 0:
+                        color = Color.PURPLE;
+                        break;
+                    case 1:
+                        color = Color.YELLOW;
+                        break;
+                    case 2:
+                        color = Color.GREEN;
+                        break;
+                    case 3:
+                        color = Color.BLUE;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("column must be in [0;3]");
+                }
+                decks[column][lv] = DevCardMarketBuilder.getStackByLevelColor(lv, color);
+          }
+         }
+        return new CardMarket(decks);
     }
 
     public CardMarket(Stack<DevelopmentCard>[][] decks) {
