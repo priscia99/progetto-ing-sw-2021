@@ -18,11 +18,10 @@ public class DevelopmentCardsDeck {
     }
 
     public void addCard(DevelopmentCard developmentCard) {
-
+        // TODO: implement addCard();
     }
 
     public int getCardNumber() {
-        // TODO: check getCardNumber();
         return deck.size();
     }
 

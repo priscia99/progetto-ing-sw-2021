@@ -94,4 +94,9 @@ public class PlayerBoard {
     public void removeFromDepot(int depot) {
         warehouse.removeFromDepot(depot);
     }
+
+    public void addDevelopmentCard(DevelopmentCard card, int deck){
+        // TODO: non più di 3 carte e la carta in cima o non c'è oppure ha livello inferiore di 1
+    }
+
 }
