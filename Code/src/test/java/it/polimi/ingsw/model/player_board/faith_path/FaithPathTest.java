@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model.player_board.faith_path;
 
 import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.model.player_board.faith_path.PopeCell;

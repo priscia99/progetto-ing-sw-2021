@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model.card;
 
 import it.polimi.ingsw.model.card.LeaderCard;
 import org.junit.jupiter.api.Assertions;
