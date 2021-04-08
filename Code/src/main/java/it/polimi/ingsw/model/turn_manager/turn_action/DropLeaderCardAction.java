@@ -5,13 +5,8 @@ import it.polimi.ingsw.model.game.Player;
 
 public class DropLeaderCardAction extends TurnAction{
 
-    public DropLeaderCardAction(Game game, TurnActionType turnActionType) {
-        super(game, turnActionType);
-    }
-
-    @Override
-    public Game getGame() {
-        return super.getGame();
+    public DropLeaderCardAction() {
+        this.turnActionType = TurnActionType.DROP_LEADER_CARD;
     }
 
     @Override

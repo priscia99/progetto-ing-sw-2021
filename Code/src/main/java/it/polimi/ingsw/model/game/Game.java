@@ -52,7 +52,7 @@ public class Game {
         return false;
     }
 
-    public void start() {
+    private void start() {
         Collections.shuffle(this.players);
         players.get(0).setIsFirst(true);
         giveInitialResources();
@@ -80,6 +80,7 @@ public class Game {
         }
     }
 
+    //will be called by controller ( probably moved into controller )
     public void playerHasChosenLeaderCards(String playerId, List<LeaderCard> leaderCards){
         players.get(players.indexOf(playerId)).pickedLeaderCards(leaderCards);
         if(allPlayersHaveLeaderCards()) start();
@@ -94,7 +95,18 @@ public class Game {
     }
 
     private void giveInitialResources() {
+        //players.get(1).askForResourceType();
+        //listenForResponses();
 
+        if(players.size()>2){
+            //players.get(2).askForResorceType();
+            players.get(2).addFaithPoints(1);
+            if(players.size()>3){
+                //players.get(3).askForResorceType();
+                //players.get(3).askForResorceType();
+                players.get(3).addFaithPoints(1);
+            }
+        }
     }
 
     private void setupMarbleMarket() {

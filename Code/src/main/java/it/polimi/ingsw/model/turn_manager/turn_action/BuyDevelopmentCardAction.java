@@ -5,13 +5,8 @@ import it.polimi.ingsw.model.game.Player;
 
 public class BuyDevelopmentCardAction extends TurnAction{
 
-    public BuyDevelopmentCardAction(Game game, TurnActionType turnActionType) {
-        super(game, turnActionType);
-    }
-
-    @Override
-    public Game getGame() {
-        return super.getGame();
+    public BuyDevelopmentCardAction() {
+        this.turnActionType = TurnActionType.BUY_DEVELOPMENT_CARD;
     }
 
     @Override

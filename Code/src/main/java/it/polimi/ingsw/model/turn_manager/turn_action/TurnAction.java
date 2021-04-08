@@ -5,17 +5,11 @@ import it.polimi.ingsw.model.game.Player;
 
 public abstract class TurnAction {
 
-    private final Game game;
-    private final TurnActionType turnActionType;
+    protected TurnActionType turnActionType;
 
-    public TurnAction(Game game, TurnActionType turnActionType) {
-        this.game = game;
-        this.turnActionType = turnActionType;
+    public TurnAction() {
     }
 
-    public Game getGame() {
-        return game;
-    }
 
     public TurnActionType getTurnActionType() {
         return turnActionType;

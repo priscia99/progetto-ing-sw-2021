@@ -159,4 +159,9 @@ public class Player {
 
         return colors;
     }
+
+    //TODO: implement add faith point to player
+    public void addFaithPoints(int count){
+
+    }
 }

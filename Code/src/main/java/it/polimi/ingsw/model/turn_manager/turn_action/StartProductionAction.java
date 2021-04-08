@@ -5,13 +5,8 @@ import it.polimi.ingsw.model.game.Player;
 
 public class StartProductionAction extends TurnAction{
 
-    public StartProductionAction(Game game, TurnActionType turnActionType) {
-        super(game, turnActionType);
-    }
-
-    @Override
-    public Game getGame() {
-        return super.getGame();
+    public StartProductionAction() {
+        this.turnActionType = TurnActionType.START_PRODUCTION;
     }
 
     @Override

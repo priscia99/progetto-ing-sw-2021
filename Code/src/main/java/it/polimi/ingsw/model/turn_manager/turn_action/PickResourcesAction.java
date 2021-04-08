@@ -5,13 +5,8 @@ import it.polimi.ingsw.model.game.Player;
 
 public class PickResourcesAction extends TurnAction{
 
-    public PickResourcesAction(Game game, TurnActionType turnActionType) {
-        super(game, turnActionType);
-    }
-
-    @Override
-    public Game getGame() {
-        return super.getGame();
+    public PickResourcesAction() {
+        this.turnActionType = TurnActionType.PICK_RESOURCES;
     }
 
     @Override
