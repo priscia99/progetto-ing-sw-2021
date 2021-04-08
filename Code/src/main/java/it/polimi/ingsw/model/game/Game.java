@@ -41,6 +41,8 @@ public class Game {
         return leaderCardsDeck;
     }
 
+    public MarbleMarket getMarbleMarket(){return marbleMarket;}
+
     private void nextTurn() {
         if (!playerIterator.hasNext()) {
             playerIterator = players.listIterator();

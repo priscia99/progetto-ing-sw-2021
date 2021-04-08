@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.game.Player;
 public abstract class TurnAction {
 
     protected TurnActionType turnActionType;
+    protected Player currentPlayer;
 
     public TurnAction() {
     }
@@ -15,5 +16,7 @@ public abstract class TurnAction {
         return turnActionType;
     }
 
-    public abstract void execute(Player player, Game currentGame);
+    public void execute(Player player, Game currentGame){
+        currentPlayer = player;
+    };
 }

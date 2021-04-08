@@ -52,6 +52,12 @@ public class Player {
         this.playerBoard.removeFromLeaderCardsDeck(card);
     }
 
+    public void activateLeaderCard(LeaderCard card){
+        playerBoard.getLeaderCardsDeck().getLeaderCards()
+                .get(playerBoard.getLeaderCardsDeck().getLeaderCards().indexOf(card))
+                .play();
+    }
+
     public PlayerBoard getPlayerBoard() {
         return playerBoard;
     }
@@ -70,8 +76,13 @@ public class Player {
         return playerBoard.leaderCardsArePresent();
     }
 
-    public void addResource(ResourcePile resourcePile) {
+    public void addResourceToDepot(ResourceType resourceType, int depotIndex){
+        playerBoard.getWarehouse().addToDepot(depotIndex, resourceType);
+    }
 
+    public void addResourcesToStrongBox(ResourcePile resources){
+        for(int i = 0; i < resources.getQuantity(); i++)
+            playerBoard.getStrongbox().addResource(resources.getResourceType());
     }
 
     public void pickAction() {

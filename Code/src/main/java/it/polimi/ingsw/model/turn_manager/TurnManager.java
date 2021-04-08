@@ -39,9 +39,17 @@ public class TurnManager {
         //ask for action
     }
 
+    private boolean checkActionIsInvalid(TurnActionType selectedTurnAction){
+        return  mainActionDone &&
+                (selectedTurnAction == TurnActionType.BUY_DEVELOPMENT_CARD ||
+                        selectedTurnAction == TurnActionType.PICK_RESOURCES ||
+                        selectedTurnAction == TurnActionType.START_PRODUCTION );
+    }
+
     //called by controller ( or controller itself )
     public void playerPickedAction(TurnActionType selectedTurnAction) throws InvalidActionException {
         TurnAction turnAction;
+        if(checkActionIsInvalid(selectedTurnAction)) throw new InvalidActionException();
         switch(selectedTurnAction){
             case BUY_DEVELOPMENT_CARD : turnAction = new BuyDevelopmentCardAction(); break;
             case DROP_LEADER_CARD : turnAction = new DropLeaderCardAction(); break;
