@@ -49,9 +49,9 @@ public class PlayerTest {
     @Test
     @DisplayName("Test player has LeaderCards")
     public void testPlayerHasLeaderCards(){
-        Assertions.assertEquals(false, player.hasLeaderCards());
+        Assertions.assertFalse(player.hasLeaderCards());
         LeaderCard cardToAdd = getLeaderCardMock();
         player.getPlayerBoard().getLeaderCardsDeck().addLeader(cardToAdd);
-        Assertions.assertEquals(true, player.hasLeaderCards());
+        Assertions.assertTrue(player.hasLeaderCards());
     }
 }
