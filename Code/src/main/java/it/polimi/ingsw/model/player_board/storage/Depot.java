@@ -21,10 +21,6 @@ public class Depot extends Storage{
         return capacity;
     }
 
-    public Depot() {
-        super();
-    }
-
     @Override
     public List<ConsumableResource> getConsumableResources() {
         return super.getConsumableResources();

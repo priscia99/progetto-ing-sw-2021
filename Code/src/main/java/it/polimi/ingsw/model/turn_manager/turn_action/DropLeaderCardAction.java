@@ -5,20 +5,14 @@ import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
 
 public class DropLeaderCardAction extends TurnAction{
-    private Player currentPlayer;
 
     public DropLeaderCardAction() {
         this.turnActionType = TurnActionType.DROP_LEADER_CARD;
     }
 
     @Override
-    public TurnActionType getTurnActionType() {
-        return super.getTurnActionType();
-    }
-
-    @Override
     public void execute(Player player, Game currentGame) {
-        this.currentPlayer = player;
+        super.execute(player, currentGame);
         //ask for leader card to choose
         //once selected drop it and add faith point
     }

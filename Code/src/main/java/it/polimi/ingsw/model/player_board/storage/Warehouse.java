@@ -13,6 +13,9 @@ public class Warehouse {
 
     public Warehouse() {
         this.depots = new Depot[3];
+        this.depots[0] = new Depot(1);
+        this.depots[1] = new Depot(2);
+        this.depots[2] = new Depot(3);
     }
 
     public Depot[] getDepots() {
@@ -37,6 +40,10 @@ public class Warehouse {
             e.printStackTrace();
             // TODO: Manage code behaviour when player is trying to add a resource in a full warehouse depot
         }
+    }
+
+    public void removeConsumedResources(){
+        for(Depot toClean : depots) toClean.removeConsumedResources();
     }
 
     public void removeFromDepot(int depotIndex) {

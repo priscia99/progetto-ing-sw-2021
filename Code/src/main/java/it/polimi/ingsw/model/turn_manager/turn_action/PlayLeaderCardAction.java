@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.turn_manager.turn_action;
 
+import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
 
@@ -10,12 +11,12 @@ public class PlayLeaderCardAction extends TurnAction{
     }
 
     @Override
-    public TurnActionType getTurnActionType() {
-        return super.getTurnActionType();
+    public void execute(Player player, Game currentGame) {
+        super.execute(player, currentGame);
+        //choose card
     }
 
-    @Override
-    public void execute(Player player, Game currentGame) {
-
+    private void onLeaderCardSelected(LeaderCard card){
+        currentPlayer.activateLeaderCard(card);
     }
 }
