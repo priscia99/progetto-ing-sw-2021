@@ -21,35 +21,11 @@ public class PlayerBoard {
     private  Strongbox strongbox;
 
     public PlayerBoard() {
-        setupFaithPath();
-        setupBasicProduction();
-        setupDevelopmentCardDeck();
-        setupLeaderCards();
-        setupWarehouse();
-        setupStrongBox();
-    }
-
-    private void setupStrongBox() {
         this.strongbox = new Strongbox();
-    }
-
-    private void setupWarehouse() {
         this.warehouse = new Warehouse();
-    }
-
-    private void setupLeaderCards() {
         this.leaderCardsDeck = new LeaderCardsDeck();
-    }
-
-    private void setupDevelopmentCardDeck() {
         this.developmentCardsDecks = new DevelopmentCardsDeck[3];
-    }
-
-    private void setupBasicProduction() {
         this.basicProduction = ProductionEffect.getBasicProduction();
-    }
-
-    private void setupFaithPath() {
         this.faithPath = FaithPath.getStandardFaithPath();
     }
 
@@ -69,9 +45,7 @@ public class PlayerBoard {
         return leaderCardsDeck;
     }
 
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
+    public Warehouse getWarehouse() { return warehouse; }
 
     public Strongbox getStrongbox() {
         return strongbox;
@@ -115,6 +89,17 @@ public class PlayerBoard {
         for(int i=0; i<points; i++){
             faithPath.goToNextCell();
         }
+    }
+
+    /**
+     * @return the sum of cards number for each DevelopmentCards deck stored in player's board.
+     */
+    public int getDevelopmentCardsNumber(){
+        int sum = 0;
+        for(DevelopmentCardsDeck deck : developmentCardsDecks){
+            sum += deck.getCardNumber();
+        }
+        return sum;
     }
 
 }
