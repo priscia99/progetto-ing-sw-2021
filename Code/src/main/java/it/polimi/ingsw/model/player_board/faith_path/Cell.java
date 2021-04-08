@@ -11,4 +11,9 @@ public abstract class Cell {
     public void reach() {
         reachedUp = true;
     }
+
+    @Override
+    public String toString(){
+        return "Reached: " + reachedUp + "\n";
+    }
 }

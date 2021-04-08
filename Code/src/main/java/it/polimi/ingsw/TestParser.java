@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.marble.Marble;
 import it.polimi.ingsw.model.market.MarbleMarket;
+import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import javax.sound.midi.SysexMessage;
@@ -79,5 +80,9 @@ public class TestParser
         Stack<DevelopmentCard> deck = DevCardMarketBuilder.getStackByLevelColor(1, Color.GREEN);    // Call the builder
         while(deck.size() > 0)
             System.out.println(deck.pop()); // Use pop() to take the first top card
+
+        // HOW TO GET THE FAITH PATH USING ITS BUILDER
+        FaithPath faithPath = FaithPath.getStandardFaithPath();
+        System.out.println(faithPath);
     }
 }

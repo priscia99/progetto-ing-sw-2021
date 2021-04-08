@@ -1,0 +1,118 @@
+[
+	{
+		"index" : 1,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 2,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 3,
+		"cell_type": "POINTS_CELL",
+		"points" : 1
+	},
+	{
+		"index" : 4,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 5,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 6,
+		"cell_type": "POINTS_CELL",
+		"points" : 2
+	},
+	{
+		"index" : 7,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 8,
+		"cell_type": "POPE_CELL",
+		"pope_favor" : {
+			"first_cell_index" : 5,
+			"points" : 2
+		}
+	},
+	{
+		"index" : 9,
+		"cell_type": "POINTS_CELL",
+		"points" : 4
+	},
+	{
+		"index" : 10,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 11,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 12,
+		"cell_type": "POINTS_CELL",
+		"points" : 6
+	},
+	{
+		"index" : 13,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 14,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 15,
+		"cell_type": "POINTS_CELL",
+		"points" : 9
+	},
+	{
+		"index" : 16,
+		"cell_type": "POPE_CELL",
+		"pope_favor" : {
+			"first_cell_index" : 12,
+			"points" : 3
+		}
+	},
+	{
+		"index" : 17,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 18,
+		"cell_type": "POINTS_CELL",
+		"points" : 12
+	},
+	{
+		"index" : 19,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 20,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 21,
+		"cell_type": "POINTS_CELL",
+		"points" : 16
+	},
+	{
+		"index" : 22,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 23,
+		"cell_type": "EMPTY_CELL"
+	},
+	{
+		"index" : 24,
+		"cell_type": "FINAL_CELL",
+		"points" : 20,
+		"pope_favor" : {
+			"first_cell_index" : 19,
+			"points" : 4
+		}
+	}
+]

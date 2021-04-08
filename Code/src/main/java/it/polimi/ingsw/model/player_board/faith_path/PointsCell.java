@@ -17,4 +17,11 @@ public class PointsCell extends Cell{
     public void reach() {
         super.reach();
     }
+
+    @Override
+    public String toString(){
+        return super.toString() +
+                "Type: " + "POINTS CELL" + "\n" +
+                "Victory points at reaching: " + points + "\n";
+    }
 }

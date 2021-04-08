@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.player_board.faith_path;
 
+import it.polimi.ingsw.data.FaithPathBuilder;
+
 public class FaithPath {
 
     private final Cell[] cells;
@@ -13,10 +15,7 @@ public class FaithPath {
     }
 
     public static FaithPath getStandardFaithPath(){
-        //TODO: create FaithPath builder
-        //TODO: init with correct FaithPath data
-        Cell[] standardCells = new Cell[20];
-        return new FaithPath(standardCells);
+        return new FaithPath(FaithPathBuilder.getPath());
     }
 
     public Cell[] getCells() {
@@ -42,5 +41,15 @@ public class FaithPath {
     public void goToNextCell() {
         this.position++;
         this.cells[this.position].reach();
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        for(int i=0; i<cells.length; i++){
+            builder.append("Index: ").append((i+1)).append("\n");
+            builder.append(cells[i].toString()).append("\n");
+        }
+        return builder.toString();
     }
 }
