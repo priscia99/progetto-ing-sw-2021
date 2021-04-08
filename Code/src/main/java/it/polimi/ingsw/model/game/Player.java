@@ -48,6 +48,9 @@ public class Player {
         return nickname;
     }
 
+    public void dropLeaderCard(LeaderCard card){
+        this.playerBoard.removeFromLeaderCardsDeck(card);
+    }
 
     public PlayerBoard getPlayerBoard() {
         return playerBoard;
