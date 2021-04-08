@@ -49,7 +49,7 @@ public class Player {
     }
 
 
-    public PlayerBoard playerBoard() {
+    public PlayerBoard getPlayerBoard() {
         return playerBoard;
     }
 
@@ -160,8 +160,7 @@ public class Player {
         return colors;
     }
 
-    //TODO: implement add faith point to player
     public void addFaithPoints(int count){
-
+        this.playerBoard.addFaithPoints(count);
     }
 }
