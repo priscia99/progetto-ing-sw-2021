@@ -24,8 +24,9 @@ public abstract class Card {
         return victoryPoints;
     }
 
-    public void play() {
+    public int play() {
         this.active = true;
+        return this.victoryPoints;
     }
 
     public void setActive(boolean active){ this.active = active; }
