@@ -83,6 +83,10 @@ public class PlayerBoard {
         }
     }
 
+    public void removeFromLeaderCardsDeck(LeaderCard card){
+        this.leaderCardsDeck.removeLeaderCard(card);
+    }
+
     public boolean leaderCardsArePresent(){
         return this.leaderCardsDeck.getLeaderCards().size() > 0;
     }
