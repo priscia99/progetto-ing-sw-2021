@@ -3,17 +3,17 @@ package it.polimi.ingsw.model.card.requirement;
 import it.polimi.ingsw.model.card.color.ColorPile;
 import it.polimi.ingsw.model.game.Player;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ColorRequirement extends Requirement{
 
-    private final List<ColorPile> colorPiles;
+    private final ArrayList<ColorPile> colorPiles;
 
-    public ColorRequirement(List<ColorPile> colorPiles) {
+    public ColorRequirement(ArrayList<ColorPile> colorPiles) {
         this.colorPiles = colorPiles;
     }
 
-    public List<ColorPile> getColorPiles() {
+    public ArrayList<ColorPile> getColorPiles() {
         return colorPiles;
     }
 
