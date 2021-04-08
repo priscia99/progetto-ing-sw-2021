@@ -32,6 +32,7 @@ public class Player {
         this.nickname = nickname;
         this.id = UUID.randomUUID().toString();
         this.playerBoard = new PlayerBoard();
+        this.cardsToChoose = new ArrayList<>();
         CustomLogger.getLogger().info("Player created");
     }
 
