@@ -52,7 +52,7 @@ public class FaithPath {
      */
     public void checkPopeFavor(int index){
         if(!(cells[index] instanceof PopeCell))
-            throw new IllegalArgumentException("This position doesnt refer to a pope cell.");
+            throw new IllegalArgumentException("This position doesn't refer to a pope cell.");
 
         PopeFavor favor = ((PopeCell) cells[index]).getFavor();
         if(!favor.isUsed()){

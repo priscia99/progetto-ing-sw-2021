@@ -106,4 +106,11 @@ public class PlayerBoard {
         }
     }
 
+    public void addFaithPoints(int points){
+        // TODO check victory
+        for(int i=0; i<points; i++){
+            faithPath.goToNextCell();
+        }
+    }
+
 }
