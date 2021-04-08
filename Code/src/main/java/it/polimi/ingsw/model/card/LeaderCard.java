@@ -17,21 +17,6 @@ public class LeaderCard extends Card{
     }
 
     @Override
-    public boolean isActive() {
-        return super.isActive();
-    }
-
-    @Override
-    public int getVictoryPoints() {
-        return super.getVictoryPoints();
-    }
-
-    @Override
-    public void play(boolean active) {
-        super.play(active);
-    }
-
-    @Override
     public String toString(){
         return super.toString() +
                 getRequirement().toString() +

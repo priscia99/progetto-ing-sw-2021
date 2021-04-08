@@ -8,9 +8,9 @@ public abstract class Cell {
         this.reachedUp = false;
     }
 
-    public void reach() {
-        reachedUp = true;
-    }
+    public abstract int reach();
+
+    public void setReached(boolean reached){ reachedUp = reached; }
 
     @Override
     public String toString(){

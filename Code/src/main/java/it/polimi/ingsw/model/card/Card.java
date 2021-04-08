@@ -24,9 +24,11 @@ public abstract class Card {
         return victoryPoints;
     }
 
-    public void play(boolean active) {
-        this.active = active;
+    public void play() {
+        this.active = true;
     }
+
+    public void setActive(boolean active){ this.active = active; }
 
     @Override
     public String toString(){

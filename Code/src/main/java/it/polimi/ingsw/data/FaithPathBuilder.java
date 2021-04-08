@@ -38,17 +38,14 @@ public class FaithPathBuilder {
                         path[cellIterator] = new PopeCell(new PopeFavor(
                                 favorObject.get("first_cell_index").getAsInt(),
                                 favorObject.get("points").getAsInt()
-                        ));
+                        ), 0);
                         break;
                     case "FINAL_CELL":
                         favorObject = cellObject.get("pope_favor").getAsJsonObject();
-                        path[cellIterator] = new FinalCell(
-                                cellObject.get("points").getAsInt(),
-                                new PopeFavor(
-                                        favorObject.get("first_cell_index").getAsInt(),
-                                        favorObject.get("points").getAsInt()
-                                )
-                        );
+                        path[cellIterator] = new PopeCell(new PopeFavor(
+                                favorObject.get("first_cell_index").getAsInt(),
+                                favorObject.get("points").getAsInt()
+                        ), 20);
                         break;
                     default:
                         throw new IllegalArgumentException("Illegal argument given in file " + file_path);

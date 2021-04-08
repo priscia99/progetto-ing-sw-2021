@@ -40,7 +40,28 @@ public class FaithPath {
 
     public void goToNextCell() {
         this.position++;
-        this.cells[this.position].reach();
+        faithPoints += this.cells[this.position].reach();
+    }
+
+    // TODO: This function needs to be called by an observer
+    /**
+     * Triggered by an observer, this method check if player is eligible to receive the points given by a pope favor
+     * of a pope cell.
+     * @param index Index of a pope cell.
+     * @throws IllegalArgumentException Indicates if the given index doesn't refer to a pope cell.
+     */
+    public void checkPopeFavor(int index){
+        if(!(cells[index] instanceof PopeCell))
+            throw new IllegalArgumentException("This position doesnt refer to a pope cell.");
+
+        PopeFavor favor = ((PopeCell) cells[index]).getFavor();
+        if(!favor.isUsed()){
+            // Favor was not triggered before
+            if (this.position >= favor.getFirstCellIndex()){
+                this.faithPoints += favor.getPoints();
+            }
+            favor.setUsed(true);
+        }
     }
 
     @Override

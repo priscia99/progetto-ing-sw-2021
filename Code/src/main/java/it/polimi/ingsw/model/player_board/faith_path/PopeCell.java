@@ -3,10 +3,12 @@ package it.polimi.ingsw.model.player_board.faith_path;
 public class PopeCell extends Cell {
 
     private PopeFavor favor;
+    private int points;
 
-    public PopeCell(PopeFavor favor) {
+    public PopeCell(PopeFavor favor, int points) {
         super();
         this.favor = favor;
+        this.points = points;
     }
 
     public PopeFavor getFavor() {
@@ -14,8 +16,9 @@ public class PopeCell extends Cell {
     }
 
     @Override
-    public void reach() {
-        super.reach();
+    public int reach() {
+        super.setReached(true);
+        return points;
     }
 
     @Override

@@ -14,8 +14,9 @@ public class PointsCell extends Cell{
     }
 
     @Override
-    public void reach() {
-        super.reach();
+    public int reach() {
+        super.setReached(true);
+        return getPoints();
     }
 
     @Override

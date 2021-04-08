@@ -7,7 +7,8 @@ public class EmptyCell extends Cell {
     }
 
     @Override
-    public void reach() {
-        super.reach();
+    public int reach() {
+        super.setReached(true);
+        return 0;
     }
 }
