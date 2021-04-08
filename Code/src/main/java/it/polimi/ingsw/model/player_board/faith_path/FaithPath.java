@@ -40,7 +40,7 @@ public class FaithPath {
 
     public void goToNextCell() {
         this.position++;
-        faithPoints += this.cells[this.position].reach();
+        faithPoints += this.cells[this.position-1].reach();
     }
 
     // TODO: This function needs to be called by an observer
@@ -51,10 +51,10 @@ public class FaithPath {
      * @throws IllegalArgumentException Indicates if the given index doesn't refer to a pope cell.
      */
     public void checkPopeFavor(int index){
-        if(!(cells[index] instanceof PopeCell))
+        if(!(cells[index-1] instanceof PopeCell))
             throw new IllegalArgumentException("This position doesn't refer to a pope cell.");
 
-        PopeFavor favor = ((PopeCell) cells[index]).getFavor();
+        PopeFavor favor = ((PopeCell) cells[index-1]).getFavor();
         if(!favor.isUsed()){
             // Favor was not triggered before
             if (this.position >= favor.getFirstCellIndex()){

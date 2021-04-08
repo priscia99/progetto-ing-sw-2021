@@ -59,6 +59,6 @@ public class FaithPathBuilder {
 
     public static Cell[] getPath(){
         if(Objects.isNull(path)) initBuild();
-        return path;
+        return path.clone();
     }
 }
