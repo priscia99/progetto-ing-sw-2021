@@ -87,7 +87,7 @@ public class Player {
     }
 
     public void pickAction() {
-
+        // TODO: ?
     }
 
     // count in strongbox, then count in warehouse and sum all in result
@@ -167,6 +167,7 @@ public class Player {
                     .stream()
                     .filter(developmentCard -> developmentCard.getLevel() == level)
                     .map(DevelopmentCard::getColor)
+                    .distinct()
                     .collect(Collectors.toCollection(ArrayList::new));
 
             colors.addAll(tempColors);
