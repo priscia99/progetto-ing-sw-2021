@@ -8,7 +8,7 @@ import it.polimi.ingsw.observer.Observable;
 
 import java.util.ArrayList;
 
-public class Warehouse extends Observable<Depot> {
+public class Warehouse {
 
     private Depot[] depots;
 
@@ -33,8 +33,6 @@ public class Warehouse extends Observable<Depot> {
     public void addToDepot(int depotIndex, ResourceType resourceType) {
         try{
             depots[depotIndex].addResource(resourceType);
-
-            notify(this.depots[depotIndex]);
         }
         catch (IllegalResourceException e) {
             e.printStackTrace();
@@ -49,8 +47,6 @@ public class Warehouse extends Observable<Depot> {
     public void removeConsumedResources(){
         for(Depot toClean : depots) {
             toClean.removeConsumedResources();
-
-            notify(toClean);
         }
     }
 
@@ -59,8 +55,6 @@ public class Warehouse extends Observable<Depot> {
     public void removeFromDepot(int depotIndex) {
         try{
             depots[depotIndex].removeResource();
-
-            notify(depots[depotIndex]);
         }
         catch (EmptyDepotException e) {
             e.printStackTrace();

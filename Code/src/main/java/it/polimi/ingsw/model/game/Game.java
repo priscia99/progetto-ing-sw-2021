@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 public class Game extends Observable<Game> {
 
     private final String id;
-    private List<Player> players;
+    private final List<Player> players;
     private ListIterator<Player> playerIterator;
     private LeaderCardsDeck leaderCardsDeck;
-    private CardMarket cardMarket;
+    private CardMarket cardMarket; // TODO implement the usage of cardMarket
     private MarbleMarket marbleMarket;
     private TurnManager turnManager;
 

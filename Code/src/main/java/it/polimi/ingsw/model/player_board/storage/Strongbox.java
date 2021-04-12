@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.EmptyDepotException;
 import it.polimi.ingsw.model.resource.ConsumableResource;
 import it.polimi.ingsw.model.resource.ResourceType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,7 @@ public class Strongbox extends Storage{
     }
 
     @Override
-    public List<ConsumableResource> getConsumableResources() {
+    public ArrayList<ConsumableResource> getConsumableResources() {
         return super.getConsumableResources();
     }
 
@@ -26,6 +27,8 @@ public class Strongbox extends Storage{
     @Override
     public void addResource(ResourceType resourceType) {
         consumableResources.add(new ConsumableResource(resourceType));
+
+        notify(this.consumableResources);
     }
 
     @Override
@@ -44,6 +47,9 @@ public class Strongbox extends Storage{
                 }
             }
         }
+
+        notify(this.consumableResources);
+
         return found;
     }
 }

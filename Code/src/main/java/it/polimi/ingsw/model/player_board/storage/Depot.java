@@ -6,6 +6,7 @@ import it.polimi.ingsw.exceptions.IllegalResourceException;
 import it.polimi.ingsw.model.resource.ConsumableResource;
 import it.polimi.ingsw.model.resource.ResourceType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Depot extends Storage{
@@ -22,7 +23,7 @@ public class Depot extends Storage{
     }
 
     @Override
-    public List<ConsumableResource> getConsumableResources() {
+    public ArrayList<ConsumableResource> getConsumableResources() {
         return super.getConsumableResources();
     }
 
@@ -44,16 +45,23 @@ public class Depot extends Storage{
             throw new FullDepotException("Full depot");
         else
             consumableResources.add(new ConsumableResource(resourceType));
+
+            notify(this.consumableResources);
     }
 
     @Override
-    public void removeConsumedResources(){ super.removeConsumedResources(); }
+    public void removeConsumedResources(){
+        super.removeConsumedResources();
+
+        notify(this.consumableResources);
+    }
 
     public void removeResource() throws EmptyDepotException{
         if(isEmpty())
             throw new EmptyDepotException("Empty depot.");
         else
             consumableResources.remove(consumableResources.size()-1);
+            notify(this.consumableResources);
 
     }
 

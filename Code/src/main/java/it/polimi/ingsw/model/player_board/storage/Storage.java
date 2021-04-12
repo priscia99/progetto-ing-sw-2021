@@ -2,20 +2,21 @@ package it.polimi.ingsw.model.player_board.storage;
 
 import it.polimi.ingsw.model.resource.ConsumableResource;
 import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.observer.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Storage {
+public abstract class Storage extends Observable<ArrayList<ConsumableResource>> {
 
-    protected List<ConsumableResource> consumableResources;
+    protected ArrayList<ConsumableResource> consumableResources;
 
     public Storage() {
         this.consumableResources = new ArrayList<>();
     }
 
-    public List<ConsumableResource> getConsumableResources() {
+    public ArrayList<ConsumableResource> getConsumableResources() {
         return consumableResources;
     }
 
@@ -27,7 +28,7 @@ public abstract class Storage {
 
     public void removeConsumedResources(){
         consumableResources =
-                consumableResources.stream().filter(elem -> !elem.isToConsume()).collect(Collectors.toList());
+                consumableResources.stream().filter(elem -> !elem.isToConsume()).collect(Collectors.toCollection(ArrayList::new));
     }
 
 }

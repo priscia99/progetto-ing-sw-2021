@@ -33,16 +33,21 @@ public class FaithPath extends Observable<Integer> {
 
     public void setPosition(int position) {
         this.position = position;
+
+        notify(this.position);
     }
 
     public void setFaithPoints(int faithPoints) {
         this.faithPoints = faithPoints;
+
+        notify(this.position);
     }
 
     public void goToNextCell() {
         this.position++;
         faithPoints += this.cells[this.position-1].reach();
-        this.notify(this.position);
+
+        notify(this.position);
     }
 
     // TODO: This function needs to be called by an observer
