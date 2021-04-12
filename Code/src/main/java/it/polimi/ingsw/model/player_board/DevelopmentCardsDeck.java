@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model.player_board;
 
 import it.polimi.ingsw.model.card.DevelopmentCard;
+import it.polimi.ingsw.observer.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DevelopmentCardsDeck {
+public class DevelopmentCardsDeck extends Observable<ArrayList<DevelopmentCard>> {
 
     private final ArrayList<DevelopmentCard> deck;
 
@@ -27,6 +28,8 @@ public class DevelopmentCardsDeck {
             throw new IllegalArgumentException("The development card level is not valid for this deck");
         }
         deck.add(developmentCard);
+
+        notify(this.deck);
     }
 
     public int getCardNumber() {

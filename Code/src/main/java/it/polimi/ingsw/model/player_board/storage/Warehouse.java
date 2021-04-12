@@ -4,10 +4,11 @@ import it.polimi.ingsw.exceptions.EmptyDepotException;
 import it.polimi.ingsw.exceptions.FullDepotException;
 import it.polimi.ingsw.exceptions.IllegalResourceException;
 import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.observer.Observable;
 
 import java.util.ArrayList;
 
-public class Warehouse {
+public class Warehouse extends Observable<Depot> {
 
     private Depot[] depots;
 
@@ -32,24 +33,36 @@ public class Warehouse {
     public void addToDepot(int depotIndex, ResourceType resourceType) {
         try{
             depots[depotIndex].addResource(resourceType);
-        }catch (IllegalResourceException e){
+
+            notify(this.depots[depotIndex]);
+        }
+        catch (IllegalResourceException e) {
             e.printStackTrace();
             // TODO: Manage code behaviour when player is trying to add a resource of a wrong type in a warehouse depot
         }
-        catch (FullDepotException e){
+        catch (FullDepotException e) {
             e.printStackTrace();
             // TODO: Manage code behaviour when player is trying to add a resource in a full warehouse depot
         }
     }
 
     public void removeConsumedResources(){
-        for(Depot toClean : depots) toClean.removeConsumedResources();
+        for(Depot toClean : depots) {
+            toClean.removeConsumedResources();
+
+            notify(toClean);
+        }
     }
 
+
+    // TODO is it useful ???
     public void removeFromDepot(int depotIndex) {
         try{
             depots[depotIndex].removeResource();
-        }catch (EmptyDepotException e){
+
+            notify(depots[depotIndex]);
+        }
+        catch (EmptyDepotException e) {
             e.printStackTrace();
             // TODO: Manage code bahviour when player is trying to remove a resource from an empty warehouse depot
         }

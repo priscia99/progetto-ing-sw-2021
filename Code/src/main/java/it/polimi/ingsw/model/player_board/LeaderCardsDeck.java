@@ -3,14 +3,11 @@ package it.polimi.ingsw.model.player_board;
 import it.polimi.ingsw.data.LeaderCardsBuilder;
 import it.polimi.ingsw.exceptions.EmptyDeckException;
 import it.polimi.ingsw.model.card.LeaderCard;
-import it.polimi.ingsw.model.card.effect.DiscountEffect;
-import it.polimi.ingsw.model.card.effect.EffectType;
-import it.polimi.ingsw.model.resource.ResourceType;
-import it.polimi.ingsw.utils.CustomLogger;
+import it.polimi.ingsw.observer.Observable;
 
 import java.util.*;
 
-public class LeaderCardsDeck {
+public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
 
     private final ArrayList<LeaderCard> leaderCards;
 
@@ -42,11 +39,18 @@ public class LeaderCardsDeck {
 
     public void addLeader(LeaderCard leaderCard) {
         leaderCards.add(leaderCard);
+
+        notify(this.leaderCards);
     }
 
     public void removeLeaderCard(LeaderCard leaderCard) {
-        if(leaderCards.isEmpty()) throw new EmptyDeckException("This player's leader cards deck is empty.");
-        if(!leaderCards.remove(leaderCard))
+        if(leaderCards.isEmpty()) {
+            throw new EmptyDeckException("This player's leader cards deck is empty.");
+        }
+        else if (!leaderCards.remove(leaderCard)) {
             throw new IllegalArgumentException("LeaderCard not present this player's deck");
+        }
+
+        notify(this.leaderCards);
     }
 }
