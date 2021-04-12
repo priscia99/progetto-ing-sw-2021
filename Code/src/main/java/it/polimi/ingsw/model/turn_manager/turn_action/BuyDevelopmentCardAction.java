@@ -17,6 +17,7 @@ public class BuyDevelopmentCardAction extends TurnAction{
     }
 
     private void onDevelopmentCardSelected(DevelopmentCard card, int deckIndex){
+        //TODO: rimuovere la carta dal mercato
         currentPlayer.getPlayerBoard().addDevelopmentCard(card, deckIndex);
     }
 }
