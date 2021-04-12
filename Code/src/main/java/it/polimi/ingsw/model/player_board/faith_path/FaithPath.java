@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.player_board.faith_path;
 
 import it.polimi.ingsw.data.FaithPathBuilder;
+import it.polimi.ingsw.observer.Observable;
 
-public class FaithPath {
+public class FaithPath extends Observable<Integer> {
 
     private final Cell[] cells;
     private int position;
@@ -41,6 +42,7 @@ public class FaithPath {
     public void goToNextCell() {
         this.position++;
         faithPoints += this.cells[this.position-1].reach();
+        this.notify(this.position);
     }
 
     // TODO: This function needs to be called by an observer

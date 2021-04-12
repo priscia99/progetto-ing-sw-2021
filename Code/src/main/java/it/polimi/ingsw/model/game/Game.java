@@ -5,12 +5,13 @@ import it.polimi.ingsw.model.market.CardMarket;
 import it.polimi.ingsw.model.market.MarbleMarket;
 import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.model.turn_manager.TurnManager;
+import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Game {
+public class Game extends Observable<Game> {
 
     private final String id;
     private List<Player> players;
@@ -48,9 +49,13 @@ public class Game {
             playerIterator = players.listIterator();
         }
         turnManager.startTurn(playerIterator.next());
+
+        // FIXME
+        notify(this);
     }
 
     public boolean checkVictory() {
+        // TODO fill the function
         return false;
     }
 
@@ -60,6 +65,9 @@ public class Game {
         playerIterator = players.listIterator();
         //notify che dà a i giocatori i dati anche degli altri, e il loro ordine
         nextTurn();
+
+        // FIXME
+        notify(this);
     }
 
     public void setup() {
@@ -110,6 +118,9 @@ public class Game {
                 players.get(3).addFaithPoints(1);
             }
         }
+
+        // FIXME
+        notify(this);
     }
 
     private void setupMarbleMarket() {
