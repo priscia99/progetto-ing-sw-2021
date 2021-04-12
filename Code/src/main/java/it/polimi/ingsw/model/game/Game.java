@@ -57,8 +57,8 @@ public class Game {
     private void start() {
         Collections.shuffle(this.players);
         players.get(0).setIsFirst(true);
-        giveInitialResources();
         playerIterator = players.listIterator();
+        //notify che dà a i giocatori i dati anche degli altri, e il loro ordine
         nextTurn();
     }
 
@@ -68,6 +68,7 @@ public class Game {
         setupMarbleMarket();
         setupTurnManager();
         giveLeaderCardsToPlayers();
+        //player.forEach(player -> player.notify());
     }
 
     private void giveLeaderCardsToPlayers() {
@@ -78,7 +79,7 @@ public class Game {
             for(int i = 0; i<numberCardsToGive; i++){
                 cardsToGive.add(this.leaderCardsDeck.pop());
             }
-            player.receiveCardsToChoose(cardsToGive);
+            cardsToGive.forEach(c-> player.getPlayerBoard().getLeaderCardsDeck().addLeader(c));
         }
     }
 
