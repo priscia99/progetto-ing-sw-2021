@@ -6,7 +6,7 @@ import it.polimi.ingsw.observer.Observable;
 public class FaithPath extends Observable<Integer> {
 
     private final Cell[] cells;
-    private int position;
+    private int position; // TODO remove
     private int faithPoints;
 
     public FaithPath(Cell[] cells) {
