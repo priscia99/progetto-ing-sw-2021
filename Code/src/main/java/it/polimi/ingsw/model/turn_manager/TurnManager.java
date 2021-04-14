@@ -45,27 +45,27 @@ public class TurnManager {
                         selectedTurnAction == TurnActionType.START_PRODUCTION );
     }
 
-    public void executeBuyDevelopmentCard(Map<String, String> params){
+    public void executeBuyDevelopmentCard(Map<String, Object> params){
         BuyDevelopmentCardAction action = new BuyDevelopmentCardAction();
         action.execute(game, params);
     }
 
-    public void executeDropLeaderCard(Map<String, String> params){
+    public void executeDropLeaderCard(Map<String, Object> params){
         DropLeaderCardAction action = new DropLeaderCardAction();
         action.execute(game, params);
     }
 
-    public void executePlayLeaderCard(Map<String, String> params){
+    public void executePlayLeaderCard(Map<String, Object> params){
         PlayLeaderCardAction action = new PlayLeaderCardAction();
         action.execute(game, params);
     }
 
-    public void executePickResources(Map<String, String> params){
+    public void executePickResources(Map<String, Object> params){
         PickResourcesAction action = new PickResourcesAction();
         action.execute(game, params);
     }
 
-    public void executeStartProduction(Map<String, String> params){
+    public void executeStartProduction(Map<String, Object> params){
         StartProductionAction action = new StartProductionAction();
         action.execute(game, params);
     }

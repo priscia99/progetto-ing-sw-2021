@@ -53,10 +53,6 @@ public class Player {
         return nickname;
     }
 
-    public void dropLeaderCard(LeaderCard card){
-        this.playerBoard.removeFromLeaderCardsDeck(card);
-    }
-
     public void activateLeaderCard(LeaderCard card){
         playerBoard.getLeaderCardsDeck().getLeaderCards()
                 .get(playerBoard.getLeaderCardsDeck().getLeaderCards().indexOf(card))

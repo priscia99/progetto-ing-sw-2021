@@ -12,12 +12,10 @@ public class PlayLeaderCardAction extends TurnAction{
         this.turnActionType = TurnActionType.PLAY_LEADER_CARD;
     }
 
-    public void execute(Game currentGame, Map<String, String> params) {
-        super.execute(currentGame);
+    public void execute(Game currentGame, Map<String, Object> params) {
         //TODO: params{cardId} che indica la carta che deve attivate
-    }
-
-    private void onLeaderCardSelected(LeaderCard card){
-        currentPlayer.activateLeaderCard(card);
+        //TODO: implement cardId not card
+        LeaderCard card = (LeaderCard) params.get("cardId");
+        currentGame.getCurrentPlayer().activateLeaderCard(card);
     }
 }

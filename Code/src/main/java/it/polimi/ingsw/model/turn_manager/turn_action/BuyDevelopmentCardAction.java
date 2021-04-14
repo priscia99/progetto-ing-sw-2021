@@ -12,14 +12,12 @@ public class BuyDevelopmentCardAction extends TurnAction{
         this.turnActionType = TurnActionType.BUY_DEVELOPMENT_CARD;
     }
 
-    public void execute(Game currentGame, Map<String, String> params) {
-        super.execute(currentGame);
-        //TODO: params:{x,y} che indica la posizione della carta comprata
-
-    }
-
-    private void onDevelopmentCardSelected(DevelopmentCard card, int deckIndex){
-        //TODO: rimuovere la carta dal mercato
-        currentPlayer.getPlayerBoard().addDevelopmentCard(card, deckIndex);
+    public void execute(Game currentGame, Map<String, Object> params) {
+        //TODO: move params parsing in controller
+        int xPosition = (int) params.get("xPosition");
+        int yPosition = (int) params.get("yPosition");
+        int deckIndex = (int) params.get("deckIndex");
+        DevelopmentCard cardBought = currentGame.getCardMarket().sell(xPosition, yPosition, currentGame.getCurrentPlayer());
+        currentGame.getCurrentPlayer().getPlayerBoard().addDevelopmentCard(cardBought, deckIndex);
     }
 }

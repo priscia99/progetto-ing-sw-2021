@@ -17,7 +17,7 @@ public class Game extends Observable<Game> {
     private List<Player> players;
     private int currentPlayerIndex;
     private LeaderCardsDeck leaderCardsDeck;
-    private CardMarket cardMarket; // TODO implement the usage of cardMarket
+    private CardMarket cardMarket;
     private MarbleMarket marbleMarket;
     private TurnManager turnManager;
 
@@ -25,6 +25,10 @@ public class Game extends Observable<Game> {
         CustomLogger.getLogger().info("Creating Game");
         this.id = id;
         CustomLogger.getLogger().info("Game created");
+    }
+
+    public CardMarket getCardMarket() {
+        return cardMarket;
     }
 
     public List<Player> getPlayers() {

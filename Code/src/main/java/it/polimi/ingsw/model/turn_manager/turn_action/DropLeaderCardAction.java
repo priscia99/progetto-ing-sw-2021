@@ -12,15 +12,11 @@ public class DropLeaderCardAction extends TurnAction{
         this.turnActionType = TurnActionType.DROP_LEADER_CARD;
     }
 
-    public void execute(Game currentGame, Map<String, String> params) {
-        super.execute(currentGame);
-        //TODO: params:{cardId} che indica la carta che deve scartare
-        //ask for leader card to choose
-        //once selected drop it and add faith point
-    }
-
-    private void onLeaderCardSelected(LeaderCard card){
-        currentPlayer.dropLeaderCard(card);
-        currentPlayer.addFaithPoints(1);
+    public void execute(Game currentGame, Map<String, Object> params) {
+        //TODO: move params parsing in controller
+        //TODO: use cardId not card
+        LeaderCard cardToDrop = (LeaderCard) params.get("cardId");
+        currentGame.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().removeLeaderCardWithId(cardToDrop);
+        currentGame.getCurrentPlayer().addFaithPoints(1);
     }
 }
