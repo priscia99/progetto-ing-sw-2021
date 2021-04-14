@@ -16,7 +16,7 @@ public abstract class TurnAction {
         return turnActionType;
     }
 
-    public void execute(Player player, Game currentGame){
-        currentPlayer = player;
+    public void execute(Game currentGame){
+        currentPlayer = currentGame.getCurrentPlayer();
     };
 }

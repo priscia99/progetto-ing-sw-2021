@@ -25,20 +25,24 @@ public class Player {
     private final String id;
     private final PlayerBoard playerBoard;
     private boolean isFirst;
-    private List<? extends Card> cardsToChoose;
+    private int initialResourceToChoose;
 
     public Player(String nickname) {
         CustomLogger.getLogger().info("Creating player");
+        initialResourceToChoose = 0;
         this.nickname = nickname;
         this.id = UUID.randomUUID().toString();
         this.playerBoard = new PlayerBoard();
-        this.cardsToChoose = new ArrayList<>();
         CustomLogger.getLogger().info("Player created");
     }
 
-    public void receiveCardsToChoose(List<? extends Card> cards){
-        this.cardsToChoose = cards;
+    public void setInitialResourceToChoose(int value){
+        initialResourceToChoose = value;
     }
+
+    public void hasChosenInitialResource(){initialResourceToChoose--;}
+
+    public boolean hasToChooseInitialResource(){return initialResourceToChoose > 0;}
 
     public boolean getIsFirst() { return isFirst;}
     public void setIsFirst(boolean value) { isFirst = value;}
@@ -69,7 +73,7 @@ public class Player {
 
 
     public void pickedLeaderCards(List<LeaderCard> cards){
-        this.cardsToChoose.clear();
+        this.playerBoard.getLeaderCardsDeck().clear();
         this.playerBoard.addToLeaderCardsDeck(cards);
     }
 

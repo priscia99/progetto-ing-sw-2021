@@ -4,15 +4,17 @@ import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
 
+import java.util.Map;
+
 public class DropLeaderCardAction extends TurnAction{
 
     public DropLeaderCardAction() {
         this.turnActionType = TurnActionType.DROP_LEADER_CARD;
     }
 
-    @Override
-    public void execute(Player player, Game currentGame) {
-        super.execute(player, currentGame);
+    public void execute(Game currentGame, Map<String, String> params) {
+        super.execute(currentGame);
+        //TODO: params:{cardId} che indica la carta che deve scartare
         //ask for leader card to choose
         //once selected drop it and add faith point
     }

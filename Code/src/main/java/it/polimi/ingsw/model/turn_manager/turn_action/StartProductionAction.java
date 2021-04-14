@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.market.MarbleMarket;
 
 import java.util.List;
+import java.util.Map;
 
 public class StartProductionAction extends TurnAction{
 
@@ -13,10 +14,9 @@ public class StartProductionAction extends TurnAction{
         this.turnActionType = TurnActionType.START_PRODUCTION;
     }
 
-    @Override
-    public void execute(Player player, Game currentGame) {
-        super.execute(player, currentGame);
-        //select production to activate
+    public void execute(Game currentGame, Map<String, String> params) {
+        super.execute(currentGame);
+        //TODO: params{newWareHouse, newStrongBox, productionsToActivate}
     }
 
     private void onProductionsSelected(List<ProductionEffect> productionsSelected){

@@ -39,8 +39,11 @@ public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
 
     public void addLeader(LeaderCard leaderCard) {
         leaderCards.add(leaderCard);
-
         notify(this.leaderCards);
+    }
+
+    public void clear(){
+        leaderCards.clear();
     }
 
     public void removeLeaderCard(LeaderCard leaderCard) {

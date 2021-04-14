@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.market.MarbleMarket;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class PickResourcesAction extends TurnAction{
     private MarbleMarket marbleMarket;
@@ -16,11 +17,10 @@ public class PickResourcesAction extends TurnAction{
         this.turnActionType = TurnActionType.PICK_RESOURCES;
     }
 
-    @Override
-    public void execute(Player player, Game currentGame) {
-        super.execute(player, currentGame);
+    public void execute(Game currentGame, Map<String, String> params) {
+        super.execute(currentGame);
         marbleMarket = currentGame.getMarbleMarket();
-        //player has to pick resources
+        //TODO: params{MarbleSelection} che indica la seleziona fatta dall'utente
     }
 
     private void onMarblesSelected(MarbleSelection selection){

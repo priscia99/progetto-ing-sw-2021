@@ -1,17 +1,18 @@
 package it.polimi.ingsw.model.turn_manager;
 
 import it.polimi.ingsw.exceptions.InvalidActionException;
+import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.turn_manager.turn_action.*;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class TurnManager {
 
     private boolean mainActionDone;
-    private Player currentPlayer;
     private final Game game;
     private ArrayList<TurnAction> possibleActions;
 
@@ -28,48 +29,45 @@ public class TurnManager {
         this.mainActionDone = mainActionDone;
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
     public Game getGame() {
         return game;
     }
 
     public void startTurn(Player player) {
-        this.currentPlayer = player;
         this.mainActionDone = false;
-        CustomLogger.getLogger().info(String.format("%s has started the turn.", currentPlayer.getNickname()));
-        //notify per aggiornare il client, questo una volta ricevuto stampa "E' il tuo turno"|"E' il turno di X"
+        CustomLogger.getLogger().info(String.format("%s has started the turn.", game.getCurrentPlayer().getNickname()));
     }
 
-    private boolean checkActionIsInvalid(TurnActionType selectedTurnAction){
-        //TODO: calculate possibleActions
-        //TODO: check action is in possibleActions
+    public boolean isActionValid(TurnActionType selectedTurnAction){
         return  mainActionDone &&
                 (selectedTurnAction == TurnActionType.BUY_DEVELOPMENT_CARD ||
                         selectedTurnAction == TurnActionType.PICK_RESOURCES ||
                         selectedTurnAction == TurnActionType.START_PRODUCTION );
     }
 
-    //called by controller ( or controller itself )
-    public void playerPickedAction(TurnActionType selectedTurnAction) throws InvalidActionException {
-        TurnAction turnAction;
-        if(checkActionIsInvalid(selectedTurnAction)) throw new InvalidActionException();
-        switch(selectedTurnAction){
-            //TODO: params:{x,y} che indica la posizione della carta comprata
-            case BUY_DEVELOPMENT_CARD : turnAction = new BuyDevelopmentCardAction(); break;
-            //TODO: params:{cardId} che indica la carta che deve scartare
-            case DROP_LEADER_CARD : turnAction = new DropLeaderCardAction(); break;
-            //TODO: params{cardId} che indica la carta che deve attivate
-            case PLAY_LEADER_CARD: turnAction = new PlayLeaderCardAction(); break;
-            //TODO: params{MarbleSelection} che indica la seleziona fatta dall'utente
-            case PICK_RESOURCES : turnAction = new PickResourcesAction(); break;
-            //TODO: params{newWareHouse, newStrongBox, productionsToActivate}
-            case START_PRODUCTION: turnAction = new StartProductionAction(); break;
-            default: throw new InvalidActionException();
-            }
-            //notify interne, già all'interno mandano il messaggio di cosa è cambiato e come
-            turnAction.execute(currentPlayer, game);
+    public void executeBuyDevelopmentCard(Map<String, String> params){
+        BuyDevelopmentCardAction action = new BuyDevelopmentCardAction();
+        action.execute(game, params);
     }
+
+    public void executeDropLeaderCard(Map<String, String> params){
+        DropLeaderCardAction action = new DropLeaderCardAction();
+        action.execute(game, params);
+    }
+
+    public void executePlayLeaderCard(Map<String, String> params){
+        PlayLeaderCardAction action = new PlayLeaderCardAction();
+        action.execute(game, params);
+    }
+
+    public void executePickResources(Map<String, String> params){
+        PickResourcesAction action = new PickResourcesAction();
+        action.execute(game, params);
+    }
+
+    public void executeStartProduction(Map<String, String> params){
+        StartProductionAction action = new StartProductionAction();
+        action.execute(game, params);
+    }
+
 }
