@@ -12,7 +12,7 @@ public class TurnController {
     public TurnController(TurnManager turnManager){this.turnManager = turnManager;}
 
     public void playerPickedAction(TurnActionType selectedTurnAction, Map<String, Object> params) throws InvalidActionException {
-        if(turnManager.isActionValid(selectedTurnAction)) throw new InvalidActionException();
+        if(turnManager.isActionInvalid(selectedTurnAction)) throw new InvalidActionException();
         switch(selectedTurnAction){
             case BUY_DEVELOPMENT_CARD : turnManager.executeBuyDevelopmentCard(params); break;
             case DROP_LEADER_CARD : turnManager.executeDropLeaderCard(params); break;

@@ -21,14 +21,12 @@ public class DevelopmentCardsDeck extends Observable<ArrayList<DevelopmentCard>>
 
     public void addCard(DevelopmentCard developmentCard) throws IllegalArgumentException{
         if(getCardNumber() == 3) {
-            // This deck contains only up to 3 dev cards
             throw new IllegalArgumentException("This dev cards deck is full");
         }
         if((deck.size() == 0 && developmentCard.getLevel() !=1) || (getTopCard().getLevel() != developmentCard.getLevel()-1)) {
             throw new IllegalArgumentException("The development card level is not valid for this deck");
         }
         deck.add(developmentCard);
-
         notify(this.deck);
     }
 

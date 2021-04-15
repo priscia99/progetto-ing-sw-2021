@@ -20,10 +20,12 @@ public class Game extends Observable<Game> {
     private CardMarket cardMarket;
     private MarbleMarket marbleMarket;
     private TurnManager turnManager;
+    private boolean areWinConditionsMet;
 
     public Game(String id) {
         CustomLogger.getLogger().info("Creating Game");
         this.id = id;
+        this.areWinConditionsMet = false;
         CustomLogger.getLogger().info("Game created");
     }
 
@@ -39,10 +41,6 @@ public class Game extends Observable<Game> {
         return id;
     }
 
-    public LeaderCardsDeck getLeaderCardsDeck() {
-        return leaderCardsDeck;
-    }
-
     public MarbleMarket getMarbleMarket(){return marbleMarket;}
 
     public void nextTurn() {
@@ -54,9 +52,10 @@ public class Game extends Observable<Game> {
     }
 
 
-    public boolean checkVictory() {
-        // TODO fill the function
-        return false;
+    public void checkVictory() {
+        if(players.stream().map(player->player.meetsWinCondition()).collect(Collectors.toList()).size()>0){
+            areWinConditionsMet = true;
+        }
     }
 
     public void setFirstPlayer(){

@@ -15,6 +15,7 @@ import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -67,6 +68,18 @@ public class Player {
         this.nickname = nickname;
     }
 
+    public boolean meetsWinCondition(){
+        return (finishedFaithPath() || getTotalDevelopmentCard() > 6);
+    }
+
+    private boolean finishedFaithPath() {
+        return playerBoard.getFaithPath().getPosition() == playerBoard.getFaithPath().getCells().length;
+    }
+
+    private int getTotalDevelopmentCard(){
+        return Arrays.stream(playerBoard.getDevelopmentCardsDecks())
+                .mapToInt(DevelopmentCardsDeck::getCardNumber).sum();
+    }
 
     public void pickedLeaderCards(List<LeaderCard> cards){
         this.playerBoard.getLeaderCardsDeck().clear();
@@ -84,10 +97,6 @@ public class Player {
     public void addResourcesToStrongBox(ResourcePile resources){
         for(int i = 0; i < resources.getQuantity(); i++)
             playerBoard.getStrongbox().addResource(resources.getResourceType());
-    }
-
-    public void pickAction() {
-        // TODO: ?
     }
 
     // count in strongbox, then count in warehouse and sum all in result

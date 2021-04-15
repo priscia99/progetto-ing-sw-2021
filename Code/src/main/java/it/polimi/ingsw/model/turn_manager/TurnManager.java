@@ -38,7 +38,7 @@ public class TurnManager {
         CustomLogger.getLogger().info(String.format("%s has started the turn.", game.getCurrentPlayer().getNickname()));
     }
 
-    public boolean isActionValid(TurnActionType selectedTurnAction){
+    public boolean isActionInvalid(TurnActionType selectedTurnAction){
         return  mainActionDone &&
                 (selectedTurnAction == TurnActionType.BUY_DEVELOPMENT_CARD ||
                         selectedTurnAction == TurnActionType.PICK_RESOURCES ||
