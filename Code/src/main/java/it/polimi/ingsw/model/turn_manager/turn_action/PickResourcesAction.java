@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.marble.MarbleSelection;
 import it.polimi.ingsw.model.marble.Orientation;
 import it.polimi.ingsw.model.market.MarbleMarket;
 import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.model.turn_manager.action_params.PickResourcesParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,11 @@ public class PickResourcesAction extends TurnAction{
         this.turnActionType = TurnActionType.PICK_RESOURCES;
     }
 
-    public void execute(Game currentGame, Map<String, Object> params) {
+    public void execute(Game currentGame, PickResourcesParams params) {
         marbleMarket = currentGame.getMarbleMarket();
-        Orientation orientation = (Orientation) params.get("orientation");
-        int index = (int) params.get("index");
-        List<Integer> positionsSelected = (List<Integer>) params.get("positions");
+        Orientation orientation = params.getOrientation();
+        int index = params.getIndex();
+        ArrayList<Integer> positionsSelected = params.getPositions();
         MarbleSelection selectionOfUser = new MarbleSelection(orientation, index);
         ArrayList<Marble> selectedMarbles = marbleMarket.sell(selectionOfUser);
         for(int i = 0; i<selectedMarbles.size(); i++){

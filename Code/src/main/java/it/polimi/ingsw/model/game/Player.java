@@ -54,12 +54,6 @@ public class Player {
         return nickname;
     }
 
-    public void activateLeaderCard(LeaderCard card){
-        playerBoard.getLeaderCardsDeck().getLeaderCards()
-                .get(playerBoard.getLeaderCardsDeck().getLeaderCards().indexOf(card))
-                .play();
-    }
-
     public PlayerBoard getPlayerBoard() {
         return playerBoard;
     }
@@ -73,7 +67,7 @@ public class Player {
     }
 
     private boolean finishedFaithPath() {
-        return playerBoard.getFaithPath().getPosition() == playerBoard.getFaithPath().getCells().length;
+        return playerBoard.getFaithPath().getFaithPoints() == playerBoard.getFaithPath().getCells().length;
     }
 
     private int getTotalDevelopmentCard(){

@@ -46,11 +46,15 @@ public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
         leaderCards.clear();
     }
 
-    public void removeLeaderCardWithId(LeaderCard leaderCard) {
+    public void activateWithId(String cardId){
+        leaderCards.stream().filter(card->card.getId() == cardId).findFirst().get().play();
+    }
+
+    public void removeLeaderCardWithId(String cardId) {
         if(leaderCards.isEmpty()) {
             throw new EmptyDeckException("This player's leader cards deck is empty.");
         }
-        else if (!leaderCards.remove(leaderCard)) {
+        else if (!leaderCards.removeIf(card->card.getId()==cardId)) {
             throw new IllegalArgumentException("LeaderCard not present this player's deck");
         }
         notify(this.leaderCards);

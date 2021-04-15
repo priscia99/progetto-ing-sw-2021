@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.InvalidActionException;
 import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
+import it.polimi.ingsw.model.turn_manager.action_params.*;
 import it.polimi.ingsw.model.turn_manager.turn_action.*;
 import it.polimi.ingsw.utils.CustomLogger;
 
@@ -45,27 +46,27 @@ public class TurnManager {
                         selectedTurnAction == TurnActionType.START_PRODUCTION );
     }
 
-    public void executeBuyDevelopmentCard(Map<String, Object> params){
+    public void executeBuyDevelopmentCard(BuyDevelopmentCardParams params){
         BuyDevelopmentCardAction action = new BuyDevelopmentCardAction();
         action.execute(game, params);
     }
 
-    public void executeDropLeaderCard(Map<String, Object> params){
+    public void executeDropLeaderCard(DropLeaderCardParams params){
         DropLeaderCardAction action = new DropLeaderCardAction();
         action.execute(game, params);
     }
 
-    public void executePlayLeaderCard(Map<String, Object> params){
+    public void executePlayLeaderCard(PlayLeaderCardParams params){
         PlayLeaderCardAction action = new PlayLeaderCardAction();
         action.execute(game, params);
     }
 
-    public void executePickResources(Map<String, Object> params){
+    public void executePickResources(PickResourcesParams params){
         PickResourcesAction action = new PickResourcesAction();
         action.execute(game, params);
     }
 
-    public void executeStartProduction(Map<String, Object> params){
+    public void executeStartProduction(StartProductionParams params){
         StartProductionAction action = new StartProductionAction();
         action.execute(game, params);
     }
