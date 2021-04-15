@@ -39,20 +39,18 @@ public class Lobby {
      */
     public void createGame() {
         // FIXME develop join mechanic
-        final List<Player> players = new ArrayList<>();
-        players.add(new Player("Pippo"));
-        players.add(new Player("Banano"));
-        Game game = new Game(players);
+        Game game = new Game();
     }
 
     /**
-     * Add client
+     * Add a client to the lobby.
      * @param clientConnection client's connection to add.
      */
     public void addClientConnection(ClientConnection clientConnection) {
         this.clientConnections.add(clientConnection);
     }
 
+    /**
     public void removeClientConnection(ClientConnection clientConnection) {
         this.clientConnections.remove(clientConnection);
     }
