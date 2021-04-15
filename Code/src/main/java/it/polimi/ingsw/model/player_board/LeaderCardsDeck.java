@@ -12,7 +12,7 @@ public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
     private final ArrayList<LeaderCard> leaderCards;
 
     static public LeaderCardsDeck getStartingDeck(){
-        return new LeaderCardsDeck((ArrayList<LeaderCard>)LeaderCardsBuilder.getDeck());
+        return new LeaderCardsDeck(LeaderCardsBuilder.getDeck());
     }
 
     public LeaderCardsDeck(ArrayList<LeaderCard> leaderCards) {

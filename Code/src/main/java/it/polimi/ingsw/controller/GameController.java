@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.resource.ResourcePile;
 import it.polimi.ingsw.model.resource.ResourceType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
@@ -15,11 +16,11 @@ public class GameController {
         this.game = game;
     }
 
-    public void setupGame(List<Player> players){
+    public void setupGame(ArrayList<Player> players){
         game.setup(players);
     }
 
-    public void playerHasChosenLeaders(Player player, List<LeaderCard> leaderCards){
+    public void playerHasChosenLeaders(Player player, ArrayList<LeaderCard> leaderCards){
         game.getPlayers().get(game.getPlayers().indexOf(player)).pickedLeaderCards(leaderCards);
         if(game.allPlayersHaveStartingLeaderCards()) game.giveInitialResources();
     }

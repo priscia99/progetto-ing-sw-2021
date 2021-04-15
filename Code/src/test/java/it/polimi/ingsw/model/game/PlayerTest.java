@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.card.effect.DepotEffect;
 import it.polimi.ingsw.model.card.requirement.Requirement;
 import it.polimi.ingsw.model.player_board.storage.Depot;
 import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.testUtils.MockProvider;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -15,22 +16,6 @@ import java.util.List;
 
 public class PlayerTest {
     private Player player;
-
-
-
-    private LeaderCard getLeaderCardMock(){
-        return new LeaderCard(
-                false,
-                5,
-                new DepotEffect(ResourceType.COIN, new Depot(2)),
-                new Requirement() {
-                    @Override
-                    public boolean isFulfilled(Player player) {
-                        return false;
-                    }
-                }
-        );
-    }
 
     @BeforeEach
     public void setUp(){
@@ -41,7 +26,7 @@ public class PlayerTest {
     @DisplayName("Test picked leader cards")
     public void testPickedLeaderCards(){
         List<LeaderCard> pickedCards = new ArrayList<>();
-        LeaderCard cardToCheck = getLeaderCardMock();
+        LeaderCard cardToCheck = MockProvider.getLeaderCardMock();
         pickedCards.add(cardToCheck);
         player.pickedLeaderCards(pickedCards);
         Assertions.assertEquals(1, player.getPlayerBoard().getLeaderCardsDeck().getLeaderCards().size());
@@ -52,7 +37,7 @@ public class PlayerTest {
     @DisplayName("Test player has LeaderCards")
     public void testPlayerHasLeaderCards(){
         Assertions.assertFalse(player.hasLeaderCards());
-        LeaderCard cardToAdd = getLeaderCardMock();
+        LeaderCard cardToAdd = MockProvider.getLeaderCardMock();
         player.getPlayerBoard().getLeaderCardsDeck().addLeader(cardToAdd);
         Assertions.assertTrue(player.hasLeaderCards());
     }

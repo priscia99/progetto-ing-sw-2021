@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class Game extends Observable<Game> {
 
     private final String id;
-    private List<Player> players;
+    private ArrayList<Player> players;
     private int currentPlayerIndex;
     private LeaderCardsDeck leaderCardsDeck;
     private CardMarket cardMarket;
@@ -26,6 +26,7 @@ public class Game extends Observable<Game> {
         CustomLogger.getLogger().info("Creating Game");
         this.id = id;
         this.areWinConditionsMet = false;
+        this.currentPlayerIndex = 0;
         CustomLogger.getLogger().info("Game created");
     }
 
@@ -33,7 +34,7 @@ public class Game extends Observable<Game> {
         return cardMarket;
     }
 
-    public List<Player> getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
@@ -61,7 +62,6 @@ public class Game extends Observable<Game> {
     public void setFirstPlayer(){
         Collections.shuffle(this.players);
         players.get(0).setIsFirst(true);
-        currentPlayerIndex = 0;
     }
 
     public Player getCurrentPlayer(){return players.get(currentPlayerIndex);}
@@ -74,7 +74,7 @@ public class Game extends Observable<Game> {
         notify(this);
     }
 
-    public void setup(List<Player> players) {
+    public void setup(ArrayList<Player> players) {
         this.players = players;
         setupLeaderCards();
         setupCardsMarket();
