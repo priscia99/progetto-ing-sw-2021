@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 public class Game extends Observable<Game> {
 
-    private final String id;
     private final List<Player> players;
     private ListIterator<Player> playerIterator;
     private LeaderCardsDeck leaderCardsDeck;
@@ -21,9 +20,8 @@ public class Game extends Observable<Game> {
     private MarbleMarket marbleMarket;
     private TurnManager turnManager;
 
-    public Game(String id, List<Player> players) {
+    public Game(List<Player> players) {
         CustomLogger.getLogger().info("Creating Game");
-        this.id = id;
         this.players = players;
         this.setup();
         CustomLogger.getLogger().info("Game created");
@@ -32,10 +30,6 @@ public class Game extends Observable<Game> {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public LeaderCardsDeck getLeaderCardsDeck() {
