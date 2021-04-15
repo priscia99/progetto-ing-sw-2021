@@ -12,7 +12,7 @@ public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
     private final ArrayList<LeaderCard> leaderCards;
 
     static public LeaderCardsDeck getStartingDeck(){
-        return new LeaderCardsDeck((ArrayList<LeaderCard>)LeaderCardsBuilder.getDeck());
+        return new LeaderCardsDeck(LeaderCardsBuilder.getDeck());
     }
 
     public LeaderCardsDeck(ArrayList<LeaderCard> leaderCards) {
@@ -39,18 +39,24 @@ public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
 
     public void addLeader(LeaderCard leaderCard) {
         leaderCards.add(leaderCard);
-
         notify(this.leaderCards);
     }
 
-    public void removeLeaderCard(LeaderCard leaderCard) {
+    public void clear(){
+        leaderCards.clear();
+    }
+
+    public void activateWithId(String cardId){
+        leaderCards.stream().filter(card->card.getId() == cardId).findFirst().get().play();
+    }
+
+    public void removeLeaderCardWithId(String cardId) {
         if(leaderCards.isEmpty()) {
             throw new EmptyDeckException("This player's leader cards deck is empty.");
         }
-        else if (!leaderCards.remove(leaderCard)) {
+        else if (!leaderCards.removeIf(card->card.getId()==cardId)) {
             throw new IllegalArgumentException("LeaderCard not present this player's deck");
         }
-
         notify(this.leaderCards);
     }
 }

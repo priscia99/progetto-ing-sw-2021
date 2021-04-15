@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.turn_manager.turn_action;
 
 import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.game.Game;
-import it.polimi.ingsw.model.game.Player;
+import it.polimi.ingsw.model.turn_manager.action_params.BuyDevelopmentCardParams;
 
 public class BuyDevelopmentCardAction extends TurnAction{
 
@@ -10,14 +10,8 @@ public class BuyDevelopmentCardAction extends TurnAction{
         this.turnActionType = TurnActionType.BUY_DEVELOPMENT_CARD;
     }
 
-    @Override
-    public void execute(Player player, Game currentGame) {
-        super.execute(player, currentGame);
-        //player has to choose from cards
-    }
-
-    private void onDevelopmentCardSelected(DevelopmentCard card, int deckIndex){
-        //TODO: rimuovere la carta dal mercato
-        currentPlayer.getPlayerBoard().addDevelopmentCard(card, deckIndex);
+    public void execute(Game currentGame, BuyDevelopmentCardParams params){
+        DevelopmentCard cardBought = currentGame.getCardMarket().sell(params.getXPosition(), params.getYPosition(), currentGame.getCurrentPlayer());
+        currentGame.getCurrentPlayer().getPlayerBoard().addDevelopmentCard(cardBought, params.getDeckIndex());
     }
 }

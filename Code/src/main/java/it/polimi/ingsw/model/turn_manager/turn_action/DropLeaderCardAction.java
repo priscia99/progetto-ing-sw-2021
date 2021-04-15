@@ -3,6 +3,9 @@ package it.polimi.ingsw.model.turn_manager.turn_action;
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
+import it.polimi.ingsw.model.turn_manager.action_params.DropLeaderCardParams;
+
+import java.util.Map;
 
 public class DropLeaderCardAction extends TurnAction{
 
@@ -10,15 +13,8 @@ public class DropLeaderCardAction extends TurnAction{
         this.turnActionType = TurnActionType.DROP_LEADER_CARD;
     }
 
-    @Override
-    public void execute(Player player, Game currentGame) {
-        super.execute(player, currentGame);
-        //ask for leader card to choose
-        //once selected drop it and add faith point
-    }
-
-    private void onLeaderCardSelected(LeaderCard card){
-        currentPlayer.dropLeaderCard(card);
-        currentPlayer.addFaithPoints(1);
+    public void execute(Game currentGame, DropLeaderCardParams params) {
+        currentGame.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().removeLeaderCardWithId(params.getCardId());
+        currentGame.getCurrentPlayer().addFaithPoints(1);
     }
 }

@@ -15,6 +15,7 @@ import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -25,20 +26,24 @@ public class Player {
     private final String id;
     private final PlayerBoard playerBoard;
     private boolean isFirst;
-    private List<? extends Card> cardsToChoose;
+    private int initialResourceToChoose;
 
     public Player(String nickname) {
         CustomLogger.getLogger().info("Creating player");
+        initialResourceToChoose = 0;
         this.nickname = nickname;
         this.id = UUID.randomUUID().toString();
         this.playerBoard = new PlayerBoard();
-        this.cardsToChoose = new ArrayList<>();
         CustomLogger.getLogger().info("Player created");
     }
 
-    public void receiveCardsToChoose(List<? extends Card> cards){
-        this.cardsToChoose = cards;
+    public void setInitialResourceToChoose(int value){
+        initialResourceToChoose = value;
     }
+
+    public void hasChosenInitialResource(){initialResourceToChoose--;}
+
+    public boolean hasToChooseInitialResource(){return initialResourceToChoose > 0;}
 
     public boolean getIsFirst() { return isFirst;}
     public void setIsFirst(boolean value) { isFirst = value;}
@@ -49,16 +54,6 @@ public class Player {
         return nickname;
     }
 
-    public void dropLeaderCard(LeaderCard card){
-        this.playerBoard.removeFromLeaderCardsDeck(card);
-    }
-
-    public void activateLeaderCard(LeaderCard card){
-        playerBoard.getLeaderCardsDeck().getLeaderCards()
-                .get(playerBoard.getLeaderCardsDeck().getLeaderCards().indexOf(card))
-                .play();
-    }
-
     public PlayerBoard getPlayerBoard() {
         return playerBoard;
     }
@@ -67,9 +62,21 @@ public class Player {
         this.nickname = nickname;
     }
 
+    public boolean meetsWinCondition(){
+        return (finishedFaithPath() || getTotalDevelopmentCard() > 6);
+    }
+
+    private boolean finishedFaithPath() {
+        return playerBoard.getFaithPath().getFaithPoints() == playerBoard.getFaithPath().getCells().length;
+    }
+
+    private int getTotalDevelopmentCard(){
+        return Arrays.stream(playerBoard.getDevelopmentCardsDecks())
+                .mapToInt(DevelopmentCardsDeck::getCardNumber).sum();
+    }
 
     public void pickedLeaderCards(List<LeaderCard> cards){
-        this.cardsToChoose.clear();
+        this.playerBoard.getLeaderCardsDeck().clear();
         this.playerBoard.addToLeaderCardsDeck(cards);
     }
 
@@ -84,10 +91,6 @@ public class Player {
     public void addResourcesToStrongBox(ResourcePile resources){
         for(int i = 0; i < resources.getQuantity(); i++)
             playerBoard.getStrongbox().addResource(resources.getResourceType());
-    }
-
-    public void pickAction() {
-        // TODO: ?
     }
 
     // count in strongbox, then count in warehouse and sum all in result

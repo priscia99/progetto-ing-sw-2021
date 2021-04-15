@@ -4,8 +4,13 @@ import it.polimi.ingsw.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
 import it.polimi.ingsw.model.market.MarbleMarket;
+import it.polimi.ingsw.model.player_board.storage.Strongbox;
+import it.polimi.ingsw.model.player_board.storage.Warehouse;
+import it.polimi.ingsw.model.turn_manager.action_params.StartProductionParams;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class StartProductionAction extends TurnAction{
 
@@ -13,18 +18,14 @@ public class StartProductionAction extends TurnAction{
         this.turnActionType = TurnActionType.START_PRODUCTION;
     }
 
-    @Override
-    public void execute(Player player, Game currentGame) {
-        super.execute(player, currentGame);
-        //select production to activate
-    }
-
-    private void onProductionsSelected(List<ProductionEffect> productionsSelected){
-        currentPlayer.getPlayerBoard().getStrongbox().removeConsumedResources();
-        currentPlayer.getPlayerBoard().getWarehouse().removeConsumedResources();
+    public void execute(Game currentGame, StartProductionParams params) {
+        //TODO: implement storage subsitutions methods
+        Warehouse warehouse = params.getWarehouse();
+        Strongbox strongbox = params.getStrongbox();
+        ArrayList<ProductionEffect> productionsSelected = params.getProductionToActivate();
         for(ProductionEffect productionToActivate : productionsSelected){
             productionToActivate.getOutPiles().forEach(
-                    resourcePile -> currentPlayer.addResourcesToStrongBox(resourcePile)
+                    resourcePile -> currentGame.getCurrentPlayer().addResourcesToStrongBox(resourcePile)
             );
         }
     }

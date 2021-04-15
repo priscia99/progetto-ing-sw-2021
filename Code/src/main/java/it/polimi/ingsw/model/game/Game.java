@@ -13,64 +13,75 @@ import java.util.stream.Collectors;
 
 public class Game extends Observable<Game> {
 
-    private final List<Player> players;
-    private ListIterator<Player> playerIterator;
+    private final String id;
+    private ArrayList<Player> players;
+    private int currentPlayerIndex;
     private LeaderCardsDeck leaderCardsDeck;
-    private CardMarket cardMarket; // TODO implement the usage of cardMarket
+    private CardMarket cardMarket;
     private MarbleMarket marbleMarket;
     private TurnManager turnManager;
+    private boolean areWinConditionsMet;
 
-    public Game(List<Player> players) {
+    public Game(String id) {
         CustomLogger.getLogger().info("Creating Game");
-        this.players = players;
-        this.setup();
+        this.id = id;
+        this.areWinConditionsMet = false;
+        this.currentPlayerIndex = 0;
         CustomLogger.getLogger().info("Game created");
-        CustomLogger.getLogger().info("Waiting for all players to choose leader cards");
     }
 
-    public List<Player> getPlayers() {
+    public CardMarket getCardMarket() {
+        return cardMarket;
+    }
+
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public LeaderCardsDeck getLeaderCardsDeck() {
-        return leaderCardsDeck;
+    public String getId() {
+        return id;
     }
 
     public MarbleMarket getMarbleMarket(){return marbleMarket;}
 
-    private void nextTurn() {
-        if (!playerIterator.hasNext()) {
-            playerIterator = players.listIterator();
-        }
-        turnManager.startTurn(playerIterator.next());
-
+    public void nextTurn() {
+        currentPlayerIndex++;
+        currentPlayerIndex = currentPlayerIndex % players.size();
+        turnManager.startTurn(players.get(currentPlayerIndex));
         // FIXME
         notify(this);
     }
 
-    public boolean checkVictory() {
-        // TODO fill the function
-        return false;
+
+    public void checkVictory() {
+        if(players.stream().map(player->player.meetsWinCondition()).collect(Collectors.toList()).size()>0){
+            areWinConditionsMet = true;
+        }
     }
 
-    private void start() {
+    public void setFirstPlayer(){
         Collections.shuffle(this.players);
         players.get(0).setIsFirst(true);
-        playerIterator = players.listIterator();
-        //notify che dà a i giocatori i dati anche degli altri, e il loro ordine
-        nextTurn();
+    }
 
+    public Player getCurrentPlayer(){return players.get(currentPlayerIndex);}
+
+
+
+    public void start() {
+        nextTurn();
         // FIXME
         notify(this);
     }
 
-    public void setup() {
+    public void setup(ArrayList<Player> players) {
+        this.players = players;
         setupLeaderCards();
         setupCardsMarket();
         setupMarbleMarket();
         setupTurnManager();
         giveLeaderCardsToPlayers();
-        //player.forEach(player -> player.notify());
+        giveInitialResources();
     }
 
     private void giveLeaderCardsToPlayers() {
@@ -85,30 +96,27 @@ public class Game extends Observable<Game> {
         }
     }
 
-    //will be called by controller ( probably moved into controller )
-    public void playerHasChosenLeaderCards(String playerId, List<LeaderCard> leaderCards){
-        players.get(players.indexOf(playerId)).pickedLeaderCards(leaderCards);
-        if(allPlayersHaveLeaderCards()) start();
-    }
 
-
-    private boolean allPlayersHaveLeaderCards(){
+    public boolean allPlayersHaveStartingLeaderCards(){
         return !players.stream()
-                .map(Player::hasLeaderCards)
+                .map(player -> player.getPlayerBoard().getLeaderCardsDeck().getLeaderCards().size()==2)
                 .collect(Collectors.toList())
                 .contains(false);
     }
 
-    private void giveInitialResources() {
-        //players.get(1).askForResourceType();
-        //listenForResponses();
+    public boolean allPlayersHasChosedInitialResources(){
+        return !players.stream()
+                .map(player-> player.hasToChooseInitialResource())
+                .collect(Collectors.toList())
+                .contains(false);
+    }
 
+    public void giveInitialResources() {
         if(players.size()>2){
-            //players.get(2).askForResorceType();
+            players.get(2).setInitialResourceToChoose(1);
             players.get(2).addFaithPoints(1);
             if(players.size()>3){
-                //players.get(3).askForResorceType();
-                //players.get(3).askForResorceType();
+                players.get(3).setInitialResourceToChoose(2);
                 players.get(3).addFaithPoints(1);
             }
         }

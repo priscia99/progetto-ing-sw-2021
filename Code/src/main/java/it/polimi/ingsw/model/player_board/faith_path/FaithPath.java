@@ -6,12 +6,10 @@ import it.polimi.ingsw.observer.Observable;
 public class FaithPath extends Observable<Integer> {
 
     private final Cell[] cells;
-    private int position; // TODO remove
     private int faithPoints;
 
     public FaithPath(Cell[] cells) {
         this.cells = cells;
-        this.position = 0;
         this.faithPoints = 0;
     }
 
@@ -23,31 +21,13 @@ public class FaithPath extends Observable<Integer> {
         return cells;
     }
 
-    public int getPosition() {
-        return position;
-    }
-
     public int getFaithPoints() {
         return faithPoints;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
-
-        notify(this.position);
-    }
-
-    public void setFaithPoints(int faithPoints) {
-        this.faithPoints = faithPoints;
-
-        notify(this.position);
-    }
-
     public void goToNextCell() {
-        this.position++;
-        faithPoints += this.cells[this.position-1].reach();
-
-        notify(this.position);
+        faithPoints += this.cells[this.faithPoints-1].reach();
+        notify(this.faithPoints);
     }
 
     // TODO: This function needs to be called by an observer
@@ -64,7 +44,7 @@ public class FaithPath extends Observable<Integer> {
         PopeFavor favor = ((PopeCell) cells[index-1]).getFavor();
         if(!favor.isUsed()){
             // Favor was not triggered before
-            if (this.position >= favor.getFirstCellIndex()){
+            if (this.faithPoints >= favor.getFirstCellIndex()){
                 this.faithPoints += favor.getPoints();
             }
             favor.setUsed(true);
