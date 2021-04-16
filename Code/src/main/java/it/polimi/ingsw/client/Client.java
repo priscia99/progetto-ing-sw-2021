@@ -11,13 +11,12 @@ public class Client {
 
     private final String ip;
     private final int port;
+    private boolean active = true;
 
     public Client(String ip, int port){
         this.ip = ip;
         this.port = port;
     }
-
-    private boolean active = true;
 
     public synchronized boolean isActive(){
         return active;
@@ -27,6 +26,13 @@ public class Client {
         this.active = active;
     }
 
+    /**
+     * Read asynchronously messages from the socket until the client is active.
+     * @param socketIn socket from which read
+     * @return reading thread
+     * @throws IllegalArgumentException if the message format is unexpected
+     * @throws Exception if a generic exception happens shut down the server
+     */
     public Thread asyncReadFromSocket(final ObjectInputStream socketIn){
         Thread t = new Thread((Runnable) () -> {
                 try {
@@ -47,6 +53,13 @@ public class Client {
         return t;
     }
 
+    /**
+     * Write asynchronously a message in the socket.
+     * @param stdin input stream from which read
+     * @param socketOut output stream in which write
+     * @return writing thread
+     * @throws Exception if a generic exception happens shut down the server
+     */
     public Thread asyncWriteToSocket(final Scanner stdin, final PrintWriter socketOut){
         Thread t = new Thread((Runnable) () -> {
                 try {
@@ -63,6 +76,11 @@ public class Client {
         return t;
     }
 
+    /**
+     * Thread-like run function.
+     * @throws IOException
+     * @throws NoSuchElementException
+     */
     public void run() throws IOException {
         Socket socket = new Socket(ip, port);
         System.out.println("Connection established");

@@ -1,13 +1,11 @@
 package it.polimi.ingsw.model.game;
 
-import it.polimi.ingsw.model.card.Card;
 import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.DepotEffect;
 import it.polimi.ingsw.model.card.effect.EffectType;
 import it.polimi.ingsw.model.player_board.DevelopmentCardsDeck;
-import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.model.player_board.PlayerBoard;
 import it.polimi.ingsw.model.player_board.storage.Depot;
 import it.polimi.ingsw.model.resource.ResourcePile;
@@ -22,16 +20,16 @@ import java.util.stream.Collectors;
 
 public class Player {
 
-    private String nickname;
+    private String username;
     private final String id;
     private final PlayerBoard playerBoard;
     private boolean isFirst;
     private int initialResourceToChoose;
 
-    public Player(String nickname) {
+    public Player(String username) {
         CustomLogger.getLogger().info("Creating player");
         initialResourceToChoose = 0;
-        this.nickname = nickname;
+        this.username = username;
         this.id = UUID.randomUUID().toString();
         this.playerBoard = new PlayerBoard();
         CustomLogger.getLogger().info("Player created");
@@ -51,7 +49,7 @@ public class Player {
     public String getId(){ return id;}
 
     public String getNickname() {
-        return nickname;
+        return username;
     }
 
     public PlayerBoard getPlayerBoard() {
@@ -59,7 +57,7 @@ public class Player {
     }
 
     public void setNickname(String nickname) {
-        this.nickname = nickname;
+        this.username = nickname;
     }
 
     public boolean meetsWinCondition(){

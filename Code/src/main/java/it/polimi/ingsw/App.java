@@ -17,6 +17,6 @@ public class App
         final List<Player> players = new ArrayList<>();
         players.add(new Player("Pippo"));
         players.add(new Player("Banano"));
-        Game game = new Game(gameId, players);
+        Game game = new Game();
     }
 }
