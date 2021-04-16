@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Stack;
 
 public class FaithPathBuilder {
-    private static final int PATH_DIM = 24;
+    private static final int PATH_DIM = 25;
     private static final String file_path = "assets/faith_path.json";
     private static Cell[] path = null;
 
