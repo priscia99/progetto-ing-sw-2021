@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private static final int PORT = 8888;
+    private static final int PORT = 12345;
     private final ServerSocket serverSocket;
     private final ExecutorService executor = Executors.newFixedThreadPool(128);
     private final Map<String, Lobby> lobbyMap = new HashMap<>();
@@ -33,6 +33,7 @@ public class Server {
         Lobby tempLobby = new Lobby(dimension);
         tempLobby.addClientConnection(username, clientConnection);
         lobbyMap.put(lobbyId, tempLobby);
+        clientConnection.asyncSend(String.format("Joined lobby %s", lobbyId));
 
         this.startLobbyIsFull(tempLobby);
     }
@@ -48,6 +49,7 @@ public class Server {
         if (lobbyMap.containsKey(lobbyId)) {
             Lobby currLobby = lobbyMap.get(lobbyId);
             currLobby.addClientConnection(username, clientConnection);
+            clientConnection.asyncSend(String.format("Joined lobby %s", lobbyId));
             this.startLobbyIsFull(currLobby);
         }
         else {

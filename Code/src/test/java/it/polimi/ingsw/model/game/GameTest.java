@@ -16,7 +16,7 @@ public class GameTest {
 
     @BeforeEach
     public void setUp(){
-        game = new Game(UUID.randomUUID().toString());
+        game = new Game();
         game.setup(MockProvider.getMockPlayers());
     }
 

@@ -80,19 +80,19 @@ public class SocketClientConnection extends Observable<String> implements Client
             out = new ObjectOutputStream(socket.getOutputStream());
 
             // FIXME: call view (temporary)
-            this.send("Welcome!\n");  // read username and lobby id from the client
+            this.send("Welcome!");  // read username and lobby id from the client
             this.send("Enter a username: ");
             String inBuffer = in.nextLine();
             username = inBuffer;
-            this.send("\nDo you want to create a new lobby? [Y/N] \n");
+            this.send("Do you want to create a new lobby? [Y/N]");
             inBuffer = in.nextLine();
             if (inBuffer.equalsIgnoreCase("y")) {
-                this.send("\nSpecify the dimension of the lobby: [4 max] \n");
+                this.send("Specify the dimension of the lobby: [4 max]");
                 inBuffer = in.nextLine();
                 int dimension = Integer.parseInt(inBuffer);
                 server.lobby(dimension, username, this);   // add this client connection to the server
             } else if (inBuffer.equalsIgnoreCase("n")) {
-                this.send("\nDo you want to join a lobby? [Y/N] \n");
+                this.send("Enter a lobby id: ");
                 inBuffer = in.nextLine();
                 lobbyId = inBuffer;
                 server.lobby(lobbyId, username, this);   // add this client connection to the server
