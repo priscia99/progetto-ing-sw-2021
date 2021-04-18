@@ -3,13 +3,37 @@ package it.polimi.ingsw.model.player_board;
 import it.polimi.ingsw.data.LeaderCardsBuilder;
 import it.polimi.ingsw.exceptions.EmptyDeckException;
 import it.polimi.ingsw.model.card.LeaderCard;
+import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
 import it.polimi.ingsw.observer.Observable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
+public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> implements LocallyCopyable<LeaderCardsDeck.LeaderCardsDeckLocalCopy> {
 
     private final ArrayList<LeaderCard> leaderCards;
+
+    public static class LeaderCardsDeckLocalCopy {
+
+        private final ArrayList<LeaderCard.LeaderCardLocalCopy> leaderCardLocalCopies;
+
+        public LeaderCardsDeckLocalCopy(ArrayList<LeaderCard.LeaderCardLocalCopy> leaderCardLocalCopies) {
+            this.leaderCardLocalCopies = leaderCardLocalCopies;
+        }
+
+        public ArrayList<LeaderCard.LeaderCardLocalCopy> getLeaderCardLocalCopies() {
+            return leaderCardLocalCopies;
+        }
+
+        // TODO add functions
+    }
+
+    @Override
+    public LeaderCardsDeckLocalCopy getLocalCopy() {
+        return new LeaderCardsDeckLocalCopy(
+                this.leaderCards.stream().map(LeaderCard::getLocalCopy).collect(Collectors.toCollection(ArrayList::new))
+        );
+    }
 
     static public LeaderCardsDeck getStartingDeck(){
         return new LeaderCardsDeck(LeaderCardsBuilder.getDeck());

@@ -1,15 +1,39 @@
 package it.polimi.ingsw.model.player_board;
 
 import it.polimi.ingsw.model.card.DevelopmentCard;
+import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
 import it.polimi.ingsw.observer.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
-public class DevelopmentCardsDeck extends Observable<ArrayList<DevelopmentCard>> {
+public class DevelopmentCardsDeck extends Observable<ArrayList<DevelopmentCard>> implements LocallyCopyable<DevelopmentCardsDeck.DevelopmentCardsDeckLocalCopy> {
 
     private final ArrayList<DevelopmentCard> deck;
+
+    public static class DevelopmentCardsDeckLocalCopy {
+
+        private final ArrayList<DevelopmentCard.DevelopmentCardLocalCopy> cardLocalCopies;
+
+        public DevelopmentCardsDeckLocalCopy(ArrayList<DevelopmentCard.DevelopmentCardLocalCopy> cardLocalCopies) {
+            this.cardLocalCopies = cardLocalCopies;
+        }
+
+        public ArrayList<DevelopmentCard.DevelopmentCardLocalCopy> getCardLocalCopies() {
+            return cardLocalCopies;
+        }
+
+        // TODO add functions (maybe also in other local copies)
+    }
+
+    @Override
+    public DevelopmentCardsDeckLocalCopy getLocalCopy() {
+        return new DevelopmentCardsDeckLocalCopy(
+                this.deck.stream().map(DevelopmentCard::getLocalCopy).collect(Collectors.toCollection(ArrayList::new))
+        );
+    }
 
     public DevelopmentCardsDeck(ArrayList<DevelopmentCard> deck) {
         this.deck = deck;
