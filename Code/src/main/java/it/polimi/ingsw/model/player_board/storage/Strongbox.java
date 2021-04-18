@@ -1,17 +1,46 @@
 package it.polimi.ingsw.model.player_board.storage;
 
-import it.polimi.ingsw.exceptions.EmptyDepotException;
+import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
 import it.polimi.ingsw.model.resource.ConsumableResource;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
-public class Strongbox extends Storage{
+public class Strongbox extends Storage implements LocallyCopyable<Strongbox.StrongboxLocalCopy> {
 
     public Strongbox() {
         super();
+    }
+
+    public static class StrongboxLocalCopy {
+
+        private final ArrayList<ConsumableResource> consumableResources;
+
+        public StrongboxLocalCopy(ArrayList<ConsumableResource> consumableResources) {
+            this.consumableResources = consumableResources;
+        }
+
+        public ArrayList<ConsumableResource> getConsumableResources() {
+            return consumableResources;
+        }
+
+        public int getQuantityByType(ResourceType resourceType) {
+            return (int) this.consumableResources
+                    .stream()
+                    .filter(consumableResource -> consumableResource.getResourceType().equals(resourceType))
+                    .count();
+        }
+
+        public boolean contains(ResourceType resourceType) {
+            return this.consumableResources
+                    .stream()
+                    .anyMatch(consumableResource -> consumableResource.getResourceType().equals(resourceType));
+        }
+    }
+
+    @Override
+    public StrongboxLocalCopy getLocalCopy() {
+        return new StrongboxLocalCopy(this.consumableResources);
     }
 
     @Override

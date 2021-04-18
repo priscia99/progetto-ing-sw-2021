@@ -3,15 +3,51 @@ package it.polimi.ingsw.model.player_board.storage;
 import it.polimi.ingsw.exceptions.EmptyDepotException;
 import it.polimi.ingsw.exceptions.FullDepotException;
 import it.polimi.ingsw.exceptions.IllegalResourceException;
+import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
 import it.polimi.ingsw.model.resource.ConsumableResource;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Depot extends Storage{
+public class Depot extends Storage implements LocallyCopyable<Depot.DepotLocalCopy> {
 
-    private int capacity;
+    private final int capacity;
+
+    // inner class for local copy (simple copy for clients)
+    public static class DepotLocalCopy {
+
+        private final int capacity;
+        private final ArrayList<ConsumableResource> consumableResources;
+
+        public DepotLocalCopy(int capacity, ArrayList<ConsumableResource> consumableResources) {
+            this.capacity = capacity;
+            this.consumableResources = consumableResources;
+        }
+
+        public int getOccupiedSpace() {
+            return consumableResources.size();
+        }
+
+        public int getCapacity() {
+            return capacity;
+        }
+
+        public ArrayList<ConsumableResource> getConsumableResources() {
+            return consumableResources;
+        }
+
+        public boolean contains(ResourceType resourceType) {
+            return this.consumableResources
+                    .stream()
+                    .anyMatch(consumableResource -> consumableResource.getResourceType().equals(resourceType));
+        }
+    }
+
+    @Override
+    public DepotLocalCopy getLocalCopy() {
+        return new DepotLocalCopy(this.capacity, this.consumableResources);
+    }
 
     public Depot(int capacity) {
         super();

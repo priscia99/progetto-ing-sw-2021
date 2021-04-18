@@ -20,6 +20,8 @@ public class PlayerBoard {
     private  Warehouse warehouse;
     private  Strongbox strongbox;
 
+    // TODO add local copy
+
     public PlayerBoard() {
         this.strongbox = new Strongbox();
         this.warehouse = new Warehouse();

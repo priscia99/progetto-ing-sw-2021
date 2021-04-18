@@ -21,4 +21,10 @@ public class ConsumableResource {
     public void setToConsume(boolean toConsume) {
         this.toConsume = toConsume;
     }
+
+    public ConsumableResource copy() {
+        ConsumableResource result = new ConsumableResource(this.resourceType);
+        result.setToConsume(this.toConsume);
+        return result;
+    }
 }

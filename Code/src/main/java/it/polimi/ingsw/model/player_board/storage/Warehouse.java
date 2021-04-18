@@ -3,14 +3,52 @@ package it.polimi.ingsw.model.player_board.storage;
 import it.polimi.ingsw.exceptions.EmptyDepotException;
 import it.polimi.ingsw.exceptions.FullDepotException;
 import it.polimi.ingsw.exceptions.IllegalResourceException;
+import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.observer.Observable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
-public class Warehouse {
+public class Warehouse implements LocallyCopyable<Warehouse.WarehouseLocalCopy> {
 
-    private Depot[] depots;
+    private final Depot[] depots;
+
+    // inner class for local copy (simple copy for clients)
+    public static class WarehouseLocalCopy {
+
+        private final ArrayList<Depot.DepotLocalCopy> depots;
+
+        public WarehouseLocalCopy(ArrayList<Depot.DepotLocalCopy> depots) {
+            this.depots = depots;
+        }
+
+        public Depot.DepotLocalCopy getDepot(int index) {
+            return depots.get(index);
+        }
+
+        public boolean contains(ResourceType resourceType) {
+            for (Depot.DepotLocalCopy depot: depots) {
+                if (depot.getConsumableResources()
+                        .stream()
+                        .anyMatch(consumableResource -> consumableResource.getResourceType().equals(resourceType))
+                ) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    @Override
+    public WarehouseLocalCopy getLocalCopy() {
+        return new WarehouseLocalCopy(
+                Arrays.stream(this.depots)
+                        .map(Depot::getLocalCopy)
+                        .collect(Collectors.toCollection(ArrayList::new))
+        );
+    }
 
     public Warehouse() {
         this.depots = new Depot[3];
