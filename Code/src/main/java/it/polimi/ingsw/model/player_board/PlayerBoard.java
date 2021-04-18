@@ -3,24 +3,68 @@ package it.polimi.ingsw.model.player_board;
 import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
 import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.model.resource.ResourceType;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
-public class PlayerBoard {
+public class PlayerBoard implements LocallyCopyable<PlayerBoard.PlayerBoardLocalCopy> {
 
-    private  FaithPath faithPath;
-    private  ProductionEffect basicProduction;
-    private  DevelopmentCardsDeck[] developmentCardsDecks;
-    private  LeaderCardsDeck leaderCardsDeck;
-    private  Warehouse warehouse;
-    private  Strongbox strongbox;
+    private final FaithPath faithPath;
+    private final ProductionEffect basicProduction;
+    private final DevelopmentCardsDeck[] developmentCardsDecks;
+    private final LeaderCardsDeck leaderCardsDeck;
+    private final Warehouse warehouse;
+    private final Strongbox strongbox;
 
-    // TODO add local copy
+        public static class PlayerBoardLocalCopy {
+
+        private final int faithPoints;
+        private final ArrayList<DevelopmentCardsDeck.DevelopmentCardsDeckLocalCopy> developmentCardsDeckLocalCopies;
+        private final LeaderCardsDeck.LeaderCardsDeckLocalCopy leaderCardsDeckLocalCopy;
+        private final Warehouse.WarehouseLocalCopy warehouseLocalCopy;
+        private final Strongbox.StrongboxLocalCopy strongboxLocalCopy;
+
+        public PlayerBoardLocalCopy(int faithPoints,
+                                    ArrayList<DevelopmentCardsDeck.DevelopmentCardsDeckLocalCopy> developmentCardsDeckLocalCopies,
+                                    LeaderCardsDeck.LeaderCardsDeckLocalCopy leaderCardsDeckLocalCopy,
+                                    Warehouse.WarehouseLocalCopy warehouseLocalCopy,
+                                    Strongbox.StrongboxLocalCopy strongboxLocalCopy)
+        {
+            this.faithPoints = faithPoints;
+            this.developmentCardsDeckLocalCopies = developmentCardsDeckLocalCopies;
+            this.leaderCardsDeckLocalCopy = leaderCardsDeckLocalCopy;
+            this.warehouseLocalCopy = warehouseLocalCopy;
+            this.strongboxLocalCopy = strongboxLocalCopy;
+        }
+
+            public int getFaithPoints() {
+                return faithPoints;
+            }
+
+            // TODO implement facade methods
+
+    }
+
+    @Override
+    public PlayerBoardLocalCopy getLocalCopy() {
+        return new PlayerBoardLocalCopy(
+                this.faithPath.getFaithPoints(),
+                Arrays.stream(this.developmentCardsDecks)
+                        .map(DevelopmentCardsDeck::getLocalCopy)
+                        .collect(Collectors.toCollection(ArrayList::new)),
+                this.leaderCardsDeck.getLocalCopy(),
+                this.warehouse.getLocalCopy(),
+                this.strongbox.getLocalCopy()
+        );
+    }
 
     public PlayerBoard() {
         this.strongbox = new Strongbox();
