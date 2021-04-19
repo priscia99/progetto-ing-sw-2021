@@ -12,12 +12,12 @@ import java.util.List;
 
 public class Depot extends Storage implements LocallyCopyable<Depot.DepotLocalCopy> {
 
-    private final int capacity;
+    private int capacity;
 
     // inner class for local copy (simple copy for clients)
     public static class DepotLocalCopy {
 
-        private final int capacity;
+        private int capacity;
         private final ArrayList<ConsumableResource> consumableResources;
 
         public DepotLocalCopy(int capacity, ArrayList<ConsumableResource> consumableResources) {
@@ -51,6 +51,10 @@ public class Depot extends Storage implements LocallyCopyable<Depot.DepotLocalCo
 
     public Depot(int capacity) {
         super();
+        this.capacity = capacity;
+    }
+
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 

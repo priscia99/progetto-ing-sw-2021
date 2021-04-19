@@ -57,6 +57,28 @@ public class Warehouse implements LocallyCopyable<Warehouse.WarehouseLocalCopy> 
         this.depots[2] = new Depot(3);
     }
 
+    /**
+     * Swap depots position in Warehouse and assign them new capacity based on the new position.
+     * @param index1 index of the first depot (new index for the second depot)
+     * @param index2 index of the second depot (new index for the first depot)
+     * @throws IllegalArgumentException if indexes are not in [0;2]
+     */
+    public void swapDepot(int index1, int index2) {
+        if(index1 < 0 || index1 > 2) {
+            throw new IllegalArgumentException("Indexes must be in [0;2]");
+        }
+        if(index2 < 0 || index2 > 2) {
+            throw new IllegalArgumentException("Indexes must be in [0;2]");
+        }
+
+        Depot tempDepot = this.depots[index1];
+        this.depots[index1] = this.depots[index2];
+        this.depots[index2] = tempDepot;
+
+        this.depots[index1].setCapacity(index1+1);
+        this.depots[index2].setCapacity(index2+1);
+    }
+
     public Depot[] getDepots() {
         return depots;
     }
