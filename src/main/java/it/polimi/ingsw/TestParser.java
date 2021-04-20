@@ -67,7 +67,7 @@ public class TestParser
             System.out.print("\n");
         }
         System.out.println("Not for sale marble: " + anotherNotForSale.getResourceType().name());
-
+        System.out.println("----------------------------------------------------------------------");
         // HOW TO GET A STACK OF DEV CARDS GIVEN LEVEL AND COLOR
         Stack<DevelopmentCard> deck = DevCardMarketBuilder.getStackByLevelColor(1, Color.GREEN);    // Call the builder
         while(deck.size() > 0)

@@ -23,7 +23,7 @@ public class CardMarket {
 
         Stack[][] decks = new Stack[4][3];
         for (int column = 0; column<4; column++) {
-            for (int lv = 0; lv<3; lv++) {
+            for (int lv = 1; lv<=3; lv++) {
                 Color color;
                 switch (column) {
                     case 0:

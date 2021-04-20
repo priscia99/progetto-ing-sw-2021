@@ -105,8 +105,8 @@ public class SocketClientConnection extends Observable<String> implements Client
                 inBuffer = in.nextLine();
                 notify(inBuffer);
             }
-        } catch (IOException e) {
-            System.err.println("Error!" + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally { // when the connection die close it
             close();
         }
