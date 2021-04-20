@@ -96,9 +96,14 @@ public class Server {
     }
 
     private String generateRandomString() {
-        byte[] array = new byte[7]; // length is bounded by 7
-        new Random().nextBytes(array);
-        return new String(array, StandardCharsets.UTF_8);
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789";
+        StringBuilder sb = new StringBuilder(7);
+        for (int i = 0; i<7; i++) {
+            int index =(int)(AlphaNumericString.length() * Math.random());
+            sb.append(AlphaNumericString.charAt(index));
+        }
+        return sb.toString();
     }
 
     /**
