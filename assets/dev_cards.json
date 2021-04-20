@@ -665,6 +665,37 @@
 		]
 	},
 	{
+		"victory_points" : 6,
+		"color" : "YELLOW",
+		"level" : 2,
+		"requirements" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 3
+			},
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 2
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 3
+			}
+		]
+	},
+	{
 		"victory_points" : 7,
 		"color" : "GREEN",
 		"level" : 2,
@@ -893,6 +924,502 @@
 			{
 				"resource_type" : "FAITH",
 				"quantity" : 1
+			}
+		]
+	},
+	{
+		"victory_points" : 9,
+		"color" : "GREEN",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 6
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 2
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 3
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 2
+			}
+		]
+	},
+	{
+		"victory_points" : 9,
+		"color" : "PURPLE",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 6
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 2
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 3
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 2
+			}
+		]
+	},
+	{
+		"victory_points" : 9,
+		"color" : "BLUE",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 6
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 2
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 3
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 2
+			}
+		]
+	},
+	{
+		"victory_points" : 9,
+		"color" : "YELLOW",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 6
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 2
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 3
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 2
+			}
+		]
+	},
+	{
+		"victory_points" : 10,
+		"color" : "GREEN",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 5
+			},
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 2
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 2
+			},
+			{
+				"resource_type" : "STONE",
+				"quantity" : 2
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 1
+			}
+		]
+	},
+	{
+		"victory_points" : 10,
+		"color" : "PURPLE",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 5
+			},
+			{
+				"resource_type" : "COIN",
+				"quantity" : 2
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 2
+			},
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 2
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 1
+			}
+		]
+	},
+	{
+		"victory_points" : 10,
+		"color" : "BLUE",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 5
+			},
+			{
+				"resource_type" : "STONE",
+				"quantity" : 2
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 2
+			},
+			{
+				"resource_type" : "STONE",
+				"quantity" : 2
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 1
+			}
+		]
+	},
+	{
+		"victory_points" : 10,
+		"color" : "YELLOW",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 5
+			},
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 2
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 2
+			},
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 2
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 1
+			}
+		]
+	},
+	{
+		"victory_points" : 11,
+		"color" : "GREEN",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 7
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 3
+			}
+		]
+	},
+	{
+		"victory_points" : 11,
+		"color" : "PURPLE",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 7
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 3
+			}
+		]
+	},
+	{
+		"victory_points" : 11,
+		"color" : "BLUE",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 7
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 3
+			}
+		]
+	},
+	{
+		"victory_points" : 11,
+		"color" : "YELLOW",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 7
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "FAITH",
+				"quantity" : 3
+			}
+		]
+	},
+	{
+		"victory_points" : 12,
+		"color" : "GREEN",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 4
+			},
+			{
+				"resource_type" : "COIN",
+				"quantity" : 4
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 3
+			},
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 1
+			}
+		]
+	},
+	{
+		"victory_points" : 12,
+		"color" : "PURPLE",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 4
+			},
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 4
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 3
+			},
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 1
+			}
+		]
+	},
+	{
+		"victory_points" : 12,
+		"color" : "BLUE",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 4
+			},
+			{
+				"resource_type" : "STONE",
+				"quantity" : 4
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "COIN",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 3
+			}
+		]
+	},
+	{
+		"victory_points" : 12,
+		"color" : "YELLOW",
+		"level" : 3,
+		"requirements" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 4
+			},
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 4
+			}
+		],
+		"input_pile" : [
+			{
+				"resource_type" : "SHIELD",
+				"quantity" : 1
+			}
+		],
+		"output_pile" : [
+			{
+				"resource_type" : "STONE",
+				"quantity" : 1
+			},
+			{
+				"resource_type" : "SERVANT",
+				"quantity" : 3
 			}
 		]
 	}

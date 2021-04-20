@@ -41,7 +41,7 @@ public class CardMarket {
                     default:
                         throw new IllegalArgumentException("column must be in [0;3]");
                 }
-                decks[column][lv] = DevCardMarketBuilder.getStackByLevelColor(lv, color);
+                decks[column][lv-1] = DevCardMarketBuilder.getStackByLevelColor(lv, color);
           }
          }
         return new CardMarket(decks);
