@@ -7,17 +7,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Extension of Effect to specify productions.
+ */
 public class ProductionEffect extends Effect{
 
     private final ArrayList<ResourcePile> inPiles;
     private final ArrayList<ResourcePile> outPiles;
 
+    /**
+     * Create a ProductionEffect object.
+     * @param inPiles the piles of resources consumed by the production
+     * @param outPiles the piles of resources returned by the production
+     */
     public ProductionEffect(ArrayList<ResourcePile> inPiles, ArrayList<ResourcePile> outPiles) {
         this.effectType = EffectType.PRODUCTION;
         this.inPiles = inPiles;
         this.outPiles = outPiles;
     }
 
+    /**
+     *
+     * @return a basic production effect that takes two resources of your choice and returns one resource of
+     * your choice (only consumable resources)
+     */
     static public ProductionEffect getBasicProduction() {
         ArrayList<ResourcePile> inResources = new ArrayList<>(Arrays.asList(
                 new ResourcePile(1, ResourceType.GENERIC),
@@ -26,10 +39,18 @@ public class ProductionEffect extends Effect{
         return new ProductionEffect(inResources, outResources);
     }
 
+    /**
+     *
+     * @return the input piles of resources
+     */
     public List<ResourcePile> getInPiles() {
         return inPiles;
     }
 
+    /**
+     *
+     * @return the output piles of resoruces
+     */
     public List<ResourcePile> getOutPiles() {
         return outPiles;
     }

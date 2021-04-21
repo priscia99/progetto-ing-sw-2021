@@ -79,7 +79,7 @@ public class Player {
     }
 
     public boolean hasLeaderCards(){
-        return playerBoard.leaderCardsArePresent();
+        return playerBoard.isThereAnyLeaderCard();
     }
 
     public void addResourceToDepot(ResourceType resourceType, int depotIndex){

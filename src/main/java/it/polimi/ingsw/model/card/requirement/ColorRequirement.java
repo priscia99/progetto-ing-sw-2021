@@ -5,14 +5,25 @@ import it.polimi.ingsw.model.game.Player;
 
 import java.util.ArrayList;
 
+/**
+ * Extension of Requirement to specify the requirement of specific card color.
+ */
 public class ColorRequirement extends Requirement{
 
     private final ArrayList<ColorPile> colorPiles;
 
+    /**
+     * Create a ColorRequirement object with a given set of colors.
+     * @param colorPiles the list of required colors and their quantities
+     */
     public ColorRequirement(ArrayList<ColorPile> colorPiles) {
         this.colorPiles = colorPiles;
     }
 
+    /**
+     *
+     * @return the required color piles.
+     */
     public ArrayList<ColorPile> getColorPiles() {
         return colorPiles;
     }

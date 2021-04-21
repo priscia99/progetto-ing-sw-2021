@@ -19,7 +19,6 @@ public class MockProvider {
 
     static public LeaderCard getLeaderCardMock(){
         return new LeaderCard(
-                false,
                 5,
                 new DepotEffect(ResourceType.COIN, new Depot(2)),
                 new Requirement() {

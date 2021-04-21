@@ -15,6 +15,10 @@ import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
+/**
+ * Class that models the player board. It instantiate a faith path, storages and slots for cards. It take count of the
+ * player statistics such as victory points.
+ */
 public class PlayerBoard {
 
     private final FaithPath faithPath;
@@ -24,6 +28,9 @@ public class PlayerBoard {
     private final Warehouse warehouse;
     private final Strongbox strongbox;
 
+    /**
+     * Create an empty PlayerBoard object.
+     */
     public PlayerBoard() {
         this.strongbox = new Strongbox();
         this.warehouse = new Warehouse();
@@ -33,59 +40,107 @@ public class PlayerBoard {
         this.faithPath = FaithPath.getStandardFaithPath();
     }
 
+    /**
+     *
+     * @return the faith path object.
+     */
     public FaithPath getFaithPath() {
         return faithPath;
     }
 
+    /**
+     *
+     * @return the basic production effect of the player board (2 generic resources, for 1 generic resource)
+     */
     public ProductionEffect getBasicProduction() {
         return basicProduction;
     }
 
+    /**
+     *
+     * @return return the decks of development cards.
+     */
     public DevelopmentCardsDeck[] getDevelopmentCardsDecks() {
         return developmentCardsDecks;
     }
 
+    /**
+     *
+     * @return return the decks of leader cards.
+     */
     public LeaderCardsDeck getLeaderCardsDeck() {
         return leaderCardsDeck;
     }
 
+    /**
+     *
+     * @return return the warehouse that contains the depots of resources.
+     */
     public Warehouse getWarehouse() { return warehouse; }
 
+    /**
+     *
+     * @return the strongbox of resources.
+     */
     public Strongbox getStrongbox() {
         return strongbox;
     }
 
+    /**
+     * Add a new leader card to the deck of leader cards.
+     * @param leadersToAdd the new leader card object to add.
+     */
     public void addToLeaderCardsDeck(List<LeaderCard> leadersToAdd){
         for(LeaderCard card : leadersToAdd){
             this.leaderCardsDeck.addLeader(card);
         }
     }
 
-    public boolean leaderCardsArePresent(){
+    /**
+     * Test if there is any leader card.
+     * @return true if there is at least a leader card in the deck, false if not.
+     */
+    public boolean isThereAnyLeaderCard(){
         return this.leaderCardsDeck.getLeaderCards().size() > 0;
     }
 
-    public void addToDepot(int depot, ResourceType resourceType) {
-        warehouse.addToDepot(depot, resourceType);
+    /**
+     * Add one resource of a consumable kind to a specific depot.
+     * @param depotIndex the index of the target depot
+     * @param resourceType the type of the resource to add
+     */
+    public void addToDepot(int depotIndex, ResourceType resourceType) {
+        warehouse.addToDepot(depotIndex, resourceType);
     }
 
-    public void removeFromDepot(int depot) {
-        warehouse.removeFromDepot(depot);
+    /**
+     * Clear a depot.
+     * @param depotIndex the index of the depot to clear
+     */
+    public void removeFromDepot(int depotIndex) {
+        warehouse.removeFromDepot(depotIndex);
     }
 
-    public void addDevelopmentCard(DevelopmentCard card, int deck) throws IllegalArgumentException{
-        // Controllo dell'indice deck ricevuto in ingresso
-        if(deck<0 || deck>2) throw new IllegalArgumentException("Invalid deck number");
+    /**
+     * Add a new development card to the development cards deck.
+     * @param card the new development card to add
+     * @param deckIndex the target deck index
+     * @throws IllegalArgumentException
+     */
+    public void addDevelopmentCard(DevelopmentCard card, int deckIndex) throws IllegalArgumentException{
+        if(deckIndex<0 || deckIndex>2) throw new IllegalArgumentException("Invalid deck number");
         try{
-            // I controlli dello specifico deck sono rilegati alla funzione interna di DevelopmentCardDeck
-            developmentCardsDecks[deck].addCard(card);
+            developmentCardsDecks[deckIndex].addCard(card);
         }catch(Exception e){
             e.printStackTrace();
         }
     }
 
+    /**
+     * Add a number of faith points to the the faith path.
+     * @param points the quantity of points to add
+     */
     public void addFaithPoints(int points){
-        // TODO check victory
         for(int i=0; i<points; i++){
             faithPath.goToNextCell();
         }

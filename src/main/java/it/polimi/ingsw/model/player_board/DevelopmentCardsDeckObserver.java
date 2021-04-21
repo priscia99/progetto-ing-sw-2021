@@ -5,6 +5,9 @@ import it.polimi.ingsw.observer.Observer;
 
 import java.util.ArrayList;
 
+/**
+ * Observer to monitor leader cards deck. It refer to the socket connections (clients) and the model.
+ */
 public class DevelopmentCardsDeckObserver implements Observer<ArrayList<DevelopmentCard>> {
 
     private DevelopmentCardsDeck observed;

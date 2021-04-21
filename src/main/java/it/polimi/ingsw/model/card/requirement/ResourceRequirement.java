@@ -6,14 +6,25 @@ import it.polimi.ingsw.model.resource.ResourcePile;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Extension of Requirement to specify the requirement of specific quantities of determined resources.
+ */
 public class ResourceRequirement extends Requirement{
 
     private final List<ResourcePile> resourcePiles;
 
+    /**
+     * Create a ResourceRequirement object with a given list of resource piles.
+     * @param resourcePiles the list of wanted resource piles (type and quantities)
+     */
     public ResourceRequirement(List<ResourcePile> resourcePiles) {
         this.resourcePiles = resourcePiles;
     }
 
+    /**
+     *
+     * @return return the list of resource piles.
+     */
     public List<ResourcePile> getResourcePiles() {
         return resourcePiles;
     }
