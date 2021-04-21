@@ -6,41 +6,10 @@ import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;
 
-public class Strongbox extends Storage implements LocallyCopyable<Strongbox.StrongboxLocalCopy> {
+public class Strongbox extends Storage {
 
     public Strongbox() {
         super();
-    }
-
-    public static class StrongboxLocalCopy {
-
-        private final ArrayList<ConsumableResource> consumableResources;
-
-        public StrongboxLocalCopy(ArrayList<ConsumableResource> consumableResources) {
-            this.consumableResources = consumableResources;
-        }
-
-        public ArrayList<ConsumableResource> getConsumableResources() {
-            return consumableResources;
-        }
-
-        public int getQuantityByType(ResourceType resourceType) {
-            return (int) this.consumableResources
-                    .stream()
-                    .filter(consumableResource -> consumableResource.getResourceType().equals(resourceType))
-                    .count();
-        }
-
-        public boolean contains(ResourceType resourceType) {
-            return this.consumableResources
-                    .stream()
-                    .anyMatch(consumableResource -> consumableResource.getResourceType().equals(resourceType));
-        }
-    }
-
-    @Override
-    public StrongboxLocalCopy getLocalCopy() {
-        return new StrongboxLocalCopy(this.consumableResources);
     }
 
     @Override

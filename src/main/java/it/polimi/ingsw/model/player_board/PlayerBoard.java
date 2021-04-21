@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class PlayerBoard implements LocallyCopyable<PlayerBoard.PlayerBoardLocalCopy> {
+public class PlayerBoard {
 
     private final FaithPath faithPath;
     private final ProductionEffect basicProduction;
@@ -23,48 +23,6 @@ public class PlayerBoard implements LocallyCopyable<PlayerBoard.PlayerBoardLocal
     private final LeaderCardsDeck leaderCardsDeck;
     private final Warehouse warehouse;
     private final Strongbox strongbox;
-
-        public static class PlayerBoardLocalCopy {
-
-        private final int faithPoints;
-        private final ArrayList<DevelopmentCardsDeck.DevelopmentCardsDeckLocalCopy> developmentCardsDeckLocalCopies;
-        private final LeaderCardsDeck.LeaderCardsDeckLocalCopy leaderCardsDeckLocalCopy;
-        private final Warehouse.WarehouseLocalCopy warehouseLocalCopy;
-        private final Strongbox.StrongboxLocalCopy strongboxLocalCopy;
-
-        public PlayerBoardLocalCopy(int faithPoints,
-                                    ArrayList<DevelopmentCardsDeck.DevelopmentCardsDeckLocalCopy> developmentCardsDeckLocalCopies,
-                                    LeaderCardsDeck.LeaderCardsDeckLocalCopy leaderCardsDeckLocalCopy,
-                                    Warehouse.WarehouseLocalCopy warehouseLocalCopy,
-                                    Strongbox.StrongboxLocalCopy strongboxLocalCopy)
-        {
-            this.faithPoints = faithPoints;
-            this.developmentCardsDeckLocalCopies = developmentCardsDeckLocalCopies;
-            this.leaderCardsDeckLocalCopy = leaderCardsDeckLocalCopy;
-            this.warehouseLocalCopy = warehouseLocalCopy;
-            this.strongboxLocalCopy = strongboxLocalCopy;
-        }
-
-            public int getFaithPoints() {
-                return faithPoints;
-            }
-
-            // TODO implement facade methods
-
-    }
-
-    @Override
-    public PlayerBoardLocalCopy getLocalCopy() {
-        return new PlayerBoardLocalCopy(
-                this.faithPath.getFaithPoints(),
-                Arrays.stream(this.developmentCardsDecks)
-                        .map(DevelopmentCardsDeck::getLocalCopy)
-                        .collect(Collectors.toCollection(ArrayList::new)),
-                this.leaderCardsDeck.getLocalCopy(),
-                this.warehouse.getLocalCopy(),
-                this.strongbox.getLocalCopy()
-        );
-    }
 
     public PlayerBoard() {
         this.strongbox = new Strongbox();

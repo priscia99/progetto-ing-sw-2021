@@ -9,31 +9,9 @@ import it.polimi.ingsw.observer.Observable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> implements LocallyCopyable<LeaderCardsDeck.LeaderCardsDeckLocalCopy> {
+public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
 
     private final ArrayList<LeaderCard> leaderCards;
-
-    public static class LeaderCardsDeckLocalCopy {
-
-        private final ArrayList<LeaderCard.LeaderCardLocalCopy> leaderCardLocalCopies;
-
-        public LeaderCardsDeckLocalCopy(ArrayList<LeaderCard.LeaderCardLocalCopy> leaderCardLocalCopies) {
-            this.leaderCardLocalCopies = leaderCardLocalCopies;
-        }
-
-        public ArrayList<LeaderCard.LeaderCardLocalCopy> getLeaderCardLocalCopies() {
-            return leaderCardLocalCopies;
-        }
-
-        // TODO add functions
-    }
-
-    @Override
-    public LeaderCardsDeckLocalCopy getLocalCopy() {
-        return new LeaderCardsDeckLocalCopy(
-                this.leaderCards.stream().map(LeaderCard::getLocalCopy).collect(Collectors.toCollection(ArrayList::new))
-        );
-    }
 
     static public LeaderCardsDeck getStartingDeck(){
         return new LeaderCardsDeck(LeaderCardsBuilder.getDeck());
