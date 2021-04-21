@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.Effect;
 import it.polimi.ingsw.model.card.requirement.Requirement;
 
-public class ClientDevelopmentCard extends ClientCard{
+public class ClientDevelopmentCard extends ClientCard implements Viewable{
 
     private final Color color;
 
@@ -15,5 +15,11 @@ public class ClientDevelopmentCard extends ClientCard{
 
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public String getAssetLink() {
+        // FIXME: complete me
+        return null;
     }
 }
