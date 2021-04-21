@@ -19,7 +19,7 @@ public class ClientLeaderCard extends ClientCard implements Viewable {
 
     @Override
     public String getAssetLink() {
-        // FIXME: complete me
+        // FIXME: complete
         return null;
     }
 }
