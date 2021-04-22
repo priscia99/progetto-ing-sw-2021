@@ -1,16 +1,18 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.model.resource.ResourceDepot;
+
 import java.util.ArrayList;
 
 public class ClientWarehouse {
 
-    private final ArrayList<ResourcePile> resourcePiles;
+    private final ArrayList<ResourceDepot> resourceDepots;
 
-    public ClientWarehouse(ArrayList<ResourcePile> resourcePiles) {
-        this.resourcePiles = resourcePiles;
+    public ClientWarehouse(ArrayList<ResourceDepot> resourcePiles) {
+        this.resourceDepots = resourcePiles;
     }
 
-    public ResourcePile getResourcePile(int index) {
-        return resourcePiles.get(index);
+    public ResourceDepot getResourcePile(int index) {
+        return resourceDepots.get(index);
     }
 }
