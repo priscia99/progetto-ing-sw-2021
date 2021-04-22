@@ -8,14 +8,12 @@ import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.*;
 import it.polimi.ingsw.model.card.requirement.ResourceRequirement;
-import it.polimi.ingsw.model.resource.ResourcePile;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
 
 import java.util.Objects;
 

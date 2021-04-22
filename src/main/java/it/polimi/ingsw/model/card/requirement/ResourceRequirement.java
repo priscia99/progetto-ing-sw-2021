@@ -1,37 +1,36 @@
 package it.polimi.ingsw.model.card.requirement;
 
 import it.polimi.ingsw.model.game.Player;
-import it.polimi.ingsw.model.resource.ResourcePile;
+import it.polimi.ingsw.model.resource.ResourceStock;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Extension of Requirement to specify the requirement of specific quantities of determined resources.
  */
 public class ResourceRequirement extends Requirement{
 
-    private final List<ResourcePile> resourcePiles;
+    private final List<ResourceStock> resourceStocks;
 
     /**
      * Create a ResourceRequirement object with a given list of resource piles.
-     * @param resourcePiles the list of wanted resource piles (type and quantities)
+     * @param resourceStocks the list of wanted resource piles (type and quantities)
      */
-    public ResourceRequirement(List<ResourcePile> resourcePiles) {
-        this.resourcePiles = resourcePiles;
+    public ResourceRequirement(List<ResourceStock> resourceStocks) {
+        this.resourceStocks = resourceStocks;
     }
 
     /**
      *
      * @return return the list of resource piles.
      */
-    public List<ResourcePile> getResourcePiles() {
-        return resourcePiles;
+    public List<ResourceStock> getResourceStocks() {
+        return resourceStocks;
     }
 
     @Override
     public boolean isFulfilled(Player player) {
-         return this.resourcePiles
+         return this.resourceStocks
                  .stream()
                  .allMatch(resourcePile ->
                          player.countByResource(resourcePile.getResourceType()) == resourcePile.getQuantity());
@@ -41,7 +40,7 @@ public class ResourceRequirement extends Requirement{
     public String toString(){
         StringBuilder buffer = new StringBuilder();
         buffer.append("Requirement type: RESOURCES\n");
-        for(ResourcePile pile : resourcePiles){
+        for(ResourceStock pile : resourceStocks){
             buffer.append("\tType: ").append(pile.getResourceType().name());
             buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
         }

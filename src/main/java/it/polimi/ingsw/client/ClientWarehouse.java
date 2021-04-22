@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.model.resource.ResourcePile;
-
 import java.util.ArrayList;
 
 public class ClientWarehouse {

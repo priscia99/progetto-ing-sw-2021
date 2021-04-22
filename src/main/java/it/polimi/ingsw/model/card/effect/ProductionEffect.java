@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model.card.effect;
 
-import it.polimi.ingsw.model.resource.ResourcePile;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,18 +13,18 @@ import java.util.List;
  */
 public class ProductionEffect extends Effect{
 
-    private final ArrayList<ResourcePile> inPiles;
-    private final ArrayList<ResourcePile> outPiles;
+    private final ArrayList<ResourceStock> inStocks;
+    private final ArrayList<ResourceStock> outStocks;
 
     /**
      * Create a ProductionEffect object.
-     * @param inPiles the piles of resources consumed by the production
-     * @param outPiles the piles of resources returned by the production
+     * @param inStocks the piles of resources consumed by the production
+     * @param outStocks the piles of resources returned by the production
      */
-    public ProductionEffect(ArrayList<ResourcePile> inPiles, ArrayList<ResourcePile> outPiles) {
+    public ProductionEffect(ArrayList<ResourceStock> inStocks, ArrayList<ResourceStock> outStocks) {
         this.effectType = EffectType.PRODUCTION;
-        this.inPiles = inPiles;
-        this.outPiles = outPiles;
+        this.inStocks = inStocks;
+        this.outStocks = outStocks;
     }
 
     /**
@@ -32,10 +33,10 @@ public class ProductionEffect extends Effect{
      * your choice (only consumable resources)
      */
     static public ProductionEffect getBasicProduction() {
-        ArrayList<ResourcePile> inResources = new ArrayList<>(Arrays.asList(
-                new ResourcePile(1, ResourceType.GENERIC),
-                new ResourcePile(1, ResourceType.GENERIC)));
-        ArrayList<ResourcePile> outResources = new ArrayList<>(Arrays.asList(new ResourcePile(1, ResourceType.GENERIC)));
+        ArrayList<ResourceStock> inResources = new ArrayList<>(Arrays.asList(
+                new ResourceStock(ResourceType.GENERIC, 1),
+                new ResourceStock(ResourceType.GENERIC, 1)));
+        ArrayList<ResourceStock> outResources = new ArrayList<>(Collections.singletonList(new ResourceStock(ResourceType.GENERIC, 1)));
         return new ProductionEffect(inResources, outResources);
     }
 
@@ -43,16 +44,16 @@ public class ProductionEffect extends Effect{
      *
      * @return the input piles of resources
      */
-    public List<ResourcePile> getInPiles() {
-        return inPiles;
+    public List<ResourceStock> getInStocks() {
+        return inStocks;
     }
 
     /**
      *
      * @return the output piles of resoruces
      */
-    public List<ResourcePile> getOutPiles() {
-        return outPiles;
+    public List<ResourceStock> getOutStocks() {
+        return outStocks;
     }
 
     @Override
@@ -65,12 +66,12 @@ public class ProductionEffect extends Effect{
         StringBuilder buffer = new StringBuilder();
         buffer.append("Effect type: PRODUCTION\n");
         buffer.append("\tRequired resources: \n");
-        for(ResourcePile pile : inPiles){
+        for(ResourceStock pile : inStocks){
             buffer.append("\t\tType: ").append(pile.getResourceType().name());
             buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
         }
         buffer.append("\tOutput resources: \n");
-        for(ResourcePile pile : outPiles){
+        for(ResourceStock pile : outStocks){
             buffer.append("\t\tType: ").append(pile.getResourceType().name());
             buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
         }

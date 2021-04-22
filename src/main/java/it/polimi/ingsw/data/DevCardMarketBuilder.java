@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.model.card.requirement.ResourceRequirement;
-import it.polimi.ingsw.model.resource.ResourcePile;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.io.FileReader;

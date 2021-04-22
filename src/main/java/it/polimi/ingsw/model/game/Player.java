@@ -7,8 +7,8 @@ import it.polimi.ingsw.model.card.effect.DepotEffect;
 import it.polimi.ingsw.model.card.effect.EffectType;
 import it.polimi.ingsw.model.player_board.DevelopmentCardsDeck;
 import it.polimi.ingsw.model.player_board.PlayerBoard;
-import it.polimi.ingsw.model.player_board.storage.Depot;
-import it.polimi.ingsw.model.resource.ResourcePile;
+import it.polimi.ingsw.model.resource.ResourceDepot;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
@@ -86,46 +86,14 @@ public class Player {
         playerBoard.getWarehouse().addToDepot(depotIndex, resourceType);
     }
 
-    public void addResourcesToStrongBox(ResourcePile resources){
+    public void addResourcesToStrongBox(ResourceStock resources){
         for(int i = 0; i < resources.getQuantity(); i++)
             playerBoard.getStrongbox().addResource(resources.getResourceType());
     }
 
     // count in strongbox, then count in warehouse and sum all in result
     public int countByResource(ResourceType resourceType) {
-        int result = 0;
-
-        result += this.playerBoard.getStrongbox().getConsumableResources()
-                .stream()
-                .filter(consumableResource -> consumableResource.getResourceType().equals(resourceType))
-                .count();
-
-        for (Depot depot : this.playerBoard.getWarehouse().getDepots()) {
-            if (depot.getResourceType().equals(resourceType)) {
-                result += depot.getConsumableResources().size();
-            }
-        }
-
-        result += this.playerBoard.getLeaderCardsDeck().getLeaderCards()
-                .stream()
-                .filter(LeaderCard::isActive)
-                .filter(leaderCard -> leaderCard.getEffect().getEffectType().equals(EffectType.DEPOT))
-                .map(leaderCard -> {
-                    int tempCount = 0;
-                    if (leaderCard.getEffect() instanceof DepotEffect) {
-                        DepotEffect effect = (DepotEffect) leaderCard.getEffect();
-                        Depot depot = effect.getDepot();
-                        tempCount = depot.getConsumableResources().size();
-                    }
-                    else {
-                        throw new IllegalArgumentException("leaderCard.getEffect() is not instance of DepotEffect");
-                    }
-                    return tempCount;
-                })
-                .mapToInt(Integer::intValue)
-                .sum();
-
-        return result;
+        return this.playerBoard.countByResourceType(resourceType);
     }
 
     // count in developmentCardsDecks where cards' color is equal to the given color

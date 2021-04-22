@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.player_board;
 
 import it.polimi.ingsw.model.card.DevelopmentCard;
-import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
 import it.polimi.ingsw.observer.Observable;
 
 import java.util.ArrayList;

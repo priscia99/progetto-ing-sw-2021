@@ -2,15 +2,11 @@ package it.polimi.ingsw.model.turn_manager.turn_action;
 
 import it.polimi.ingsw.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.model.game.Game;
-import it.polimi.ingsw.model.game.Player;
-import it.polimi.ingsw.model.market.MarbleMarket;
 import it.polimi.ingsw.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.model.turn_manager.action_params.StartProductionParams;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class StartProductionAction extends TurnAction{
 
@@ -24,7 +20,7 @@ public class StartProductionAction extends TurnAction{
         Strongbox strongbox = params.getStrongbox();
         ArrayList<ProductionEffect> productionsSelected = params.getProductionToActivate();
         for(ProductionEffect productionToActivate : productionsSelected){
-            productionToActivate.getOutPiles().forEach(
+            productionToActivate.getOutStocks().forEach(
                     resourcePile -> currentGame.getCurrentPlayer().addResourcesToStrongBox(resourcePile)
             );
         }

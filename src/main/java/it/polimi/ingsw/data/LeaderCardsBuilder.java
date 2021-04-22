@@ -14,8 +14,8 @@ import it.polimi.ingsw.model.card.requirement.ColorRequirement;
 import it.polimi.ingsw.model.card.requirement.LevelRequirement;
 import it.polimi.ingsw.model.card.requirement.Requirement;
 import it.polimi.ingsw.model.card.requirement.ResourceRequirement;
-import it.polimi.ingsw.model.player_board.storage.Depot;
-import it.polimi.ingsw.model.resource.ResourcePile;
+import it.polimi.ingsw.model.resource.ResourceDepot;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
@@ -66,16 +66,16 @@ public class LeaderCardsBuilder{
                     }
                     case "RESOURCE": {
                         JsonArray contentArray = reqObject.get("content").getAsJsonArray();
-                        ArrayList<ResourcePile> resourcePiles = new ArrayList<>();
+                        ArrayList<ResourceStock> resourceStocks = new ArrayList<>();
 
                         for (int contentIterator = 0; contentIterator < contentArray.size(); contentIterator++) {
                             JsonObject contentObject = contentArray.get(contentIterator).getAsJsonObject();
-                            resourcePiles.add(new ResourcePile(
-                                    contentObject.get("quantity").getAsInt(),
-                                    ResourceType.valueOf(contentObject.get("resource_type").getAsString())
+                            resourceStocks.add(new ResourceStock(
+                                    ResourceType.valueOf(contentObject.get("resource_type").getAsString()),
+                                    contentObject.get("quantity").getAsInt()
                             ));
                         }
-                        requirement = new ResourceRequirement(resourcePiles);
+                        requirement = new ResourceRequirement(resourceStocks);
                         break;
                     }
                     default:
@@ -87,22 +87,22 @@ public class LeaderCardsBuilder{
                     case "PRODUCTION":
                         JsonArray inputPiles = effObject.get("input_piles").getAsJsonArray();
                         JsonArray outputPiles = effObject.get("output_piles").getAsJsonArray();
-                        ArrayList<ResourcePile> input = new ArrayList<>();
-                        ArrayList<ResourcePile> output = new ArrayList<>();
+                        ArrayList<ResourceStock> input = new ArrayList<>();
+                        ArrayList<ResourceStock> output = new ArrayList<>();
 
                         for (int pileIterator = 0; pileIterator < inputPiles.size(); pileIterator++) {
                             JsonObject pileObject = inputPiles.get(pileIterator).getAsJsonObject();
-                            input.add(new ResourcePile(
-                                    pileObject.get("resource_quantity").getAsInt(),
-                                    ResourceType.valueOf(pileObject.get("resource_type").getAsString())
+                            input.add(new ResourceStock(
+                                    ResourceType.valueOf(pileObject.get("resource_type").getAsString()),
+                                    pileObject.get("resource_quantity").getAsInt()
                             ));
                         }
 
                         for (int pileIterator = 0; pileIterator < outputPiles.size(); pileIterator++) {
                             JsonObject pileObject = outputPiles.get(pileIterator).getAsJsonObject();
-                            output.add(new ResourcePile(
-                                    pileObject.get("resource_quantity").getAsInt(),
-                                    ResourceType.valueOf(pileObject.get("resource_type").getAsString())
+                            output.add(new ResourceStock(
+                                    ResourceType.valueOf(pileObject.get("resource_type").getAsString()),
+                                    pileObject.get("resource_quantity").getAsInt()
                             ));
                         }
                         effect = new ProductionEffect(input, output);
@@ -112,8 +112,7 @@ public class LeaderCardsBuilder{
                         break;
                     case "DEPOT":
                         effect = new DepotEffect(
-                                ResourceType.valueOf(effObject.get("depot_type").getAsString()),
-                                new Depot(2));
+                                ResourceType.valueOf(effObject.get("depot_type").getAsString()));
                         break;
                     case "DISCOUNT":
                         effect = new DiscountEffect(ResourceType.valueOf(effObject.get("discount_type").getAsString()));
@@ -124,7 +123,6 @@ public class LeaderCardsBuilder{
                 }
 
                 leaderCardList.add(new LeaderCard(
-                        false,
                         tempObject.get("victory_points").getAsInt(),
                         effect,
                         requirement

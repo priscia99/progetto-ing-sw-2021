@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.card.effect;
 
-import it.polimi.ingsw.model.player_board.storage.Depot;
+import it.polimi.ingsw.model.resource.ResourceDepot;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 /**
@@ -8,18 +8,15 @@ import it.polimi.ingsw.model.resource.ResourceType;
  */
 public class DepotEffect extends Effect{
 
-    private final ResourceType resourceType;
-    private final Depot depot;
+    private final ResourceDepot resourceDepot;
 
     /**
      * Create a DepotEffect object.
      * @param resourceType the specific type of resource accepted
-     * @param depot the depot to store the resources in
      */
-    public DepotEffect( ResourceType resourceType, Depot depot) {
+    public DepotEffect( ResourceType resourceType) {
         this.effectType = EffectType.DEPOT;
-        this.resourceType = resourceType;
-        this.depot = depot;
+        this.resourceDepot = new ResourceDepot(resourceType, 2);
     }
 
     /**
@@ -27,15 +24,15 @@ public class DepotEffect extends Effect{
      * @return the type of accepted resources
      */
     public ResourceType getResourceType() {
-        return resourceType;
+        return this.resourceDepot.getResourceType();
     }
 
     /**
      *
      * @return the depot in which resources are stored
      */
-    public Depot getDepot() {
-        return depot;
+    public ResourceDepot getDepot() {
+        return this.resourceDepot;
     }
 
     @Override
@@ -45,6 +42,6 @@ public class DepotEffect extends Effect{
 
     public String toString(){
         return "Effect type: ADDITIONARY DEPOT \n" +
-                "\tCreate a 2-resources capacity depot containing " + resourceType.name() + "S";
+                "\tCreate a 2-resources capacity depot containing " + this.getResourceType().name() + "S";
     }
 }

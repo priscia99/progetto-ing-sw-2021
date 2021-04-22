@@ -3,15 +3,11 @@ package it.polimi.ingsw.model.game;
 import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.color.Color;
-import it.polimi.ingsw.model.card.effect.DepotEffect;
-import it.polimi.ingsw.model.card.requirement.Requirement;
-import it.polimi.ingsw.model.player_board.storage.Depot;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.testUtils.MockProvider;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PlayerTest {

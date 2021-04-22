@@ -1,34 +1,28 @@
 package it.polimi.ingsw.model.player_board.storage;
 
-import it.polimi.ingsw.model.resource.ConsumableResource;
+import it.polimi.ingsw.model.resource.ResourceDepot;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.observer.Observable;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Storage extends Observable<ArrayList<ConsumableResource>> {
+public abstract class Storage extends Observable<ArrayList<ResourceStock>> {
 
-    protected ArrayList<ConsumableResource> consumableResources;
+    protected ArrayList<ResourceStock> resourceStocks;
 
     public Storage() {
-        this.consumableResources = new ArrayList<>();
+        this.resourceStocks = new ArrayList<>();
     }
 
-    public ArrayList<ConsumableResource> getConsumableResources() {
-        return consumableResources;
+    public ResourceStock getResourceStock(int index) {
+        return resourceStocks.get(index);
     }
 
     public boolean isEmpty() {
-        return (consumableResources == null || consumableResources.isEmpty());
+        return this.resourceStocks.stream().allMatch(ResourceStock::isEmpty);
     }
 
-    public abstract void addResource(ResourceType resourceType);
-
-    public void removeConsumedResources(){
-        consumableResources =
-                consumableResources.stream().filter(elem -> !elem.isToConsume()).collect(Collectors.toCollection(ArrayList::new));
-    }
-
+    public abstract int countByResourceType(ResourceType resourceType);
 }

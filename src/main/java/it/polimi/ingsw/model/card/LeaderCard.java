@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.card;
 
 import it.polimi.ingsw.model.card.effect.Effect;
 import it.polimi.ingsw.model.card.requirement.Requirement;
-import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
 
 /**
  * Extension fo Card to specify leader cards.

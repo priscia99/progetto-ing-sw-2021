@@ -7,7 +7,6 @@ import it.polimi.ingsw.model.card.requirement.ColorRequirement;
 import it.polimi.ingsw.model.card.requirement.LevelRequirement;
 import it.polimi.ingsw.model.card.requirement.ResourceRequirement;
 import it.polimi.ingsw.model.game.Player;
-import it.polimi.ingsw.model.resource.ResourcePile;
 import it.polimi.ingsw.model.resource.ResourceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

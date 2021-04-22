@@ -3,23 +3,23 @@ package it.polimi.ingsw.model.player_board.storage;
 import it.polimi.ingsw.exceptions.EmptyDepotException;
 import it.polimi.ingsw.exceptions.FullDepotException;
 import it.polimi.ingsw.exceptions.IllegalResourceException;
-import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
+import it.polimi.ingsw.model.resource.ResourceDepot;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.observer.Observable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
-public class Warehouse {
-
-    private final Depot[] depots;
+public class Warehouse extends Storage {
 
     public Warehouse() {
-        this.depots = new Depot[3];
-        this.depots[0] = new Depot(1);
-        this.depots[1] = new Depot(2);
-        this.depots[2] = new Depot(3);
+        super();
+        for (int i = 0; i < 3; i++) {
+            this.resourceStocks.add(new ResourceDepot());
+        }
     }
 
     /**
@@ -28,62 +28,59 @@ public class Warehouse {
      * @param index2 index of the second depot (new index for the first depot)
      * @throws IllegalArgumentException if indexes are not in [0;2]
      */
-    public void swapDepot(int index1, int index2) {
-        if(index1 < 0 || index1 > 2) {
-            throw new IllegalArgumentException("Indexes must be in [0;2]");
-        }
-        if(index2 < 0 || index2 > 2) {
-            throw new IllegalArgumentException("Indexes must be in [0;2]");
-        }
+    public void swapDepots(int index1, int index2) {
+        this.checkValidIndex(index1);
+        this.checkValidIndex(index2);
 
-        Depot tempDepot = this.depots[index1];
-        this.depots[index1] = this.depots[index2];
-        this.depots[index2] = tempDepot;
-
-        this.depots[index1].setCapacity(index1+1);
-        this.depots[index2].setCapacity(index2+1);
+        Collections.swap(this.resourceStocks, index1, index2);
+        ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index2+1);
+        ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index1+1);
     }
 
-    public Depot[] getDepots() {
-        return depots;
+    public ResourceDepot getDepot(int index) {
+        this.checkValidIndex(index);
+        return (ResourceDepot) this.getResourceStock(index);
     }
 
     public boolean isFull() {
-        for(Depot d : depots){
-            if (!d.isFull()) return false;
-        }
-        return true;
+        return this.resourceStocks.stream()
+                .map(resourceStock -> (ResourceDepot) resourceStock)
+                .allMatch(resourceDepot -> isFull());
     }
 
-    public void addToDepot(int depotIndex, ResourceType resourceType) {
-        try{
-            depots[depotIndex].addResource(resourceType);
+    public boolean isEmpty() {
+        return this.resourceStocks.stream()
+                .map(resourceStock -> (ResourceDepot) resourceStock)
+                .allMatch(resourceDepot -> isEmpty());
+    }
+
+    public void addToDepot(int index, ResourceType resourceType){
+        this.checkValidIndex(index);
+        if (this.getResourceStock(index).isEmpty()) {
+            ((ResourceDepot) this.getResourceStock(index)).setResourceType(resourceType);
         }
-        catch (IllegalResourceException e) {
-            e.printStackTrace();
-            // TODO: Manage code behaviour when player is trying to add a resource of a wrong type in a warehouse depot
-        }
-        catch (FullDepotException e) {
-            e.printStackTrace();
-            // TODO: Manage code behaviour when player is trying to add a resource in a full warehouse depot
+        this.getResourceStock(index).incrementResource(resourceType);
+    }
+
+    public void removeFromDepot(int index, ResourceType resourceType) {
+        this.checkValidIndex(index);
+        this.getResourceStock(index).incrementResource(resourceType);
+        if (this.getResourceStock(index).isEmpty()) {
+            ((ResourceDepot) this.getResourceStock(index)).setResourceType(ResourceType.BLANK);
         }
     }
 
-    public void removeConsumedResources(){
-        for(Depot toClean : depots) {
-            toClean.removeConsumedResources();
-        }
+    @Override
+    public int countByResourceType(ResourceType resourceType) {
+        return this.resourceStocks.stream()
+                .filter(resourceStock -> resourceStock.contains(resourceType))
+                .map(ResourceStock::getQuantity)
+                .reduce(0, Integer::sum);
     }
 
-
-    // TODO is it useful ???
-    public void removeFromDepot(int depotIndex) {
-        try{
-            depots[depotIndex].removeResource();
-        }
-        catch (EmptyDepotException e) {
-            e.printStackTrace();
-            // TODO: Manage code bahviour when player is trying to remove a resource from an empty warehouse depot
+    private void checkValidIndex(int index) {
+        if(index < 0 || index > 2) {
+            throw new IllegalArgumentException("Indexes must be in [0;2]");
         }
     }
 }

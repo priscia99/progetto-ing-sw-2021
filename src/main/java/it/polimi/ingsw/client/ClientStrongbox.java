@@ -1,18 +1,18 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.model.resource.ResourcePile;
+import it.polimi.ingsw.model.resource.ResourceStock;
 
 import java.util.ArrayList;
 
 public class ClientStrongbox {
 
-    private ArrayList<ResourcePile> resourcePiles;
+    private final ArrayList<ResourceStock> resourceStocks;
 
-    public ClientStrongbox(ArrayList<ResourcePile> resourcePiles) {
-        this.resourcePiles = resourcePiles;
+    public ClientStrongbox(ArrayList<ResourceStock> resourcePiles) {
+        this.resourceStocks = resourcePiles;
     }
 
-    public ResourcePile getResourcePile(int index) {
-        return resourcePiles.get(index);
+    public ResourceStock getResourcePile(int index) {
+        return resourceStocks.get(index);
     }
 }

@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model.player_board.storage;
 
-import it.polimi.ingsw.model.resource.ConsumableResource;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.observer.Observer;
 
 import java.util.ArrayList;
 
-public class StorageObserver implements Observer<ArrayList<ConsumableResource>> {
+public class StorageObserver implements Observer<ArrayList<ResourceStock>> {
 
     private Storage observed;
 
@@ -22,7 +22,7 @@ public class StorageObserver implements Observer<ArrayList<ConsumableResource>> 
     }
 
     @Override
-    public void update(ArrayList<ConsumableResource> message) {
+    public void update(ArrayList<ResourceStock> message) {
         // TODO fill update
     }
 }

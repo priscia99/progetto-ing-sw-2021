@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.effect.DepotEffect;
 import it.polimi.ingsw.model.card.requirement.Requirement;
 import it.polimi.ingsw.model.game.Player;
-import it.polimi.ingsw.model.player_board.storage.Depot;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;

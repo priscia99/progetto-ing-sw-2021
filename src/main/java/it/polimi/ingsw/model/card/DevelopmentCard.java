@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.card;
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.model.card.requirement.Requirement;
-import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
 
 /**
  * Extension of Card to specify cards with a development effect that can be purchased in card market.

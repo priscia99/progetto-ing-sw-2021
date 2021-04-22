@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.player_board;
 import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.effect.ProductionEffect;
-import it.polimi.ingsw.model.locally_copiable.LocallyCopyable;
 import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.model.player_board.storage.Warehouse;
@@ -115,10 +114,10 @@ public class PlayerBoard {
 
     /**
      * Clear a depot.
-     * @param depotIndex the index of the depot to clear
+     * @param index the index of the depot to clear
      */
-    public void removeFromDepot(int depotIndex) {
-        warehouse.removeFromDepot(depotIndex);
+    public void removeFromDepot(int index, ResourceType resourceType) {
+        warehouse.removeFromDepot(index, resourceType);
     }
 
     /**
@@ -155,6 +154,10 @@ public class PlayerBoard {
             sum += deck.getCardNumber();
         }
         return sum;
+    }
+
+    public int countByResourceType(ResourceType resourceType) {
+        return this.warehouse.countByResourceType(resourceType) + this.strongbox.countByResourceType(resourceType);
     }
 
 }
