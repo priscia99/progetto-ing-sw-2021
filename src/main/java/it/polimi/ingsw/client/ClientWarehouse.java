@@ -12,7 +12,7 @@ public class ClientWarehouse {
         this.resourceDepots = resourcePiles;
     }
 
-    public ResourceDepot getResourcePile(int index) {
+    public ResourceDepot getResourceDepot(int index) {
         return resourceDepots.get(index);
     }
 }

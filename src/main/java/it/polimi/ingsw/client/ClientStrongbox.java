@@ -12,7 +12,7 @@ public class ClientStrongbox {
         this.resourceStocks = resourcePiles;
     }
 
-    public ResourceStock getResourcePile(int index) {
+    public ResourceStock gerResourceStock(int index) {
         return resourceStocks.get(index);
     }
 }
