@@ -8,9 +8,11 @@ public abstract class Cell {
         this.reachedUp = false;
     }
 
-    public abstract int reach();
+    public void reach(){this.reachedUp = true;};
 
     public void setReached(boolean reached){ reachedUp = reached; }
+
+    public abstract int getVictoryPoints();
 
     @Override
     public String toString(){

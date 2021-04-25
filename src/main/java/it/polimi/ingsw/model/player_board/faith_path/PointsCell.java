@@ -14,9 +14,13 @@ public class PointsCell extends Cell{
     }
 
     @Override
-    public int reach() {
+    public void reach() {
         super.setReached(true);
-        return getPoints();
+    }
+
+    @Override
+    public int getVictoryPoints() {
+        return points;
     }
 
     @Override

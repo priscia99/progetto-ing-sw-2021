@@ -16,9 +16,8 @@ public class PopeCell extends Cell {
     }
 
     @Override
-    public int reach() {
-        super.setReached(true);
-        return points;
+    public int getVictoryPoints() {
+        return favor.isUsed() ? favor.getPoints() : 0;
     }
 
     @Override

@@ -3,6 +3,8 @@ package it.polimi.ingsw.model.player_board.faith_path;
 import it.polimi.ingsw.data.FaithPathBuilder;
 import it.polimi.ingsw.observer.Observable;
 
+import java.util.Arrays;
+
 public class FaithPath extends Observable<Integer> {
 
     private final Cell[] cells;
@@ -25,8 +27,17 @@ public class FaithPath extends Observable<Integer> {
         return faithPoints;
     }
 
+    public int getVictoryPoints() {
+        int points = 0;
+        for(int i=0; i<=faithPoints; i++){
+            points += cells[i].getVictoryPoints();
+        }
+        return points;
+    }
+
     public void goToNextCell() {
-        faithPoints += this.cells[this.faithPoints].reach();
+        this.cells[this.faithPoints].reach();
+        faithPoints++;
         notify(this.faithPoints);
     }
 
@@ -38,16 +49,15 @@ public class FaithPath extends Observable<Integer> {
      * @throws IllegalArgumentException Indicates if the given index doesn't refer to a pope cell.
      */
     public void checkPopeFavor(int index){
-        if(!(cells[index-1] instanceof PopeCell))
+        if(!(cells[index] instanceof PopeCell))
             throw new IllegalArgumentException("This position doesn't refer to a pope cell.");
 
-        PopeFavor favor = ((PopeCell) cells[index-1]).getFavor();
+        PopeFavor favor = ((PopeCell) cells[index]).getFavor();
         if(!favor.isUsed()){
             // Favor was not triggered before
             if (this.faithPoints >= favor.getFirstCellIndex()){
-                this.faithPoints += favor.getPoints();
+                favor.setUsed(true);
             }
-            favor.setUsed(true);
         }
     }
 

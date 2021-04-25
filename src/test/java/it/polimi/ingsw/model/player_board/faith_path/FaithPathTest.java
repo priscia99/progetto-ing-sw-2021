@@ -32,33 +32,32 @@ public class FaithPathTest
     }
 
     @Test
-    @DisplayName("Test player received faith points from a PointsCell")
+    @DisplayName("Test player received victory points from a PointsCell")
     public void testPointsFromPointsCell(){
         while(faithPath.getFaithPoints() != 3){
             faithPath.goToNextCell();
         }
         Assertions.assertEquals(3, faithPath.getFaithPoints(), "Position should be 3");
-        Assertions.assertEquals(1, faithPath.getFaithPoints(), "Player should have 1 faith point");
+        Assertions.assertEquals(1, faithPath.getVictoryPoints(), "Player should have 1 victory point");
 
         while(faithPath.getFaithPoints() != 6){
             faithPath.goToNextCell();
         }
         Assertions.assertEquals(6, faithPath.getFaithPoints(), "Position should be 6");
-        Assertions.assertEquals(3, faithPath.getFaithPoints(), "Player should have 3 faith points");
+        Assertions.assertEquals(3, faithPath.getVictoryPoints(), "Player should have 3 victory points");
     }
 
     @Test
-    @DisplayName("Test player received faith points from a PopeFavor cell")
+    @DisplayName("Test player received victory points from a PopeFavor cell")
     public void testPointsFromPopeFavor(){
         while(faithPath.getFaithPoints() != 8){
             faithPath.goToNextCell();
         }
         Assertions.assertEquals(8, faithPath.getFaithPoints(), "Position should be 8");
-        Assertions.assertTrue((faithPath.getCells()[7] instanceof PopeCell),"This Cell should be a PopeCell instance");
-        PopeFavor favor = ((PopeCell) faithPath.getCells()[7]).getFavor();
-        Assertions.assertFalse(favor.isUsed(), "Favor should NOT be used");
+        Assertions.assertTrue((faithPath.getCells()[8] instanceof PopeCell),"This Cell should be a PopeCell instance");
+        PopeFavor favor = ((PopeCell) faithPath.getCells()[8]).getFavor();
         faithPath.checkPopeFavor(8);
-        Assertions.assertEquals(5, faithPath.getFaithPoints(), "Position should have 5 faith points(1+2+2PF)");
+        Assertions.assertEquals(5, faithPath.getVictoryPoints(), "Position should have 5 faith points(1+2+2PF)");
     }
 
     @Test
@@ -68,8 +67,8 @@ public class FaithPathTest
             faithPath.goToNextCell();
         }
         faithPath.checkPopeFavor(8);
-        Assertions.assertTrue((faithPath.getCells()[7] instanceof PopeCell),"This Cell should be a PopeCell instance");
-        PopeFavor favor = ((PopeCell) faithPath.getCells()[7]).getFavor();
+        Assertions.assertTrue((faithPath.getCells()[8] instanceof PopeCell),"This Cell should be a PopeCell instance");
+        PopeFavor favor = ((PopeCell) faithPath.getCells()[8]).getFavor();
         Assertions.assertTrue(favor.isUsed(), "Favor should be used");
     }
 

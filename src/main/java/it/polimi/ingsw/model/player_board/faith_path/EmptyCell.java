@@ -7,8 +7,12 @@ public class EmptyCell extends Cell {
     }
 
     @Override
-    public int reach() {
-        super.setReached(true);
+    public int getVictoryPoints(){
         return 0;
+    }
+
+    @Override
+    public void reach() {
+        super.setReached(true);
     }
 }
