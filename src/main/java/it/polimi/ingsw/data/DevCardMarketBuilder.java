@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.model.card.requirement.ResourceRequirement;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.io.FileReader;
@@ -35,31 +36,31 @@ public class DevCardMarketBuilder {
                 JsonArray inputArray = card.get("input_pile").getAsJsonArray();
                 JsonArray outputArray = card.get("output_pile").getAsJsonArray();
                 // Creating requirements
-                ArrayList<ResourcePile> requiredPiles = new ArrayList<>();
+                ArrayList<ResourceStock> requiredPiles = new ArrayList<>();
                 for (int pileIterator = 0; pileIterator < reqArray.size(); pileIterator++) {
                     JsonObject pileObject = reqArray.get(pileIterator).getAsJsonObject();
-                    requiredPiles.add(new ResourcePile(
-                            pileObject.get("quantity").getAsInt(),
-                            ResourceType.valueOf(pileObject.get("resource_type").getAsString())
-                    ));
+                    requiredPiles.add(new ResourceStock(
+                            ResourceType.valueOf(pileObject.get("resource_type").getAsString()),
+                            pileObject.get("quantity").getAsInt()
+                            ));
                 }
                 //Creating input pile
-                ArrayList<ResourcePile> inputPile = new ArrayList<>();
+                ArrayList<ResourceStock> inputPile = new ArrayList<>();
                 for (int pileIterator = 0; pileIterator < inputArray.size(); pileIterator++) {
                     JsonObject pileObject = inputArray.get(pileIterator).getAsJsonObject();
-                    inputPile.add(new ResourcePile(
-                            pileObject.get("quantity").getAsInt(),
-                            ResourceType.valueOf(pileObject.get("resource_type").getAsString())
-                    ));
+                    inputPile.add(new ResourceStock(
+                            ResourceType.valueOf(pileObject.get("resource_type").getAsString()),
+                            pileObject.get("quantity").getAsInt()
+                            ));
                 }
                 //Creating output pile
-                ArrayList<ResourcePile> outputPile = new ArrayList<>();
+                ArrayList<ResourceStock> outputPile = new ArrayList<>();
                 for (int pileIterator = 0; pileIterator < outputArray.size(); pileIterator++) {
                     JsonObject pileObject = outputArray.get(pileIterator).getAsJsonObject();
-                    outputPile.add(new ResourcePile(
-                            pileObject.get("quantity").getAsInt(),
-                            ResourceType.valueOf(pileObject.get("resource_type").getAsString())
-                    ));
+                    outputPile.add(new ResourceStock(
+                            ResourceType.valueOf(pileObject.get("resource_type").getAsString()),
+                            pileObject.get("quantity").getAsInt()
+                            ));
                 }
 
                 if(Objects.isNull(marketDecks[cardLevel-1][cardColor.ordinal()])){
@@ -67,7 +68,6 @@ public class DevCardMarketBuilder {
                 }
 
                 marketDecks[cardLevel-1][cardColor.ordinal()].add(new DevelopmentCard(
-                        false,
                         cardPoints,
                         cardLevel,
                         new ProductionEffect(inputPile, outputPile),

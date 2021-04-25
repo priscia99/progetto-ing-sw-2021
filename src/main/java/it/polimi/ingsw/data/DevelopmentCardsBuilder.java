@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.*;
 import it.polimi.ingsw.model.card.requirement.ResourceRequirement;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
@@ -36,37 +37,36 @@ public class DevelopmentCardsBuilder {
                 JsonArray outputArray = cardObject.get("output_pile").getAsJsonArray();
 
                 // Creating requirements
-                ArrayList<ResourcePile> requiredPiles = new ArrayList<>();
+                ArrayList<ResourceStock> requiredPiles = new ArrayList<>();
                 for(int pileIterator=0; pileIterator<reqArray.size(); pileIterator++){
                     JsonObject pileObject = reqArray.get(pileIterator).getAsJsonObject();
-                    requiredPiles.add(new ResourcePile(
-                            pileObject.get("quantity").getAsInt(),
-                            ResourceType.valueOf(pileObject.get("resource_type").getAsString())
-                    ));
+                    requiredPiles.add(new ResourceStock(
+                            ResourceType.valueOf(pileObject.get("resource_type").getAsString()),
+                            pileObject.get("quantity").getAsInt()
+                            ));
                 }
 
                 //Creating input pile
-                ArrayList<ResourcePile> inputPile = new ArrayList<>();
+                ArrayList<ResourceStock> inputPile = new ArrayList<>();
                 for(int pileIterator=0; pileIterator<inputArray.size(); pileIterator++){
                     JsonObject pileObject = inputArray.get(pileIterator).getAsJsonObject();
-                    inputPile.add(new ResourcePile(
-                            pileObject.get("quantity").getAsInt(),
-                            ResourceType.valueOf(pileObject.get("resource_type").getAsString())
-                    ));
+                    inputPile.add(new ResourceStock(
+                            ResourceType.valueOf(pileObject.get("resource_type").getAsString()),
+                            pileObject.get("quantity").getAsInt()
+                            ));
                 }
 
                 //Creating output pile
-                ArrayList<ResourcePile> outputPile = new ArrayList<>();
+                ArrayList<ResourceStock> outputPile = new ArrayList<>();
                 for(int pileIterator=0; pileIterator<outputArray.size(); pileIterator++){
                     JsonObject pileObject = outputArray.get(pileIterator).getAsJsonObject();
-                    outputPile.add(new ResourcePile(
-                            pileObject.get("quantity").getAsInt(),
-                            ResourceType.valueOf(pileObject.get("resource_type").getAsString())
-                    ));
+                    outputPile.add(new ResourceStock(
+                            ResourceType.valueOf(pileObject.get("resource_type").getAsString()),
+                            pileObject.get("quantity").getAsInt()
+                            ));
                 }
 
                 developmentCardList.add(new DevelopmentCard(
-                        false,
                         cardObject.get("victory_points").getAsInt(),
                         cardObject.get("level").getAsInt(),
                         new ProductionEffect(inputPile, outputPile),
