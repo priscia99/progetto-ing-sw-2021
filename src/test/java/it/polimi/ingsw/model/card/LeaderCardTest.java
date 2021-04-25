@@ -1,6 +1,4 @@
 package it.polimi.ingsw.model.card;
-
-import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.model.resource.ResourceType;
 import org.junit.jupiter.api.Assertions;

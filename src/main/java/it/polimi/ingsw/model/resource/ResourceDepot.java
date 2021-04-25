@@ -4,11 +4,6 @@ public class ResourceDepot extends ResourceStock{
 
     private int capacity;
 
-    public ResourceDepot() {
-        super(ResourceType.BLANK);
-        this.capacity = 0;
-    }
-
     public ResourceDepot(ResourceType resourceType, int capacity) {
         super(resourceType);
         this.capacity = capacity;

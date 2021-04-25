@@ -34,9 +34,17 @@ public class PlayerBoard {
         this.strongbox = new Strongbox();
         this.warehouse = new Warehouse();
         this.leaderCardsDeck = new LeaderCardsDeck();
-        this.developmentCardsDecks = new DevelopmentCardsDeck[3];
+        this.developmentCardsDecks = createDevelopmentCardsDeck();
         this.basicProduction = ProductionEffect.getBasicProduction();
         this.faithPath = FaithPath.getStandardFaithPath();
+    }
+
+    private DevelopmentCardsDeck[] createDevelopmentCardsDeck(){
+        DevelopmentCardsDeck[] developmentCardsDeck = new DevelopmentCardsDeck[3];
+        developmentCardsDeck[0] = new DevelopmentCardsDeck(new ArrayList<>());
+        developmentCardsDeck[1] = new DevelopmentCardsDeck(new ArrayList<>());
+        developmentCardsDeck[2] = new DevelopmentCardsDeck(new ArrayList<>());
+        return developmentCardsDeck;
     }
 
     /**

@@ -121,7 +121,7 @@ public class Player {
                     .count();
         }
 
-        return 0;
+        return result;
     }
 
     public ArrayList<Color> colorByLevel(int level) {

@@ -18,7 +18,7 @@ public class Warehouse extends Storage {
     public Warehouse() {
         super();
         for (int i = 0; i < 3; i++) {
-            this.resourceStocks.add(new ResourceDepot());
+            this.resourceStocks.add(new ResourceDepot(i+1));
         }
     }
 

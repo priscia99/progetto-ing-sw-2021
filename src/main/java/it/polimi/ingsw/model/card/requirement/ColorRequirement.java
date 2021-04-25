@@ -32,7 +32,7 @@ public class ColorRequirement extends Requirement{
     public boolean isFulfilled(Player player) {
         return this.colorPiles
                 .stream()
-                .allMatch(colorPile -> player.countByColor(colorPile.getColor()) == colorPile.getQuantity());
+                .allMatch(colorPile -> player.countByColor(colorPile.getColor()) >= colorPile.getQuantity());
     }
 
     @Override

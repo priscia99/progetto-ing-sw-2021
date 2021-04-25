@@ -41,7 +41,7 @@ public class DevelopmentCardsDeck extends Observable<ArrayList<DevelopmentCard>>
         if(this.isFull()) {
             throw new IllegalArgumentException("This dev cards deck is full");
         }
-        if((deck.size() == 0 && developmentCard.getLevel() !=1) || (getTopCard().getLevel() != developmentCard.getLevel()-1)) {
+        if((deck.size() == 0 && developmentCard.getLevel() != 1) || (deck.size() != 0 && getTopCard().getLevel() != developmentCard.getLevel()-1)) {
             throw new IllegalArgumentException("The development card level is not valid for this deck");
         }
         deck.add(developmentCard);
