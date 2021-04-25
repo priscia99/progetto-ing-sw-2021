@@ -33,8 +33,11 @@ public class requirementTest {
                 new DevelopmentCard( 1, 1, null, Color.PURPLE, null),
                 0);
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( 1, 2, null, Color.BLUE, null),
-                0
+                new DevelopmentCard( 1, 2, null, Color.PURPLE, null),
+                0);
+        player.getPlayerBoard().addDevelopmentCard(
+                new DevelopmentCard( 1, 1, null, Color.BLUE, null),
+                1
         );
 
         // setup resource requirement
