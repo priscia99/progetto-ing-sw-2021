@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.card.requirement.ColorRequirement;
 import it.polimi.ingsw.model.card.requirement.LevelRequirement;
 import it.polimi.ingsw.model.card.requirement.ResourceRequirement;
 import it.polimi.ingsw.model.game.Player;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,16 +30,16 @@ public class requirementTest {
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         // add development cards
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( false,1, 1, null, Color.PURPLE, null),
+                new DevelopmentCard( 1, 1, null, Color.PURPLE, null),
                 0);
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard(false, 1, 2, null, Color.BLUE, null),
+                new DevelopmentCard( 1, 2, null, Color.BLUE, null),
                 0
         );
 
         // setup resource requirement
-        ArrayList<ResourcePile> resources = new ArrayList<ResourcePile>();
-        resources.add(new ResourcePile(1, ResourceType.COIN));
+        ArrayList<ResourceStock> resources = new ArrayList<ResourceStock>();
+        resources.add(new ResourceStock(ResourceType.COIN, 1));
         this.resourceRequirement = new ResourceRequirement(resources);
 
         // setup level requirement

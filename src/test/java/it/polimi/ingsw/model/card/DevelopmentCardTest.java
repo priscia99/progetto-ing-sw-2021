@@ -11,7 +11,7 @@ public class DevelopmentCardTest {
 
     @BeforeEach
     public void setUp(){
-        this.developmentCard = new DevelopmentCard(false, 5, 1, null, Color.PURPLE, null);
+        this.developmentCard = new DevelopmentCard( 5, 1, null, Color.PURPLE, null);
     }
 
     @Test

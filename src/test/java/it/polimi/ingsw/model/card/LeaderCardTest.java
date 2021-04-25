@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.card;
 
 import it.polimi.ingsw.model.card.LeaderCard;
+import it.polimi.ingsw.model.card.effect.DiscountEffect;
+import it.polimi.ingsw.model.resource.ResourceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +13,7 @@ public class LeaderCardTest {
 
     @BeforeEach
     public void setUp(){
-        this.leaderCard = new LeaderCard(false, 5, null, null);
+        this.leaderCard = new LeaderCard(5, new DiscountEffect(ResourceType.COIN), null);
     }
 
     @Test

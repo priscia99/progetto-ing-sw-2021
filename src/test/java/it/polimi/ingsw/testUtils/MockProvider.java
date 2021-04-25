@@ -19,7 +19,7 @@ public class MockProvider {
     static public LeaderCard getLeaderCardMock(){
         return new LeaderCard(
                 5,
-                new DepotEffect(ResourceType.COIN, new Depot(2)),
+                new DepotEffect(ResourceType.COIN),
                 new Requirement() {
                     @Override
                     public boolean isFulfilled(Player player) {
