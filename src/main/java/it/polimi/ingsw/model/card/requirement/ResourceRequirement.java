@@ -33,7 +33,7 @@ public class ResourceRequirement extends Requirement{
          return this.resourceStocks
                  .stream()
                  .allMatch(resourcePile ->
-                         player.countByResource(resourcePile.getResourceType()) == resourcePile.getQuantity());
+                         player.countByResource(resourcePile.getResourceType()) >= resourcePile.getQuantity());
     }
 
     @Override

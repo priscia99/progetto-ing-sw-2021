@@ -60,8 +60,6 @@ public class Game extends Observable<Game> {
 
     public Player getCurrentPlayer(){return players.get(currentPlayerIndex);}
 
-
-
     public void start() {
         nextTurn();
         // FIXME

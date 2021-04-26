@@ -1,6 +1,8 @@
 package it.polimi.ingsw.testUtils;
 
+import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.LeaderCard;
+import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.DepotEffect;
 import it.polimi.ingsw.model.card.requirement.Requirement;
 import it.polimi.ingsw.model.game.Player;
@@ -34,6 +36,18 @@ public class MockProvider {
         leaderCards.add(getLeaderCardMock());
         leaderCards.add(getLeaderCardMock());
         return leaderCards;
+    }
+
+    static public ArrayList<DevelopmentCard> getArrayDevelopmentCardsMock(){
+        ArrayList<DevelopmentCard> developmentCards = new ArrayList<>();
+        developmentCards.add(new DevelopmentCard(1, 1, null, Color.BLUE, null));
+        developmentCards.add(new DevelopmentCard(1, 1, null, Color.BLUE, null));
+        developmentCards.add(new DevelopmentCard(1, 1, null, Color.BLUE, null));
+        developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null));
+        developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null));
+        developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null));
+        developmentCards.add(new DevelopmentCard(1, 3, null, Color.BLUE, null));
+        return developmentCards;
     }
 
 }

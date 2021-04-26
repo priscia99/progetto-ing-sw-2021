@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.game;
 import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.color.Color;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.testUtils.MockProvider;
 import org.junit.jupiter.api.*;
@@ -42,7 +43,6 @@ public class PlayerTest {
     @DisplayName("Ensure that the counter of player's resources work correctly")
     public void testCountByResources() {
         // setup player
-        this.player = new Player("Giocatore 1");
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
                 new DevelopmentCard( 1, 1, null, Color.PURPLE, null),
@@ -60,7 +60,6 @@ public class PlayerTest {
     @DisplayName("Ensure that the counter of player's cards' colors work correctly")
     public void testCountByColor() {
         // setup player
-        this.player = new Player("Giocatore 1");
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
                 new DevelopmentCard( 1, 1, null, Color.PURPLE, null),
@@ -78,7 +77,6 @@ public class PlayerTest {
     @DisplayName("Ensure that the counter of player's resources' levels work correctly")
     public void testCountByLevel() {
         // setup player
-        this.player = new Player("Giocatore 1");
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
                 new DevelopmentCard( 1, 1, null, Color.PURPLE, null),
@@ -96,7 +94,6 @@ public class PlayerTest {
     @DisplayName("Ensure getter of player's cards' by color work correctly")
     public void testColorByLevel() {
         // setup player
-        this.player = new Player("Giocatore 1");
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
                 new DevelopmentCard( 1, 1, null, Color.PURPLE, null),
@@ -123,5 +120,69 @@ public class PlayerTest {
         // test level 3
         ArrayList<Color> lv3 = player.colorByLevel(3);
         Assertions.assertEquals(0, lv3.size(), "The list of level THREE cards should be empty.");
+    }
+
+    @Test
+    @DisplayName("Test initial resource logic")
+    public void testInitialResource(){
+        player.setInitialResourceToChoose(2);
+        Assertions.assertTrue(player.hasToChooseInitialResource());
+        player.hasChosenInitialResource();
+        Assertions.assertTrue(player.hasToChooseInitialResource());
+        player.hasChosenInitialResource();
+        Assertions.assertFalse(player.hasToChooseInitialResource());
+    }
+
+    @Test
+    @DisplayName("Test meets win conditions for faith path")
+    public void testMeetConditionFaithPath(){
+        player.addFaithPoints(24);
+        Assertions.assertFalse(player.meetsWinCondition());
+        player.addFaithPoints(1);
+        Assertions.assertTrue(player.meetsWinCondition());
+    }
+
+    @Test
+    @DisplayName("Test meets win conditions for development cards")
+    public void testMeetConditionDevelopmentCards(){
+        ArrayList<DevelopmentCard> cards = MockProvider.getArrayDevelopmentCardsMock();
+        for(int i = 0; i<6; i++) {
+            player.getPlayerBoard().addDevelopmentCard(cards.get(i), i%3 );
+            Assertions.assertFalse(player.meetsWinCondition());
+        }
+        player.getPlayerBoard().addDevelopmentCard(cards.get(6), 0 );
+        Assertions.assertTrue(player.meetsWinCondition());
+    }
+
+    @Test
+    @DisplayName("Test add to strongbox")
+    public void testAddToStrongBox(){
+        player.addResourcesToStrongBox(new ResourceStock(ResourceType.COIN, 1));
+        Assertions.assertEquals(1, player.getPlayerBoard().getStrongbox().countByResourceType(ResourceType.COIN));
+        player.addResourcesToStrongBox(new ResourceStock(ResourceType.SERVANT, 1));
+        player.addResourcesToStrongBox(new ResourceStock(ResourceType.SHIELD, 3));
+        player.addResourcesToStrongBox(new ResourceStock(ResourceType.COIN, 2));
+        Assertions.assertEquals(3, player.getPlayerBoard().getStrongbox().countByResourceType(ResourceType.COIN));
+        Assertions.assertEquals(1, player.getPlayerBoard().getStrongbox().countByResourceType(ResourceType.SERVANT));
+        Assertions.assertEquals(3, player.getPlayerBoard().getStrongbox().countByResourceType(ResourceType.SHIELD));
+        Assertions.assertEquals(0, player.getPlayerBoard().getStrongbox().countByResourceType(ResourceType.STONE));
+    }
+
+    @Test
+    @DisplayName("Test add to warehouse")
+    public void testAddToWarehouse(){
+        player.addResourceToDepot(ResourceType.COIN, 1);
+        Assertions.assertEquals(1, player.getPlayerBoard().getWarehouse().countByResourceType(ResourceType.COIN));
+        player.addResourceToDepot(ResourceType.COIN, 1);
+        player.addResourceToDepot(ResourceType.SHIELD, 2);
+        player.addResourceToDepot(ResourceType.SHIELD, 2);
+        Assertions.assertEquals(2, player.getPlayerBoard().getWarehouse().countByResourceType(ResourceType.SHIELD));
+        player.addResourceToDepot(ResourceType.SHIELD, 2);
+        Assertions.assertEquals(0, player.getPlayerBoard().getWarehouse().countByResourceType(ResourceType.SERVANT));
+        player.addResourceToDepot(ResourceType.SERVANT, 0);
+        Assertions.assertEquals(2, player.getPlayerBoard().getWarehouse().countByResourceType(ResourceType.COIN));
+        Assertions.assertEquals(1, player.getPlayerBoard().getWarehouse().countByResourceType(ResourceType.SERVANT));
+        Assertions.assertEquals(3, player.getPlayerBoard().getWarehouse().countByResourceType(ResourceType.SHIELD));
+        Assertions.assertEquals(0, player.getPlayerBoard().getWarehouse().countByResourceType(ResourceType.STONE));
     }
 }
