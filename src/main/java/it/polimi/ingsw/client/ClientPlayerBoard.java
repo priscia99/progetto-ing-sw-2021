@@ -8,10 +8,10 @@ public class ClientPlayerBoard {
     private final ClientWarehouse warehouse;
     private final ClientStrongbox strongbox;
     private final ArrayList<ClientLeaderCard> clientLeaderCards;
-    private final ArrayList<ClientDevelopmentCard> developmentCards;
+    private final ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards;
 
     public ClientPlayerBoard(ClientFaithPath faithPath, ClientWarehouse warehouse, ClientStrongbox strongbox,
-                             ArrayList<ClientLeaderCard> clientLeaderCards, ArrayList<ClientDevelopmentCard> developmentCards) {
+                             ArrayList<ClientLeaderCard> clientLeaderCards, ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards) {
         this.faithPath = faithPath;
         this.warehouse = warehouse;
         this.strongbox = strongbox;
@@ -35,7 +35,7 @@ public class ClientPlayerBoard {
         return clientLeaderCards;
     }
 
-    public ArrayList<ClientDevelopmentCard> getDevelopmentCards() {
+    public ArrayList<ArrayList<ClientDevelopmentCard>> getDevelopmentCards() {
         return developmentCards;
     }
 

@@ -3,8 +3,6 @@ package it.polimi.ingsw.model.player_board.storage;
 import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 
-import java.util.ArrayList;
-
 public class Strongbox extends Storage {
 
     public Strongbox() {
@@ -20,12 +18,14 @@ public class Strongbox extends Storage {
         this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
                 .forEach(resourceStock -> resourceStock.incrementResource(resourceType));
+        notify(resourceStocks);
     }
 
     public void removeResource(ResourceType resourceType) {
         this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
                 .forEach(resourceStock -> resourceStock.decrementResource(resourceType));
+        notify(resourceStocks);
     }
 
     @Override

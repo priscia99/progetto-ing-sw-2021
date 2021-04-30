@@ -20,6 +20,6 @@ public class GameObserver implements Observer<Game> {
 
     @Override
     public void update(Game message) {
-        // TODO fill update
+
     }
 }

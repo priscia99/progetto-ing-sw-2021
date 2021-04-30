@@ -4,15 +4,13 @@ import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
+import it.polimi.ingsw.model.player_board.storage.Storage;
 import it.polimi.ingsw.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
-import java.util.stream.Collectors;
 
 /**
  * Class that models the player board. It instantiate a faith path, storages and slots for cards. It take count of the

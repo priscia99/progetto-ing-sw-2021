@@ -1,17 +1,10 @@
 package it.polimi.ingsw.model.player_board.storage;
 
-import it.polimi.ingsw.exceptions.EmptyDepotException;
-import it.polimi.ingsw.exceptions.FullDepotException;
-import it.polimi.ingsw.exceptions.IllegalResourceException;
 import it.polimi.ingsw.model.resource.ResourceDepot;
 import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
-import it.polimi.ingsw.observer.Observable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 public class Warehouse extends Storage {
 
@@ -35,6 +28,8 @@ public class Warehouse extends Storage {
         Collections.swap(this.resourceStocks, index1, index2);
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index2+1);
         ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index1+1);
+
+        notify(resourceStocks);
     }
 
     public ResourceDepot getDepot(int index) {
@@ -60,6 +55,8 @@ public class Warehouse extends Storage {
             ((ResourceDepot) this.getResourceStock(index)).setResourceType(resourceType);
         }
         this.getResourceStock(index).incrementResource(resourceType);
+
+        notify(resourceStocks);
     }
 
     public void removeFromDepot(int index, ResourceType resourceType) {
@@ -68,6 +65,8 @@ public class Warehouse extends Storage {
         if (this.getResourceStock(index).isEmpty()) {
             ((ResourceDepot) this.getResourceStock(index)).setResourceType(ResourceType.BLANK);
         }
+
+        notify(resourceStocks);
     }
 
     @Override

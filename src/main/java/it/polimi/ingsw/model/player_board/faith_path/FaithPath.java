@@ -38,6 +38,7 @@ public class FaithPath extends Observable<Integer> {
     public void goToNextCell() {
         this.cells[this.faithPoints].reach();
         faithPoints++;
+
         notify(this.faithPoints);
     }
 
