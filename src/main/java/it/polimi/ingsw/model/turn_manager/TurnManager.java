@@ -34,7 +34,7 @@ public class TurnManager {
         return game;
     }
 
-    public void startTurn(Player player) {
+    public void startTurn() {
         this.mainActionDone = false;
         CustomLogger.getLogger().info(String.format("%s has started the turn.", game.getCurrentPlayer().getNickname()));
     }

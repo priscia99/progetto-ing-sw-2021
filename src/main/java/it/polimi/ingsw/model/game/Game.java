@@ -32,6 +32,8 @@ public class Game extends Observable<Game> {
         return cardMarket;
     }
 
+    public TurnManager getTurnManager() {return turnManager;}
+
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -41,7 +43,7 @@ public class Game extends Observable<Game> {
     public void nextTurn() {
         currentPlayerIndex++;
         currentPlayerIndex = currentPlayerIndex % players.size();
-        turnManager.startTurn(players.get(currentPlayerIndex));
+        turnManager.startTurn();
         // FIXME
         notify(this);
     }
