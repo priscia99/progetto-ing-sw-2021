@@ -15,7 +15,7 @@ public class DropLeaderCardParams {
 
     static public DropLeaderCardParams fromMap(Map<String, Object> map){
         try{
-            String cardId = (String) map.get("cardIndex");
+            String cardId = (String) map.get("cardId");
             return new DropLeaderCardParams(cardId);
         } catch (Exception e){
             throw new ParamsConvertionException("Error converting to DropLeaderCardParams");
