@@ -5,7 +5,9 @@ import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.DepotEffect;
 import it.polimi.ingsw.model.card.requirement.Requirement;
+import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
+import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class MockProvider {
         return players;
     }
 
+
     static public LeaderCard getLeaderCardMock(){
         return new LeaderCard(
                 5,
@@ -29,6 +32,14 @@ public class MockProvider {
                     }
                 }
         );
+    }
+
+    static public Game getMockGame(){
+        Game game = new Game();
+        ArrayList<Player> players = getMockPlayers();
+        game.setup(players);
+        game.start();
+        return game;
     }
 
     static public ArrayList<LeaderCard> getArrayListLeaderCardsMock(){
