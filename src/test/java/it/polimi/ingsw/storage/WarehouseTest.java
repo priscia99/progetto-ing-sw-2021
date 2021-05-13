@@ -42,9 +42,12 @@ public class WarehouseTest {
 
     @Test
     @DisplayName("Test removal of a single resource from depot")
-    public void test(){
+    public void testRemovalFromSingleDepot(){
+        // Check if depot is originally empty
         Assertions.assertTrue(this.warehouse.isEmpty());
+        // Check if depot capacity is correct
         Assertions.assertEquals(2, this.warehouse.getDepot(1).getCapacity());
+        // Adding new resources until the depot is full
         this.warehouse.addToDepot(1, ResourceType.SERVANT);
         Assertions.assertFalse(this.warehouse.getDepot(1).isFull());
         Assertions.assertEquals(1, this.warehouse.getDepot(1).getQuantity());
@@ -53,6 +56,7 @@ public class WarehouseTest {
         Assertions.assertEquals(2, this.warehouse.countByResourceType(ResourceType.SERVANT));
         Assertions.assertTrue(this.warehouse.getDepot(1).isFull());
         Assertions.assertFalse(this.warehouse.getDepot(1).isEmpty());
+        // Removing resources from depot until it is empty
         this.warehouse.removeFromDepot(1, ResourceType.SERVANT);
         Assertions.assertEquals(1, this.warehouse.getDepot(1).getQuantity());
         Assertions.assertFalse(this.warehouse.getDepot(1).isEmpty());
@@ -61,6 +65,42 @@ public class WarehouseTest {
         Assertions.assertEquals(0, this.warehouse.getDepot(1).getQuantity());
         Assertions.assertTrue(this.warehouse.getDepot(1).isEmpty());
         Assertions.assertFalse(this.warehouse.getDepot(1).isFull());
+    }
 
+    @Test
+    @DisplayName("Inserting resources until the entire warehouse is full")
+    public void testInsertingUntilFullWarehouse(){
+        Assertions.assertTrue(warehouse.isEmpty());
+        Assertions.assertFalse(warehouse.isFull());
+        for(int i=0; i<3; i++){
+            while(!warehouse.getDepot(i).isFull()){
+                warehouse.addToDepot(i,ResourceType.SHIELD);
+            }
+        }
+        Assertions.assertFalse(warehouse.isEmpty());
+        Assertions.assertTrue(warehouse.isFull());
+    }
+
+    @Test
+    @DisplayName("Test swapping a depot")
+    public void testDepotSwap(){
+        // Adding resources to depots
+        this.warehouse.addToDepot(0, ResourceType.COIN);
+        Assertions.assertEquals(ResourceType.COIN, this.warehouse.getDepot(0).getResourceType());
+        Assertions.assertEquals(1, this.warehouse.getDepot(0).getQuantity());
+        this.warehouse.addToDepot(1, ResourceType.SERVANT);
+        Assertions.assertEquals(ResourceType.SERVANT, this.warehouse.getDepot(1).getResourceType());
+        Assertions.assertEquals(1, this.warehouse.getDepot(1).getQuantity());
+        // Checking depots capacity
+        Assertions.assertEquals(1, this.warehouse.getDepot(0).getCapacity());
+        Assertions.assertEquals(2, this.warehouse.getDepot(1).getCapacity());
+        // Swapping depots
+        this.warehouse.swapDepots(0,1);
+        Assertions.assertEquals(ResourceType.SERVANT, this.warehouse.getDepot(0).getResourceType());
+        Assertions.assertEquals(ResourceType.COIN, this.warehouse.getDepot(1).getResourceType());
+        Assertions.assertEquals(1, this.warehouse.getDepot(0).getQuantity());
+        Assertions.assertEquals(1, this.warehouse.getDepot(1).getQuantity());
+        Assertions.assertEquals(1, this.warehouse.getDepot(0).getCapacity());
+        Assertions.assertEquals(2, this.warehouse.getDepot(1).getCapacity());
     }
 }

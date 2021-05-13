@@ -26,7 +26,7 @@ public class WarehouseAdapter extends Observable<Message> implements Observer<St
     @Override
     public void update(Storage message) {
         // TODO: add messageType and create copy
-        Message networkMessage = new Message(null, (Warehouse) message);
-        notify(networkMessage);
+      // Message networkMessage = new Message(null, (Warehouse) message);
+        //notify(networkMessage);
     }
 }

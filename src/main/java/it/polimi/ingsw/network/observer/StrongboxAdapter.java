@@ -27,7 +27,8 @@ public class StrongboxAdapter extends Observable<Message> implements Observer<St
     @Override
     public void update(Storage message) {
         // TODO: add messageType and create copy
-        Message networkMessage = new Message(null, (Strongbox) message);
-        notify(networkMessage);
+        //Message networkMessage = new Message(null, (Strongbox) message);
+
+        //notify(networkMessage);
     }
 }

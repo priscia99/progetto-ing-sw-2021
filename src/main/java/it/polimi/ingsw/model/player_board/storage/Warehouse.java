@@ -26,8 +26,8 @@ public class Warehouse extends Storage {
         this.checkValidIndex(index2);
 
         Collections.swap(this.resourceStocks, index1, index2);
-        ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index2+1);
-        ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index1+1);
+        ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index2+1);
+        ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
 
         notify(this);
     }

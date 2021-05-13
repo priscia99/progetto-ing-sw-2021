@@ -24,7 +24,7 @@ public class FaithPathAdapter extends Observable<Message> implements Observer<Fa
     public void update(FaithPath message) {
         // TODO: add messageType and create copy
         // TODO: add game update
-        Message networkMessage = new Message(null, message);
-        notify(networkMessage);
+       // Message networkMessage = new Message(null, message);
+        // notify(//networkMessage);
     }
 }

@@ -29,8 +29,8 @@ public class LeaderCardsDeckAdapter extends Observable<Message> implements Obser
     @Override
     public void update(LeaderCardsDeck message) {
         // TODO: add messageType and create copy
-        Message networkMessage = new Message(null, message);
-        notify(networkMessage);
+       //  Message networkMessage = new Message(null, message);
+        // notify(//networkMessage);
     }
 }
 

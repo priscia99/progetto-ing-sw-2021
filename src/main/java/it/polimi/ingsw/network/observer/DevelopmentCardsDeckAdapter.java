@@ -31,7 +31,7 @@ public class DevelopmentCardsDeckAdapter extends Observable<Message> implements 
     public void update(DevelopmentCardsDeck message) {
         // TODO: add messageType and create copy
         // TODO: add game update
-        Message networkMessage = new Message(null, message);
-        notify(networkMessage);
+       // Message networkMessage = new Message(null, message);
+        // notify(networkMessage);
     }
 }
