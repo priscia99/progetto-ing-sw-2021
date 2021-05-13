@@ -1,19 +1,19 @@
 package it.polimi.ingsw.network.observer;
 
 import it.polimi.ingsw.model.player_board.storage.Storage;
+import it.polimi.ingsw.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.model.resource.ResourceStock;
+import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.server.Lobby;
 
 import java.util.ArrayList;
 
-public class StrongboxObserver implements Observer<ArrayList<ResourceStock>> {
+public class StrongboxObserver extends Observable<Message> implements Observer<Storage> {
 
     private Storage observed;
-    private final Lobby lobby;
 
-    public StrongboxObserver(Storage observed, Lobby lobby) {
+    public StrongboxObserver(Storage observed) {
         this.observed = observed;
-        this.lobby = lobby;
     }
 
     public Storage getObserved() {
@@ -25,8 +25,9 @@ public class StrongboxObserver implements Observer<ArrayList<ResourceStock>> {
     }
 
     @Override
-    public void update(ArrayList<ResourceStock> message) {
-        // TODO fill update
-        lobby.sendBroadcast(message);
+    public void update(Storage message) {
+        // TODO: add messageType and create copy
+        Message networkMessage = new Message(null, (Strongbox) message);
+        notify(networkMessage);
     }
 }

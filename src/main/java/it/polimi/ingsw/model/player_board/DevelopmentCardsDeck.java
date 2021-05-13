@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Class that models a deck of development cards.
  */
-public class DevelopmentCardsDeck extends Observable<ArrayList<DevelopmentCard>> implements Serializable {
+public class DevelopmentCardsDeck extends Observable<DevelopmentCardsDeck> implements Serializable {
 
     private static final long serialVersionUID = 1L;    // for serialization
 
@@ -45,7 +45,7 @@ public class DevelopmentCardsDeck extends Observable<ArrayList<DevelopmentCard>>
             throw new IllegalArgumentException("The development card level is not valid for this deck");
         }
         deck.add(developmentCard);
-        notify(this.deck);
+        notify(this);
     }
 
     /**

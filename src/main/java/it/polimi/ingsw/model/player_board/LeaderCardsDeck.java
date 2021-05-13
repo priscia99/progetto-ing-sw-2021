@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Class that models a list of leader cards.
  */
-public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
+public class LeaderCardsDeck extends Observable<LeaderCardsDeck> {
 
     private final ArrayList<LeaderCard> leaderCards;
 
@@ -67,7 +67,7 @@ public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
      */
     public void addLeader(LeaderCard leaderCard) {
         leaderCards.add(leaderCard);
-        notify(this.leaderCards);
+        notify(this);
     }
 
     /**
@@ -82,7 +82,7 @@ public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
      * @param cardId the id of the card to activate.
      */
     public void activateLeaderCardById(String cardId){
-        leaderCards.stream().filter(card->card.getId() == cardId).findFirst().get().play();
+        leaderCards.stream().filter(card-> card.getId().equals(cardId)).findFirst().get().play();
     }
 
     /**
@@ -93,9 +93,9 @@ public class LeaderCardsDeck extends Observable<ArrayList<LeaderCard>> {
         if(leaderCards.isEmpty()) {
             throw new EmptyDeckException("This player's leader cards deck is empty.");
         }
-        else if (!leaderCards.removeIf(card->card.getId()==cardId)) {
+        else if (!leaderCards.removeIf(card-> card.getId().equals(cardId))) {
             throw new IllegalArgumentException("LeaderCard not present this player's deck");
         }
-        notify(this.leaderCards);
+        notify(this);
     }
 }

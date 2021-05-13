@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.observer;
 
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
+import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.server.Lobby;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Observer to monitor leader cards deck. It refer to the socket connections (clients).
  */
-public class LeaderCardsDeckObserver implements Observer<ArrayList<LeaderCard>> {
+public class LeaderCardsDeckObserver extends Observable<Message> implements Observer<LeaderCardsDeck> {
 
     private LeaderCardsDeck observed;
     private final Lobby lobby;
@@ -28,9 +29,10 @@ public class LeaderCardsDeckObserver implements Observer<ArrayList<LeaderCard>> 
     }
 
     @Override
-    public void update(ArrayList<LeaderCard> message) {
-        // TODO fill update
-        lobby.sendBroadcast(message);
+    public void update(LeaderCardsDeck message) {
+        // TODO: add messageType and create copy
+        Message networkMessage = new Message(null, message);
+        notify(networkMessage);
     }
 }
 
