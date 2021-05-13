@@ -24,12 +24,10 @@ public class DropLeaderCardActionTest {
     @Test
     @DisplayName("Test leader is removed")
     public void testLeaderIsRemoved(){
-        HashMap<String, Object> map = new HashMap<>();
         String cardId = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0).getId();
-        map.put("cardId", cardId);
         int deckSize = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().size();
         LeaderCard cardToDrop = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0);
-        DropLeaderCardParams params = DropLeaderCardParams.fromMap(map);
+        DropLeaderCardParams params = new DropLeaderCardParams(cardId);
         action.execute(game, params);
         int deckSizeAfterDrop = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().size();
         Assertions.assertEquals(deckSize -1, deckSizeAfterDrop );
@@ -41,11 +39,9 @@ public class DropLeaderCardActionTest {
     @Test
     @DisplayName("Test player gain faith point")
     public void testPlayerGainFaithPoint(){
-        HashMap<String, Object> map = new HashMap<>();
         String cardId = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0).getId();
-        map.put("cardId", cardId);
         int faithPoints = game.getCurrentPlayer().getPlayerBoard().getFaithPath().getFaithPoints();
-        DropLeaderCardParams params = DropLeaderCardParams.fromMap(map);
+        DropLeaderCardParams params = new DropLeaderCardParams(cardId);
         action.execute(game, params);
         int faithPointsAfterDrop = game.getCurrentPlayer().getPlayerBoard().getFaithPath().getFaithPoints();
         Assertions.assertEquals(faithPointsAfterDrop, faithPoints +1);

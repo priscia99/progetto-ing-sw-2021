@@ -25,11 +25,9 @@ public class PlayLeaderCardActionTest {
     @Test
     @DisplayName("Test leader card activation")
     public void testLeaderCardActivation(){
-        HashMap<String, Object> map = new HashMap<>();
         String cardId = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0).getId();
-        map.put("cardId", cardId);
         Assertions.assertFalse(game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0).isActive());
-        PlayLeaderCardParams params = PlayLeaderCardParams.fromMap(map);
+        PlayLeaderCardParams params = new PlayLeaderCardParams(cardId);
         action.execute(game, params);
         Assertions.assertTrue(game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0).isActive());
     }
