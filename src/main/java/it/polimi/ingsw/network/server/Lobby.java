@@ -1,8 +1,11 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.TurnController;
 import it.polimi.ingsw.exceptions.FullLobbyException;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
+import it.polimi.ingsw.network.MessageDecoder;
 
 import java.util.*;
 
@@ -27,6 +30,7 @@ public class Lobby {
             throw new FullLobbyException("Full lobby");
         }
         clientConnectionMap.put(username, clientConnection);
+        if(this.isFull()) init();
     }
 
     /**
@@ -65,16 +69,29 @@ public class Lobby {
         return clientConnectionMap.size() == 0;
     }
 
-    /**
-     * Start a new game.
-     */
-    public void startGame() {
+
+    public void init(){
+        GameController gameController = new GameController(game);
+        TurnController turnController = new TurnController(game.getTurnManager());
+        MessageDecoder messageDecoder = new MessageDecoder(turnController);
+        clientConnectionMap.values()
+                .forEach(connection -> {
+                    connection.addObserver(messageDecoder);
+                });
+
+
         ArrayList<Player> players = new ArrayList<>();
         clientConnectionMap.keySet()
                 .forEach(username -> {
                     players.add(new Player(username));
                 });
-        game.setup(players);
+        gameController.setupGame(players);
+    }
+    /**
+     * Start a new game.
+     */
+    public void startGame() {
+
     }
 
     /**

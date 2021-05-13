@@ -11,7 +11,7 @@ import java.util.List;
 public class GameController {
     private Game game;
 
-    GameController(Game game){
+    public GameController(Game game){
         this.game = game;
     }
 

@@ -6,7 +6,11 @@ import it.polimi.ingsw.model.turn_manager.turn_action.TurnActionType;
 import it.polimi.ingsw.network.observer.Observer;
 
 public class MessageDecoder implements Observer<Message> {
-    TurnController turnController;
+    private TurnController turnController;
+
+    public MessageDecoder(TurnController controller){
+        this.turnController = controller;
+    }
 
 
     @Override

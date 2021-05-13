@@ -1,16 +1,19 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.observer.Observable;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class SocketClientConnection extends Observable<String> implements ClientConnection, Runnable {
+public class SocketClientConnection extends Observable<Message> implements ClientConnection, Runnable {
 
     private Socket socket;  // single socket connection with one client
     private ObjectOutputStream out; // output stream to the client
+    private ObjectInputStream in;
     private Server server;
     private boolean alive = true;
 
@@ -72,38 +75,37 @@ public class SocketClientConnection extends Observable<String> implements Client
 
     @Override
     public void run() {
-        Scanner in;         // input stream valid locally
         String username;    // username of the player (client)
         String lobbyId;
         try {
-            in = new Scanner(socket.getInputStream());
+            in = new ObjectInputStream(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
 
             // FIXME: call view (temporary)
+            /*
             this.send("Welcome!");  // read username and lobby id from the client
             this.send("Enter a username: ");
-            String inBuffer = in.nextLine();
-            username = inBuffer;
+            Message inBuffer = (Message) in.readObject();
+            username = inBuffer.getPayload();
             this.send("Do you want to create a new lobby? [Y/N]");
-            inBuffer = in.nextLine();
+            inBuffer = in.readObject();
             if (inBuffer.equalsIgnoreCase("y")) {
                 this.send("Specify the dimension of the lobby: [4 max]");
-                inBuffer = in.nextLine();
+                inBuffer = in.readObject();
                 int dimension = Integer.parseInt(inBuffer);
                 server.lobby(dimension, username, this);   // add this client connection to the server
             } else if (inBuffer.equalsIgnoreCase("n")) {
                 this.send("Enter a lobby id: ");
-                inBuffer = in.nextLine();
+                inBuffer = in.readObject();
                 lobbyId = inBuffer;
                 server.lobby(lobbyId, username, this);   // add this client connection to the server
             } else {
                 throw new IllegalArgumentException("Wrong response!!!");
             }
-
+            */
             // while the connection is alive read every message and notify it to the server
             while(isAlive()) {
-                inBuffer = in.nextLine();
-                notify(inBuffer);
+                notify((Message) in.readObject());
             }
         } catch (Exception e) {
             e.printStackTrace();
