@@ -1,4 +1,4 @@
-package it.polimi.ingsw.storage;
+package it.polimi.ingsw.model.storage;
 
 import it.polimi.ingsw.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.model.resource.ResourceType;
@@ -102,5 +102,19 @@ public class WarehouseTest {
         Assertions.assertEquals(1, this.warehouse.getDepot(1).getQuantity());
         Assertions.assertEquals(1, this.warehouse.getDepot(0).getCapacity());
         Assertions.assertEquals(2, this.warehouse.getDepot(1).getCapacity());
+    }
+
+    @Test
+    @DisplayName("Test counting by resource type")
+    public void testCountingByResourceType(){
+        // Adding several resources to depots in warehouse
+        this.warehouse.addToDepot(0, ResourceType.SERVANT);
+        this.warehouse.addToDepot(2, ResourceType.COIN);
+        this.warehouse.addToDepot(1, ResourceType.STONE);
+        this.warehouse.addToDepot(2, ResourceType.COIN);
+        // Checking if counts by resource types are correct
+        Assertions.assertEquals(1, this.warehouse.countByResourceType(ResourceType.SERVANT));
+        Assertions.assertEquals(1, this.warehouse.countByResourceType(ResourceType.STONE));
+        Assertions.assertEquals(2, this.warehouse.countByResourceType(ResourceType.COIN));
     }
 }

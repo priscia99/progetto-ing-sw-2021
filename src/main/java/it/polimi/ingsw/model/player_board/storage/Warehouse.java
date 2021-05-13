@@ -49,6 +49,11 @@ public class Warehouse extends Storage {
                 .allMatch(ResourceStock::isEmpty);
     }
 
+    /**
+     * Add a new resource into the specified depot
+     * @param index index of the depot
+     * @param resourceType type of the resource to insert
+     */
     public void addToDepot(int index, ResourceType resourceType){
         // TODO: Check if a resource of the same type is in another depot
         this.checkValidIndex(index);
@@ -60,6 +65,11 @@ public class Warehouse extends Storage {
         notify(this);
     }
 
+    /**
+     * Remove a resource given its type and the index from which it needs to be removed
+     * @param index index of the depot
+     * @param resourceType type of the resource to delete
+     */
     public void removeFromDepot(int index, ResourceType resourceType) {
         this.checkValidIndex(index);
         this.getResourceStock(index).decrementResource(resourceType);
