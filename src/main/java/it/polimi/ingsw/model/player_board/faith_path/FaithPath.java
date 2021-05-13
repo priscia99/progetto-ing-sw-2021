@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.player_board.faith_path;
 
 import it.polimi.ingsw.data.FaithPathBuilder;
-import it.polimi.ingsw.network.observer.Observable;
+import it.polimi.ingsw.network.observer.ObservableWithOption;
 
-public class FaithPath extends Observable<FaithPath> {
+public class FaithPath extends ObservableWithOption<FaithPath> {
 
     private final Cell[] cells;
     private int faithPoints;

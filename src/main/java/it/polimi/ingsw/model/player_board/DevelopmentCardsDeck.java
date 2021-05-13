@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model.player_board;
 
 import it.polimi.ingsw.model.card.DevelopmentCard;
-import it.polimi.ingsw.network.observer.Observable;
+import it.polimi.ingsw.network.MessageType;
+import it.polimi.ingsw.network.observer.ObservableWithOption;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Class that models a deck of development cards.
  */
-public class DevelopmentCardsDeck extends Observable<DevelopmentCardsDeck> implements Serializable {
+public class DevelopmentCardsDeck extends ObservableWithOption<DevelopmentCardsDeck, MessageType> implements Serializable {
 
     private static final long serialVersionUID = 1L;    // for serialization
 
@@ -45,7 +46,9 @@ public class DevelopmentCardsDeck extends Observable<DevelopmentCardsDeck> imple
             throw new IllegalArgumentException("The development card level is not valid for this deck");
         }
         deck.add(developmentCard);
-        notify(this);
+
+        // TODO: add messageType
+        notify(this, null);
     }
 
     /**

@@ -5,13 +5,13 @@ import it.polimi.ingsw.model.market.CardMarket;
 import it.polimi.ingsw.model.market.MarbleMarket;
 import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.model.turn_manager.TurnManager;
-import it.polimi.ingsw.network.observer.Observable;
+import it.polimi.ingsw.network.observer.ObservableWithOption;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Game extends Observable<Game> {
+public class Game extends ObservableWithOption<Game> {
 
     private ArrayList<Player> players;
     private int currentPlayerIndex;

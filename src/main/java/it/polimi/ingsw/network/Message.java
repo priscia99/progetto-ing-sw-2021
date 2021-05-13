@@ -2,12 +2,17 @@ package it.polimi.ingsw.network;
 
 public class Message {
     MessageType type;       // message header
-    String currentPlayer;   // player username
+    String currentPlayer = null;   // player username
     Object payload;         // message payload
 
     public Message(MessageType type, String currentPlayer, Object payload) {
         this.type = type;
         this.currentPlayer = currentPlayer;
+        this.payload = payload;
+    }
+
+    public Message(MessageType type, Object payload) {
+        this.type = type;
         this.payload = payload;
     }
 

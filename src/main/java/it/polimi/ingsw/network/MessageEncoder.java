@@ -1,9 +1,9 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.network.observer.Observer;
+import it.polimi.ingsw.network.observer.ObserverWithOption;
 import it.polimi.ingsw.network.server.Lobby;
 
-public class MessageEncoder implements Observer<Message> {
+public class MessageEncoder implements ObserverWithOption<Object, MessageType> {
 
     private Lobby lobby;
 
@@ -20,7 +20,7 @@ public class MessageEncoder implements Observer<Message> {
     }
 
     @Override
-    public void update(Message message) {
+    public void update(Object message, MessageType type) {
         this.lobby.sendBroadcast(message);
     }
 }

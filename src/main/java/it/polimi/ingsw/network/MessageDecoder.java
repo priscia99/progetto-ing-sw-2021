@@ -3,9 +3,9 @@ package it.polimi.ingsw.network;
 import it.polimi.ingsw.controller.TurnController;
 import it.polimi.ingsw.model.turn_manager.action_params.*;
 import it.polimi.ingsw.model.turn_manager.turn_action.TurnActionType;
-import it.polimi.ingsw.network.observer.Observer;
+import it.polimi.ingsw.network.observer.ObserverWithOption;
 
-public class MessageDecoder implements Observer<Message> {
+public class MessageDecoder implements ObserverWithOption<Message, MessageType> {
     private TurnController turnController;
 
     public MessageDecoder(TurnController controller){
@@ -14,7 +14,7 @@ public class MessageDecoder implements Observer<Message> {
 
 
     @Override
-    public void update(Message message) {
+    public void update(Message message, MessageType type) {
         ActionParams params;
         switch(message.getType()){
             case DROP_LEADER_CARD:
