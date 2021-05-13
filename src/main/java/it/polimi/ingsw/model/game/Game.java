@@ -50,7 +50,7 @@ public class Game extends Observable<Game> {
 
 
     public void checkVictory() {
-        if(players.stream().map(player->player.meetsWinCondition()).collect(Collectors.toList()).size()>0){
+        if(players.stream().map(Player::meetsWinCondition).count() >0){
             areWinConditionsMet = true;
         }
     }
@@ -100,7 +100,7 @@ public class Game extends Observable<Game> {
 
     public boolean allPlayersHasChosedInitialResources(){
         return !players.stream()
-                .map(player-> player.hasToChooseInitialResource())
+                .map(Player::hasToChooseInitialResource)
                 .collect(Collectors.toList())
                 .contains(false);
     }

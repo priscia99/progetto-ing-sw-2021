@@ -7,11 +7,9 @@ import it.polimi.ingsw.network.server.Lobby;
 public class FaithPathObserver extends Observable<Message> implements Observer<FaithPath> {
 
     private FaithPath observed;
-    private Lobby lobby;
 
-    public FaithPathObserver(FaithPath observed, Lobby lobby) {
+    public FaithPathObserver(FaithPath observed) {
         this.observed = observed;
-        this.lobby = lobby;
     }
 
     public FaithPath getObserved() {

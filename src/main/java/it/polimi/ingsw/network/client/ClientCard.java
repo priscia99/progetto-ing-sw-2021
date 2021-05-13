@@ -5,17 +5,17 @@ import it.polimi.ingsw.model.card.requirement.Requirement;
 
 public abstract class ClientCard {
 
-    private final int id;
+    private final String id;
     private final Requirement requirement;
     private final Effect effect;
 
-    public ClientCard(int id, Requirement requirement, Effect effect) {
+    public ClientCard(String id, Requirement requirement, Effect effect) {
         this.id = id;
         this.requirement = requirement;
         this.effect = effect;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

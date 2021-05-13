@@ -13,11 +13,9 @@ import java.util.ArrayList;
 public class LeaderCardsDeckObserver extends Observable<Message> implements Observer<LeaderCardsDeck> {
 
     private LeaderCardsDeck observed;
-    private final Lobby lobby;
 
-    public LeaderCardsDeckObserver(LeaderCardsDeck observed, Lobby lobby) {
+    public LeaderCardsDeckObserver(LeaderCardsDeck observed) {
         this.observed = observed;
-        this.lobby = lobby;
     }
 
     public LeaderCardsDeck getObserved() {
