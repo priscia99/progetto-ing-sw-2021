@@ -14,27 +14,27 @@ public class MessageDecoder implements ObserverWithOption<Message, MessageType> 
 
 
     @Override
-    public void update(Message message, MessageType type) {
+    public void update(Message object, MessageType type) {
         ActionParams params;
-        switch(message.getType()){
+        switch(object.getType()){
             case DROP_LEADER_CARD:
-                params = (DropLeaderCardParams) message.getPayload();
+                params = (DropLeaderCardParams) object.getPayload();
                 turnController.playerPickedAction(TurnActionType.DROP_LEADER_CARD, params);
                 break;
             case PLAY_LEADER_CARD:
-                params = (PlayLeaderCardParams) message.getPayload();
+                params = (PlayLeaderCardParams) object.getPayload();
                 turnController.playerPickedAction(TurnActionType.PLAY_LEADER_CARD, params);
                 break;
             case BUY_DEVELOPMENT_CARD:
-                params = (BuyDevelopmentCardParams) message.getPayload();
+                params = (BuyDevelopmentCardParams) object.getPayload();
                 turnController.playerPickedAction(TurnActionType.BUY_DEVELOPMENT_CARD, params);
                 break;
             case PICK_RESOURCES:
-                params = (PickResourcesParams) message.getPayload();
+                params = (PickResourcesParams) object.getPayload();
                 turnController.playerPickedAction(TurnActionType.PICK_RESOURCES, params);
                 break;
             case START_PRODUCTION:
-                params = (StartProductionParams) message.getPayload();
+                params = (StartProductionParams) object.getPayload();
                 turnController.playerPickedAction(TurnActionType.START_PRODUCTION, params);
                 break;
         }

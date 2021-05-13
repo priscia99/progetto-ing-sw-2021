@@ -22,7 +22,8 @@ public class VictoryObserver implements ObserverWithOption<Object, MessageType> 
     }
 
     @Override
-    public void update(Object message, MessageType option) {
+    public void update(Object object, MessageType option) {
         // TODO complete with end check
+
     }
 }
