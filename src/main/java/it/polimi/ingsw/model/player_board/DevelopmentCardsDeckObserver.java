@@ -13,16 +13,10 @@ import java.util.ArrayList;
  */
 public class DevelopmentCardsDeckObserver implements Observer<ArrayList<DevelopmentCard>> {
 
-    private DevelopmentCardsDeck observed;
     private Lobby lobby;
 
     public DevelopmentCardsDeckObserver(DevelopmentCardsDeck observed, Lobby lobby) {
-        this.observed = observed;
         this.lobby = lobby;
-    }
-
-    public void setObserved(DevelopmentCardsDeck observed) {
-        this.observed = observed;
     }
 
     @Override
