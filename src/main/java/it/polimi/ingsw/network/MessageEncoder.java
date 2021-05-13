@@ -20,7 +20,9 @@ public class MessageEncoder implements ObserverWithOption<Object, MessageType> {
     }
 
     @Override
-    public void update(Object message, MessageType type) {
+    public void update(Object object, MessageType type) {
+        // TODO complete
+        Message message = new Message(type, object);
         this.lobby.sendBroadcast(message);
     }
 }

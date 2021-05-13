@@ -19,10 +19,10 @@ public class Observable<T> {
         }
     }
 
-    protected void notify(T message){
+    protected void notify(T object){
         synchronized (observers) {
             for(Observer<T> observer : observers){
-                observer.update(message);
+                observer.update(object);
             }
         }
     }
