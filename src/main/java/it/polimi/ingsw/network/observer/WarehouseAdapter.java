@@ -7,11 +7,11 @@ import it.polimi.ingsw.network.MessageEncoder;
 
 import java.util.ArrayList;
 
-public class WarehouseObserver extends Observable<Message> implements Observer<Storage> {
+public class WarehouseAdapter extends Observable<Message> implements Observer<Storage> {
 
     private Warehouse observed;
 
-    public WarehouseObserver(Warehouse observed) {
+    public WarehouseAdapter(Warehouse observed) {
         this.observed = observed;
     }
 

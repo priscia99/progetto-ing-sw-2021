@@ -4,11 +4,11 @@ import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.server.Lobby;
 
-public class FaithPathObserver extends Observable<Message> implements Observer<FaithPath> {
+public class FaithPathAdapter extends Observable<Message> implements Observer<FaithPath> {
 
     private FaithPath observed;
 
-    public FaithPathObserver(FaithPath observed) {
+    public FaithPathAdapter(FaithPath observed) {
         this.observed = observed;
     }
 

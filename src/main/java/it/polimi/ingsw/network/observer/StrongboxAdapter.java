@@ -8,11 +8,11 @@ import it.polimi.ingsw.network.server.Lobby;
 
 import java.util.ArrayList;
 
-public class StrongboxObserver extends Observable<Message> implements Observer<Storage> {
+public class StrongboxAdapter extends Observable<Message> implements Observer<Storage> {
 
     private Storage observed;
 
-    public StrongboxObserver(Storage observed) {
+    public StrongboxAdapter(Storage observed) {
         this.observed = observed;
     }
 

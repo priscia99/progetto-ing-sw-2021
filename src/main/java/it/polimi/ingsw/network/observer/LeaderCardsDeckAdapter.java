@@ -10,11 +10,11 @@ import java.util.ArrayList;
 /**
  * Observer to monitor leader cards deck. It refer to the socket connections (clients).
  */
-public class LeaderCardsDeckObserver extends Observable<Message> implements Observer<LeaderCardsDeck> {
+public class LeaderCardsDeckAdapter extends Observable<Message> implements Observer<LeaderCardsDeck> {
 
     private LeaderCardsDeck observed;
 
-    public LeaderCardsDeckObserver(LeaderCardsDeck observed) {
+    public LeaderCardsDeckAdapter(LeaderCardsDeck observed) {
         this.observed = observed;
     }
 

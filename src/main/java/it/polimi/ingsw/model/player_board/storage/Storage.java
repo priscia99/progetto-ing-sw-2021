@@ -18,6 +18,10 @@ public abstract class Storage extends Observable<Storage> {
         return resourceStocks.get(index);
     }
 
+    public ArrayList<ResourceStock> getResourceStocks() {
+        return resourceStocks;
+    }
+
     public boolean isEmpty() {
         return this.resourceStocks.stream().allMatch(ResourceStock::isEmpty);
     }

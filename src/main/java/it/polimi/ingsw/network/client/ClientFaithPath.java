@@ -1,11 +1,27 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
+import it.polimi.ingsw.model.player_board.faith_path.PopeCell;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class ClientFaithPath {
 
     private final int faithPoints;
-    private final boolean[] popeFavors;
+    private final ArrayList<Boolean> popeFavors;
 
-    public ClientFaithPath(int faithPoints, boolean[] popeFavors) {
+    public ClientFaithPath(FaithPath faithPath) {
+        this.faithPoints = faithPath.getFaithPoints();
+        popeFavors = Arrays
+                .stream(faithPath.getCells())
+                .filter(cell -> cell instanceof PopeCell)
+                .map(cell -> ((PopeCell) cell).getFavor().isUsed())
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public ClientFaithPath(int faithPoints, ArrayList<Boolean> popeFavors) {
         this.faithPoints = faithPoints;
         this.popeFavors = popeFavors;
     }
@@ -14,11 +30,11 @@ public class ClientFaithPath {
         return faithPoints;
     }
 
-    public boolean[] getPopeFavors() {
+    public ArrayList<Boolean> getPopeFavors() {
         return popeFavors;
     }
 
     public boolean getPopeFavor(int index) {
-        return popeFavors[index];
+        return popeFavors.get(index);
     }
 }

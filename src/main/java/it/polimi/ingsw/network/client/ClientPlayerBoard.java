@@ -10,6 +10,8 @@ public class ClientPlayerBoard {
     private final ArrayList<ClientLeaderCard> clientLeaderCards;
     private final ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards;
 
+
+
     public ClientPlayerBoard(ClientFaithPath faithPath, ClientWarehouse warehouse, ClientStrongbox strongbox,
                              ArrayList<ClientLeaderCard> clientLeaderCards, ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards) {
         this.faithPath = faithPath;
