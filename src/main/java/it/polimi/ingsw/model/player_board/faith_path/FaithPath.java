@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.player_board.faith_path;
 
 import it.polimi.ingsw.data.FaithPathBuilder;
+import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.observer.ObservableWithOption;
 
-public class FaithPath extends ObservableWithOption<FaithPath> {
+public class FaithPath extends ObservableWithOption<FaithPath, MessageType> {
 
     private final Cell[] cells;
     private int faithPoints;
@@ -37,7 +38,8 @@ public class FaithPath extends ObservableWithOption<FaithPath> {
         this.cells[this.faithPoints].reach();
         faithPoints++;
 
-        notify(this);
+        // TODO add messageType
+        notify(this, null);
     }
 
     // TODO: This function needs to be called by an observer
