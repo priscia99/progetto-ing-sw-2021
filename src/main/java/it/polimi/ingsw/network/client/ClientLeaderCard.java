@@ -7,7 +7,7 @@ public class ClientLeaderCard extends ClientCard implements Viewable {
 
     private final boolean active;
 
-    public ClientLeaderCard(int id, Requirement requirement, Effect effect, boolean active) {
+    public ClientLeaderCard(String id, Requirement requirement, Effect effect, boolean active) {
         super(id, requirement, effect);
         this.active = active;
     }
