@@ -40,16 +40,17 @@ public class Warehouse extends Storage {
     public boolean isFull() {
         return this.resourceStocks.stream()
                 .map(resourceStock -> (ResourceDepot) resourceStock)
-                .allMatch(resourceDepot -> isFull());
+                .allMatch(ResourceDepot::isFull);
     }
 
     public boolean isEmpty() {
         return this.resourceStocks.stream()
                 .map(resourceStock -> (ResourceDepot) resourceStock)
-                .allMatch(resourceDepot -> isEmpty());
+                .allMatch(ResourceStock::isEmpty);
     }
 
     public void addToDepot(int index, ResourceType resourceType){
+        // TODO: Check if a resource of the same type is in another depot
         this.checkValidIndex(index);
         if (this.getResourceStock(index).isEmpty()) {
             ((ResourceDepot) this.getResourceStock(index)).setResourceType(resourceType);
@@ -61,7 +62,7 @@ public class Warehouse extends Storage {
 
     public void removeFromDepot(int index, ResourceType resourceType) {
         this.checkValidIndex(index);
-        this.getResourceStock(index).incrementResource(resourceType);
+        this.getResourceStock(index).decrementResource(resourceType);
         if (this.getResourceStock(index).isEmpty()) {
             ((ResourceDepot) this.getResourceStock(index)).setResourceType(ResourceType.BLANK);
         }
