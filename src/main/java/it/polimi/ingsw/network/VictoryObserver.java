@@ -2,9 +2,10 @@ package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.network.observer.ObservableWithOption;
+import it.polimi.ingsw.network.observer.ObserverWithOption;
 import it.polimi.ingsw.network.server.Lobby;
 
-public class VictoryObserver extends ObservableWithOption<Object, MessageType> {
+public class VictoryObserver implements ObserverWithOption<Object, MessageType> {
 
     private Game game;
 
@@ -21,7 +22,7 @@ public class VictoryObserver extends ObservableWithOption<Object, MessageType> {
     }
 
     @Override
-    public void update(Object message, MessageType type) {
-        // trigger end
+    public void update(Object message, MessageType option) {
+        // TODO complete with end check
     }
 }

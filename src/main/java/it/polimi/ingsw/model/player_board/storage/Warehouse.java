@@ -29,7 +29,8 @@ public class Warehouse extends Storage {
         ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index2+1);
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
 
-        notify(this);
+        // TODO add messageType
+        notify(this, null);
     }
 
     public ResourceDepot getDepot(int index) {
@@ -57,7 +58,8 @@ public class Warehouse extends Storage {
         }
         this.getResourceStock(index).incrementResource(resourceType);
 
-        notify(this);
+        // TODO add messageType
+        notify(this, null);
     }
 
     public void removeFromDepot(int index, ResourceType resourceType) {
@@ -67,7 +69,8 @@ public class Warehouse extends Storage {
             ((ResourceDepot) this.getResourceStock(index)).setResourceType(ResourceType.BLANK);
         }
 
-        notify(this);
+        // TODO add messageType
+        notify(this, null);
     }
 
     @Override

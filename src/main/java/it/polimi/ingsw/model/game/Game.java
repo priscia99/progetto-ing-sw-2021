@@ -5,13 +5,14 @@ import it.polimi.ingsw.model.market.CardMarket;
 import it.polimi.ingsw.model.market.MarbleMarket;
 import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.model.turn_manager.TurnManager;
+import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.observer.ObservableWithOption;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Game extends ObservableWithOption<Game> {
+public class Game extends ObservableWithOption<Game, MessageType> {
 
     private ArrayList<Player> players;
     private int currentPlayerIndex;
@@ -44,8 +45,9 @@ public class Game extends ObservableWithOption<Game> {
         currentPlayerIndex++;
         currentPlayerIndex = currentPlayerIndex % players.size();
         turnManager.startTurn();
-        // FIXME
-        notify(this);
+
+        // TODO add messageType
+        notify(this, null);
     }
 
 
@@ -64,8 +66,9 @@ public class Game extends ObservableWithOption<Game> {
 
     public void start() {
         nextTurn();
-        // FIXME
-        notify(this);
+
+        // TODO add messageType
+        notify(this, null);
     }
 
     public void setup(ArrayList<Player> players) {
@@ -115,8 +118,8 @@ public class Game extends ObservableWithOption<Game> {
             }
         }
 
-        // FIXME
-        notify(this);
+        // TODO add messageType
+        notify(this, null);
     }
 
     private void setupMarbleMarket() {

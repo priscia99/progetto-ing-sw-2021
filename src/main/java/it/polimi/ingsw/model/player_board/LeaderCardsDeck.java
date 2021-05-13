@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.player_board;
 import it.polimi.ingsw.data.LeaderCardsBuilder;
 import it.polimi.ingsw.exceptions.EmptyDeckException;
 import it.polimi.ingsw.model.card.LeaderCard;
+import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.observer.ObservableWithOption;
 
 import java.util.*;
@@ -10,7 +11,7 @@ import java.util.*;
 /**
  * Class that models a list of leader cards.
  */
-public class LeaderCardsDeck extends ObservableWithOption<LeaderCardsDeck> {
+public class LeaderCardsDeck extends ObservableWithOption<LeaderCardsDeck, MessageType> {
 
     private final ArrayList<LeaderCard> leaderCards;
 
@@ -67,12 +68,16 @@ public class LeaderCardsDeck extends ObservableWithOption<LeaderCardsDeck> {
      */
     public void addLeader(LeaderCard leaderCard) {
         leaderCards.add(leaderCard);
-        notify(this);
+
+        // TODO add messageType
+        notify(this, null);
     }
 
     public void playLeaderCard(int index) {
         leaderCards.get(index).play();
-        notify(this);
+
+        // TODO add messageType
+        notify(this, null);
     }
 
     /**
@@ -101,6 +106,8 @@ public class LeaderCardsDeck extends ObservableWithOption<LeaderCardsDeck> {
         else if (!leaderCards.removeIf(card-> card.getId().equals(cardId))) {
             throw new IllegalArgumentException("LeaderCard not present this player's deck");
         }
-        notify(this);
+
+        // TODO add messageType
+        notify(this, null);
     }
 }

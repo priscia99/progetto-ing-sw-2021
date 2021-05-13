@@ -17,14 +17,18 @@ public class Strongbox extends Storage {
         this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
                 .forEach(resourceStock -> resourceStock.incrementResource(resourceType));
-        notify(this);
+
+        // TODO add messageType
+        notify(this, null);
     }
 
     public void removeResource(ResourceType resourceType) {
         this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
                 .forEach(resourceStock -> resourceStock.decrementResource(resourceType));
-        notify(this);
+
+        // TODO add messageType
+        notify(this, null);
     }
 
     @Override
