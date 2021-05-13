@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.market.CardMarket;
 import it.polimi.ingsw.model.market.MarbleMarket;
 import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.model.turn_manager.TurnManager;
-import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.network.observer.Observable;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.*;

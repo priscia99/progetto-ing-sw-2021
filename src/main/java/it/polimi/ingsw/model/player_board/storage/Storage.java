@@ -1,12 +1,10 @@
 package it.polimi.ingsw.model.player_board.storage;
 
-import it.polimi.ingsw.model.resource.ResourceDepot;
 import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
-import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.network.observer.Observable;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public abstract class Storage extends Observable<ArrayList<ResourceStock>> {
 

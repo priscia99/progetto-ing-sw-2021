@@ -1,9 +1,8 @@
-package it.polimi.ingsw.model.player_board.storage;
+package it.polimi.ingsw.network.observer;
 
-import it.polimi.ingsw.client.Message;
+import it.polimi.ingsw.model.player_board.storage.Storage;
 import it.polimi.ingsw.model.resource.ResourceStock;
-import it.polimi.ingsw.observer.Observer;
-import it.polimi.ingsw.server.Lobby;
+import it.polimi.ingsw.network.server.Lobby;
 
 import java.util.ArrayList;
 

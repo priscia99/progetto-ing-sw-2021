@@ -6,7 +6,7 @@
 <title>Lobby</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2021-04-23">
-<meta name="description" content="declaration: package: it.polimi.ingsw.server, class: Lobby">
+<meta name="description" content="declaration: package: it.polimi.ingsw.network.server, class: Lobby">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
@@ -73,11 +73,11 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">it.polimi.ingsw.server</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">it.polimi.ingsw.network.server</a></div>
 <h1 title="Class Lobby" class="title">Class Lobby</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance">it.polimi.ingsw.server.Lobby</div>
+<div class="inheritance">it.polimi.ingsw.network.server.Lobby</div>
 </div>
 <section class="description">
 <hr>
@@ -102,7 +102,7 @@ extends java.lang.Object</pre>
 </thead>
 <tbody>
 <tr class="alt-color">
-<td class="col-first"><code>private java.util.Map&lt;java.lang.String,&#8203;<a href="ClientConnection.html" title="interface in it.polimi.ingsw.server">ClientConnection</a>&gt;</code></td>
+<td class="col-first"><code>private java.util.Map&lt;java.lang.String,&#8203;<a href="ClientConnection.html" title="interface in it.polimi.ingsw.network.server">ClientConnection</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#clientConnectionMap">clientConnectionMap</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -163,14 +163,14 @@ extends java.lang.Object</pre>
 <tr class="alt-color" id="i0">
 <td class="col-first"><code>void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#addClientConnection(java.lang.String,it.polimi.ingsw.server.ClientConnection)">addClientConnection</a></span>&#8203;(java.lang.String&nbsp;username,
-<a href="ClientConnection.html" title="interface in it.polimi.ingsw.server">ClientConnection</a>&nbsp;clientConnection)</code></th>
+<a href="ClientConnection.html" title="interface in it.polimi.ingsw.network.server">ClientConnection</a>&nbsp;clientConnection)</code></th>
 <td class="col-last">
 <div class="block">Add a new client's connection the lobby if there is enough space.</div>
 </td>
 </tr>
 <tr class="row-color" id="i1">
 <td class="col-first"><code>boolean</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#contains(it.polimi.ingsw.server.ClientConnection)">contains</a></span>&#8203;(<a href="ClientConnection.html" title="interface in it.polimi.ingsw.server">ClientConnection</a>&nbsp;clientConnection)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#contains(it.polimi.ingsw.server.ClientConnection)">contains</a></span>&#8203;(<a href="ClientConnection.html" title="interface in it.polimi.ingsw.network.server">ClientConnection</a>&nbsp;clientConnection)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color" id="i2">
@@ -195,7 +195,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="alt-color" id="i6">
 <td class="col-first"><code>void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#removeClientConnection(it.polimi.ingsw.server.ClientConnection)">removeClientConnection</a></span>&#8203;(<a href="ClientConnection.html" title="interface in it.polimi.ingsw.server">ClientConnection</a>&nbsp;clientConnection)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#removeClientConnection(it.polimi.ingsw.server.ClientConnection)">removeClientConnection</a></span>&#8203;(<a href="ClientConnection.html" title="interface in it.polimi.ingsw.network.server">ClientConnection</a>&nbsp;clientConnection)</code></th>
 <td class="col-last">
 <div class="block">Remove a player from the lobby.</div>
 </td>
@@ -248,7 +248,7 @@ extends java.lang.Object</pre>
 <li>
 <section class="detail" id="clientConnectionMap">
 <h3>clientConnectionMap</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">java.util.Map&lt;java.lang.String,&#8203;<a href="ClientConnection.html" title="interface in it.polimi.ingsw.server">ClientConnection</a>&gt;</span>&nbsp;<span class="member-name">clientConnectionMap</span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">java.util.Map&lt;java.lang.String,&#8203;<a href="ClientConnection.html" title="interface in it.polimi.ingsw.network.server">ClientConnection</a>&gt;</span>&nbsp;<span class="member-name">clientConnectionMap</span></div>
 </section>
 </li>
 <li>
@@ -283,7 +283,7 @@ extends java.lang.Object</pre>
 <section class="detail" id="addClientConnection(java.lang.String,it.polimi.ingsw.server.ClientConnection)">
 <h3>addClientConnection</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">addClientConnection</span>&#8203;(<span class="parameters">java.lang.String&nbsp;username,
-<a href="ClientConnection.html" title="interface in it.polimi.ingsw.server">ClientConnection</a>&nbsp;clientConnection)</span></div>
+<a href="ClientConnection.html" title="interface in it.polimi.ingsw.network.server">ClientConnection</a>&nbsp;clientConnection)</span></div>
 <div class="block">Add a new client's connection the lobby if there is enough space.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -308,7 +308,7 @@ extends java.lang.Object</pre>
 <li>
 <section class="detail" id="removeClientConnection(it.polimi.ingsw.server.ClientConnection)">
 <h3>removeClientConnection</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">removeClientConnection</span>&#8203;(<span class="parameters"><a href="ClientConnection.html" title="interface in it.polimi.ingsw.server">ClientConnection</a>&nbsp;clientConnection)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">removeClientConnection</span>&#8203;(<span class="parameters"><a href="ClientConnection.html" title="interface in it.polimi.ingsw.network.server">ClientConnection</a>&nbsp;clientConnection)</span></div>
 <div class="block">Remove a player from the lobby.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -357,7 +357,7 @@ extends java.lang.Object</pre>
 <li>
 <section class="detail" id="contains(it.polimi.ingsw.server.ClientConnection)">
 <h3>contains</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">contains</span>&#8203;(<span class="parameters"><a href="ClientConnection.html" title="interface in it.polimi.ingsw.server">ClientConnection</a>&nbsp;clientConnection)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">contains</span>&#8203;(<span class="parameters"><a href="ClientConnection.html" title="interface in it.polimi.ingsw.network.server">ClientConnection</a>&nbsp;clientConnection)</span></div>
 </section>
 </li>
 </ul>

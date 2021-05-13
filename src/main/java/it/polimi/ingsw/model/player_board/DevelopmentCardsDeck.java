@@ -1,13 +1,10 @@
 package it.polimi.ingsw.model.player_board;
 
 import it.polimi.ingsw.model.card.DevelopmentCard;
-import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.network.observer.Observable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Class that models a deck of development cards.

@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model.player_board.faith_path;
 
 import it.polimi.ingsw.data.FaithPathBuilder;
-import it.polimi.ingsw.observer.Observable;
-
-import java.util.Arrays;
+import it.polimi.ingsw.network.observer.Observable;
 
 public class FaithPath extends Observable<Integer> {
 

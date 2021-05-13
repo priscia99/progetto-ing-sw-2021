@@ -1,11 +1,9 @@
-package it.polimi.ingsw.model.player_board;
+package it.polimi.ingsw.network.observer;
 
 import it.polimi.ingsw.model.card.DevelopmentCard;
-import it.polimi.ingsw.observer.Observer;
-import it.polimi.ingsw.server.Lobby;
+import it.polimi.ingsw.model.player_board.DevelopmentCardsDeck;
+import it.polimi.ingsw.network.server.Lobby;
 
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**

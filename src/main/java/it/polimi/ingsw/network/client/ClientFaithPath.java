@@ -1,6 +1,4 @@
-package it.polimi.ingsw.client;
-
-import it.polimi.ingsw.model.player_board.faith_path.PopeFavor;
+package it.polimi.ingsw.network.client;
 
 public class ClientFaithPath {
 

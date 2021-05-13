@@ -1,11 +1,10 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.exceptions.FullLobbyException;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Lobby {
 

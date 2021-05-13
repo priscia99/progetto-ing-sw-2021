@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.game;
 
-import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.network.observer.Observer;
 
 public class GameObserver implements Observer<Game> {
 

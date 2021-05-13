@@ -1,6 +1,5 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.model.card.Card;
 import it.polimi.ingsw.model.card.effect.Effect;
 import it.polimi.ingsw.model.card.requirement.Requirement;
 

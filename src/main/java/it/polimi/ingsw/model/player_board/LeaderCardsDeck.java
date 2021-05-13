@@ -3,10 +3,9 @@ package it.polimi.ingsw.model.player_board;
 import it.polimi.ingsw.data.LeaderCardsBuilder;
 import it.polimi.ingsw.exceptions.EmptyDeckException;
 import it.polimi.ingsw.model.card.LeaderCard;
-import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.network.observer.Observable;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Class that models a list of leader cards.

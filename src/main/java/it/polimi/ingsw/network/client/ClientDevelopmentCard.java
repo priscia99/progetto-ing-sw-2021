@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.model.card.color.Color;
 import it.polimi.ingsw.model.card.effect.Effect;

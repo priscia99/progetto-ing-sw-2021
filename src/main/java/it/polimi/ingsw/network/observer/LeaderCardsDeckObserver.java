@@ -1,9 +1,8 @@
-package it.polimi.ingsw.model.player_board;
+package it.polimi.ingsw.network.observer;
 
 import it.polimi.ingsw.model.card.LeaderCard;
 import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
-import it.polimi.ingsw.observer.Observer;
-import it.polimi.ingsw.server.Lobby;
+import it.polimi.ingsw.network.server.Lobby;
 
 import java.util.ArrayList;
 

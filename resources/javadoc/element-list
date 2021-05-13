@@ -1,5 +1,5 @@
 it.polimi.ingsw
-it.polimi.ingsw.client
+it.polimi.ingsw.network.client
 it.polimi.ingsw.controller
 it.polimi.ingsw.data
 it.polimi.ingsw.exceptions
@@ -18,7 +18,7 @@ it.polimi.ingsw.model.resource
 it.polimi.ingsw.model.turn_manager
 it.polimi.ingsw.model.turn_manager.action_params
 it.polimi.ingsw.model.turn_manager.turn_action
-it.polimi.ingsw.observer
-it.polimi.ingsw.server
+it.polimi.ingsw.network.observer
+it.polimi.ingsw.network.server
 it.polimi.ingsw.testUtils
 it.polimi.ingsw.utils

@@ -1,6 +1,6 @@
-package it.polimi.ingsw.server;
+package it.polimi.ingsw.network.server;
 
-import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.network.observer.Observable;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
