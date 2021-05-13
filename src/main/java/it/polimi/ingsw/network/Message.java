@@ -11,10 +11,8 @@ public class Message {
         this.payload = payload;
     }
 
-    public Message(MessageType type, Object payload) {
-        this.type = type;
-        this.currentPlayer = null;
-        this.payload = payload;
+    public static Message StartingMessage(MessageType type, Object payload){
+        return new Message(type, null, payload);
     }
 
     public MessageType getType() {
