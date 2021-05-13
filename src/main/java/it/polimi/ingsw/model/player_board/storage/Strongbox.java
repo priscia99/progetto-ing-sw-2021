@@ -11,21 +11,20 @@ public class Strongbox extends Storage {
         this.resourceStocks.add(new ResourceStock(ResourceType.STONE));
         this.resourceStocks.add(new ResourceStock(ResourceType.SHIELD));
         this.resourceStocks.add(new ResourceStock(ResourceType.SERVANT));
-
     }
 
     public void addResource(ResourceType resourceType) {
         this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
                 .forEach(resourceStock -> resourceStock.incrementResource(resourceType));
-        notify(resourceStocks);
+        notify(this);
     }
 
     public void removeResource(ResourceType resourceType) {
         this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
                 .forEach(resourceStock -> resourceStock.decrementResource(resourceType));
-        notify(resourceStocks);
+        notify(this);
     }
 
     @Override

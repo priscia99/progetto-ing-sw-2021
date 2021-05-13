@@ -1,9 +1,10 @@
 package it.polimi.ingsw.network.observer;
 
 import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
+import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.server.Lobby;
 
-public class FaithPathObserver implements Observer<Integer> {
+public class FaithPathObserver extends Observable<Message> implements Observer<FaithPath> {
 
     private FaithPath observed;
     private Lobby lobby;
@@ -22,11 +23,10 @@ public class FaithPathObserver implements Observer<Integer> {
     }
 
     @Override
-    public void update(Integer message) {
-        // TODO fill update
-        lobby.sendBroadcast(message);
-        if (message == 20) {
-            // TODO call game
-        }
+    public void update(FaithPath message) {
+        // TODO: add messageType and create copy
+        // TODO: add game update
+        Message networkMessage = new Message(null, message);
+        notify(networkMessage);
     }
 }

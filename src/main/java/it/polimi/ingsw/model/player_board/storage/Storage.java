@@ -6,7 +6,7 @@ import it.polimi.ingsw.network.observer.Observable;
 
 import java.util.ArrayList;
 
-public abstract class Storage extends Observable<ArrayList<ResourceStock>> {
+public abstract class Storage extends Observable<Storage> {
 
     protected ArrayList<ResourceStock> resourceStocks;
 

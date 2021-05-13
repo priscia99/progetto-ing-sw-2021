@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.player_board.faith_path;
 import it.polimi.ingsw.data.FaithPathBuilder;
 import it.polimi.ingsw.network.observer.Observable;
 
-public class FaithPath extends Observable<Integer> {
+public class FaithPath extends Observable<FaithPath> {
 
     private final Cell[] cells;
     private int faithPoints;
@@ -37,7 +37,7 @@ public class FaithPath extends Observable<Integer> {
         this.cells[this.faithPoints].reach();
         faithPoints++;
 
-        notify(this.faithPoints);
+        notify(this);
     }
 
     // TODO: This function needs to be called by an observer

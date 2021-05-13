@@ -1,19 +1,22 @@
 package it.polimi.ingsw.network.observer;
 
-import it.polimi.ingsw.model.card.DevelopmentCard;
+import it.polimi.ingsw.model.player_board.storage.Storage;
 import it.polimi.ingsw.model.player_board.storage.Warehouse;
-import it.polimi.ingsw.network.server.Lobby;
+import it.polimi.ingsw.network.Message;
+import it.polimi.ingsw.network.MessageEncoder;
 
 import java.util.ArrayList;
 
-public class WarehouseObserver implements Observer<ArrayList<DevelopmentCard>> {
+public class WarehouseObserver extends Observable<Message> implements Observer<Storage> {
 
     private Warehouse observed;
-    private final Lobby lobby;
 
-    public WarehouseObserver(Warehouse observed, Lobby lobby) {
+    public WarehouseObserver(Warehouse observed) {
         this.observed = observed;
-        this.lobby = lobby;
+    }
+
+    public Warehouse getObserved() {
+        return observed;
     }
 
     public void setObserved(Warehouse observed) {
@@ -21,8 +24,9 @@ public class WarehouseObserver implements Observer<ArrayList<DevelopmentCard>> {
     }
 
     @Override
-    public void update(ArrayList<DevelopmentCard> message) {
-        // TODO fill update
-        lobby.sendBroadcast(message);
+    public void update(Storage message) {
+        // TODO: add messageType and create copy
+        Message networkMessage = new Message(null, (Warehouse) message);
+        notify(networkMessage);
     }
 }
