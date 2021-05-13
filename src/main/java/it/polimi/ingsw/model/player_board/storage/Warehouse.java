@@ -3,6 +3,8 @@ package it.polimi.ingsw.model.player_board.storage;
 import it.polimi.ingsw.model.resource.ResourceDepot;
 import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.network.Message;
+import it.polimi.ingsw.network.MessageType;
 
 import java.util.Collections;
 
@@ -29,8 +31,7 @@ public class Warehouse extends Storage {
         ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index2+1);
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
 
-        // TODO add messageType
-        notify(this, null);
+        notify(this, MessageType.WAREHOUSE_SWAP);
     }
 
     public ResourceDepot getDepot(int index) {
@@ -56,15 +57,17 @@ public class Warehouse extends Storage {
      * @param resourceType type of the resource to insert
      */
     public void addToDepot(int index, ResourceType resourceType){
-        // TODO: Check if a resource of the same type is in another depot
         this.checkValidIndex(index);
         if (this.getResourceStock(index).isEmpty()) {
-            ((ResourceDepot) this.getResourceStock(index)).setResourceType(resourceType);
+            if (this.contains(resourceType)) {
+                throw new IllegalArgumentException("An other depot in the warehouse already contains this resource type");
+            } else {
+                ((ResourceDepot) this.getResourceStock(index)).setResourceType(resourceType);
+            }
         }
         this.getResourceStock(index).incrementResource(resourceType);
 
-        // TODO add messageType
-        notify(this, null);
+        notify(this, MessageType.WAREHOUSE_ADD);
     }
 
     /**
@@ -79,16 +82,22 @@ public class Warehouse extends Storage {
             ((ResourceDepot) this.getResourceStock(index)).setResourceType(ResourceType.BLANK);
         }
 
-        // TODO add messageType
-        notify(this, null);
+        notify(this, MessageType.WAREHOUSE_REMOVE);
     }
 
     @Override
     public int countByResourceType(ResourceType resourceType) {
-        return this.resourceStocks.stream()
+        return this.resourceStocks
+                .stream()
                 .filter(resourceStock -> resourceStock.contains(resourceType))
                 .map(ResourceStock::getQuantity)
                 .reduce(0, Integer::sum);
+    }
+
+    public boolean contains(ResourceType resourceType) {
+        return this.resourceStocks
+                .stream()
+                .anyMatch(resourceStock -> resourceStock.contains(resourceType));
     }
 
     private void checkValidIndex(int index) {

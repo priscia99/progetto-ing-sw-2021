@@ -47,8 +47,7 @@ public class DevelopmentCardsDeck extends ObservableWithOption<DevelopmentCardsD
         }
         deck.add(developmentCard);
 
-        // TODO: add messageType
-        notify(this, null);
+        notify(this, MessageType.BUY_DEVELOPMENT_CARD);
     }
 
     /**

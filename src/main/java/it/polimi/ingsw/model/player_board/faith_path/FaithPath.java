@@ -38,8 +38,7 @@ public class FaithPath extends ObservableWithOption<FaithPath, MessageType> {
         this.cells[this.faithPoints].reach();
         faithPoints++;
 
-        // TODO add messageType
-        notify(this, null);
+        notify(this, MessageType.FAITH_PATH_NEXT);
     }
 
     // TODO: This function needs to be called by an observer

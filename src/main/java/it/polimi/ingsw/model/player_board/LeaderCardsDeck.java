@@ -69,15 +69,13 @@ public class LeaderCardsDeck extends ObservableWithOption<LeaderCardsDeck, Messa
     public void addLeader(LeaderCard leaderCard) {
         leaderCards.add(leaderCard);
 
-        // TODO add messageType
-        notify(this, null);
+        notify(this, MessageType.ADD_LEADER_CARD);
     }
 
     public void playLeaderCard(int index) {
         leaderCards.get(index).play();
 
-        // TODO add messageType
-        notify(this, null);
+        notify(this, MessageType.PLAY_LEADER_CARD);
     }
 
     /**
@@ -107,7 +105,6 @@ public class LeaderCardsDeck extends ObservableWithOption<LeaderCardsDeck, Messa
             throw new IllegalArgumentException("LeaderCard not present this player's deck");
         }
 
-        // TODO add messageType
-        notify(this, null);
+        notify(this, MessageType.DROP_LEADER_CARD);
     }
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.player_board.storage;
 
 import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.network.MessageType;
 
 public class Strongbox extends Storage {
 
@@ -18,8 +19,7 @@ public class Strongbox extends Storage {
                 .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
                 .forEach(resourceStock -> resourceStock.incrementResource(resourceType));
 
-        // TODO add messageType
-        notify(this, null);
+        notify(this, MessageType.STRONGBOX_ADD);
     }
 
     public void removeResource(ResourceType resourceType) {
@@ -27,8 +27,7 @@ public class Strongbox extends Storage {
                 .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
                 .forEach(resourceStock -> resourceStock.decrementResource(resourceType));
 
-        // TODO add messageType
-        notify(this, null);
+        notify(this, MessageType.STRONGBOX_REMOVE);
     }
 
     @Override
