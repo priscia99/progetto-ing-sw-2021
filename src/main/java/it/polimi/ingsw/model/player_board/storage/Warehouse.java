@@ -33,17 +33,32 @@ public class Warehouse extends Storage {
         notify(this, null);
     }
 
+    /**
+     * Returns the depot that matches with the address given as input
+     * @param index index of the depot to return
+     * @return the depot that matches with the address given as input
+     */
     public ResourceDepot getDepot(int index) {
         this.checkValidIndex(index);
         return (ResourceDepot) this.getResourceStock(index);
     }
 
+    /**
+     * Check if the entire warehouse is full
+     * @return true if the warehouse is full
+     * @return false otherwise
+     */
     public boolean isFull() {
         return this.resourceStocks.stream()
                 .map(resourceStock -> (ResourceDepot) resourceStock)
                 .allMatch(ResourceDepot::isFull);
     }
 
+    /**
+     * Check if the entire warehouse is empty
+     * @return true if the warehouse is empty
+     * @return false otherwise
+     */
     public boolean isEmpty() {
         return this.resourceStocks.stream()
                 .map(resourceStock -> (ResourceDepot) resourceStock)
@@ -83,6 +98,11 @@ public class Warehouse extends Storage {
         notify(this, null);
     }
 
+    /**
+     * Counts and returns the number of resources of the requested type
+     * @param resourceType the type of the resource to be counted
+     * @return the number of resources of that type
+     */
     @Override
     public int countByResourceType(ResourceType resourceType) {
         return this.resourceStocks.stream()
@@ -91,6 +111,10 @@ public class Warehouse extends Storage {
                 .reduce(0, Integer::sum);
     }
 
+    /**
+     * Check if the given index is valid
+     * @param index index to check
+     */
     private void checkValidIndex(int index) {
         if(index < 0 || index > 2) {
             throw new IllegalArgumentException("Indexes must be in [0;2]");
