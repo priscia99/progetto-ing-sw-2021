@@ -4,12 +4,12 @@ import it.polimi.ingsw.exceptions.ParamsConvertionException;
 
 import java.util.Map;
 
-public class BuyDevelopmentCardParams {
+public class BuyDevelopmentCardParams extends  ActionParams{
     final private int xPosition;
     final private int yPosition;
     final private int deckIndex;
 
-    private BuyDevelopmentCardParams(
+    public BuyDevelopmentCardParams(
             int x, int y, int deckI
     ){
         this.xPosition = x;
@@ -22,14 +22,4 @@ public class BuyDevelopmentCardParams {
 
     public int getDeckIndex() { return deckIndex; }
 
-    static public BuyDevelopmentCardParams fromMap(Map<String, Object> map){
-        try{
-            int xPosition = (int) map.get("xPosition");
-            int yPosition = (int) map.get("yPosition");
-            int deckIndex = (int) map.get("deckIndex");
-            return new BuyDevelopmentCardParams(xPosition, yPosition, deckIndex);
-        } catch (Exception e){
-            throw new ParamsConvertionException("Error converting to BuyDevelopmentCardParams");
-        }
-    }
 }

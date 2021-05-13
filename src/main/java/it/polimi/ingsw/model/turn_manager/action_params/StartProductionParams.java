@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.player_board.storage.Warehouse;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class StartProductionParams {
+public class StartProductionParams extends ActionParams {
     final Warehouse warehouse;
     final Storage strongbox;
     final ArrayList<ProductionEffect> productionToActivate;
@@ -21,20 +21,10 @@ public class StartProductionParams {
         return productionToActivate;
     }
 
-    private StartProductionParams(Warehouse warehouse, Storage strongbox, ArrayList<ProductionEffect> productions){
+    public StartProductionParams(Warehouse warehouse, Storage strongbox, ArrayList<ProductionEffect> productions){
         this.warehouse = warehouse;
         this.strongbox = strongbox;
         this.productionToActivate = productions;
     }
 
-    static public StartProductionParams fromMap(Map<String, Object> map){
-        try{
-            Warehouse warehouse = (Warehouse) map.get("warehouse");
-            Storage strongbox = (Storage) map.get("strongbox");
-            ArrayList<ProductionEffect> productionSelected = (ArrayList<ProductionEffect>) map.get("productions");
-            return new StartProductionParams(warehouse, strongbox, productionSelected);
-        } catch (Exception e){
-            throw new ParamsConvertionException("Error while converting play leader card params");
-        }
-    }
 }

@@ -28,11 +28,7 @@ public class BuyDevelopmentCardActionTest {
     @Test
     @DisplayName("Test player has new card")
     public void testPlayerHasNewCard(){
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("xPosition", 0);
-        map.put("yPosition", 0);
-        map.put("deckIndex", 1);
-        BuyDevelopmentCardParams params = BuyDevelopmentCardParams.fromMap(map);
+        BuyDevelopmentCardParams params = new BuyDevelopmentCardParams(0,0,1);
         Assertions.assertEquals(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
         TestHelper.makeHimRich(game.getCurrentPlayer());
         action.execute(game, params);
@@ -42,12 +38,8 @@ public class BuyDevelopmentCardActionTest {
     @Test
     @DisplayName("Test player get bought card")
     public void testPlayerGetBoughtCard(){
-        HashMap<String, Object> map = new HashMap<>();
         DevelopmentCard cardToBuy = game.getCardMarket().getDecks()[0][0].get(3);
-        map.put("xPosition", 0);
-        map.put("yPosition", 0);
-        map.put("deckIndex", 1);
-        BuyDevelopmentCardParams params = BuyDevelopmentCardParams.fromMap(map);
+        BuyDevelopmentCardParams params = new BuyDevelopmentCardParams(0,0,1);
         TestHelper.makeHimRich(game.getCurrentPlayer());
         action.execute(game, params);
         Assertions.assertTrue(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[1].getTopCard() == cardToBuy);
@@ -56,12 +48,8 @@ public class BuyDevelopmentCardActionTest {
     @Test
     @DisplayName("Test cards market renew")
     public void testCardsMaketRenew(){
-        HashMap<String, Object> map = new HashMap<>();
         DevelopmentCard cardToBuy = game.getCardMarket().getDecks()[0][0].get(3);
-        map.put("xPosition", 0);
-        map.put("yPosition", 0);
-        map.put("deckIndex", 1);
-        BuyDevelopmentCardParams params = BuyDevelopmentCardParams.fromMap(map);
+        BuyDevelopmentCardParams params = new BuyDevelopmentCardParams(0,0,1);
         TestHelper.makeHimRich(game.getCurrentPlayer());
         action.execute(game, params);
         Assertions.assertEquals(game.getCardMarket().getDecks()[0][0].size(), 3);

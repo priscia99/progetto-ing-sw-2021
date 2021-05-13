@@ -37,17 +37,11 @@ public class TurnManagerTest {
         Assertions.assertFalse(turnManager.isMainActionDone());
         LeaderCard leaderCard = MockProvider.getLeaderCardMock();
         game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().addLeader(leaderCard);
-        HashMap<String, Object> netDropParams = new HashMap<>();
-        netDropParams.put("cardIndex", leaderCard.getId());
-        DropLeaderCardParams params = DropLeaderCardParams.fromMap(netDropParams);
+        DropLeaderCardParams params = new DropLeaderCardParams(leaderCard.getId());
         turnManager.executeDropLeaderCard(params);
         Assertions.assertFalse(turnManager.isMainActionDone());
-        HashMap<String, Object> netPickParams = new HashMap<>();
-        netPickParams.put("orientation", Orientation.HORIZONTAL);
-        netPickParams.put("index", 1);
         ArrayList<Integer> positions = new ArrayList<>(Arrays.asList(-1, -1, -1, -1));
-        netPickParams.put("positions", positions);
-        PickResourcesParams pickParams = PickResourcesParams.fromMap(netPickParams);
+        PickResourcesParams pickParams = new PickResourcesParams(Orientation.HORIZONTAL,1, positions );
         turnManager.executePickResources(pickParams);
         Assertions.assertFalse(turnManager.isMainActionDone());
     }
