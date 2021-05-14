@@ -7,13 +7,21 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CLI {
 
+    // private final String file_path = "src/main/java/it/polimi/ingsw/view/CLI/pages.json";
+    private String file_path = null;
+    private Map<String, Page> pages = new HashMap<>();
 
-    private static final String file_path = "src/main/java/it/polimi/ingsw/view/CLI/pages.json";
+    public CLI(String file_path) {
+        this.file_path = file_path;
+    }
 
-    public static void main(String[] args) {
+    public void init() {
         try {
             JsonReader reader = new JsonReader(new FileReader(file_path));
             JsonParser parser = new JsonParser();
@@ -22,10 +30,14 @@ public class CLI {
             for(int pageIterator=0; pageIterator< pageArray.size(); pageIterator++) {
                 JsonObject pageJson = pageArray.get(pageIterator).getAsJsonObject();
                 Page page = new Page(pageJson);
-                System.out.print(page.renderPage());
+                pages.put(page.getTitle(), page);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void renderPage(String title, ArrayList<String> params) {
+        pages.get(title).getBody();
     }
 }

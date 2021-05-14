@@ -39,6 +39,7 @@ public class Client {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
                         if(inputObject instanceof String){
+                            // TODO add client decoder
                             System.out.println((String)inputObject);
                         } else {
                             throw new IllegalArgumentException();

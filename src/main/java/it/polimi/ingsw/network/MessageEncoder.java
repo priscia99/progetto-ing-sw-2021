@@ -27,6 +27,8 @@ public class MessageEncoder implements ObserverWithOption<Object, MessageType> {
      */
     @Override
     public void update(Object object, MessageType type) {
+        // this.lobby.sendBroadcast(update);
+
         Message message = new Message(type, lobby.getCurrentPlayer().getNickname(), object);
         this.lobby.sendBroadcast(message);
     }

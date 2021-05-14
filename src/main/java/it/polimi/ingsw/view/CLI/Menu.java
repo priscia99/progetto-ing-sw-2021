@@ -32,7 +32,7 @@ public class Menu {
     public String toString() {
         StringBuilder list = new StringBuilder();
         for (String i : this.items) {
-            list.append(String.format("%s\n", i));
+            list.append(String.format("> %s\n", i));
         }
         return String.format("%s\n%s", this.header, list);
     }

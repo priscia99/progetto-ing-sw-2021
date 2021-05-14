@@ -3,6 +3,8 @@ package it.polimi.ingsw.view.CLI;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+
 public class Page {
 
     private String title = null;
@@ -67,11 +69,17 @@ public class Page {
         this.footer = footer;
     }
 
-    public String renderPage() {
+    public String putParameters(String... p) {
+        String newBody = String.format(this.body, p);
+        return newBody;
+    }
+
+    @Override
+    public String toString() {
         String headerRender = header.equals("") ? "" : String.format("%s", header);
         String alertRender = alert.equals("") ? "" : String.format("\n%s", alert);
         String bodyRender = body.equals("") ? "" : String.format("\n%s", body);
-        String footerRender = footer.equals("") ? "" : String.format("\n%s", footer);
-        return String.format("\n%s%s%s%s\n", headerRender, alertRender, bodyRender, footerRender);
+        // String footerRender = footer.equals("") ? "" : String.format("\n%s", footer);
+        return String.format("\n%s%s%s\n", headerRender, alertRender, bodyRender);
     }
 }

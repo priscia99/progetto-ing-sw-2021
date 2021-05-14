@@ -10,7 +10,7 @@
     "title": "Home",
     "header": "[ Home ]",
     "alert": "",
-    "body": "",
+    "body": "%s",
     "footer": "test4"
   }
 ]
