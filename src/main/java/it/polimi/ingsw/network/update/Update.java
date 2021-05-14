@@ -2,14 +2,14 @@ package it.polimi.ingsw.network.update;
 
 public abstract class Update {
 
-    private final ClientCopy clientCopy;
+    private final Object object;
 
-    public Update(ClientCopy clientCopy) {
-        this.clientCopy = clientCopy;
+    public Update(Object object) {
+        this.object = object;
     }
 
-    public ClientCopy getClientCopy() {
-        return clientCopy;
+    public Object getClientCopy() {
+        return object;
     }
 
     public abstract void execute();
