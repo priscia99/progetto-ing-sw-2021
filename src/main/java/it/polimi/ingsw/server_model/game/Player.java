@@ -36,14 +36,24 @@ public class Player {
         initialResourceToChoose = value;
     }
 
-    public void hasChosenInitialResource(){initialResourceToChoose--;}
+    public void hasChosenInitialResource(){
+        initialResourceToChoose--;
+    }
 
-    public boolean hasToChooseInitialResource(){return initialResourceToChoose > 0;}
+    public boolean hasToChooseInitialResource(){
+        return initialResourceToChoose > 0;
+    }
 
-    public boolean getIsFirst() { return isFirst;}
-    public void setIsFirst(boolean value) { isFirst = value;}
+    public boolean getIsFirst() {
+        return isFirst;
+    }
+    public void setIsFirst(boolean value) {
+        isFirst = value;
+    }
 
-    public String getId(){ return id;}
+    public String getId(){
+        return id;
+    }
 
     public String getNickname() {
         return username;
@@ -61,10 +71,12 @@ public class Player {
         return (finishedFaithPath() || getTotalDevelopmentCard() > 6);
     }
 
+    // FIXME right place ????????????????????????????????????
     private boolean finishedFaithPath() {
         return playerBoard.getFaithPath().getFaithPoints() == playerBoard.getFaithPath().getCells().length;
     }
 
+    // FIXME right place ????????????????????????????????????
     private int getTotalDevelopmentCard(){
         return Arrays.stream(playerBoard.getDevelopmentCardsDecks())
                 .mapToInt(DevelopmentCardsDeck::getCardNumber).sum();
@@ -84,6 +96,7 @@ public class Player {
     }
 
     public void addResourcesToStrongBox(ResourceStock resources){
+        // FIXME remove loops and add all resources at once
         for(int i = 0; i < resources.getQuantity(); i++)
             playerBoard.getStrongbox().addResource(resources.getResourceType());
     }
