@@ -9,7 +9,6 @@ import it.polimi.ingsw.model.player_board.DevelopmentCardsDeck;
 import it.polimi.ingsw.network.MessageDecoder;
 import it.polimi.ingsw.network.MessageEncoder;
 import it.polimi.ingsw.network.VictoryObserver;
-import it.polimi.ingsw.network.observer.DevelopmentCardsDeckAdapter;
 
 import java.util.*;
 

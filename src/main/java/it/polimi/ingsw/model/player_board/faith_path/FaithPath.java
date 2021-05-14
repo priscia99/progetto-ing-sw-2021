@@ -4,7 +4,7 @@ import it.polimi.ingsw.data.FaithPathBuilder;
 import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.observer.ObservableWithOption;
 
-public class FaithPath extends ObservableWithOption<FaithPath, MessageType> {
+public class FaithPath extends ObservableWithOption<Object, MessageType> {
 
     private final Cell[] cells;
     private int faithPoints;

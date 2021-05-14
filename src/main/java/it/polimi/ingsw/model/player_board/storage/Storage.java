@@ -7,7 +7,7 @@ import it.polimi.ingsw.network.observer.ObservableWithOption;
 
 import java.util.ArrayList;
 
-public abstract class Storage extends ObservableWithOption<Storage, MessageType> {
+public abstract class Storage extends ObservableWithOption<Object, MessageType> {
 
     protected ArrayList<ResourceStock> resourceStocks;
 

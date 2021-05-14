@@ -11,7 +11,7 @@ import java.util.*;
 /**
  * Class that models a list of leader cards.
  */
-public class LeaderCardsDeck extends ObservableWithOption<LeaderCardsDeck, MessageType> {
+public class LeaderCardsDeck extends ObservableWithOption<Object, MessageType> {
 
     private final ArrayList<LeaderCard> leaderCards;
 

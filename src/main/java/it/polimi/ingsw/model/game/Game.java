@@ -12,7 +12,7 @@ import it.polimi.ingsw.utils.CustomLogger;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Game extends ObservableWithOption<Game, MessageType> {
+public class Game extends ObservableWithOption<Object, MessageType> {
 
     private ArrayList<Player> players;
     private int currentPlayerIndex;

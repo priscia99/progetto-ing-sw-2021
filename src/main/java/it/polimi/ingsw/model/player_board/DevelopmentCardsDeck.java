@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Class that models a deck of development cards.
  */
-public class DevelopmentCardsDeck extends ObservableWithOption<DevelopmentCardsDeck, MessageType> implements Serializable {
+public class DevelopmentCardsDeck extends ObservableWithOption<Object, MessageType> implements Serializable {
 
     private static final long serialVersionUID = 1L;    // for serialization
 
