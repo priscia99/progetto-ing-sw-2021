@@ -1,14 +1,13 @@
 package it.polimi.ingsw.testUtils;
 
-import it.polimi.ingsw.model.card.DevelopmentCard;
-import it.polimi.ingsw.model.card.LeaderCard;
-import it.polimi.ingsw.model.card.color.Color;
-import it.polimi.ingsw.model.card.effect.DepotEffect;
-import it.polimi.ingsw.model.card.requirement.Requirement;
-import it.polimi.ingsw.model.game.Game;
-import it.polimi.ingsw.model.game.Player;
-import it.polimi.ingsw.model.resource.ResourceStock;
-import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.server_model.card.DevelopmentCard;
+import it.polimi.ingsw.server_model.card.LeaderCard;
+import it.polimi.ingsw.server_model.card.color.Color;
+import it.polimi.ingsw.server_model.card.effect.DepotEffect;
+import it.polimi.ingsw.server_model.card.requirement.Requirement;
+import it.polimi.ingsw.server_model.game.Game;
+import it.polimi.ingsw.server_model.game.Player;
+import it.polimi.ingsw.server_model.resource.ResourceType;
 
 import java.util.ArrayList;
 

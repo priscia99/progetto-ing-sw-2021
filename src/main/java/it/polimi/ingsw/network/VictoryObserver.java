@@ -1,15 +1,10 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.model.card.DevelopmentCard;
-import it.polimi.ingsw.model.game.Game;
-import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
-import it.polimi.ingsw.network.observer.Observable;
-import it.polimi.ingsw.network.observer.Observer;
-import it.polimi.ingsw.network.server.Lobby;
+import it.polimi.ingsw.server_model.game.Game;
+import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.network.update.Update;
 
-import java.util.ArrayList;
-
+// TODO put me in Game
 public class VictoryObserver implements Observer<Update> {
 
     private Game game;

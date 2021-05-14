@@ -1,8 +1,8 @@
 package it.polimi.ingsw.testUtils;
 
-import it.polimi.ingsw.model.game.Player;
-import it.polimi.ingsw.model.resource.ResourceStock;
-import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.server_model.game.Player;
+import it.polimi.ingsw.server_model.resource.ResourceStock;
+import it.polimi.ingsw.server_model.resource.ResourceType;
 
 public class TestHelper {
 

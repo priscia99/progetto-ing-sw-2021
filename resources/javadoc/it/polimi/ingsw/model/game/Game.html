@@ -6,7 +6,7 @@
 <title>Game</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2021-04-23">
-<meta name="description" content="declaration: package: it.polimi.ingsw.model.game, class: Game">
+<meta name="description" content="declaration: package: it.polimi.ingsw.server_model.game, class: Game">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
@@ -73,18 +73,18 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">it.polimi.ingsw.model.game</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">it.polimi.ingsw.server_model.game</a></div>
 <h1 title="Class Game" class="title">Class Game</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance"><a href="../../observer/Observable.html" title="class in it.polimi.ingsw.network.observer">it.polimi.ingsw.network.observer.ObservableWithOption</a>&lt;<a href="Game.html" title="class in it.polimi.ingsw.model.game">Game</a>&gt;
-<div class="inheritance">it.polimi.ingsw.model.game.Game</div>
+<div class="inheritance"><a href="../../observer/Observable.html" title="class in it.polimi.ingsw.observer">it.polimi.ingsw.observer.ObservableWithOption</a>&lt;<a href="Game.html" title="class in it.polimi.ingsw.server_model.game">Game</a>&gt;
+<div class="inheritance">it.polimi.ingsw.server_model.game.Game</div>
 </div>
 </div>
 <section class="description">
 <hr>
 <pre>public class <span class="type-name-label">Game</span>
-extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw.network.observer">Observable</a>&lt;<a href="Game.html" title="class in it.polimi.ingsw.model.game">Game</a>&gt;</pre>
+extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw.observer">Observable</a>&lt;<a href="Game.html" title="class in it.polimi.ingsw.server_model.game">Game</a>&gt;</pre>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -109,7 +109,7 @@ extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color">
-<td class="col-first"><code>private <a href="../market/CardMarket.html" title="class in it.polimi.ingsw.model.market">CardMarket</a></code></td>
+<td class="col-first"><code>private <a href="../market/CardMarket.html" title="class in it.polimi.ingsw.server_model.market">CardMarket</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#cardMarket">cardMarket</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -119,22 +119,22 @@ extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color">
-<td class="col-first"><code>private <a href="../player_board/LeaderCardsDeck.html" title="class in it.polimi.ingsw.model.player_board">LeaderCardsDeck</a></code></td>
+<td class="col-first"><code>private <a href="../player_board/LeaderCardsDeck.html" title="class in it.polimi.ingsw.server_model.player_board">LeaderCardsDeck</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#leaderCardsDeck">leaderCardsDeck</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color">
-<td class="col-first"><code>private <a href="../market/MarbleMarket.html" title="class in it.polimi.ingsw.model.market">MarbleMarket</a></code></td>
+<td class="col-first"><code>private <a href="../market/MarbleMarket.html" title="class in it.polimi.ingsw.server_model.market">MarbleMarket</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#marbleMarket">marbleMarket</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color">
-<td class="col-first"><code>private java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.model.game">Player</a>&gt;</code></td>
+<td class="col-first"><code>private java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.server_model.game">Player</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#players">players</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color">
-<td class="col-first"><code>private <a href="../turn_manager/TurnManager.html" title="class in it.polimi.ingsw.model.turn_manager">TurnManager</a></code></td>
+<td class="col-first"><code>private <a href="../turn_manager/TurnManager.html" title="class in it.polimi.ingsw.controller.turn_manager">TurnManager</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#turnManager">turnManager</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -198,22 +198,22 @@ extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i3">
-<td class="col-first"><code><a href="../market/CardMarket.html" title="class in it.polimi.ingsw.model.market">CardMarket</a></code></td>
+<td class="col-first"><code><a href="../market/CardMarket.html" title="class in it.polimi.ingsw.server_model.market">CardMarket</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getCardMarket()">getCardMarket</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color" id="i4">
-<td class="col-first"><code><a href="Player.html" title="class in it.polimi.ingsw.model.game">Player</a></code></td>
+<td class="col-first"><code><a href="Player.html" title="class in it.polimi.ingsw.server_model.game">Player</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getCurrentPlayer()">getCurrentPlayer</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i5">
-<td class="col-first"><code><a href="../market/MarbleMarket.html" title="class in it.polimi.ingsw.model.market">MarbleMarket</a></code></td>
+<td class="col-first"><code><a href="../market/MarbleMarket.html" title="class in it.polimi.ingsw.server_model.market">MarbleMarket</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getMarbleMarket()">getMarbleMarket</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color" id="i6">
-<td class="col-first"><code>java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.model.game">Player</a>&gt;</code></td>
+<td class="col-first"><code>java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.server_model.game">Player</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getPlayers()">getPlayers</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -239,7 +239,7 @@ extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw
 </tr>
 <tr class="row-color" id="i11">
 <td class="col-first"><code>void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setup(java.util.ArrayList)">setup</a></span>&#8203;(java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.model.game">Player</a>&gt;&nbsp;players)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setup(java.util.ArrayList)">setup</a></span>&#8203;(java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.server_model.game">Player</a>&gt;&nbsp;players)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color" id="i12">
@@ -272,7 +272,7 @@ extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods.inherited.from.class.it.polimi.ingsw.observer.Observable">Methods inherited from class&nbsp;it.polimi.ingsw.network.observer.<a href="../../observer/Observable.html" title="class in it.polimi.ingsw.network.observer">Observable</a></h3>
+<h3 id="methods.inherited.from.class.it.polimi.ingsw.observer.Observable">Methods inherited from class&nbsp;it.polimi.ingsw.observer.<a href="../../observer/Observable.html" title="class in it.polimi.ingsw.observer">Observable</a></h3>
 <code><a href="../../observer/Observable.html#addObserver(it.polimi.ingsw.observer.Observer)">addObserver</a>, <a href="../../observer/Observable.html#notify(T)">notify</a>, <a href="../../observer/Observable.html#removeObserver(it.polimi.ingsw.observer.Observer)">removeObserver</a></code></div>
 <div class="inherited-list">
 <h3 id="methods.inherited.from.class.java.lang.Object">Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -291,7 +291,7 @@ extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw
 <li>
 <section class="detail" id="players">
 <h3>players</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.model.game">Player</a>&gt;</span>&nbsp;<span class="member-name">players</span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.server_model.game">Player</a>&gt;</span>&nbsp;<span class="member-name">players</span></div>
 </section>
 </li>
 <li>
@@ -303,25 +303,25 @@ extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw
 <li>
 <section class="detail" id="leaderCardsDeck">
 <h3>leaderCardsDeck</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../player_board/LeaderCardsDeck.html" title="class in it.polimi.ingsw.model.player_board">LeaderCardsDeck</a></span>&nbsp;<span class="member-name">leaderCardsDeck</span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../player_board/LeaderCardsDeck.html" title="class in it.polimi.ingsw.server_model.player_board">LeaderCardsDeck</a></span>&nbsp;<span class="member-name">leaderCardsDeck</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="cardMarket">
 <h3>cardMarket</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../market/CardMarket.html" title="class in it.polimi.ingsw.model.market">CardMarket</a></span>&nbsp;<span class="member-name">cardMarket</span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../market/CardMarket.html" title="class in it.polimi.ingsw.server_model.market">CardMarket</a></span>&nbsp;<span class="member-name">cardMarket</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="marbleMarket">
 <h3>marbleMarket</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../market/MarbleMarket.html" title="class in it.polimi.ingsw.model.market">MarbleMarket</a></span>&nbsp;<span class="member-name">marbleMarket</span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../market/MarbleMarket.html" title="class in it.polimi.ingsw.server_model.market">MarbleMarket</a></span>&nbsp;<span class="member-name">marbleMarket</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="turnManager">
 <h3>turnManager</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../turn_manager/TurnManager.html" title="class in it.polimi.ingsw.model.turn_manager">TurnManager</a></span>&nbsp;<span class="member-name">turnManager</span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="../turn_manager/TurnManager.html" title="class in it.polimi.ingsw.controller.turn_manager">TurnManager</a></span>&nbsp;<span class="member-name">turnManager</span></div>
 </section>
 </li>
 <li>
@@ -355,19 +355,19 @@ extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw
 <li>
 <section class="detail" id="getCardMarket()">
 <h3>getCardMarket</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../market/CardMarket.html" title="class in it.polimi.ingsw.model.market">CardMarket</a></span>&nbsp;<span class="member-name">getCardMarket</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../market/CardMarket.html" title="class in it.polimi.ingsw.server_model.market">CardMarket</a></span>&nbsp;<span class="member-name">getCardMarket</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlayers()">
 <h3>getPlayers</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.model.game">Player</a>&gt;</span>&nbsp;<span class="member-name">getPlayers</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.server_model.game">Player</a>&gt;</span>&nbsp;<span class="member-name">getPlayers</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMarbleMarket()">
 <h3>getMarbleMarket</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../market/MarbleMarket.html" title="class in it.polimi.ingsw.model.market">MarbleMarket</a></span>&nbsp;<span class="member-name">getMarbleMarket</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../market/MarbleMarket.html" title="class in it.polimi.ingsw.server_model.market">MarbleMarket</a></span>&nbsp;<span class="member-name">getMarbleMarket</span>()</div>
 </section>
 </li>
 <li>
@@ -391,7 +391,7 @@ extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw
 <li>
 <section class="detail" id="getCurrentPlayer()">
 <h3>getCurrentPlayer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Player.html" title="class in it.polimi.ingsw.model.game">Player</a></span>&nbsp;<span class="member-name">getCurrentPlayer</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Player.html" title="class in it.polimi.ingsw.server_model.game">Player</a></span>&nbsp;<span class="member-name">getCurrentPlayer</span>()</div>
 </section>
 </li>
 <li>
@@ -403,7 +403,7 @@ extends <a href="../../observer/Observable.html" title="class in it.polimi.ingsw
 <li>
 <section class="detail" id="setup(java.util.ArrayList)">
 <h3>setup</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">setup</span>&#8203;(<span class="parameters">java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.model.game">Player</a>&gt;&nbsp;players)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">setup</span>&#8203;(<span class="parameters">java.util.ArrayList&lt;<a href="Player.html" title="class in it.polimi.ingsw.server_model.game">Player</a>&gt;&nbsp;players)</span></div>
 </section>
 </li>
 <li>

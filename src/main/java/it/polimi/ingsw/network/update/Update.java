@@ -8,7 +8,7 @@ public abstract class Update {
         this.object = object;
     }
 
-    public Object getClientCopy() {
+    public Object getObject() {
         return object;
     }
 

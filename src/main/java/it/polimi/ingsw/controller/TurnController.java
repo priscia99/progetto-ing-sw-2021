@@ -1,11 +1,9 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.InvalidActionException;
-import it.polimi.ingsw.model.turn_manager.TurnManager;
-import it.polimi.ingsw.model.turn_manager.action_params.*;
-import it.polimi.ingsw.model.turn_manager.turn_action.*;
-
-import java.util.Map;
+import it.polimi.ingsw.controller.turn_manager.TurnManager;
+import it.polimi.ingsw.controller.turn_manager.action_params.*;
+import it.polimi.ingsw.controller.turn_manager.turn_action.*;
 
 public class TurnController {
     private TurnManager turnManager;

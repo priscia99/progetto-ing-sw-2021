@@ -4,11 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.model.player_board.faith_path.*;
+import it.polimi.ingsw.server_model.player_board.faith_path.*;
 
 import java.io.FileReader;
 import java.util.Objects;
-import java.util.Stack;
 
 public class FaithPathBuilder {
     private static final int PATH_DIM = 25;
