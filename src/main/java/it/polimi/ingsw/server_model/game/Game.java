@@ -67,6 +67,7 @@ public class Game extends Observable<Update> implements Observer<Update> {
 
     public void setup(ArrayList<Player> players) {
         this.players = players;
+        setupVictoryObservations();
         setupLeaderCards();
         setupCardsMarket();
         setupMarbleMarket();
@@ -111,6 +112,15 @@ public class Game extends Observable<Update> implements Observer<Update> {
                 players.get(3).addFaithPoints(1);
             }
         }
+    }
+
+    private void setupVictoryObservations(){
+        players.forEach((player)->{
+            player.getPlayerBoard().getFaithPath().addObserver(this);
+            Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(
+                    deck -> deck.addObserver(this)
+            );
+        });
     }
 
     private void setupMarbleMarket() {
