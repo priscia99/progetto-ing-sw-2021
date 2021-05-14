@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.action;
 
+import it.polimi.ingsw.exceptions.InvalidActionException;
 import it.polimi.ingsw.server_model.game.Game;
 import it.polimi.ingsw.server_model.marble.Marble;
 import it.polimi.ingsw.server_model.marble.MarbleSelection;
@@ -17,6 +18,7 @@ public class PickResourcesAction extends Action {
     }
 
     public void execute(Game currentGame) {
+        if(currentGame.getCurrentPlayer().hasDoneMainAction()) throw new InvalidActionException();
         ArrayList<Marble> selectedMarbles = currentGame.getMarbleMarket().sell(marbleSelection);
         for(int i = 0; i<selectedMarbles.size(); i++){
             ResourceType resourceToAdd = selectedMarbles.get(i).getResourceType();
@@ -29,6 +31,6 @@ public class PickResourcesAction extends Action {
                 currentGame.getCurrentPlayer().addResourceToDepot(resourceToAdd, selectedPosition);
             }
         }
-
+        currentGame.getCurrentPlayer().setHasDoneMainAction(true);
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.action;
 
+import it.polimi.ingsw.exceptions.InvalidActionException;
 import it.polimi.ingsw.server_model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server_model.game.Game;
 import it.polimi.ingsw.server_model.resource.ResourceStock;
@@ -19,11 +20,13 @@ public class StartProductionAction extends Action {
 
     public void execute(Game currentGame) {
         //TODO: implement depot consume methods
+        if(currentGame.getCurrentPlayer().hasDoneMainAction()) throw new InvalidActionException();
         ArrayList<ProductionEffect> productionsSelected = productionsToActivate;
         for(ProductionEffect productionToActivate : productionsSelected){
             productionToActivate.getOutStocks().forEach(
                     resourcePile -> currentGame.getCurrentPlayer().addResourcesToStrongBox(resourcePile)
             );
         }
+        currentGame.getCurrentPlayer().setHasDoneMainAction(true);
     }
 }
