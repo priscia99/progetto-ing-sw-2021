@@ -40,7 +40,7 @@ public class GameTest {
     @DisplayName("Test game sets isFirst to first player")
     public void testSetFirstPlayer(){
         game.setFirstPlayer();
-        Assertions.assertTrue(game.getPlayers().get(0).isFirst());
+        Assertions.assertTrue(game.getPlayers().get(1).isFirst());
     }
 
     @Test

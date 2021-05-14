@@ -137,9 +137,9 @@ public class PlayerTest {
     @DisplayName("Test meets win conditions for faith path")
     public void testMeetConditionFaithPath(){
         player.addFaithPoints(24);
-        Assertions.assertFalse(player.meetsWinCondition());
+        Assertions.assertFalse(player.finishedFaithPath());
         player.addFaithPoints(1);
-        Assertions.assertTrue(player.meetsWinCondition());
+        Assertions.assertTrue(player.finishedFaithPath());
     }
 
     @Test
@@ -148,10 +148,10 @@ public class PlayerTest {
         ArrayList<DevelopmentCard> cards = MockProvider.getArrayDevelopmentCardsMock();
         for(int i = 0; i<6; i++) {
             player.getPlayerBoard().addDevelopmentCard(cards.get(i), i%3 );
-            Assertions.assertFalse(player.meetsWinCondition());
+            Assertions.assertFalse(player.getTotalDevelopmentCards()>6);
         }
         player.getPlayerBoard().addDevelopmentCard(cards.get(6), 0 );
-        Assertions.assertTrue(player.meetsWinCondition());
+        Assertions.assertTrue(player.getTotalDevelopmentCards()>6);
     }
 
     @Test
