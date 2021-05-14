@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.MessageType;
+import it.polimi.ingsw.network.observer.Observable;
 import it.polimi.ingsw.network.observer.ObservableWithOption;
 
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class SocketClientConnection extends ObservableWithOption<Message, MessageType> implements ClientConnection, Runnable {
+public class SocketClientConnection extends Observable<Message> implements ClientConnection, Runnable {
 
     private Socket socket;  // single socket connection with one client
     private ObjectOutputStream out; // output stream to the client
@@ -105,8 +106,10 @@ public class SocketClientConnection extends ObservableWithOption<Message, Messag
             */
             // while the connection is alive read every message and notify it to the server
             while(isAlive()) {
-                // FIXME please! End my sufferance
-                notify((Message) in.readObject());
+                // TODO: complete
+                // ClientConnection does not need observer with option because everything is in the message
+                Message incomingMessage = (Message) in.readObject();
+                notify(incomingMessage);
             }
         } catch (Exception e) {
             e.printStackTrace();

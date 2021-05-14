@@ -81,7 +81,8 @@ public class Lobby {
         VictoryObserver victoryObserver = new VictoryObserver(game);
         clientConnectionMap.values()
                 .forEach(connection -> {
-                    connection.addObserver(messageDecoder);
+                    SocketClientConnection socketClientConnection = (SocketClientConnection) connection;
+                    socketClientConnection.addObserver(messageDecoder);
                 });
         ArrayList<Player> players = new ArrayList<>();
         clientConnectionMap.keySet()
@@ -123,5 +124,9 @@ public class Lobby {
 
     public boolean contains(ClientConnection clientConnection) {
         return clientConnectionMap.containsValue(clientConnection);
+    }
+
+    public Player getCurrentPlayer() {
+        return this.game.getCurrentPlayer();
     }
 }
