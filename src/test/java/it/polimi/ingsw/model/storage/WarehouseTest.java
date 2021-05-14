@@ -72,10 +72,14 @@ public class WarehouseTest {
     public void testInsertingUntilFullWarehouse(){
         Assertions.assertTrue(warehouse.isEmpty());
         Assertions.assertFalse(warehouse.isFull());
-        for(int i=0; i<3; i++){
-            while(!warehouse.getDepot(i).isFull()){
-                warehouse.addToDepot(i,ResourceType.SHIELD);
-            }
+        while(!warehouse.getDepot(0).isFull()){
+            warehouse.addToDepot(0,ResourceType.SHIELD);
+        }
+        while(!warehouse.getDepot(1).isFull()){
+            warehouse.addToDepot(1,ResourceType.COIN);
+        }
+        while(!warehouse.getDepot(2).isFull()){
+            warehouse.addToDepot(2,ResourceType.STONE);
         }
         Assertions.assertFalse(warehouse.isEmpty());
         Assertions.assertTrue(warehouse.isFull());
