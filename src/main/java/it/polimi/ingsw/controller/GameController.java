@@ -34,7 +34,7 @@ public class GameController {
 
     private void startGame(){
         game.setFirstPlayer();
-        game.start();
+        game.nextTurn();
 
     }
 }

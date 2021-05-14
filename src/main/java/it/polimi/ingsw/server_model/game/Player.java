@@ -20,8 +20,9 @@ public class Player {
     private String username;
     private final String id;
     private final PlayerBoard playerBoard;
-    private boolean isFirst;
-    private int initialResourceToChoose;
+    private boolean first;
+    private int initialResourceToChoose; // FIXME
+    private boolean ready;
 
     public Player(String username) {
         CustomLogger.getLogger().info("Creating player");
@@ -33,6 +34,7 @@ public class Player {
     }
 
     public void setInitialResourceToChoose(int value){
+        // FIXME
         initialResourceToChoose = value;
     }
 
@@ -44,11 +46,11 @@ public class Player {
         return initialResourceToChoose > 0;
     }
 
-    public boolean getIsFirst() {
-        return isFirst;
+    public boolean isFirst() {
+        return first;
     }
-    public void setIsFirst(boolean value) {
-        isFirst = value;
+    public void setFirst(boolean value) {
+        first = value;
     }
 
     public String getId(){
@@ -65,10 +67,6 @@ public class Player {
 
     public void setNickname(String nickname) {
         this.username = nickname;
-    }
-
-    public boolean meetsWinCondition(){
-        return (finishedFaithPath() || getTotalDevelopmentCard() > 6);
     }
 
     // FIXME right place ????????????????????????????????????

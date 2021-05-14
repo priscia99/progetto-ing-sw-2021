@@ -47,30 +47,21 @@ public class Game extends Observable<Update> {
         currentPlayerIndex = currentPlayerIndex % players.size();
         turnManager.startTurn();
 
-        // TODO add messageType
         notify(new UpdateCurrentPlayer(this));
     }
 
+    // FIXME change with update
+    private void checkEnd() {
 
-    public void checkVictory() {
-        if(players.stream().map(Player::meetsWinCondition).count() >0){
-            areWinConditionsMet = true;
-            //TODO: send message player has met win conditions
-            notify();
-        }
     }
 
     public void setFirstPlayer(){
         Collections.shuffle(this.players);
-        players.get(0).setIsFirst(true);
+        players.get(0).setFirst(true);
     }
 
-    public Player getCurrentPlayer(){return players.get(currentPlayerIndex);}
-
-    // FIXME ??????????????????
-    public void start() {
-        nextTurn();
-
+    public Player getCurrentPlayer(){
+        return players.get(currentPlayerIndex);
     }
 
     public void setup(ArrayList<Player> players) {
@@ -103,7 +94,7 @@ public class Game extends Observable<Update> {
                 .contains(false);
     }
 
-    public boolean allPlayersHasChosedInitialResources(){
+    public boolean allPlayersHasChosenInitialResources(){
         return !players.stream()
                 .map(Player::hasToChooseInitialResource)
                 .collect(Collectors.toList())
@@ -120,7 +111,6 @@ public class Game extends Observable<Update> {
                 players.get(3).addFaithPoints(1);
             }
         }
-
     }
 
     private void setupMarbleMarket() {
@@ -139,6 +129,7 @@ public class Game extends Observable<Update> {
         this.leaderCardsDeck.shuffle();
     }
 
+    // FIXME
     private void setupTurnManager(){
         CustomLogger.getLogger().info("Setting up turn manager");
         this.turnManager = new TurnManager(this);

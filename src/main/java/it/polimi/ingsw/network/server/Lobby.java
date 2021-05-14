@@ -9,7 +9,6 @@ import it.polimi.ingsw.server_model.game.Game;
 import it.polimi.ingsw.server_model.game.Player;
 import it.polimi.ingsw.network.MessageDecoder;
 import it.polimi.ingsw.network.MessageEncoder;
-import it.polimi.ingsw.network.VictoryObserver;
 
 import java.util.*;
 

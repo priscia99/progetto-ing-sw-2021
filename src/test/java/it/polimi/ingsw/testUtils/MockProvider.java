@@ -37,7 +37,7 @@ public class MockProvider {
         Game game = new Game();
         ArrayList<Player> players = getMockPlayers();
         game.setup(players);
-        game.start();
+        game.nextTurn();
         return game;
     }
 
