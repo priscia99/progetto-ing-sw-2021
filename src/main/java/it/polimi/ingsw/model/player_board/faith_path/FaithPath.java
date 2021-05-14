@@ -2,9 +2,12 @@ package it.polimi.ingsw.model.player_board.faith_path;
 
 import it.polimi.ingsw.data.FaithPathBuilder;
 import it.polimi.ingsw.network.MessageType;
-import it.polimi.ingsw.network.observer.ObservableWithOption;
+import it.polimi.ingsw.network.observer.Observable;
+import it.polimi.ingsw.network.update.Update;
+import it.polimi.ingsw.network.update.UpdateFaithPath;
+import it.polimi.ingsw.network.update.UpdateLeaderCards;
 
-public class FaithPath extends ObservableWithOption<Object, MessageType> {
+public class FaithPath extends Observable<Update> {
 
     private final Cell[] cells;
     private int faithPoints;
@@ -38,8 +41,9 @@ public class FaithPath extends ObservableWithOption<Object, MessageType> {
         this.cells[this.faithPoints].reach();
         faithPoints++;
 
-        notify(this, MessageType.FAITH_PATH_NEXT);
+        notify(new UpdateFaithPath(this));
     }
+
 
     // TODO: This function needs to be called by an observer
     /**
@@ -70,4 +74,6 @@ public class FaithPath extends ObservableWithOption<Object, MessageType> {
         }
         return builder.toString();
     }
+
+
 }

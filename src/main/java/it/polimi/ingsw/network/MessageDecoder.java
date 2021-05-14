@@ -4,7 +4,6 @@ import it.polimi.ingsw.controller.TurnController;
 import it.polimi.ingsw.model.turn_manager.action_params.*;
 import it.polimi.ingsw.model.turn_manager.turn_action.TurnActionType;
 import it.polimi.ingsw.network.observer.Observer;
-import it.polimi.ingsw.network.observer.ObserverWithOption;
 
 public class MessageDecoder implements Observer<Message> {
 

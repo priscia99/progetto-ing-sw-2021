@@ -5,6 +5,8 @@ import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.MessageType;
+import it.polimi.ingsw.network.update.UpdateStrongbox;
+import it.polimi.ingsw.network.update.UpdateWarehouse;
 
 import java.util.Collections;
 
@@ -31,7 +33,7 @@ public class Warehouse extends Storage {
         ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index2+1);
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
 
-        notify(this, MessageType.WAREHOUSE_SWAP);
+        notify(new UpdateWarehouse(this));
     }
 
     /**
@@ -82,7 +84,7 @@ public class Warehouse extends Storage {
         }
         this.getResourceStock(index).incrementResource(resourceType);
 
-        notify(this, MessageType.WAREHOUSE_ADD);
+        notify(new UpdateWarehouse(this));
     }
 
     /**
@@ -97,7 +99,7 @@ public class Warehouse extends Storage {
             ((ResourceDepot) this.getResourceStock(index)).setResourceType(ResourceType.BLANK);
         }
 
-        notify(this, MessageType.WAREHOUSE_REMOVE);
+        notify(new UpdateWarehouse(this));
     }
 
     /**

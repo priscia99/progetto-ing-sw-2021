@@ -1,9 +1,10 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.network.observer.ObserverWithOption;
+import it.polimi.ingsw.network.observer.Observer;
 import it.polimi.ingsw.network.server.Lobby;
+import it.polimi.ingsw.network.update.Update;
 
-public class MessageEncoder implements ObserverWithOption<Object, MessageType> {
+public class MessageEncoder implements Observer<Update> {
 
     private Lobby lobby;
 
@@ -26,10 +27,11 @@ public class MessageEncoder implements ObserverWithOption<Object, MessageType> {
      * @param type the type of the message, needed by the receiver to understand what it receives
      */
     @Override
-    public void update(Object object, MessageType type) {
+    public void update(Update update) {
         // this.lobby.sendBroadcast(update);
 
-        Message message = new Message(type, lobby.getCurrentPlayer().getNickname(), object);
-        this.lobby.sendBroadcast(message);
+        // TODO Fix message
+        //Message message = new Message(type, lobby.getCurrentPlayer().getNickname(), object);
+       // this.lobby.sendBroadcast(message);
     }
 }

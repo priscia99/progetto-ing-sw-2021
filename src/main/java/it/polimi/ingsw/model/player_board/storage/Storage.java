@@ -3,11 +3,12 @@ package it.polimi.ingsw.model.player_board.storage;
 import it.polimi.ingsw.model.resource.ResourceStock;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.network.MessageType;
-import it.polimi.ingsw.network.observer.ObservableWithOption;
+import it.polimi.ingsw.network.observer.Observable;
+import it.polimi.ingsw.network.update.Update;
 
 import java.util.ArrayList;
 
-public abstract class Storage extends ObservableWithOption<Object, MessageType> {
+public abstract class Storage extends Observable<Update> {
 
     protected ArrayList<ResourceStock> resourceStocks;
 

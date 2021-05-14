@@ -3,7 +3,6 @@ package it.polimi.ingsw.network.server;
 import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.observer.Observable;
-import it.polimi.ingsw.network.observer.ObservableWithOption;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
