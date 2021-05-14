@@ -24,7 +24,6 @@ public class MessageEncoder implements Observer<Update> {
      * When the message encoder receive a notify via update() it create a message with the data given and the current player.
      * Then it send the message via broadcast to the lobby.
      * @param object the object to send as payload of the message
-     * @param type the type of the message, needed by the receiver to understand what it receives
      */
     @Override
     public void update(Update object) {

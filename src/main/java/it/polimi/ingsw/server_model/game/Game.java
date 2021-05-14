@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server_model.game;
 
+import it.polimi.ingsw.network.update.UpdateLastRound;
+import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server_model.card.LeaderCard;
 import it.polimi.ingsw.server_model.market.CardMarket;
 import it.polimi.ingsw.server_model.market.MarbleMarket;
@@ -12,18 +14,18 @@ import it.polimi.ingsw.utils.CustomLogger;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Game extends Observable<Update> {
+public class Game extends Observable<Update> implements Observer<Update> {
 
     private ArrayList<Player> players;
     private int currentPlayerIndex;
     private LeaderCardsDeck leaderCardsDeck;
     private CardMarket cardMarket;
     private MarbleMarket marbleMarket;
-    private boolean areWinConditionsMet;
+    private boolean isLastRound;
 
     public Game() {
         CustomLogger.getLogger().info("Creating Game");
-        this.areWinConditionsMet = false;
+        this.isLastRound = false;
         this.currentPlayerIndex = 0;
         CustomLogger.getLogger().info("Game created");
     }
@@ -38,16 +40,20 @@ public class Game extends Observable<Update> {
 
     public MarbleMarket getMarbleMarket(){return marbleMarket;}
 
+
     public void nextTurn() {
         currentPlayerIndex++;
         currentPlayerIndex = currentPlayerIndex % players.size();
-        getCurrentPlayer().setHasDoneMainAction(false);
-        notify(new UpdateCurrentPlayer(this));
+        if(isLastRound && getCurrentPlayer().isFirst()){
+            finalizeGame();
+        } else {
+            getCurrentPlayer().setHasDoneMainAction(false);
+            notify(new UpdateCurrentPlayer(this));
+        }
     }
 
-    // FIXME change with update
-    private void checkEnd() {
-
+    private void finalizeGame(){
+        //TODO: for each player calculate and set victory points
     }
 
     public void setFirstPlayer(){
@@ -123,4 +129,14 @@ public class Game extends Observable<Update> {
         this.leaderCardsDeck.shuffle();
     }
 
+    @Override
+    public void update(Update object) {
+        players.forEach((player)->{
+            if(player.finishedFaithPath() || player.getTotalDevelopmentCards()>6) {
+                isLastRound = true;
+                notify(new UpdateLastRound(this));
+                return;
+            }
+        });
+    }
 }
