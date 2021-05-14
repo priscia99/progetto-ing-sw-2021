@@ -4,7 +4,6 @@ import it.polimi.ingsw.server_model.card.LeaderCard;
 import it.polimi.ingsw.server_model.market.CardMarket;
 import it.polimi.ingsw.server_model.market.MarbleMarket;
 import it.polimi.ingsw.server_model.player_board.LeaderCardsDeck;
-import it.polimi.ingsw.controller.turn_manager.TurnManager;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.network.update.Update;
 import it.polimi.ingsw.network.update.UpdateCurrentPlayer;
@@ -20,7 +19,6 @@ public class Game extends Observable<Update> {
     private LeaderCardsDeck leaderCardsDeck;
     private CardMarket cardMarket;
     private MarbleMarket marbleMarket;
-    private TurnManager turnManager;
     private boolean areWinConditionsMet;
 
     public Game() {
@@ -34,8 +32,6 @@ public class Game extends Observable<Update> {
         return cardMarket;
     }
 
-    public TurnManager getTurnManager() {return turnManager;}
-
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -45,8 +41,7 @@ public class Game extends Observable<Update> {
     public void nextTurn() {
         currentPlayerIndex++;
         currentPlayerIndex = currentPlayerIndex % players.size();
-        turnManager.startTurn();
-
+        getCurrentPlayer().setHasDoneMainAction(false);
         notify(new UpdateCurrentPlayer(this));
     }
 
@@ -69,7 +64,6 @@ public class Game extends Observable<Update> {
         setupLeaderCards();
         setupCardsMarket();
         setupMarbleMarket();
-        setupTurnManager();
         giveLeaderCardsToPlayers();
         giveInitialResources();
     }
@@ -129,9 +123,4 @@ public class Game extends Observable<Update> {
         this.leaderCardsDeck.shuffle();
     }
 
-    // FIXME
-    private void setupTurnManager(){
-        CustomLogger.getLogger().info("Setting up turn manager");
-        this.turnManager = new TurnManager(this);
-    }
 }

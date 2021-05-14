@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.network.Message;
+import it.polimi.ingsw.controller.action.Action;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.observer.Observable;
 
@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class SocketClientConnection extends Observable<Message> implements ClientConnection, Runnable {
+public class SocketClientConnection extends Observable<Action> implements ClientConnection, Runnable {
 
     private Socket socket;  // single socket connection with one client
     private ObjectOutputStream out; // output stream to the client
@@ -105,10 +105,8 @@ public class SocketClientConnection extends Observable<Message> implements Clien
             */
             // while the connection is alive read every message and notify it to the server
             while(isAlive()) {
-                // TODO: complete
-                // ClientConnection does not need observer with option because everything is in the message
-                Message incomingMessage = (Message) in.readObject();
-                notify(incomingMessage);
+                Action incomingAction = (Action) in.readObject();
+                notify(incomingAction);
             }
         } catch (Exception e) {
             e.printStackTrace();

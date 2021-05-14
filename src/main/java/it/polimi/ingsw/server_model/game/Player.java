@@ -23,6 +23,25 @@ public class Player {
     private boolean first;
     private int initialResourceToChoose; // FIXME
     private boolean ready;
+    private boolean isCurrent;
+    private boolean hasDoneMainAction;
+
+    public boolean isCurrent() {
+        return isCurrent;
+    }
+
+    public void setCurrent(boolean current) {
+        isCurrent = current;
+    }
+
+    public boolean hasDoneMainAction() {
+        return hasDoneMainAction;
+    }
+
+    public void setHasDoneMainAction(boolean hasDoneMainAction) {
+        this.hasDoneMainAction = hasDoneMainAction;
+    }
+
 
     public Player(String username) {
         CustomLogger.getLogger().info("Creating player");

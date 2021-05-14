@@ -1,20 +1,20 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.controller.TurnController;
+import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.action.Action;
 import it.polimi.ingsw.observer.Observer;
 
-public class MessageDecoder implements Observer<Message> {
+public class MessageDecoder implements Observer<Action> {
 
-    private TurnController turnController;
+    private GameController controller;
 
-    public MessageDecoder(TurnController controller){
-        this.turnController = controller;
+    public MessageDecoder(GameController controller){
+        this.controller = controller;
     }
 
 
     @Override
-    public void update(Message object) {
-        // TODO: Fill me
+    public void update(Action action) {
+        controller.executeAction(action);
     }
-
 }

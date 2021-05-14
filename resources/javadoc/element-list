@@ -17,7 +17,7 @@ it.polimi.ingsw.server_model.requirements
 it.polimi.ingsw.server_model.resource
 it.polimi.ingsw.controller.turn_manager
 it.polimi.ingsw.controller.turn_manager.action_params
-it.polimi.ingsw.controller.turn_manager.turn_action
+it.polimi.ingsw.controller.action
 it.polimi.ingsw.observer
 it.polimi.ingsw.network.server
 it.polimi.ingsw.testUtils

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.controller.TurnController;
 import it.polimi.ingsw.exceptions.FullLobbyException;
 import it.polimi.ingsw.network.client.ClientConnection;
 import it.polimi.ingsw.network.client.SocketClientConnection;
@@ -75,10 +74,8 @@ public class Lobby {
 
     public void init(){
         GameController gameController = new GameController(game);
-        TurnController turnController = new TurnController(game.getTurnManager());
-        MessageDecoder messageDecoder = new MessageDecoder(turnController);
+        MessageDecoder messageDecoder = new MessageDecoder(gameController);
         MessageEncoder messageEncoder = new MessageEncoder(this);
-        VictoryObserver victoryObserver = new VictoryObserver(game);
         clientConnectionMap.values()
                 .forEach(connection -> {
                     SocketClientConnection socketClientConnection = (SocketClientConnection) connection;
@@ -93,9 +90,7 @@ public class Lobby {
         game.addObserver(messageEncoder);
         game.getPlayers().forEach((player)->{
             Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(messageEncoder));
-            Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(victoryObserver));
             player.getPlayerBoard().getFaithPath().addObserver(messageEncoder);
-            player.getPlayerBoard().getFaithPath().addObserver(victoryObserver);
             player.getPlayerBoard().getLeaderCardsDeck().addObserver(messageEncoder);
             player.getPlayerBoard().getStrongbox().addObserver(messageEncoder);
             player.getPlayerBoard().getWarehouse().addObserver(messageEncoder);
