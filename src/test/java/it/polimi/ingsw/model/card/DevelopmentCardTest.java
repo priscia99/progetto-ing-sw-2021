@@ -32,7 +32,4 @@ public class DevelopmentCardTest {
     public void testColor(){
         Assertions.assertEquals(Color.PURPLE,developmentCard.getColor(),"Color should be PURPLE");
     }
-
-
-
 }
