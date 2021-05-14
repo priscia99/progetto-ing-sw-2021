@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server_model.game;
 
+import it.polimi.ingsw.exceptions.UserNotFoundException;
 import it.polimi.ingsw.network.update.UpdateLastRound;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server_model.card.LeaderCard;
@@ -58,12 +59,20 @@ public class Game extends Observable<Update> implements Observer<Update> {
 
     public void setFirstPlayer(){
         Collections.shuffle(this.players);
-        players.get(0).setFirst(true);
+        players.get(1).setFirst(true);
     }
 
     public Player getCurrentPlayer(){
         return players.get(currentPlayerIndex);
     }
+
+    public Player getPlayerByUsername(String username){
+        for(Player player : players){
+            if(player.getNickname().equals(username)) return player;
+        }
+        throw new UserNotFoundException();
+    }
+
 
     public void setup(ArrayList<Player> players) {
         this.players = players;
@@ -87,22 +96,31 @@ public class Game extends Observable<Update> implements Observer<Update> {
         }
     }
 
+    public void tryStart(){
+        if(isReady()){
+            setFirstPlayer();
+            nextTurn();
+        }
+    }
+
+    private boolean isReady(){
+        return allPlayersHasChosenInitialResources() && allPlayersHaveStartingLeaderCards();
+    }
 
     public boolean allPlayersHaveStartingLeaderCards(){
         return !players.stream()
-                .map(player -> player.getPlayerBoard().getLeaderCardsDeck().getLeaderCards().size()==2)
+                .map(Player::isInitialLeadersReady)
                 .collect(Collectors.toList())
                 .contains(false);
     }
 
     public boolean allPlayersHasChosenInitialResources(){
         return !players.stream()
-                .map(Player::hasToChooseInitialResource)
+                .map(Player::isInitialResourcesReady)
                 .collect(Collectors.toList())
                 .contains(false);
     }
 
-    // FIXME ????????????????????
     public void giveInitialResources() {
         if(players.size()>2){
             players.get(2).setInitialResourceToChoose(1);

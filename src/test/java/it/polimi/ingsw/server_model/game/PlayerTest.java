@@ -22,7 +22,7 @@ public class PlayerTest {
     @Test
     @DisplayName("Test picked leader cards")
     public void testPickedLeaderCards(){
-        List<LeaderCard> pickedCards = new ArrayList<>();
+        ArrayList<LeaderCard> pickedCards = new ArrayList<>();
         LeaderCard cardToCheck = MockProvider.getLeaderCardMock();
         pickedCards.add(cardToCheck);
         player.pickedLeaderCards(pickedCards);

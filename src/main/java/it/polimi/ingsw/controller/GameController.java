@@ -20,26 +20,8 @@ public class GameController {
         game.setup(players);
     }
 
-    public void playerHasChosenLeaders(Player player, ArrayList<LeaderCard> leaderCards){
-        game.getPlayers().get(game.getPlayers().indexOf(player)).pickedLeaderCards(leaderCards);
-        if(game.allPlayersHaveStartingLeaderCards()) game.giveInitialResources();
-    }
-
-    public void playerHasChosenInitialResource(Player player, List<ResourceType> resourcePiles, List<Integer> depots){
-        for(int i = 0; i<resourcePiles.size(); i++){
-            game.getPlayers().get(game.getPlayers().indexOf(player)).addResourceToDepot(resourcePiles.get(i), depots.get(i));
-            game.getPlayers().get(game.getPlayers().indexOf(player)).hasChosenInitialResource();
-        }
-        //if(game.allPlayersHasChosedInitialResources()) startGame();
-    }
-
     public void executeAction(Action action){
         action.execute(game);
     }
 
-    private void startGame(){
-        game.setFirstPlayer();
-        game.nextTurn();
-
-    }
 }

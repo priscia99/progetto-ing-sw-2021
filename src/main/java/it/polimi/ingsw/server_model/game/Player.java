@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server_model.game;
 
+import it.polimi.ingsw.exceptions.InvalidActionException;
 import it.polimi.ingsw.server_model.card.DevelopmentCard;
 import it.polimi.ingsw.server_model.card.LeaderCard;
 import it.polimi.ingsw.server_model.card.color.Color;
@@ -9,10 +10,7 @@ import it.polimi.ingsw.server_model.resource.ResourceStock;
 import it.polimi.ingsw.server_model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Player {
@@ -21,10 +19,29 @@ public class Player {
     private final String id;
     private final PlayerBoard playerBoard;
     private boolean first;
-    private int initialResourceToChoose; // FIXME
-    private boolean ready;
+    private int initialResourceToChoose;
+    private boolean initialLeadersReady;
+    private boolean initialResourcesReady;
     private boolean isCurrent;
     private boolean hasDoneMainAction;
+
+    public boolean isInitialLeadersReady() {
+        return initialLeadersReady;
+    }
+
+    public void setInitialLeadersReady(boolean initialLeadersReady) {
+        this.initialLeadersReady = initialLeadersReady;
+    }
+
+    public boolean isInitialResourcesReady() {
+        return initialResourcesReady;
+    }
+
+    public void setInitialResourcesReady(boolean initialResourcesReady) {
+        this.initialResourcesReady = initialResourcesReady;
+    }
+
+
 
     public boolean isCurrent() {
         return isCurrent;
@@ -49,11 +66,12 @@ public class Player {
         this.username = username;
         this.id = UUID.randomUUID().toString();
         this.playerBoard = new PlayerBoard();
+        setInitialLeadersReady(false);
+        setInitialResourcesReady(false);
         CustomLogger.getLogger().info("Player created");
     }
 
     public void setInitialResourceToChoose(int value){
-        // FIXME
         initialResourceToChoose = value;
     }
 
@@ -97,9 +115,18 @@ public class Player {
                 .mapToInt(DevelopmentCardsDeck::getCardNumber).sum();
     }
 
-    public void pickedLeaderCards(List<LeaderCard> cards){
+    public void pickedLeaderCards(ArrayList<LeaderCard> cards){
         this.playerBoard.getLeaderCardsDeck().clear();
         this.playerBoard.addToLeaderCardsDeck(cards);
+        setInitialLeadersReady(true);
+    }
+
+    public void pickedInitialResources(HashMap<Integer, ResourceType> toAdd){
+        if(toAdd.values().size() != initialResourceToChoose) throw new InvalidActionException();
+        for (Integer depotIndex : toAdd.keySet()) {
+            getPlayerBoard().getWarehouse().addToDepot(depotIndex, toAdd.get(depotIndex));
+        }
+        setInitialResourcesReady(true);
     }
 
     public boolean hasLeaderCards(){
