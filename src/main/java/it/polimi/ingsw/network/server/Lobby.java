@@ -5,7 +5,11 @@ import it.polimi.ingsw.controller.TurnController;
 import it.polimi.ingsw.exceptions.FullLobbyException;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
+import it.polimi.ingsw.model.player_board.DevelopmentCardsDeck;
 import it.polimi.ingsw.network.MessageDecoder;
+import it.polimi.ingsw.network.MessageEncoder;
+import it.polimi.ingsw.network.VictoryObserver;
+import it.polimi.ingsw.network.observer.DevelopmentCardsDeckAdapter;
 
 import java.util.*;
 
@@ -74,18 +78,28 @@ public class Lobby {
         GameController gameController = new GameController(game);
         TurnController turnController = new TurnController(game.getTurnManager());
         MessageDecoder messageDecoder = new MessageDecoder(turnController);
+        MessageEncoder messageEncoder = new MessageEncoder(this);
+        VictoryObserver victoryObserver = new VictoryObserver(game);
         clientConnectionMap.values()
                 .forEach(connection -> {
                     connection.addObserver(messageDecoder);
                 });
-
-
         ArrayList<Player> players = new ArrayList<>();
         clientConnectionMap.keySet()
                 .forEach(username -> {
                     players.add(new Player(username));
                 });
         gameController.setupGame(players);
+        game.addObserver(messageEncoder);
+        game.getPlayers().forEach((player)->{
+            Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(messageEncoder));
+            Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(victoryObserver));
+            player.getPlayerBoard().getFaithPath().addObserver(messageEncoder);
+            player.getPlayerBoard().getFaithPath().addObserver(victoryObserver);
+            player.getPlayerBoard().getLeaderCardsDeck().addObserver(messageEncoder);
+            player.getPlayerBoard().getStrongbox().addObserver(messageEncoder);
+            player.getPlayerBoard().getWarehouse().addObserver(messageEncoder);
+        });
     }
     /**
      * Start a new game.

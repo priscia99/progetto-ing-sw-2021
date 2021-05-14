@@ -54,6 +54,8 @@ public class Game extends ObservableWithOption<Game, MessageType> {
     public void checkVictory() {
         if(players.stream().map(Player::meetsWinCondition).count() >0){
             areWinConditionsMet = true;
+            //TODO: send message player has met win conditions
+            notify();
         }
     }
 

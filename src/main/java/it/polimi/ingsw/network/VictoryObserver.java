@@ -17,28 +17,11 @@ public class VictoryObserver implements ObserverWithOption<Object, MessageType> 
         this.game = game;
     }
 
-    public Game getLobby() {
-        return game;
-    }
-
-    public void setLobby(Game game) {
-        this.game = game;
-    }
-
     @Override
     public void update(Object object, MessageType option) {
-        if (option.equals(MessageType.FAITH_PATH_NEXT)) {
-            FaithPath faithPath = (FaithPath) object;
-            if (faithPath.getFaithPoints() == 20) {
-                // trigger last turn
-            }
-        } else if (option.equals(MessageType.BUY_DEVELOPMENT_CARD)) {
-            ArrayList<DevelopmentCard> developmentCards = (ArrayList<DevelopmentCard>) object;
-            if (developmentCards.size() == 7) {
-                // trigger last turn
-            }
-        } else {
-            throw new IllegalArgumentException("Message type not allowed here");
+        if (option.equals(MessageType.FAITH_PATH_NEXT)
+                || option.equals(MessageType.BUY_DEVELOPMENT_CARD)) {
+            game.checkVictory();
         }
     }
 }
