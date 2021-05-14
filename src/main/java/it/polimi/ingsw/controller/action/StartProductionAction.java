@@ -9,17 +9,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StartProductionAction extends Action {
-    ArrayList<HashMap<ResourceStock, Integer>> consumedResources;
+    HashMap<Integer, ResourceStock> consumedResources;
     ArrayList<ProductionEffect> productionsToActivate;
 
-    public StartProductionAction(ArrayList<HashMap<ResourceStock, Integer>> consumed,
+    public StartProductionAction(HashMap<Integer, ResourceStock> consumed,
                                  ArrayList<ProductionEffect> productions) {
         consumedResources = consumed;
         productionsToActivate = productions;
     }
 
     public void execute(Game currentGame) {
-        //TODO: implement depot consume methods
+        //TODO: so far only resource from warehouse, should also be possible from strongbox
+        consumedResources.keySet().forEach((depotIndex)->{
+            for(int i = 0; i<consumedResources.get(depotIndex).getQuantity(); i++){
+                currentGame.getCurrentPlayer()
+                        .getPlayerBoard()
+                        .getWarehouse()
+                        .removeFromDepot(depotIndex, consumedResources.get(depotIndex).getResourceType());
+            }
+        });
         if(currentGame.getCurrentPlayer().hasDoneMainAction()) throw new InvalidActionException();
         ArrayList<ProductionEffect> productionsSelected = productionsToActivate;
         for(ProductionEffect productionToActivate : productionsSelected){
