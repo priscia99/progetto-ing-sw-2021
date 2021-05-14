@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.turn_manager.TurnManager;
 import it.polimi.ingsw.network.MessageType;
 import it.polimi.ingsw.network.observer.Observable;
 import it.polimi.ingsw.network.update.Update;
+import it.polimi.ingsw.network.update.UpdateCurrentPlayer;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.util.*;
@@ -48,7 +49,7 @@ public class Game extends Observable<Update> {
         turnManager.startTurn();
 
         // TODO add messageType
-        notify(this, null);
+        notify(new UpdateCurrentPlayer(this));
     }
 
 
@@ -67,11 +68,10 @@ public class Game extends Observable<Update> {
 
     public Player getCurrentPlayer(){return players.get(currentPlayerIndex);}
 
+    // FIXME ??????????????????
     public void start() {
         nextTurn();
 
-        // TODO add messageType
-        notify(this, null);
     }
 
     public void setup(ArrayList<Player> players) {
@@ -111,6 +111,7 @@ public class Game extends Observable<Update> {
                 .contains(false);
     }
 
+    // FIXME ????????????????????
     public void giveInitialResources() {
         if(players.size()>2){
             players.get(2).setInitialResourceToChoose(1);
@@ -121,8 +122,6 @@ public class Game extends Observable<Update> {
             }
         }
 
-        // TODO add messageType
-        notify(this, null);
     }
 
     private void setupMarbleMarket() {
