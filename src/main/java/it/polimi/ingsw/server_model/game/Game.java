@@ -132,6 +132,11 @@ public class Game extends Observable<Update> implements Observer<Update> {
         }
     }
 
+    public void currentPlayerDropsResource(){
+        players.stream().filter(player-> player != getCurrentPlayer())
+                .forEach(player -> player.addFaithPoints(1));
+    }
+
     private void setupVictoryObservations(){
         players.forEach((player)->{
             player.getPlayerBoard().getFaithPath().addObserver(this);

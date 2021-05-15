@@ -6,6 +6,7 @@ import it.polimi.ingsw.server_model.card.LeaderCard;
 import it.polimi.ingsw.server_model.card.color.Color;
 import it.polimi.ingsw.server_model.player_board.DevelopmentCardsDeck;
 import it.polimi.ingsw.server_model.player_board.PlayerBoard;
+import it.polimi.ingsw.server_model.resource.ResourcePosition;
 import it.polimi.ingsw.server_model.resource.ResourceStock;
 import it.polimi.ingsw.server_model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -121,10 +122,10 @@ public class Player {
         setInitialLeadersReady(true);
     }
 
-    public void pickedInitialResources(HashMap<Integer, ResourceType> toAdd){
+    public void pickedInitialResources(HashMap<ResourcePosition, ResourceType> toAdd){
         if(toAdd.values().size() != initialResourceToChoose) throw new InvalidActionException();
-        for (Integer depotIndex : toAdd.keySet()) {
-            getPlayerBoard().getWarehouse().addToDepot(depotIndex, toAdd.get(depotIndex));
+        for (ResourcePosition depotIndex : toAdd.keySet()) {
+            getPlayerBoard().getWarehouse().addToDepot(depotIndex.ordinal(), toAdd.get(depotIndex));
         }
         setInitialResourcesReady(true);
     }
