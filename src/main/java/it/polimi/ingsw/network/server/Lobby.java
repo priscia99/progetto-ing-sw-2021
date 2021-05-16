@@ -6,8 +6,8 @@ import it.polimi.ingsw.network.client.ClientConnection;
 import it.polimi.ingsw.network.client.SocketClientConnection;
 import it.polimi.ingsw.server_model.game.Game;
 import it.polimi.ingsw.server_model.game.Player;
-import it.polimi.ingsw.network.MessageDecoder;
-import it.polimi.ingsw.network.MessageEncoder;
+import it.polimi.ingsw.network.ServerMessageDecoder;
+import it.polimi.ingsw.network.ServerMessageEncoder;
 
 import java.util.*;
 
@@ -74,12 +74,12 @@ public class Lobby {
 
     public void init(){
         GameController gameController = new GameController(game);
-        MessageDecoder messageDecoder = new MessageDecoder(gameController);
-        MessageEncoder messageEncoder = new MessageEncoder(this);
+        ServerMessageDecoder serverMessageDecoder = new ServerMessageDecoder(gameController);
+        ServerMessageEncoder serverMessageEncoder = new ServerMessageEncoder(this);
         clientConnectionMap.values()
                 .forEach(connection -> {
                     SocketClientConnection socketClientConnection = (SocketClientConnection) connection;
-                    socketClientConnection.addObserver(messageDecoder);
+                    socketClientConnection.addObserver(serverMessageDecoder);
                 });
         ArrayList<Player> players = new ArrayList<>();
         clientConnectionMap.keySet()
@@ -87,13 +87,13 @@ public class Lobby {
                     players.add(new Player(username));
                 });
         gameController.setupGame(players);
-        game.addObserver(messageEncoder);
+        game.addObserver(serverMessageEncoder);
         game.getPlayers().forEach((player)->{
-            Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(messageEncoder));
-            player.getPlayerBoard().getFaithPath().addObserver(messageEncoder);
-            player.getPlayerBoard().getLeaderCardsDeck().addObserver(messageEncoder);
-            player.getPlayerBoard().getStrongbox().addObserver(messageEncoder);
-            player.getPlayerBoard().getWarehouse().addObserver(messageEncoder);
+            Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(serverMessageEncoder));
+            player.getPlayerBoard().getFaithPath().addObserver(serverMessageEncoder);
+            player.getPlayerBoard().getLeaderCardsDeck().addObserver(serverMessageEncoder);
+            player.getPlayerBoard().getStrongbox().addObserver(serverMessageEncoder);
+            player.getPlayerBoard().getWarehouse().addObserver(serverMessageEncoder);
         });
     }
     /**

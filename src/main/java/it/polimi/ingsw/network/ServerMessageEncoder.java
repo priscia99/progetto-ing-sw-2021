@@ -4,11 +4,11 @@ import it.polimi.ingsw.network.update.Update;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.network.server.Lobby;
 
-public class MessageEncoder implements Observer<Update> {
+public class ServerMessageEncoder implements Observer<Update> {
 
     private Lobby lobby;
 
-    public MessageEncoder(Lobby lobby) {
+    public ServerMessageEncoder(Lobby lobby) {
         this.lobby = lobby;
     }
 
