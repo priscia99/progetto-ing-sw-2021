@@ -4,7 +4,7 @@ import it.polimi.ingsw.server_model.card.LeaderCard;
 import it.polimi.ingsw.server_model.card.effect.Effect;
 import it.polimi.ingsw.server_model.card.requirement.Requirement;
 
-public class ClientLeaderCard extends ClientCard implements Viewable {
+public class ClientLeaderCard extends ClientCard implements ClientAsset {
 
     private final boolean active;
 

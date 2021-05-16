@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.update;
+package it.polimi.ingsw.client_model;
 
 public interface ClientAsset {
 

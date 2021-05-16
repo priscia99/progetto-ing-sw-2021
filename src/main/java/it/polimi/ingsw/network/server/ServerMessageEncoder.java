@@ -1,5 +1,6 @@
-package it.polimi.ingsw.network;
+package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.network.Message;
 import it.polimi.ingsw.network.update.Update;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.network.server.Lobby;

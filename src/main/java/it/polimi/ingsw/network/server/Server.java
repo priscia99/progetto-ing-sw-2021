@@ -1,8 +1,5 @@
 package it.polimi.ingsw.network.server;
 
-import it.polimi.ingsw.network.client.ClientConnection;
-import it.polimi.ingsw.network.client.SocketClientConnection;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;

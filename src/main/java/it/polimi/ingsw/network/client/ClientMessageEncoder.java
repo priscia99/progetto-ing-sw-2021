@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network;
+package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.controller.action.Action;
 import it.polimi.ingsw.observer.Observer;

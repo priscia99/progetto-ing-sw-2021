@@ -1,7 +1,6 @@
-package it.polimi.ingsw.network.client;
+package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.action.Action;
-import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.observer.Observable;
 
 import java.io.IOException;

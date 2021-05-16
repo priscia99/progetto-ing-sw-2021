@@ -5,7 +5,7 @@ import it.polimi.ingsw.server_model.card.color.Color;
 import it.polimi.ingsw.server_model.card.effect.Effect;
 import it.polimi.ingsw.server_model.card.requirement.Requirement;
 
-public class ClientDevelopmentCard extends ClientCard implements Viewable{
+public class ClientDevelopmentCard extends ClientCard implements ClientAsset{
 
     private final Color color;
 
