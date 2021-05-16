@@ -1,9 +1,12 @@
 package it.polimi.ingsw.network.update;
 
+import it.polimi.ingsw.client_model.ClientStrongbox;
+import it.polimi.ingsw.server_model.player_board.storage.Strongbox;
+
 public class UpdateStrongbox extends  Update{
 
     public UpdateStrongbox(Object object) {
-        super(object);
+        super(new ClientStrongbox((Strongbox) object));
     }
 
     @Override

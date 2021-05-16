@@ -8,11 +8,11 @@ import it.polimi.ingsw.server_model.game.Player;
 
 import java.util.Stack;
 
-public class CardMarket {
+public class CardsMarket {
 
     private final Stack<DevelopmentCard>[][] decks;
 
-    static public CardMarket getStartingMarket(){
+    static public CardsMarket getStartingMarket(){
         // market scheme:
         // lv3 row [purple, yellow, green, blue]
         // lv2 row [purple, yellow, green, blue]
@@ -41,10 +41,10 @@ public class CardMarket {
                 decks[column][lv-1] = DevCardMarketBuilder.getStackByLevelColor(lv, color);
           }
          }
-        return new CardMarket(decks);
+        return new CardsMarket(decks);
     }
 
-    public CardMarket(Stack<DevelopmentCard>[][] decks) {
+    public CardsMarket(Stack<DevelopmentCard>[][] decks) {
         this.decks = decks;
     }
 

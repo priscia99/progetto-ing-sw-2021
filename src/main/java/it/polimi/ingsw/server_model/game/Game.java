@@ -4,7 +4,7 @@ import it.polimi.ingsw.exceptions.UserNotFoundException;
 import it.polimi.ingsw.network.update.UpdateLastRound;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server_model.card.LeaderCard;
-import it.polimi.ingsw.server_model.market.CardMarket;
+import it.polimi.ingsw.server_model.market.CardsMarket;
 import it.polimi.ingsw.server_model.market.MarbleMarket;
 import it.polimi.ingsw.server_model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.observer.Observable;
@@ -20,7 +20,7 @@ public class Game extends Observable<Update> implements Observer<Update> {
     private ArrayList<Player> players;
     private int currentPlayerIndex;
     private LeaderCardsDeck leaderCardsDeck;
-    private CardMarket cardMarket;
+    private CardsMarket cardsMarket;
     private MarbleMarket marbleMarket;
     private boolean isLastRound;
 
@@ -31,8 +31,8 @@ public class Game extends Observable<Update> implements Observer<Update> {
         CustomLogger.getLogger().info("Game created");
     }
 
-    public CardMarket getCardMarket() {
-        return cardMarket;
+    public CardsMarket getCardMarket() {
+        return cardsMarket;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -153,7 +153,7 @@ public class Game extends Observable<Update> implements Observer<Update> {
 
     private void setupCardsMarket() {
         CustomLogger.getLogger().info("Setting up cards market");
-        this.cardMarket = CardMarket.getStartingMarket();
+        this.cardsMarket = CardsMarket.getStartingMarket();
     }
 
     private void setupLeaderCards() {
