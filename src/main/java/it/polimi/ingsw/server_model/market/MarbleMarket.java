@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server_model.market;
 
 import it.polimi.ingsw.data.MarbleMarketBuilder;
+import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server_model.marble.Marble;
 import it.polimi.ingsw.server_model.marble.MarbleSelection;
 import it.polimi.ingsw.server_model.marble.Orientation;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class MarbleMarket {
+public class MarbleMarket extends Observable<MarbleMarket> {
 
     // 4 columns
     // 3 rows
@@ -30,16 +31,8 @@ public class MarbleMarket {
         return onSale;
     }
 
-    private void setOnSale(Marble[][] onSale) {
-        this.onSale = onSale;
-    }
-
     public Marble getNotForSale() {
         return notForSale;
-    }
-
-    private void setNotForSale(Marble notForSale) {
-        this.notForSale = notForSale;
     }
 
     public ArrayList<Marble> sell(MarbleSelection selection) {
@@ -55,6 +48,8 @@ public class MarbleMarket {
             System.arraycopy(this.onSale[index], 1, this.onSale[index], 0, 3);
             this.onSale[index][3] = this.notForSale;
             this.notForSale = tempNotForSale;
+
+            notify(this);
 
             return soldMarbles;
 
@@ -73,6 +68,8 @@ public class MarbleMarket {
             }
             this.onSale[2][index] = this.notForSale;
             this.notForSale = tempNotForSale;
+
+            notify(this);
 
             return soldMarbles;
 

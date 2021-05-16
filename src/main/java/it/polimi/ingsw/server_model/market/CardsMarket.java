@@ -2,13 +2,14 @@ package it.polimi.ingsw.server_model.market;
 
 import it.polimi.ingsw.data.DevCardMarketBuilder;
 import it.polimi.ingsw.exceptions.NotFulfilledException;
+import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server_model.card.DevelopmentCard;
 import it.polimi.ingsw.server_model.card.color.Color;
 import it.polimi.ingsw.server_model.game.Player;
 
 import java.util.Stack;
 
-public class CardsMarket {
+public class CardsMarket extends Observable<CardsMarket> {
 
     private final Stack<DevelopmentCard>[][] decks;
 
@@ -54,7 +55,11 @@ public class CardsMarket {
 
     public DevelopmentCard sell(int row, int column, Player player) {
         if (this.decks[row][column].peek().getRequirement().isFulfilled(player)) {
-            return this.decks[row][column].pop();
+            DevelopmentCard card = this.decks[row][column].pop();
+
+            notify(this);
+
+            return card;
         }
         else {
             throw new NotFulfilledException("player doesn't fulfill requirements");
