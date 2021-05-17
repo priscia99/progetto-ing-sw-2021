@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server_model.game;
 
 import it.polimi.ingsw.exceptions.UserNotFoundException;
+import it.polimi.ingsw.network.update.UpdateException;
 import it.polimi.ingsw.network.update.UpdateLastRound;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.server_model.card.LeaderCard;
@@ -15,7 +16,7 @@ import it.polimi.ingsw.utils.CustomLogger;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Game extends Observable<Update> implements Observer<Update> {
+public class Game extends Observable<Update> implements Observer<Update>, Cloneable {
 
     private ArrayList<Player> players;
     private int currentPlayerIndex;
@@ -31,6 +32,51 @@ public class Game extends Observable<Update> implements Observer<Update> {
         CustomLogger.getLogger().info("Game created");
     }
 
+    public Game getBackup(){
+        //TODO: pass copy of object
+        Game backup = new Game();
+        backup.setPlayers(players);
+        backup.setCurrentPlayerIndex(currentPlayerIndex);
+        backup.setLeaderCards(leaderCardsDeck);
+        backup.setCardsMarket(cardsMarket);
+        backup.setMarbleMarket(marbleMarket);
+        backup.setIsLastRound(isLastRound);
+        return backup;
+    }
+
+    private void setPlayers(ArrayList<Player> players){
+        this.players  = players;
+    }
+
+    private void setCurrentPlayerIndex(int index){
+        this.currentPlayerIndex = index;
+    }
+
+    private void setLeaderCards(LeaderCardsDeck cards){
+        this.leaderCardsDeck = cards;
+    }
+
+    private void setMarbleMarket(MarbleMarket market){
+        this.marbleMarket = market;
+    }
+
+    private void setCardsMarket(CardsMarket market){
+        this.cardsMarket = market;
+    }
+
+    private void setIsLastRound(boolean flag){
+        this.isLastRound = flag;
+    }
+
+    public void applyBackup(Game backup){
+        this.setCardsMarket(backup.getCardMarket());
+        this.setMarbleMarket(backup.getMarbleMarket());
+        this.setLeaderCards(backup.getLeaderCardsDeck());
+        this.setPlayers(backup.getPlayers());
+        this.setCurrentPlayerIndex(backup.getCurrentPlayerIndex());
+        this.setIsLastRound(backup.getIsLastRound());
+    }
+
     public CardsMarket getCardMarket() {
         return cardsMarket;
     }
@@ -40,6 +86,12 @@ public class Game extends Observable<Update> implements Observer<Update> {
     }
 
     public MarbleMarket getMarbleMarket(){return marbleMarket;}
+
+    public LeaderCardsDeck getLeaderCardsDeck(){return leaderCardsDeck;}
+
+    public int getCurrentPlayerIndex(){return currentPlayerIndex;}
+
+    public boolean getIsLastRound(){return isLastRound;}
 
 
     public void nextTurn() {
@@ -172,4 +224,9 @@ public class Game extends Observable<Update> implements Observer<Update> {
             }
         });
     }
+
+    public void notifyError(Exception exception){
+        notify(new UpdateException(exception));
+    }
+
 }

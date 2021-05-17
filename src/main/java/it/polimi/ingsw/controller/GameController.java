@@ -21,7 +21,14 @@ public class GameController {
     }
 
     public void executeAction(Action action){
-        action.execute(game);
+        Game backup = new Game();
+        try{
+            backup = game.getBackup();
+            action.execute(game);
+        } catch(Exception ex){
+            game.notifyError(ex);
+            game.applyBackup(backup);
+        }
     }
 
 }
