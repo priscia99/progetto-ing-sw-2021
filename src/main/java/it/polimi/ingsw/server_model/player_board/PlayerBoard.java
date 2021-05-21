@@ -44,6 +44,12 @@ public class PlayerBoard {
         return developmentCardsDeck;
     }
 
+    public PlayerBoard getCopy(){
+        PlayerBoard copy = new PlayerBoard();
+        
+        return copy;
+    }
+
     /**
      *
      * @return the faith path object.

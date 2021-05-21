@@ -17,8 +17,10 @@ import java.util.stream.Collectors;
 public class Player {
 
     private String username;
-    private final String id;
-    private final PlayerBoard playerBoard;
+
+
+    private String id;
+    private PlayerBoard playerBoard;
     private boolean first;
     private int initialResourceToChoose;
     private boolean initialLeadersReady;
@@ -43,6 +45,41 @@ public class Player {
     }
 
 
+
+
+    private int getInitialResourceToChoose() {
+        return initialResourceToChoose;
+    }
+
+    private boolean isHasDoneMainAction() {
+        return hasDoneMainAction;
+    }
+
+    private void setId(String id){
+        this.id = id;
+    }
+
+    private void setUsername(String username){
+        this.username = username;
+    }
+
+    public Player getCopy(){
+        Player copy = new Player();
+        copy.setId(this.id);
+        copy.setUsername(this.username);
+        copy.setPlayerBoard(this.playerBoard.getCopy());
+        copy.setFirst(this.isFirst());
+        copy.setInitialResourceToChoose(this.initialResourceToChoose);
+        copy.setInitialLeadersReady(this.initialLeadersReady);
+        copy.setInitialResourcesReady(this.initialResourcesReady);
+        copy.setCurrent(this.isCurrent);
+        copy.setHasDoneMainAction(this.hasDoneMainAction);
+        return copy;
+    }
+
+    private void setPlayerBoard(PlayerBoard board){
+        this.playerBoard = board;
+    }
 
     public boolean isCurrent() {
         return isCurrent;
@@ -70,6 +107,10 @@ public class Player {
         setInitialLeadersReady(false);
         setInitialResourcesReady(false);
         CustomLogger.getLogger().info("Player created");
+    }
+
+    private Player(){
+        this.playerBoard = new PlayerBoard();
     }
 
     public void setInitialResourceToChoose(int value){

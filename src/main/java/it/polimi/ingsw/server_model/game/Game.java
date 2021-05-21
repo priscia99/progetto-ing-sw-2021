@@ -33,13 +33,14 @@ public class Game extends Observable<Update> implements Observer<Update>, Clonea
     }
 
     public Game getBackup(){
-        //TODO: pass copy of object
         Game backup = new Game();
-        backup.setPlayers(players);
+        ArrayList<Player> playersBackup = new ArrayList<>();
+        players.forEach(player->playersBackup.add(player.getCopy()));
+        backup.setPlayers(playersBackup);
         backup.setCurrentPlayerIndex(currentPlayerIndex);
-        backup.setLeaderCards(leaderCardsDeck);
-        backup.setCardsMarket(cardsMarket);
-        backup.setMarbleMarket(marbleMarket);
+        //backup.setLeaderCards(leaderCardsDeck);
+        //backup.setCardsMarket(cardsMarket);
+        //backup.setMarbleMarket(marbleMarket);
         backup.setIsLastRound(isLastRound);
         return backup;
     }
@@ -101,7 +102,7 @@ public class Game extends Observable<Update> implements Observer<Update>, Clonea
             finalizeGame();
         } else {
             getCurrentPlayer().setHasDoneMainAction(false);
-            notify(new UpdateCurrentPlayer(this));
+            notify(new UpdateCurrentPlayer(getCurrentPlayer()));
         }
     }
 
