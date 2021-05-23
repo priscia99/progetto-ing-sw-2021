@@ -14,5 +14,5 @@ public abstract class Update {
         return object;
     }
 
-    public abstract void execute();
+    public abstract void execute(ClientGame game);
 }
