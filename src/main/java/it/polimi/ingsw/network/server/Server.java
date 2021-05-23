@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -12,7 +13,7 @@ public class Server {
 
     private static final int PORT = 12345;
     private final ServerSocket serverSocket;
-    private final ExecutorService executor = Executors.newFixedThreadPool(128);
+    // private final ExecutorService executor = Executors.newFixedThreadPool(128); // FIXED remove
     private final Map<String, Lobby> lobbyMap = new HashMap<>();
 
     public Server() throws IOException {
@@ -111,7 +112,8 @@ public class Server {
             try {
                 Socket newSocket = serverSocket.accept();
                 SocketClientConnection socketClientConnection = new SocketClientConnection(newSocket, this);
-                executor.submit(socketClientConnection);
+                socketClientConnection.run();
+                // executor.submit(socketClientConnection); // FIXED remove
             } catch (IOException e) {
                 System.out.println("Connection Error!");
             }

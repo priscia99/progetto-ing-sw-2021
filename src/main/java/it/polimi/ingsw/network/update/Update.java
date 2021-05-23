@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network.update;
 
+import it.polimi.ingsw.view.client_model.ClientGame;
+
 public abstract class Update {
 
     private final Object object;

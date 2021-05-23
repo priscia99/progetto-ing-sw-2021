@@ -1,8 +1,10 @@
 package it.polimi.ingsw.network.update;
 
-import it.polimi.ingsw.server_model.game.Player;
+import it.polimi.ingsw.view.client_model.ClientGame;
+import it.polimi.ingsw.model.game.Player;
 
 public class UpdateCurrentPlayer extends Update{
+
     public UpdateCurrentPlayer(Object object) {
         super(((Player) object).getNickname());
     }
@@ -12,3 +14,7 @@ public class UpdateCurrentPlayer extends Update{
         // TODO Send current player update
     }
 }
+
+/*
+private UI userInterface
+ */

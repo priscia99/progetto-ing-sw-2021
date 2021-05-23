@@ -2,8 +2,8 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exceptions.FullLobbyException;
-import it.polimi.ingsw.server_model.game.Game;
-import it.polimi.ingsw.server_model.game.Player;
+import it.polimi.ingsw.model.game.Game;
+import it.polimi.ingsw.model.game.Player;
 
 import java.util.*;
 

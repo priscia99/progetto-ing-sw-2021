@@ -80,9 +80,11 @@ public class SocketClientConnection extends Observable<Action> implements Client
             in = new ObjectInputStream(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
 
-            // FIXME: call view (temporary)
-            /*
+            // FIXME
+            // tell client server is ready to listen
             this.send("Welcome!");  // read username and lobby id from the client
+            // create lobby and insert this connection
+            /*
             this.send("Enter a username: ");
             Message inBuffer = (Message) in.readObject();
             username = inBuffer.getPayload();

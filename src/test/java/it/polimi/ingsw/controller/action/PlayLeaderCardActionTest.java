@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller.action;
 
-import it.polimi.ingsw.server_model.game.Game;
+import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.testUtils.MockProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

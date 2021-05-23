@@ -1,11 +1,11 @@
 package it.polimi.ingsw.controller.action;
 
 import it.polimi.ingsw.exceptions.InvalidActionException;
-import it.polimi.ingsw.server_model.game.Game;
-import it.polimi.ingsw.server_model.marble.Marble;
-import it.polimi.ingsw.server_model.marble.MarbleSelection;
-import it.polimi.ingsw.server_model.resource.ResourcePosition;
-import it.polimi.ingsw.server_model.resource.ResourceType;
+import it.polimi.ingsw.model.game.Game;
+import it.polimi.ingsw.model.marble.Marble;
+import it.polimi.ingsw.model.marble.MarbleSelection;
+import it.polimi.ingsw.model.resource.ResourcePosition;
+import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;
 

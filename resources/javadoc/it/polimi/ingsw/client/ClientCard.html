@@ -77,7 +77,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class ClientCard" class="title">Class ClientCard</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance">it.polimi.ingsw.client_model.ClientCard</div>
+<div class="inheritance">it.polimi.ingsw.view.client_model.ClientCard</div>
 </div>
 <section class="description">
 <dl class="notes">
@@ -106,7 +106,7 @@ extends java.lang.Object</pre>
 </thead>
 <tbody>
 <tr class="alt-color">
-<td class="col-first"><code>private <a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.server_model.card.effect">Effect</a></code></td>
+<td class="col-first"><code>private <a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.model.card.effect">Effect</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#effect">effect</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -116,7 +116,7 @@ extends java.lang.Object</pre>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color">
-<td class="col-first"><code>private <a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.server_model.card.requirement">Requirement</a></code></td>
+<td class="col-first"><code>private <a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.model.card.requirement">Requirement</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#requirement">requirement</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -141,8 +141,8 @@ extends java.lang.Object</pre>
 <tbody>
 <tr class="alt-color">
 <th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(int,it.polimi.ingsw.model.card.requirement.Requirement,it.polimi.ingsw.model.card.effect.Effect)">ClientCard</a></span>&#8203;(int&nbsp;id,
-<a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.server_model.card.requirement">Requirement</a>&nbsp;requirement,
-<a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.server_model.card.effect">Effect</a>&nbsp;effect)</code></th>
+<a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.model.card.requirement">Requirement</a>&nbsp;requirement,
+<a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.model.card.effect">Effect</a>&nbsp;effect)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 </tbody>
@@ -167,7 +167,7 @@ extends java.lang.Object</pre>
 </thead>
 <tbody>
 <tr class="alt-color" id="i0">
-<td class="col-first"><code><a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.server_model.card.effect">Effect</a></code></td>
+<td class="col-first"><code><a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.model.card.effect">Effect</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getEffect()">getEffect</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -177,7 +177,7 @@ extends java.lang.Object</pre>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color" id="i2">
-<td class="col-first"><code><a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.server_model.card.requirement">Requirement</a></code></td>
+<td class="col-first"><code><a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.model.card.requirement">Requirement</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getRequirement()">getRequirement</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -208,13 +208,13 @@ extends java.lang.Object</pre>
 <li>
 <section class="detail" id="requirement">
 <h3>requirement</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.server_model.card.requirement">Requirement</a></span>&nbsp;<span class="member-name">requirement</span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.model.card.requirement">Requirement</a></span>&nbsp;<span class="member-name">requirement</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="effect">
 <h3>effect</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.server_model.card.effect">Effect</a></span>&nbsp;<span class="member-name">effect</span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.model.card.effect">Effect</a></span>&nbsp;<span class="member-name">effect</span></div>
 </section>
 </li>
 </ul>
@@ -229,8 +229,8 @@ extends java.lang.Object</pre>
 <section class="detail" id="&lt;init&gt;(int,it.polimi.ingsw.model.card.requirement.Requirement,it.polimi.ingsw.model.card.effect.Effect)">
 <h3>ClientCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">ClientCard</span>&#8203;(<span class="parameters">int&nbsp;id,
-<a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.server_model.card.requirement">Requirement</a>&nbsp;requirement,
-<a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.server_model.card.effect">Effect</a>&nbsp;effect)</span></div>
+<a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.model.card.requirement">Requirement</a>&nbsp;requirement,
+<a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.model.card.effect">Effect</a>&nbsp;effect)</span></div>
 </section>
 </li>
 </ul>
@@ -250,13 +250,13 @@ extends java.lang.Object</pre>
 <li>
 <section class="detail" id="getRequirement()">
 <h3>getRequirement</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.server_model.card.requirement">Requirement</a></span>&nbsp;<span class="member-name">getRequirement</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/card/requirement/Requirement.html" title="class in it.polimi.ingsw.model.card.requirement">Requirement</a></span>&nbsp;<span class="member-name">getRequirement</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getEffect()">
 <h3>getEffect</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.server_model.card.effect">Effect</a></span>&nbsp;<span class="member-name">getEffect</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/card/effect/Effect.html" title="class in it.polimi.ingsw.model.card.effect">Effect</a></span>&nbsp;<span class="member-name">getEffect</span>()</div>
 </section>
 </li>
 </ul>

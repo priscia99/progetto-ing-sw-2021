@@ -4,8 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.server_model.marble.Marble;
-import it.polimi.ingsw.server_model.resource.ResourceType;
+import it.polimi.ingsw.model.marble.Marble;
+import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.io.FileNotFoundException;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.update;
 
-import it.polimi.ingsw.client_model.ClientCardsMarket;
-import it.polimi.ingsw.server_model.market.CardsMarket;
+import it.polimi.ingsw.view.client_model.ClientCardsMarket;
+import it.polimi.ingsw.model.market.CardsMarket;
 
 public class UpdateCardsMarket extends Update{
 

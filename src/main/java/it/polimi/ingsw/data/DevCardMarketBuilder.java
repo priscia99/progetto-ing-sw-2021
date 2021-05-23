@@ -4,12 +4,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.server_model.card.DevelopmentCard;
-import it.polimi.ingsw.server_model.card.color.Color;
-import it.polimi.ingsw.server_model.card.effect.ProductionEffect;
-import it.polimi.ingsw.server_model.card.requirement.ResourceRequirement;
-import it.polimi.ingsw.server_model.resource.ResourceStock;
-import it.polimi.ingsw.server_model.resource.ResourceType;
+import it.polimi.ingsw.model.card.DevelopmentCard;
+import it.polimi.ingsw.model.card.color.Color;
+import it.polimi.ingsw.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.model.card.requirement.ResourceRequirement;
+import it.polimi.ingsw.model.resource.ResourceStock;
+import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.io.FileReader;
 import java.util.*;

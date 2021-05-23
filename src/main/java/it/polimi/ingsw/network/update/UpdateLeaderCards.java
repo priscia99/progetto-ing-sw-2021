@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.update;
 
-import it.polimi.ingsw.client_model.ClientLeaderCard;
-import it.polimi.ingsw.server_model.player_board.LeaderCardsDeck;
+import it.polimi.ingsw.view.client_model.ClientLeaderCard;
+import it.polimi.ingsw.model.player_board.LeaderCardsDeck;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

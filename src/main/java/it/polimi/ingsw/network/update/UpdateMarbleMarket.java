@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.update;
 
-import it.polimi.ingsw.client_model.ClientMarbleMarket;
-import it.polimi.ingsw.server_model.market.MarbleMarket;
+import it.polimi.ingsw.view.client_model.ClientMarbleMarket;
+import it.polimi.ingsw.model.market.MarbleMarket;
 
 public class UpdateMarbleMarket extends Update{
 

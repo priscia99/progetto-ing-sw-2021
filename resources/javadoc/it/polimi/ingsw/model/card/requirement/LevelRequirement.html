@@ -6,7 +6,7 @@
 <title>LevelRequirement</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2021-04-23">
-<meta name="description" content="declaration: package: it.polimi.ingsw.server_model.card.requirement, class: LevelRequirement">
+<meta name="description" content="declaration: package: it.polimi.ingsw.model.card.requirement, class: LevelRequirement">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
@@ -73,18 +73,18 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">it.polimi.ingsw.server_model.card.requirement</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">it.polimi.ingsw.model.card.requirement</a></div>
 <h1 title="Class LevelRequirement" class="title">Class LevelRequirement</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance"><a href="Requirement.html" title="class in it.polimi.ingsw.server_model.card.requirement">it.polimi.ingsw.server_model.card.requirement.Requirement</a>
-<div class="inheritance">it.polimi.ingsw.server_model.card.requirement.LevelRequirement</div>
+<div class="inheritance"><a href="Requirement.html" title="class in it.polimi.ingsw.model.card.requirement">it.polimi.ingsw.model.card.requirement.Requirement</a>
+<div class="inheritance">it.polimi.ingsw.model.card.requirement.LevelRequirement</div>
 </div>
 </div>
 <section class="description">
 <hr>
 <pre>public class <span class="type-name-label">LevelRequirement</span>
-extends <a href="Requirement.html" title="class in it.polimi.ingsw.server_model.card.requirement">Requirement</a></pre>
+extends <a href="Requirement.html" title="class in it.polimi.ingsw.model.card.requirement">Requirement</a></pre>
 <div class="block">Extension of Requirement to specify the requirement of owning level 2 cards of specific colors.</div>
 </section>
 <section class="summary">
@@ -105,7 +105,7 @@ extends <a href="Requirement.html" title="class in it.polimi.ingsw.server_model.
 </thead>
 <tbody>
 <tr class="alt-color">
-<td class="col-first"><code>private <a href="../color/Color.html" title="enum in it.polimi.ingsw.server_model.card.color">Color</a></code></td>
+<td class="col-first"><code>private <a href="../color/Color.html" title="enum in it.polimi.ingsw.model.card.color">Color</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#color">color</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -129,7 +129,7 @@ extends <a href="Requirement.html" title="class in it.polimi.ingsw.server_model.
 </thead>
 <tbody>
 <tr class="alt-color">
-<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(it.polimi.ingsw.model.card.color.Color)">LevelRequirement</a></span>&#8203;(<a href="../color/Color.html" title="enum in it.polimi.ingsw.server_model.card.color">Color</a>&nbsp;color)</code></th>
+<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(it.polimi.ingsw.model.card.color.Color)">LevelRequirement</a></span>&#8203;(<a href="../color/Color.html" title="enum in it.polimi.ingsw.model.card.color">Color</a>&nbsp;color)</code></th>
 <td class="col-last">
 <div class="block">Create a LevelRequirement object with a given color.</div>
 </td>
@@ -156,13 +156,13 @@ extends <a href="Requirement.html" title="class in it.polimi.ingsw.server_model.
 </thead>
 <tbody>
 <tr class="alt-color" id="i0">
-<td class="col-first"><code><a href="../color/Color.html" title="enum in it.polimi.ingsw.server_model.card.color">Color</a></code></td>
+<td class="col-first"><code><a href="../color/Color.html" title="enum in it.polimi.ingsw.model.card.color">Color</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getColor()">getColor</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i1">
 <td class="col-first"><code>boolean</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#isFulfilled(it.polimi.ingsw.model.game.Player)">isFulfilled</a></span>&#8203;(<a href="../../game/Player.html" title="class in it.polimi.ingsw.server_model.game">Player</a>&nbsp;player)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#isFulfilled(it.polimi.ingsw.model.game.Player)">isFulfilled</a></span>&#8203;(<a href="../../game/Player.html" title="class in it.polimi.ingsw.model.game">Player</a>&nbsp;player)</code></th>
 <td class="col-last">
 <div class="block">Test if the requirement is fulfilled by a player.</div>
 </td>
@@ -193,7 +193,7 @@ extends <a href="Requirement.html" title="class in it.polimi.ingsw.server_model.
 <li>
 <section class="detail" id="color">
 <h3>color</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../color/Color.html" title="enum in it.polimi.ingsw.server_model.card.color">Color</a></span>&nbsp;<span class="member-name">color</span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../color/Color.html" title="enum in it.polimi.ingsw.model.card.color">Color</a></span>&nbsp;<span class="member-name">color</span></div>
 </section>
 </li>
 </ul>
@@ -207,7 +207,7 @@ extends <a href="Requirement.html" title="class in it.polimi.ingsw.server_model.
 <li>
 <section class="detail" id="&lt;init&gt;(it.polimi.ingsw.model.card.color.Color)">
 <h3>LevelRequirement</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">LevelRequirement</span>&#8203;(<span class="parameters"><a href="../color/Color.html" title="enum in it.polimi.ingsw.server_model.card.color">Color</a>&nbsp;color)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">LevelRequirement</span>&#8203;(<span class="parameters"><a href="../color/Color.html" title="enum in it.polimi.ingsw.model.card.color">Color</a>&nbsp;color)</span></div>
 <div class="block">Create a LevelRequirement object with a given color.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -226,7 +226,7 @@ extends <a href="Requirement.html" title="class in it.polimi.ingsw.server_model.
 <li>
 <section class="detail" id="getColor()">
 <h3>getColor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../color/Color.html" title="enum in it.polimi.ingsw.server_model.card.color">Color</a></span>&nbsp;<span class="member-name">getColor</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../color/Color.html" title="enum in it.polimi.ingsw.model.card.color">Color</a></span>&nbsp;<span class="member-name">getColor</span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the wanted color.</dd>
@@ -236,12 +236,12 @@ extends <a href="Requirement.html" title="class in it.polimi.ingsw.server_model.
 <li>
 <section class="detail" id="isFulfilled(it.polimi.ingsw.model.game.Player)">
 <h3>isFulfilled</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">isFulfilled</span>&#8203;(<span class="parameters"><a href="../../game/Player.html" title="class in it.polimi.ingsw.server_model.game">Player</a>&nbsp;player)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">isFulfilled</span>&#8203;(<span class="parameters"><a href="../../game/Player.html" title="class in it.polimi.ingsw.model.game">Player</a>&nbsp;player)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="Requirement.html#isFulfilled(it.polimi.ingsw.model.game.Player)">Requirement</a></code></span></div>
 <div class="block">Test if the requirement is fulfilled by a player.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Requirement.html#isFulfilled(it.polimi.ingsw.model.game.Player)">isFulfilled</a></code>&nbsp;in class&nbsp;<code><a href="Requirement.html" title="class in it.polimi.ingsw.server_model.card.requirement">Requirement</a></code></dd>
+<dd><code><a href="Requirement.html#isFulfilled(it.polimi.ingsw.model.game.Player)">isFulfilled</a></code>&nbsp;in class&nbsp;<code><a href="Requirement.html" title="class in it.polimi.ingsw.model.card.requirement">Requirement</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>player</code> - the player to check</dd>
 <dt>Returns:</dt>

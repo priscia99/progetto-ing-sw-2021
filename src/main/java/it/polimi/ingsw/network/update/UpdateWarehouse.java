@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.update;
 
-import it.polimi.ingsw.client_model.ClientWarehouse;
-import it.polimi.ingsw.server_model.player_board.storage.Warehouse;
+import it.polimi.ingsw.view.client_model.ClientWarehouse;
+import it.polimi.ingsw.model.player_board.storage.Warehouse;
 
 public class UpdateWarehouse extends Update{
 

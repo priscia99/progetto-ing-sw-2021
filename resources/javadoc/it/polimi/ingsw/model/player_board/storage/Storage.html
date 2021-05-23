@@ -6,7 +6,7 @@
 <title>Storage</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2021-04-23">
-<meta name="description" content="declaration: package: it.polimi.ingsw.server_model.player_board.storage, class: Storage">
+<meta name="description" content="declaration: package: it.polimi.ingsw.model.player_board.storage, class: Storage">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
@@ -73,22 +73,22 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">it.polimi.ingsw.server_model.player_board.storage</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">it.polimi.ingsw.model.player_board.storage</a></div>
 <h1 title="Class Storage" class="title">Class Storage</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance"><a href="../../../observer/Observable.html" title="class in it.polimi.ingsw.observer">it.polimi.ingsw.observer.ObservableWithOption</a>&lt;java.util.ArrayList&lt;<a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.server_model.resource">ResourceStock</a>&gt;&gt;
-<div class="inheritance">it.polimi.ingsw.server_model.player_board.storage.Storage</div>
+<div class="inheritance"><a href="../../../observer/Observable.html" title="class in it.polimi.ingsw.observer">it.polimi.ingsw.observer.ObservableWithOption</a>&lt;java.util.ArrayList&lt;<a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.model.resource">ResourceStock</a>&gt;&gt;
+<div class="inheritance">it.polimi.ingsw.model.player_board.storage.Storage</div>
 </div>
 </div>
 <section class="description">
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="Strongbox.html" title="class in it.polimi.ingsw.server_model.player_board.storage">Strongbox</a></code>, <code><a href="Warehouse.html" title="class in it.polimi.ingsw.server_model.player_board.storage">Warehouse</a></code></dd>
+<dd><code><a href="Strongbox.html" title="class in it.polimi.ingsw.model.player_board.storage">Strongbox</a></code>, <code><a href="Warehouse.html" title="class in it.polimi.ingsw.model.player_board.storage">Warehouse</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="type-name-label">Storage</span>
-extends <a href="../../../observer/Observable.html" title="class in it.polimi.ingsw.observer">Observable</a>&lt;java.util.ArrayList&lt;<a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.server_model.resource">ResourceStock</a>&gt;&gt;</pre>
+extends <a href="../../../observer/Observable.html" title="class in it.polimi.ingsw.observer">Observable</a>&lt;java.util.ArrayList&lt;<a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.model.resource">ResourceStock</a>&gt;&gt;</pre>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -108,7 +108,7 @@ extends <a href="../../../observer/Observable.html" title="class in it.polimi.in
 </thead>
 <tbody>
 <tr class="alt-color">
-<td class="col-first"><code>protected java.util.ArrayList&lt;<a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.server_model.resource">ResourceStock</a>&gt;</code></td>
+<td class="col-first"><code>protected java.util.ArrayList&lt;<a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.model.resource">ResourceStock</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#resourceStocks">resourceStocks</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -158,11 +158,11 @@ extends <a href="../../../observer/Observable.html" title="class in it.polimi.in
 <tbody>
 <tr class="alt-color" id="i0">
 <td class="col-first"><code>abstract int</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#countByResourceType(it.polimi.ingsw.model.resource.ResourceType)">countByResourceType</a></span>&#8203;(<a href="../../resource/ResourceType.html" title="enum in it.polimi.ingsw.server_model.resource">ResourceType</a>&nbsp;resourceType)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#countByResourceType(it.polimi.ingsw.model.resource.ResourceType)">countByResourceType</a></span>&#8203;(<a href="../../resource/ResourceType.html" title="enum in it.polimi.ingsw.model.resource">ResourceType</a>&nbsp;resourceType)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i1">
-<td class="col-first"><code><a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.server_model.resource">ResourceStock</a></code></td>
+<td class="col-first"><code><a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.model.resource">ResourceStock</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getResourceStock(int)">getResourceStock</a></span>&#8203;(int&nbsp;index)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -195,7 +195,7 @@ extends <a href="../../../observer/Observable.html" title="class in it.polimi.in
 <li>
 <section class="detail" id="resourceStocks">
 <h3>resourceStocks</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">java.util.ArrayList&lt;<a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.server_model.resource">ResourceStock</a>&gt;</span>&nbsp;<span class="member-name">resourceStocks</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">java.util.ArrayList&lt;<a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.model.resource">ResourceStock</a>&gt;</span>&nbsp;<span class="member-name">resourceStocks</span></div>
 </section>
 </li>
 </ul>
@@ -223,7 +223,7 @@ extends <a href="../../../observer/Observable.html" title="class in it.polimi.in
 <li>
 <section class="detail" id="getResourceStock(int)">
 <h3>getResourceStock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.server_model.resource">ResourceStock</a></span>&nbsp;<span class="member-name">getResourceStock</span>&#8203;(<span class="parameters">int&nbsp;index)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../resource/ResourceStock.html" title="class in it.polimi.ingsw.model.resource">ResourceStock</a></span>&nbsp;<span class="member-name">getResourceStock</span>&#8203;(<span class="parameters">int&nbsp;index)</span></div>
 </section>
 </li>
 <li>
@@ -235,7 +235,7 @@ extends <a href="../../../observer/Observable.html" title="class in it.polimi.in
 <li>
 <section class="detail" id="countByResourceType(it.polimi.ingsw.model.resource.ResourceType)">
 <h3>countByResourceType</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">countByResourceType</span>&#8203;(<span class="parameters"><a href="../../resource/ResourceType.html" title="enum in it.polimi.ingsw.server_model.resource">ResourceType</a>&nbsp;resourceType)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">countByResourceType</span>&#8203;(<span class="parameters"><a href="../../resource/ResourceType.html" title="enum in it.polimi.ingsw.model.resource">ResourceType</a>&nbsp;resourceType)</span></div>
 </section>
 </li>
 </ul>
