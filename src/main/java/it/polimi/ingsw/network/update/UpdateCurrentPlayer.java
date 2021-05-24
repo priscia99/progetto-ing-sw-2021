@@ -10,8 +10,8 @@ public class UpdateCurrentPlayer extends Update{
     }
 
     @Override
-    public void execute(ClientGame clientGame) {
-        clientGame.setCurrentPlayer((String) getObject());
+    public void execute() {
+       // clientGame.setCurrentPlayer((String) getObject());
 
         /*
         setCurrentPlayer(String player){

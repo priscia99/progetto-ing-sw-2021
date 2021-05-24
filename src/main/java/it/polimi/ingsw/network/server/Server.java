@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.exceptions.InvalidLobbyException;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,11 +15,13 @@ public class Server {
 
     private static final int PORT = 12345;
     private final ServerSocket serverSocket;
-    // private final ExecutorService executor = Executors.newFixedThreadPool(128); // FIXED remove
+    private final ExecutorService executor = Executors.newFixedThreadPool(128);
+    private ArrayList<Thread> threadArrayList;
     private final Map<String, Lobby> lobbyMap = new HashMap<>();
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
+        threadArrayList = new ArrayList<>();
     }
 
     /**
@@ -26,7 +30,7 @@ public class Server {
      * @param username username of the new player to add
      * @param clientConnection connection of the new player to add
      */
-    public synchronized void lobby(int dimension, String username, ClientConnection clientConnection) {
+    public synchronized String lobby(int dimension, String username, ClientConnection clientConnection) {
         String lobbyId = this.generateRandomString();
         Lobby tempLobby = new Lobby(dimension);
         tempLobby.addClientConnection(username, clientConnection);
@@ -34,6 +38,7 @@ public class Server {
         clientConnection.asyncSend(String.format("Joined lobby %s", lobbyId));
 
         this.startLobbyIsFull(tempLobby);
+        return lobbyId;
     }
 
     /**
@@ -43,7 +48,7 @@ public class Server {
      * @param clientConnection connection of the new player to add
      * @throws IllegalArgumentException if the lobby id does not exists on the server
      */
-    public synchronized void lobby(String lobbyId, String username, ClientConnection clientConnection) {
+    public synchronized String lobby(String lobbyId, String username, ClientConnection clientConnection) {
         if (lobbyMap.containsKey(lobbyId)) {
             Lobby currLobby = lobbyMap.get(lobbyId);
             currLobby.addClientConnection(username, clientConnection);
@@ -51,8 +56,9 @@ public class Server {
             this.startLobbyIsFull(currLobby);
         }
         else {
-            throw new IllegalArgumentException("Wrong lobby id !!!");
+            throw new InvalidLobbyException("wrong lobby id");
         }
+        return lobbyId;
     }
 
        private void startLobbyIsFull(Lobby lobby) {
@@ -111,11 +117,15 @@ public class Server {
         while (true) {
             try {
                 Socket newSocket = serverSocket.accept();
+                System.out.println("New client connecting");
                 SocketClientConnection socketClientConnection = new SocketClientConnection(newSocket, this);
-                socketClientConnection.run();
-                // executor.submit(socketClientConnection); // FIXED remove
-            } catch (IOException e) {
+                Thread t = new Thread(socketClientConnection);
+                t.start();
+                System.out.println("thread started");
+                //t.join();
+            } catch (Exception e) {
                 System.out.println("Connection Error!");
+                e.printStackTrace();
             }
         }
     }

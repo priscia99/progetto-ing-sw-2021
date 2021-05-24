@@ -1,6 +1,10 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.action.Action;
+import it.polimi.ingsw.exceptions.FullLobbyException;
+import it.polimi.ingsw.exceptions.InvalidLobbyException;
+import it.polimi.ingsw.network.Message;
+import it.polimi.ingsw.network.auth_data.AuthData;
 import it.polimi.ingsw.observer.Observable;
 
 import java.io.IOException;
@@ -74,36 +78,42 @@ public class SocketClientConnection extends Observable<Action> implements Client
 
     @Override
     public void run() {
-        String username;    // username of the player (client)
-        String lobbyId;
-        try {
-            in = new ObjectInputStream(socket.getInputStream());
-            out = new ObjectOutputStream(socket.getOutputStream());
 
-            // FIXME
-            // tell client server is ready to listen
-            this.send("Welcome!");  // read username and lobby id from the client
-            // create lobby and insert this connection
-            /*
-            this.send("Enter a username: ");
-            Message inBuffer = (Message) in.readObject();
-            username = inBuffer.getPayload();
-            this.send("Do you want to create a new lobby? [Y/N]");
-            inBuffer = in.readObject();
-            if (inBuffer.equalsIgnoreCase("y")) {
-                this.send("Specify the dimension of the lobby: [4 max]");
-                inBuffer = in.readObject();
-                int dimension = Integer.parseInt(inBuffer);
-                server.lobby(dimension, username, this);   // add this client connection to the server
-            } else if (inBuffer.equalsIgnoreCase("n")) {
-                this.send("Enter a lobby id: ");
-                inBuffer = in.readObject();
-                lobbyId = inBuffer;
-                server.lobby(lobbyId, username, this);   // add this client connection to the server
-            } else {
-                throw new IllegalArgumentException("Wrong response!!!");
-            }
-            */
+        String username = null;    // username of the player (client)
+        String lobbyId = null;
+        try {
+            out = new ObjectOutputStream(socket.getOutputStream());
+            this.send("auth_request");
+            in = new ObjectInputStream(socket.getInputStream());
+
+            boolean success = true;
+            do{
+                if(!success){
+                    this.send("auth_request");
+                    success = true;
+                }
+                AuthData authData = (AuthData) in.readObject();
+                System.out.println(authData.getUsername());
+                try {
+                    if (authData.isCreateNewLobby()) {
+                        lobbyId = server.lobby(authData.getLobbyPlayerNumber(), authData.getUsername(), this);
+                        // try to create a new lobby
+                        this.send("auth_created#" + lobbyId);
+                    } else {
+                        System.out.println("User attenting to join lobby");
+                        lobbyId = server.lobby(authData.getLobby(), authData.getUsername(), this);
+                        this.send("auth_joined#" + lobbyId);
+                    }
+                }catch (InvalidLobbyException e){
+                    this.send("auth_error#invalid_lobby");
+                    success = false;
+                }
+                catch (FullLobbyException e){
+                    this.send("auth_error#full_lobby");
+                    success = false;
+                }
+            }while(!success);
+
             // while the connection is alive read every message and notify it to the server
             while(isAlive()) {
                 Action incomingAction = (Action) in.readObject();
@@ -114,5 +124,6 @@ public class SocketClientConnection extends Observable<Action> implements Client
         } finally { // when the connection die close it
             close();
         }
+
     }
 }

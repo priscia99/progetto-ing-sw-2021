@@ -1,21 +1,31 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.network.auth_data.AuthData;
+import it.polimi.ingsw.network.update.Update;
+import it.polimi.ingsw.view.ui.UI;
+import it.polimi.ingsw.view.ui.cli.Command;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Client {
+    private UI userInterface;               // type of chosen UI (CLI, GUI)
+    private final String ip;                // server IP
+    private final int port;                 // server port
+    private boolean active = true;          // check connection status
+    ObjectInputStream socketIn = null;      // input socket
+    ObjectOutputStream socketOut = null;    // output socket
 
-    private final String ip;
-    private final int port;
-    private boolean active = true;
-
-    public Client(String ip, int port){
+    public Client(String ip, int port, UI userInterface){
         this.ip = ip;
         this.port = port;
+        this.userInterface = userInterface;
     }
 
     public synchronized boolean isActive(){
@@ -28,25 +38,29 @@ public class Client {
 
     /**
      * Read asynchronously messages from the socket until the client is active.
-     * @param socketIn socket from which read
      * @return reading thread
      * @throws IllegalArgumentException if the message format is unexpected
      * @throws Exception if a generic exception happens shut down the server
      */
-    public Thread asyncReadFromSocket(final ObjectInputStream socketIn){
+    public Thread asyncReadFromSocket(){
         Thread t = new Thread((Runnable) () -> {
                 try {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
                         if(inputObject instanceof String){
-                            // TODO add client decoder
-                            System.out.println((String)inputObject);
-                        } else {
-                            throw new IllegalArgumentException();
+                            manageAuth((String) inputObject);   // re-directing to authentication manager;
+                        }
+                        else if(inputObject instanceof Update){
+                            // TODO call update execute() function
+                        }
+                        else{
+                            throw new IllegalArgumentException("Unknow, type of received message from client");
                         }
                     }
                 }
                 catch (Exception e){
+                    e.printStackTrace();
+                    System.err.println("There was an error. Application will be closed.");
                     setActive(false);
                 }
         });
@@ -85,15 +99,14 @@ public class Client {
     public void run() throws IOException {
         Socket socket = new Socket(ip, port);
         System.out.println("Connection established");
-        ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
-        PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
+        socketIn = new ObjectInputStream(socket.getInputStream());
+        socketOut = new ObjectOutputStream(socket.getOutputStream());
         Scanner stdin = new Scanner(System.in);
 
         try{
-            Thread t0 = asyncReadFromSocket(socketIn);
-            Thread t1 = asyncWriteToSocket(stdin, socketOut);
-            t0.join();
-            t1.join();
+            Thread asyncRead = asyncReadFromSocket();
+            asyncRead.join();
+            //t1.join();
         } catch(InterruptedException | NoSuchElementException e){
             System.out.println("Connection closed from the client side");
         } finally {
@@ -102,5 +115,41 @@ public class Client {
             socketOut.close();
             socket.close();
         }
+    }
+
+    public Thread manageAuth(final String authInfo){
+        Thread t = new Thread(() -> {
+            String[] command = authInfo.split("#");
+            switch (command[0]){
+                case "auth_request":
+                    AuthData authData = userInterface.requestAuth();
+                    sendToSocket(authData);
+                    break;
+                case "auth_joined":
+                    userInterface.displayLobbyJoined(command[1]);
+                    break;
+                case "auth_created":
+                    userInterface.displayLobbyCreated(command[1]);
+                    break;
+                case "auth_error":
+                    userInterface.displayAuthFail(command[1]);
+                    break;
+                default: break;
+            }
+        });
+        t.start();
+        return t;
+    }
+
+    public Thread sendToSocket(Object objToSend){
+        Thread t = new Thread(() -> {
+            try {
+                socketOut.writeObject(objToSend);
+            } catch (IOException e) {
+                setActive(false);
+            }
+        });
+        t.start();
+        return t;
     }
 }
