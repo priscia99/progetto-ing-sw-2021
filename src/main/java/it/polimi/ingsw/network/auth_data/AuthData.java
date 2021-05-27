@@ -3,6 +3,24 @@ package it.polimi.ingsw.network.auth_data;
 import java.io.Serializable;
 
 public class AuthData implements Serializable {
+
+    /*
+        player : {
+            username : String
+        }
+        lobby : {
+            id : String
+            join : Boolean
+            dimension : Int
+        }
+     */
+
+    /*
+        AuthRequest         -- username
+        JoinLobbyRequest    -- lobbyToJoin
+        CreateLobbyRequest  -- lobbyPlayerNumber
+     */
+
     private static final long serialVersionUID = 1;
     String username;
     String lobby;

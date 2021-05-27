@@ -18,7 +18,7 @@ public class BuyDevelopmentCardMessage implements Message<ServerController>, Ser
         this.deckIndex = index;
     }
 
-    public void execute(ServerController controller){
-        controller.buyDevelopmentCard(positionX, positionY, deckIndex);
+    public void execute(ServerController target){
+        target.buyDevelopmentCard(positionX, positionY, deckIndex);
     }
 }

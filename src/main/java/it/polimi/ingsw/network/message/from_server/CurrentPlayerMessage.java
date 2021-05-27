@@ -14,7 +14,7 @@ public class CurrentPlayerMessage implements Message<ClientController>, Serializ
         this.username = username;
     }
 
-    public void execute(ClientController controller) {
-
+    public void execute(ClientController target) {
+        target.setCurrentPlayer(username);
     }
 }

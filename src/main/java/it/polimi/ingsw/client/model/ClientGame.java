@@ -1,17 +1,23 @@
 package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.utils.Pair;
+
 import java.util.*;
 
 // TODO consider changing Observable<String> (split observable or concentrate observable)
-public class ClientGame extends Observable<String> {
+public class ClientGame extends Observable<Pair<String, Boolean>> {
 
     private String currentPlayer;
+    private String myUsername;
     private ClientCardsMarket clientCardsMarket;
     private ClientMarbleMarket clientMarbleMarket;
     private Map<String, ClientPlayerBoard> playerBoardMap = new HashMap<>();
 
-    public ClientGame(String currentPlayer, Map<String, ClientPlayerBoard> playerBoardMap) {
+    public ClientGame(String myUsername, String currentPlayer, ArrayList<String> players, Map<String, ClientPlayerBoard> playerBoardMap) {
+        // FIXME constructor must create clear new object
+        // FIXME then object get set during the match
+        this.myUsername = myUsername;
         this.currentPlayer = currentPlayer;
         this.playerBoardMap = playerBoardMap;
     }
@@ -23,7 +29,7 @@ public class ClientGame extends Observable<String> {
     public void setCurrentPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer;
 
-        notify(currentPlayer);
+        notify(new Pair<String, Boolean>(this.currentPlayer, this.currentPlayer.equals(this.myUsername)));
     }
 
     public Map<String, ClientPlayerBoard> getPlayerBoardMap() {
@@ -32,5 +38,9 @@ public class ClientGame extends Observable<String> {
 
     public void setPlayerBoardMap(Map<String, ClientPlayerBoard> playerBoardMap) {
         this.playerBoardMap = playerBoardMap;
+    }
+
+    public String getMyUsername() {
+        return myUsername;
     }
 }

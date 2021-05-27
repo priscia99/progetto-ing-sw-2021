@@ -50,7 +50,6 @@ public class FaithPathBuilder {
                         throw new IllegalArgumentException("Illegal argument given in file " + file_path);
                 }
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }

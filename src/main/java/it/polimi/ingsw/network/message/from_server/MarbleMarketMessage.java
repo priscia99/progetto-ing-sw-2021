@@ -17,7 +17,7 @@ public class MarbleMarketMessage implements Message<ClientController>, Serializa
         this.notForSale = notForSale;
     }
 
-    public void execute(ClientController controller) {
+    public void execute(ClientController target) {
 
     }
 }

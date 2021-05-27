@@ -17,7 +17,7 @@ public class LeaderCardsMessage implements Message<ClientController>, Serializab
         this.leaderCards = leaderCards;
     }
 
-    public void execute(ClientController controller) {
+    public void execute(ClientController target) {
 
     }
 }

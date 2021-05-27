@@ -18,7 +18,7 @@ public class FaithPathMessage implements Message<ClientController>, Serializable
         this.popeFavors = popeFavors;
     }
 
-    public void execute(ClientController controller) {
+    public void execute(ClientController target) {
 
     }
 }

@@ -14,7 +14,7 @@ public class PlayLeaderCardMessage implements Message<ServerController>, Seriali
         this.cardId = id;
     }
 
-    public void execute(ServerController controller) {
-       controller.playLeaderCard(cardId);
+    public void execute(ServerController target) {
+       target.playLeaderCard(cardId);
     }
 }

@@ -19,7 +19,7 @@ public class PickResourcesMessage implements Message<ServerController>, Serializ
         this.positions = positions;
     }
 
-    public void execute(ServerController controller) {
-        controller.pickResources(marbleSelection, positions);
+    public void execute(ServerController target) {
+        target.pickResources(marbleSelection, positions);
     }
 }

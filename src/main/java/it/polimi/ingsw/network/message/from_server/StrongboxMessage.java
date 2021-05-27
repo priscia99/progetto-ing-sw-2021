@@ -17,7 +17,7 @@ public class StrongboxMessage implements Message<ClientController>, Serializable
         this.resourceStocks = resourceStocks;
     }
 
-    public void execute(ClientController controller) {
+    public void execute(ClientController target) {
 
     }
 }

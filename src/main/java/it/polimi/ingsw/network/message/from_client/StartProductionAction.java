@@ -22,7 +22,7 @@ public class StartProductionAction implements Message<ServerController>, Seriali
         productionsToActivate = productions;
     }
 
-    public void execute(ServerController controller) {
-        controller.startProduction(consumedResources, productionsToActivate);
+    public void execute(ServerController target) {
+        target.startProduction(consumedResources, productionsToActivate);
     }
 }

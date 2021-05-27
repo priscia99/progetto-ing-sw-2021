@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.Controller;
 import it.polimi.ingsw.exceptions.InvalidActionException;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
@@ -16,7 +15,7 @@ import it.polimi.ingsw.server.model.resource.ResourceType;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ServerController extends Controller {
+public class ServerController {
     private Game game;
 
     public ServerController(Game game){

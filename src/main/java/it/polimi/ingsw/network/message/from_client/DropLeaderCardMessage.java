@@ -14,7 +14,7 @@ public class DropLeaderCardMessage implements Message<ServerController>, Seriali
         this.cardId = id;
     }
 
-    public void execute(ServerController controller) {
-        controller.dropLeaderCard(cardId);
+    public void execute(ServerController target) {
+        target.dropLeaderCard(cardId);
     }
 }

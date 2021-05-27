@@ -18,8 +18,8 @@ public class ChooseInitialLeadersMessage implements Message<ServerController>, S
         this.playerUsername = username;
     }
 
-    public void execute(ServerController controller) {
-        controller.chooseInitialLeaders(leadersChosen, playerUsername);
+    public void execute(ServerController target) {
+        target.chooseInitialLeaders(leadersChosen, playerUsername);
     }
 
 }

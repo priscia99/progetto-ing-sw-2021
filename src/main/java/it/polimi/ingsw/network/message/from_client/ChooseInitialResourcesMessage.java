@@ -19,7 +19,7 @@ public class ChooseInitialResourcesMessage implements Message<ServerController>,
         this.username = username;
     }
 
-    public void execute(ServerController controller) {
-        controller.chooseInitialResources(resourcesToAdd, username);
+    public void execute(ServerController target) {
+        target.chooseInitialResources(resourcesToAdd, username);
     }
 }

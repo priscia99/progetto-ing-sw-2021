@@ -16,7 +16,7 @@ public class WarehouseMessage implements Message<ClientController>, Serializable
         this.resourceDepots = resourceDepots;
     }
 
-    public void execute(ClientController controller) {
+    public void execute(ClientController target) {
 
     }
 }

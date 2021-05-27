@@ -3,8 +3,11 @@ package it.polimi.ingsw.client.view.ui;
 import it.polimi.ingsw.network.auth_data.*;
 
 public interface UI {
-    public AuthData requestAuth();
-    public void displayAuthFail(String errType);
-    public void displayLobbyCreated(String lobbyId);
-    public void displayLobbyJoined(String lobbyId);
+
+    AuthData requestAuth();
+    void displayAuthFail(String errType);
+    void displayLobbyCreated(String lobbyId);
+    void displayLobbyJoined(String lobbyId);
+    void displayGameStarted();
+    void displayNewTurn(String player, Boolean myTurn);
 }

@@ -15,7 +15,7 @@ public class ExceptionMessage implements Message<ClientController>, Serializable
         this.exception = exception;
     }
 
-    public void execute(ClientController controller) {
+    public void execute(ClientController target) {
 
     }
 }
