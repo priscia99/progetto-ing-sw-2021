@@ -1,14 +1,14 @@
 package it.polimi.ingsw.model.requirements;
 
-import it.polimi.ingsw.model.card.DevelopmentCard;
-import it.polimi.ingsw.model.card.color.Color;
-import it.polimi.ingsw.model.card.color.ColorPile;
-import it.polimi.ingsw.model.card.requirement.ColorRequirement;
-import it.polimi.ingsw.model.card.requirement.LevelRequirement;
-import it.polimi.ingsw.model.card.requirement.ResourceRequirement;
-import it.polimi.ingsw.model.game.Player;
-import it.polimi.ingsw.model.resource.ResourceStock;
-import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.server.model.card.DevelopmentCard;
+import it.polimi.ingsw.server.model.card.color.Color;
+import it.polimi.ingsw.server.model.card.color.ColorPile;
+import it.polimi.ingsw.server.model.card.requirement.ColorRequirement;
+import it.polimi.ingsw.server.model.card.requirement.LevelRequirement;
+import it.polimi.ingsw.server.model.card.requirement.ResourceRequirement;
+import it.polimi.ingsw.server.model.game.Player;
+import it.polimi.ingsw.server.model.resource.ResourceStock;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

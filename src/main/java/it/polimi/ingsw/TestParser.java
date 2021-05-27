@@ -4,11 +4,12 @@ import it.polimi.ingsw.data.DevCardMarketBuilder;
 import it.polimi.ingsw.data.DevelopmentCardsBuilder;
 import it.polimi.ingsw.data.LeaderCardsBuilder;
 import it.polimi.ingsw.data.MarbleMarketBuilder;
-import it.polimi.ingsw.model.card.DevelopmentCard;
-import it.polimi.ingsw.model.card.LeaderCard;
-import it.polimi.ingsw.model.card.color.Color;
-import it.polimi.ingsw.model.marble.Marble;
-import it.polimi.ingsw.model.player_board.faith_path.FaithPath;
+import it.polimi.ingsw.server.model.card.DevelopmentCard;
+import it.polimi.ingsw.server.model.card.LeaderCard;
+import it.polimi.ingsw.server.model.card.color.Color;
+import it.polimi.ingsw.server.model.marble.Marble;
+import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
+
 import java.util.ArrayList;
 import java.util.Stack;
 

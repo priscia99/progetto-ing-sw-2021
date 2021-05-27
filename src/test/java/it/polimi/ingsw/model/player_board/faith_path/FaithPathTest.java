@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.player_board.faith_path;
 
+import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
+import it.polimi.ingsw.server.model.player_board.faith_path.PopeCell;
+import it.polimi.ingsw.server.model.player_board.faith_path.PopeFavor;
 import org.junit.jupiter.api.*;
 
 public class FaithPathTest

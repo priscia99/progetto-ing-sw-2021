@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model.game;
 
-import it.polimi.ingsw.model.card.DevelopmentCard;
-import it.polimi.ingsw.model.card.LeaderCard;
-import it.polimi.ingsw.model.card.color.Color;
-import it.polimi.ingsw.model.resource.ResourceStock;
-import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.server.model.card.DevelopmentCard;
+import it.polimi.ingsw.server.model.card.LeaderCard;
+import it.polimi.ingsw.server.model.card.color.Color;
+import it.polimi.ingsw.server.model.game.Player;
+import it.polimi.ingsw.server.model.resource.ResourceStock;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.testUtils.MockProvider;
 import org.junit.jupiter.api.*;
 

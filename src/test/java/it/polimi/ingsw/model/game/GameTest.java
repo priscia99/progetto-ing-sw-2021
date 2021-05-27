@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.game;
 
+import it.polimi.ingsw.server.model.game.Game;
+import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.testUtils.MockProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

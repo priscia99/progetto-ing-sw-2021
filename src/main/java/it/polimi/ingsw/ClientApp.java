@@ -1,8 +1,8 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.network.client.Client;
-import it.polimi.ingsw.view.ui.cli.CLI;
-import it.polimi.ingsw.view.ui.cli.Command;
+import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.view.ui.cli.CLI;
+import it.polimi.ingsw.client.view.ui.cli.Command;
 
 import java.io.IOException;
 import java.util.ArrayList;

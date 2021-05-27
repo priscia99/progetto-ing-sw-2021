@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.storage;
 
-import it.polimi.ingsw.model.player_board.storage.Strongbox;
-import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.server.model.player_board.storage.Strongbox;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

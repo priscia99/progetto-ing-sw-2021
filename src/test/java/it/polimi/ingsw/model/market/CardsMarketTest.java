@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model.market;
-import it.polimi.ingsw.model.card.DevelopmentCard;
-import it.polimi.ingsw.model.game.Player;
-import it.polimi.ingsw.model.resource.ResourceStock;
-import it.polimi.ingsw.model.resource.ResourceType;
+
+import it.polimi.ingsw.server.model.card.DevelopmentCard;
+import it.polimi.ingsw.server.model.game.Player;
+import it.polimi.ingsw.server.model.market.CardsMarket;
+import it.polimi.ingsw.server.model.resource.ResourceStock;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
