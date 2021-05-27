@@ -32,3 +32,28 @@ public class UpdateCurrentPlayer extends Update{
 /*
 private UI userInterface
  */
+
+
+
+
+
+
+
+
+
+
+
+/* ACTION
+execute(Controller controller) {
+    controller.doActionA();
+}
+ */
+
+/* CONTROLLER
+doActionA() {
+    1
+    2
+    3
+    4
+}
+ */

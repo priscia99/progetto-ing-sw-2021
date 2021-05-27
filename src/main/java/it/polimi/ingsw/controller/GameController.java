@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.controller.action.Action;
+import it.polimi.ingsw.exceptions.InvalidActionException;
+import it.polimi.ingsw.model.card.DevelopmentCard;
 import it.polimi.ingsw.model.game.Game;
 import it.polimi.ingsw.model.game.Player;
 
@@ -28,4 +30,10 @@ public class GameController {
         }
     }
 
+    public void doActionA(int positionX, int positionY, int deckIndex) {
+        if(game.getCurrentPlayer().hasDoneMainAction()) throw new InvalidActionException();
+        DevelopmentCard cardBought = game.getCardMarket().sell(positionX,positionY, game.getCurrentPlayer());
+        game.getCurrentPlayer().getPlayerBoard().addDevelopmentCard(cardBought, deckIndex);
+        game.getCurrentPlayer().setHasDoneMainAction(true);
+    }
 }
