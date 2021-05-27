@@ -17,6 +17,7 @@ public class DropLeaderCardMessageTest {
     @BeforeEach
     public void setUp(){
         game = MockProvider.getMockGame();
+        controller = new ServerController(game);
     }
 
     @Test
@@ -25,8 +26,8 @@ public class DropLeaderCardMessageTest {
         String cardId = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0).getId();
         int deckSize = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().size();
         LeaderCard cardToDrop = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0);
-        DropLeaderCardAction action = new DropLeaderCardAction(cardId);
-        action.execute(game);
+        DropLeaderCardMessage message = new DropLeaderCardMessage(cardId);
+        message.execute(controller);
         int deckSizeAfterDrop = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().size();
         Assertions.assertEquals(deckSize -1, deckSizeAfterDrop );
         for(LeaderCard card : game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards()){
@@ -39,8 +40,8 @@ public class DropLeaderCardMessageTest {
     public void testPlayerGainFaithPoint(){
         String cardId = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0).getId();
         int faithPoints = game.getCurrentPlayer().getPlayerBoard().getFaithPath().getFaithPoints();
-        DropLeaderCardAction action = new DropLeaderCardAction(cardId);
-        action.execute(game);
+        DropLeaderCardMessage action = new DropLeaderCardMessage(cardId);
+        action.execute(controller);
         int faithPointsAfterDrop = game.getCurrentPlayer().getPlayerBoard().getFaithPath().getFaithPoints();
         Assertions.assertEquals(faithPointsAfterDrop, faithPoints +1);
     }

@@ -33,7 +33,7 @@ public class Warehouse extends Storage {
         ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index2+1);
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
 
-        notify(new UpdateWarehouse(this));
+        notify(new WarehouseMessage(resourceStocks.stream().map(resourceStock -> (ResourceDepot) resourceStock).collect(Collectors.toCollection(ArrayList::new))));
     }
 
     /**
@@ -84,7 +84,7 @@ public class Warehouse extends Storage {
         }
         this.getResourceStock(index).incrementResource(resourceType);
 
-        notify(new UpdateWarehouse(this));
+        notify(new WarehouseMessage(resourceStocks.stream().map(resourceStock -> (ResourceDepot) resourceStock).collect(Collectors.toCollection(ArrayList::new))));
     }
 
     /**
@@ -99,7 +99,7 @@ public class Warehouse extends Storage {
             ((ResourceDepot) this.getResourceStock(index)).setResourceType(ResourceType.BLANK);
         }
 
-        notify(new UpdateWarehouse(this));
+        notify(new WarehouseMessage(resourceStocks.stream().map(resourceStock -> (ResourceDepot) resourceStock).collect(Collectors.toCollection(ArrayList::new))));
     }
 
     /**

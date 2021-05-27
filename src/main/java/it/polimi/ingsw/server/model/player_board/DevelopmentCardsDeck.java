@@ -49,8 +49,7 @@ public class DevelopmentCardsDeck extends Observable<Message<ClientController>> 
         }
         deck.add(developmentCard);
 
-        // TODO add update
-        notify(new UpdateDevelopmentCards(this));
+        notify(new DevelopmentCardsMessage(deck));
     }
 
     /**

@@ -1,7 +1,7 @@
-package v2.client.view.client_model;
+package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.model.card.effect.Effect;
-import it.polimi.ingsw.model.card.requirement.Requirement;
+import it.polimi.ingsw.server.model.card.requirement.*;
+import it.polimi.ingsw.server.model.card.effect.*;
 
 public abstract class ClientCard {
 

@@ -13,12 +13,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BuyDevelopmentCardActionTest {
-
     private Game game;
-
+    private ServerController controller;
     @BeforeEach
     public void setUp(){
         game = MockProvider.getMockGame();
+        controller = new ServerController(game);
     }
 
     @Test
@@ -26,8 +26,8 @@ public class BuyDevelopmentCardActionTest {
     public void testPlayerHasNewCard(){
         Assertions.assertEquals(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
         TestHelper.makeHimRich(game.getCurrentPlayer());
-        BuyDevelopmentCardAction action = new BuyDevelopmentCardAction(0,0,1);
-        action.execute(game);
+        BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage(0,0,1);
+        action.execute(controller);
         Assertions.assertEquals(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 1);
     }
 
@@ -36,8 +36,8 @@ public class BuyDevelopmentCardActionTest {
     public void testPlayerGetBoughtCard(){
         DevelopmentCard cardToBuy = game.getCardMarket().getDecks()[0][0].get(3);
         TestHelper.makeHimRich(game.getCurrentPlayer());
-        BuyDevelopmentCardAction action = new BuyDevelopmentCardAction(0,0,1);
-        action.execute(game);
+        BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage(0,0,1);
+        action.execute(controller);
         Assertions.assertTrue(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[1].getTopCard() == cardToBuy);
     }
 
@@ -46,8 +46,8 @@ public class BuyDevelopmentCardActionTest {
     public void testCardsMaketRenew(){
         DevelopmentCard cardToBuy = game.getCardMarket().getDecks()[0][0].get(3);
         TestHelper.makeHimRich(game.getCurrentPlayer());
-        BuyDevelopmentCardAction action = new BuyDevelopmentCardAction(0,0,1);
-        action.execute(game);
+        BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage(0,0,1);
+        action.execute(controller);
         Assertions.assertEquals(game.getCardMarket().getDecks()[0][0].size(), 3);
         Assertions.assertTrue(game.getCardMarket().getDecks()[0][0].get(2) != cardToBuy);
     }

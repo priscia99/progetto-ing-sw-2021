@@ -3,14 +3,16 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.exceptions.FullLobbyException;
 import it.polimi.ingsw.exceptions.InvalidLobbyException;
 import it.polimi.ingsw.network.auth_data.AuthData;
+import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.controller.ServerController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class SocketClientConnection extends Observable<Action> implements ClientConnection, Runnable {
+public class SocketClientConnection extends Observable<Message<ServerController>> implements ClientConnection, Runnable {
 
     private Socket socket;  // single socket connection with one client
     private ObjectOutputStream out; // output stream to the client
@@ -114,8 +116,8 @@ public class SocketClientConnection extends Observable<Action> implements Client
 
             // while the connection is alive read every message and notify it to the server
             while(isAlive()) {
-                Action incomingAction = (Action) in.readObject();
-                notify(incomingAction);
+                Message incomingMessage = (Message) in.readObject();
+                notify(incomingMessage);
             }
         } catch (Exception e) {
             e.printStackTrace();

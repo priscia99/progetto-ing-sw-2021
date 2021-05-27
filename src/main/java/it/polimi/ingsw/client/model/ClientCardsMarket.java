@@ -5,7 +5,6 @@ import it.polimi.ingsw.server.model.market.*;
 import java.util.*;
 
 public class ClientCardsMarket{
-
     private final Stack<DevelopmentCard>[][] decks;
 
     public ClientCardsMarket(CardsMarket cardsMarket) {

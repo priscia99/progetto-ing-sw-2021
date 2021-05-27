@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.util.ArrayList;
 
-public abstract class Storage extends Observable<Update> {
+public abstract class Storage extends Observable<Message<ClientController>> {
 
     protected ArrayList<ResourceStock> resourceStocks;
 

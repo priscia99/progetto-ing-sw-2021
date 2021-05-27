@@ -45,7 +45,11 @@ public class FaithPath extends Observable<Message<ClientController>> {
         this.cells[this.faithPoints].reach();
         faithPoints++;
 
-        notify(new UpdateFaithPath(this));
+        notify(new FaithPathMessage(faithPoints,
+                Arrays.stream(this.getCells())
+                .filter(cell -> cell instanceof PopeCell)
+                .map(cell -> ((PopeCell) cell).getFavor().isUsed())
+                .collect(Collectors.toCollection(ArrayList::new))));
     }
 
 

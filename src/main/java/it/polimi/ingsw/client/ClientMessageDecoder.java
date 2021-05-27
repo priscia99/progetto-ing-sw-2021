@@ -10,7 +10,7 @@ public class ClientMessageDecoder implements Observer<Message> {
     }
 
     @Override
-    public void update(Update object) {
+    public void update(Message object) {
         // TODO fill me
     }
 }
