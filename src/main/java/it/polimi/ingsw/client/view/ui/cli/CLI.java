@@ -104,4 +104,18 @@ public class CLI implements UI {
     public void displayLobbyCreated(String lobbyId){
         System.out.println("Lobby created succeffully in lobby with ID: " + lobbyId);
     }
+
+    @Override
+    public void displayNewTurn(String player, Boolean myTurn){
+        if(myTurn){
+            System.out.println(player + ", IT'S YOUR TURN!");
+        } else {
+            System.out.println("It's " + player + "'s turn.");
+        }
+    }
+
+    @Override
+    public void displayGameStarted(){
+        System.out.println("Game has started!");
+    }
 }

@@ -36,7 +36,7 @@ public class Client {
      * @throws Exception if a generic exception happens shut down the server
      */
     public Thread asyncReadFromSocket(){
-        Thread t = new Thread((Runnable) () -> {
+        Thread t = new Thread(() -> {
                 try {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
@@ -69,7 +69,7 @@ public class Client {
      * @throws Exception if a generic exception happens shut down the server
      */
     public Thread asyncWriteToSocket(final Scanner stdin, final PrintWriter socketOut){
-        Thread t = new Thread((Runnable) () -> {
+        Thread t = new Thread(() -> {
                 try {
                     while (isActive()) {
                         String inputLine = stdin.nextLine();

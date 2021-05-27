@@ -22,28 +22,30 @@ public class AuthData implements Serializable {
      */
 
     private static final long serialVersionUID = 1;
-    String username;
-    String lobby;
+    String username;    // username chosen by client
+    String lobby;       // lobby code given by client
     boolean createNewLobby;
     int lobbyPlayerNumber;
 
-    public AuthData(String playerUsername, String lobbyToJoin){
+    private AuthData(String playerUsername, String lobbyToJoin){
         this.username = playerUsername;
         this.lobby = lobbyToJoin;
         createNewLobby = false;
         lobbyPlayerNumber = 0;
     }
 
-    public AuthData(String playerUsername, int lobbyPlayerNumber){
+    private AuthData(String playerUsername, int lobbyPlayerNumber){
         this.username = playerUsername;
         this.lobbyPlayerNumber = lobbyPlayerNumber;
         createNewLobby = true;
     }
 
+    // tries to join a lobby
     public static AuthData joinLobby(String playerUsername, String lobbyToJoin){
         return new AuthData(playerUsername, lobbyToJoin);
     }
 
+    // tries to create a new lobby
     public static AuthData createLobby(String playerUsername, int lobbyPlayerNumber){
         return new AuthData(playerUsername, lobbyPlayerNumber);
     }
