@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.ui;
 
+import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.network.auth_data.*;
 
 public interface UI {
@@ -10,4 +11,5 @@ public interface UI {
     void displayLobbyJoined(String lobbyId);
     void displayGameStarted();
     void displayNewTurn(String player, Boolean myTurn);
+    void displayLeaderCard(ClientLeaderCard clientLeaderCard);
 }
