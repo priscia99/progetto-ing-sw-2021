@@ -2,11 +2,14 @@ package it.polimi.ingsw.server.model.card.effect;
 
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
+import java.io.Serializable;
+
 /**
  * Extension of Effect to specify discounts of the card market.
  */
-public class DiscountEffect extends Effect {
+public class DiscountEffect extends Effect implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final ResourceType resourceType;
 
     /**

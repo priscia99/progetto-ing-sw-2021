@@ -5,13 +5,15 @@ import it.polimi.ingsw.server.model.market.*;
 import java.util.*;
 
 public class ClientCardsMarket{
-    private final Stack<DevelopmentCard>[][] decks;
+    private Stack<DevelopmentCard>[][] decks = new Stack[0][];
 
-    public ClientCardsMarket(CardsMarket cardsMarket) {
-        this.decks = cardsMarket.getDecks();
-    }
+    public ClientCardsMarket() {}
 
     public ClientCardsMarket(Stack<DevelopmentCard>[][] decks) {
+        this.decks = decks;
+    }
+
+    public void setDecks(Stack<DevelopmentCard>[][] decks) {
         this.decks = decks;
     }
 

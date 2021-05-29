@@ -15,6 +15,10 @@ public class ClientWarehouse {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public void setResourceDepots(ArrayList<ResourceDepot> resourceDepots) {
+        this.resourceDepots = resourceDepots;
+    }
+
     public ClientWarehouse(ArrayList<ResourceDepot> resourcePiles) {
         this.resourceDepots = resourcePiles;
     }

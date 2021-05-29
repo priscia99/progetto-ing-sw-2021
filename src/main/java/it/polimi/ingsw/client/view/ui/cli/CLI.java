@@ -97,12 +97,12 @@ public class CLI implements UI {
 
     @Override
     public void displayLobbyJoined(String lobbyId){
-        System.out.println("User logged successfully in lobby with ID: " + lobbyId);
+        System.out.println("User logged successfully in lobby with ID: " + ANSI_YELLOW + lobbyId + ANSI_RESET);
     }
 
     @Override
     public void displayLobbyCreated(String lobbyId){
-        System.out.println("Lobby created succeffully in lobby with ID: " + lobbyId);
+        System.out.println("Lobby created succeffully in lobby with ID: " + ANSI_YELLOW + lobbyId + ANSI_RESET);
     }
 
     @Override

@@ -3,11 +3,14 @@ package it.polimi.ingsw.server.model.card.effect;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
+import java.io.Serializable;
+
 /**
  * Extension of effect to specify resources depot.
  */
-public class DepotEffect extends Effect {
+public class DepotEffect extends Effect implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final ResourceDepot resourceDepot;
 
     /**

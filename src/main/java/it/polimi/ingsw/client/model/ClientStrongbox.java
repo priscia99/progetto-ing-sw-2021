@@ -8,8 +8,12 @@ public class ClientStrongbox {
 
     private final ArrayList<ResourceStock> resourceStocks;
 
-    public ClientStrongbox(Strongbox strongbox) {
-        this.resourceStocks = strongbox.getResourceStocks();
+    public ClientStrongbox() {
+        this.resourceStocks = new ArrayList<>();
+    }
+
+    public void setResourceStocks(ArrayList<ResourceStock> resourceStocks) {
+        this.resourceStocks = resourceStocks;
     }
 
     public ClientStrongbox(ArrayList<ResourceStock> resourcePiles) {

@@ -5,8 +5,8 @@ import it.polimi.ingsw.server.model.market.*;
 
 public class ClientMarbleMarket {
 
-    private final Marble[][] onSale;
-    private final Marble notForSale;
+    private Marble[][] onSale;
+    private Marble notForSale;
 
     public ClientMarbleMarket(MarbleMarket marbleMarket) {
         this.onSale = marbleMarket.getOnSale();
@@ -15,6 +15,14 @@ public class ClientMarbleMarket {
 
     public ClientMarbleMarket(Marble[][] onSale, Marble notForSale) {
         this.onSale = onSale;
+        this.notForSale = notForSale;
+    }
+
+    public void setOnSale(Marble[][] onSale) {
+        this.onSale = onSale;
+    }
+
+    public void setNotForSale(Marble notForSale) {
         this.notForSale = notForSale;
     }
 

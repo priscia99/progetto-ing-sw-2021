@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.exceptions.FullLobbyException;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.service_message.GameStartedServiceMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.game.Game;
@@ -13,12 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Lobby extends Observable<Message> {
-
+    private String lobbyId;
     private final int dimension;    // number of players
     private final Map<String, ClientConnection> clientConnectionMap= new HashMap<>();
     private final Game game = new Game();
 
-    public Lobby(int dimension) {
+    public Lobby(String lobbyId, int dimension) {
+        this.lobbyId = lobbyId;
         this.dimension = dimension;
     }
 
@@ -74,28 +76,7 @@ public class Lobby extends Observable<Message> {
 
 
     public void init(){
-        ServerController gameController = new ServerController(game);
-        ServerMessageDecoder serverMessageDecoder = new ServerMessageDecoder(gameController);
-        ServerMessageEncoder serverMessageEncoder = new ServerMessageEncoder(this);
-        clientConnectionMap.values()
-                .forEach(connection -> {
-                    SocketClientConnection socketClientConnection = (SocketClientConnection) connection;
-                    socketClientConnection.addObserver(serverMessageDecoder);
-                });
-        ArrayList<Player> players = new ArrayList<>();
-        clientConnectionMap.keySet()
-                .forEach(username -> {
-                    players.add(new Player(username));
-                });
-        gameController.setupGame(players);
-        game.addObserver(serverMessageEncoder);
-        game.getPlayers().forEach((player)->{
-            Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(serverMessageEncoder));
-            player.getPlayerBoard().getFaithPath().addObserver(serverMessageEncoder);
-            player.getPlayerBoard().getLeaderCardsDeck().addObserver(serverMessageEncoder);
-            player.getPlayerBoard().getStrongbox().addObserver(serverMessageEncoder);
-            player.getPlayerBoard().getWarehouse().addObserver(serverMessageEncoder);
-        });
+        sendBroadcast(new GameStartedServiceMessage(new ArrayList<>(clientConnectionMap.keySet())));
     }
     /**
      * Start a new game.
@@ -124,5 +105,9 @@ public class Lobby extends Observable<Message> {
 
     public Player getCurrentPlayer() {
         return this.game.getCurrentPlayer();
+    }
+
+    public String getLobbyId() {
+        return lobbyId;
     }
 }

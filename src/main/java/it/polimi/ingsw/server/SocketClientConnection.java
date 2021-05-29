@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.FullLobbyException;
 import it.polimi.ingsw.exceptions.InvalidLobbyException;
 import it.polimi.ingsw.network.auth_data.AuthData;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.service_message.ServiceMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
 
@@ -13,7 +14,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class SocketClientConnection extends Observable<Message<ServerController>> implements ClientConnection, Runnable {
-
+    private Lobby lobby;
     private Socket socket;  // single socket connection with one client
     private ObjectOutputStream out; // output stream to the client
     private ObjectInputStream in;
@@ -83,41 +84,45 @@ public class SocketClientConnection extends Observable<Message<ServerController>
         String lobbyId = null;
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
-            this.send("auth_request");
+            this.asyncSend("auth_request");
             in = new ObjectInputStream(socket.getInputStream());
 
             boolean success = true;
             do{
                 if(!success){
-                    this.send("auth_request");
+                    this.asyncSend("auth_request");
                     success = true;
                 }
                 AuthData authData = (AuthData) in.readObject();
                 System.out.println(authData.getUsername());
                 try {
                     if (authData.isCreateNewLobby()) {
-                        lobbyId = server.lobby(authData.getLobbyPlayerNumber(), authData.getUsername(), this);
+                        lobby = server.lobby(authData.getLobbyPlayerNumber(), authData.getUsername(), this);
                         // try to create a new lobby
-                        this.send("auth_created#" + lobbyId);
+                        this.asyncSend("auth_created#" + lobby.getLobbyId());
                     } else {
                         System.out.println("User attenting to join lobby");
-                        lobbyId = server.lobby(authData.getLobby(), authData.getUsername(), this);
-                        this.send("auth_joined#" + lobbyId);
+                        lobby = server.lobby(authData.getLobby(), authData.getUsername(), this);
+                        this.asyncSend("auth_joined#" + lobby.getLobbyId());
                     }
                 }catch (InvalidLobbyException e){
-                    this.send("auth_error#invalid_lobby");
+                    this.asyncSend("auth_error#invalid_lobby");
                     success = false;
                 }
                 catch (FullLobbyException e){
-                    this.send("auth_error#full_lobby");
+                    this.asyncSend("auth_error#full_lobby");
                     success = false;
                 }
             }while(!success);
 
             // while the connection is alive read every message and notify it to the server
             while(isAlive()) {
-                Message incomingMessage = (Message) in.readObject();
-                notify(incomingMessage);
+                Object inputObject = in.readObject();
+                if(inputObject instanceof ServiceMessage){
+                    ServiceMessage<Lobby> message = (ServiceMessage) inputObject;
+                    message.execute(lobby);
+                }
+                // notify(inputObject);
             }
         } catch (Exception e) {
             e.printStackTrace();

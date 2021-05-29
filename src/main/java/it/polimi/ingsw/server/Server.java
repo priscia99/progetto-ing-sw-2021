@@ -31,15 +31,15 @@ public class Server {
      * @param username username of the new player to add
      * @param clientConnection connection of the new player to add
      */
-    public synchronized String lobby(int dimension, String username, ClientConnection clientConnection) {
+    public synchronized Lobby lobby(int dimension, String username, ClientConnection clientConnection) {
         String lobbyId = this.generateRandomString();
-        Lobby tempLobby = new Lobby(dimension);
+        Lobby tempLobby = new Lobby(lobbyId, dimension);
         tempLobby.addClientConnection(username, clientConnection);
         lobbyMap.put(lobbyId, tempLobby);
         clientConnection.asyncSend(String.format("Joined lobby %s", lobbyId));
 
         this.startLobbyIsFull(tempLobby);
-        return lobbyId;
+        return tempLobby;
     }
 
     /**
@@ -49,9 +49,10 @@ public class Server {
      * @param clientConnection connection of the new player to add
      * @throws IllegalArgumentException if the lobby id does not exists on the server
      */
-    public synchronized String lobby(String lobbyId, String username, ClientConnection clientConnection) {
+    public synchronized Lobby lobby(String lobbyId, String username, ClientConnection clientConnection) {
+        Lobby currLobby = null;
         if (lobbyMap.containsKey(lobbyId)) {
-            Lobby currLobby = lobbyMap.get(lobbyId);
+            currLobby = lobbyMap.get(lobbyId);
             currLobby.addClientConnection(username, clientConnection);
             clientConnection.asyncSend(String.format("Joined lobby %s", lobbyId));
             this.startLobbyIsFull(currLobby);
@@ -59,7 +60,7 @@ public class Server {
         else {
             throw new InvalidLobbyException("wrong lobby id");
         }
-        return lobbyId;
+        return currLobby;
     }
 
        private void startLobbyIsFull(Lobby lobby) {

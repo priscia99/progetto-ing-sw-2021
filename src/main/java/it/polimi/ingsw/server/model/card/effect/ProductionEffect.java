@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model.card.effect;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,8 +12,9 @@ import java.util.List;
 /**
  * Extension of Effect to specify productions.
  */
-public class ProductionEffect extends Effect {
+public class ProductionEffect extends Effect implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final ArrayList<ResourceStock> inStocks;
     private final ArrayList<ResourceStock> outStocks;
 
