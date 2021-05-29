@@ -1,8 +1,10 @@
 package it.polimi.ingsw.client.model;
 
+import it.polimi.ingsw.observer.Observable;
+
 import java.util.*;
 
-public class ClientPlayerBoard {
+public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
 
     private final ClientFaithPath faithPath;
     private final ClientWarehouse warehouse;
