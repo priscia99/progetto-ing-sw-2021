@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.server_model.player_board.faith_path.*;
+import it.polimi.ingsw.server.model.player_board.faith_path.*;
 
 import java.io.FileReader;
 import java.util.Objects;
@@ -50,7 +50,6 @@ public class FaithPathBuilder {
                         throw new IllegalArgumentException("Illegal argument given in file " + file_path);
                 }
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }

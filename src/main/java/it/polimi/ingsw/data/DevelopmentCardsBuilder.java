@@ -4,18 +4,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.server_model.card.DevelopmentCard;
-import it.polimi.ingsw.server_model.card.color.Color;
-import it.polimi.ingsw.server_model.card.effect.*;
-import it.polimi.ingsw.server_model.card.requirement.ResourceRequirement;
-import it.polimi.ingsw.server_model.resource.ResourceStock;
-import it.polimi.ingsw.server_model.resource.ResourceType;
+import it.polimi.ingsw.server.model.card.DevelopmentCard;
+import it.polimi.ingsw.server.model.card.color.Color;
+import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.server.model.card.requirement.ResourceRequirement;
+import it.polimi.ingsw.server.model.resource.ResourceStock;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-
 import java.util.Objects;
 
 public class DevelopmentCardsBuilder {

@@ -5,17 +5,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-
-import it.polimi.ingsw.server_model.card.LeaderCard;
-import it.polimi.ingsw.server_model.card.color.Color;
-import it.polimi.ingsw.server_model.card.color.ColorPile;
-import it.polimi.ingsw.server_model.card.effect.*;
-import it.polimi.ingsw.server_model.card.requirement.ColorRequirement;
-import it.polimi.ingsw.server_model.card.requirement.LevelRequirement;
-import it.polimi.ingsw.server_model.card.requirement.Requirement;
-import it.polimi.ingsw.server_model.card.requirement.ResourceRequirement;
-import it.polimi.ingsw.server_model.resource.ResourceStock;
-import it.polimi.ingsw.server_model.resource.ResourceType;
+import it.polimi.ingsw.server.model.card.LeaderCard;
+import it.polimi.ingsw.server.model.card.color.Color;
+import it.polimi.ingsw.server.model.card.color.ColorPile;
+import it.polimi.ingsw.server.model.card.effect.*;
+import it.polimi.ingsw.server.model.card.requirement.ColorRequirement;
+import it.polimi.ingsw.server.model.card.requirement.LevelRequirement;
+import it.polimi.ingsw.server.model.card.requirement.Requirement;
+import it.polimi.ingsw.server.model.card.requirement.ResourceRequirement;
+import it.polimi.ingsw.server.model.resource.ResourceStock;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
 import java.io.FileNotFoundException;
