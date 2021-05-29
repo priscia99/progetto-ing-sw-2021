@@ -3,13 +3,15 @@ package it.polimi.ingsw.server.model.card.requirement;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Extension of Requirement to specify the requirement of specific quantities of determined resources.
  */
-public class ResourceRequirement extends Requirement {
+public class ResourceRequirement extends Requirement implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final List<ResourceStock> resourceStocks;
 
     /**

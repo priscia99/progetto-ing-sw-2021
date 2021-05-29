@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.resource;
 
+import java.io.Serializable;
+
 public class ResourceDepot extends ResourceStock {
 
     private int capacity;

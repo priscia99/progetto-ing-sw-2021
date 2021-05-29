@@ -14,12 +14,14 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
     private ClientMarbleMarket clientMarbleMarket;
     private Map<String, ClientPlayerBoard> playerBoardMap = new HashMap<>();
 
-    public ClientGame(String myUsername, String currentPlayer, ArrayList<String> players, Map<String, ClientPlayerBoard> playerBoardMap) {
-        // FIXME constructor must create clear new object
-        // FIXME then object get set during the match
+    public ClientGame(String myUsername, String currentPlayer, ArrayList<String> players) {
         this.myUsername = myUsername;
         this.currentPlayer = currentPlayer;
-        this.playerBoardMap = playerBoardMap;
+        this.clientCardsMarket = new ClientCardsMarket();
+        this.clientMarbleMarket = new ClientMarbleMarket();
+        players.forEach(player -> {
+            this.playerBoardMap.put(player, new ClientPlayerBoard());
+        });
     }
 
     public String getCurrentPlayer() {

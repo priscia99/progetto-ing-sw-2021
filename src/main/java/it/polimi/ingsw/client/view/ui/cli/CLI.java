@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.view.ui.cli;
 
 import java.util.*;
+
+import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
@@ -55,21 +57,21 @@ public class CLI implements UI {
         String playerUsername;
         String choice;
         System.out.println(ANSI_CYAN + TITLE + ANSI_RESET);
-        System.out.printf("Enter an username:\n\t>");
+        System.out.printf("Enter an username:\n\t> ");
         playerUsername = in.nextLine();
         do{
-            System.out.print("Welcome, " + playerUsername + "! Would you like to join [J] or create [C] a lobby?\n\t>");
+            System.out.print("Welcome, " + playerUsername + "! Would you like to join [J] or create [C] a lobby?\n\t> ");
             choice = in.nextLine();
             if(choice.equalsIgnoreCase("J")) {
                 String lobbyToJoin;
-                System.out.print("Enter a valid lobby ID: \n\t>");
+                System.out.print("Enter a valid lobby ID: \n\t> ");
                 lobbyToJoin = in.nextLine();
                 authData = AuthData.joinLobby(playerUsername, lobbyToJoin);
             }
             else if (choice.equalsIgnoreCase("C")){
                 int playerNumber;
                 do{
-                    System.out.print("Enter the maximum number of players for this lobby [1-4]: \n\t>");
+                    System.out.print("Enter the maximum number of players for this lobby [1-4]: \n\t> ");
                     playerNumber = in.nextInt();
                 }while(playerNumber<1 || playerNumber>4);
                 authData = AuthData.createLobby(playerUsername, playerNumber);
@@ -117,5 +119,10 @@ public class CLI implements UI {
     @Override
     public void displayGameStarted(){
         System.out.println("Game has started!");
+    }
+
+    @Override
+    public void displayLeaderCard(ClientLeaderCard clientLeaderCard) {
+        String outputFormat = "%s Lv%d - Victory Points: %d - [";
     }
 }

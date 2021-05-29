@@ -3,8 +3,11 @@ package it.polimi.ingsw.client.model;
 import it.polimi.ingsw.server.model.card.requirement.*;
 import it.polimi.ingsw.server.model.card.effect.*;
 
-public abstract class ClientCard {
+import java.io.Serializable;
 
+public abstract class ClientCard implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private final String id;
     private final Requirement requirement;
     private final Effect effect;

@@ -118,6 +118,7 @@ public class Player {
 
     public void setInitialResourceToChoose(int value){
         initialResourceToChoose = value;
+        // TODO notify
     }
 
     public void hasChosenInitialResource(){

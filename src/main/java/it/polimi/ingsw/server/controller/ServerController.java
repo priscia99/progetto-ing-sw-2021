@@ -16,14 +16,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ServerController {
-    private Game game;
+
+    private final Game game;
 
     public ServerController(Game game){
         this.game = game;
     }
 
     public void setupGame(ArrayList<Player> players){
-        game.setup(players);
+        game.setPlayers(players);
+        game.setupVictoryObservations();
+        game.setupLeaderCards();
+        game.setupCardsMarket();
+        game.setupMarbleMarket();
+    }
+
+    public void giveInitialAssets() {
+        game.giveLeaderCardsToPlayers();
+        game.giveInitialResources();
     }
 
     public void buyDevelopmentCard(int positionX, int positionY, int deckIndex) {

@@ -12,7 +12,13 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
     private final ArrayList<ClientLeaderCard> clientLeaderCards;
     private final ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards;
 
-
+    public ClientPlayerBoard() {
+        this.faithPath = new ClientFaithPath();
+        this.warehouse = new ClientWarehouse();
+        this.strongbox = new ClientStrongbox();
+        this.clientLeaderCards = new ArrayList<>();
+        this.developmentCards = new ArrayList<>();
+    }
 
     public ClientPlayerBoard(ClientFaithPath faithPath, ClientWarehouse warehouse, ClientStrongbox strongbox,
                              ArrayList<ClientLeaderCard> clientLeaderCards, ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards) {
@@ -41,6 +47,25 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
 
     public ArrayList<ArrayList<ClientDevelopmentCard>> getDevelopmentCards() {
         return developmentCards;
+    }
+
+    public void addLeaderCard(ClientLeaderCard clientLeaderCard) {
+       /*
+       this.clientLeaderCards.addCard(clientLeaderCard);
+        */
+
+        /*
+        public void addCard(ClientLeaderCard clientLeaderCard) {
+            this.leaderCards.add(clientLeaderCard);
+            notify(clientLeaderCard);
+        }
+         */
+
+        /*
+        public void update(ClientLeaderCard clientLeaderCard) {
+            userInterface.displayLeaderCardInsertion();
+        }
+         */
     }
 
     // TODO: add aggregators of data

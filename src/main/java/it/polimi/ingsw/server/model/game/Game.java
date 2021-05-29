@@ -49,7 +49,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         return backup;
     }
 
-    private void setPlayers(ArrayList<Player> players){
+    public void setPlayers(ArrayList<Player> players){
         this.players  = players;
     }
 
@@ -130,18 +130,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         throw new UserNotFoundException();
     }
 
-
-    public void setup(ArrayList<Player> players) {
-        this.players = players;
-        setupVictoryObservations();
-        setupLeaderCards();
-        setupCardsMarket();
-        setupMarbleMarket();
-        giveLeaderCardsToPlayers();
-        giveInitialResources();
-    }
-
-    private void giveLeaderCardsToPlayers() {
+    public void giveLeaderCardsToPlayers() {
         final int numberCardsToGive = 4;
         for(Player player : players){
             CustomLogger.getLogger().info(String.format("Giving %s initial leader cards", player.getNickname()));
@@ -156,6 +145,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     public void tryStart(){
         if(isReady()){
             setFirstPlayer();
+            // TODO notify
             nextTurn();
         }
     }
@@ -194,7 +184,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
                 .forEach(player -> player.addFaithPoints(1));
     }
 
-    private void setupVictoryObservations(){
+    public void setupVictoryObservations(){
         players.forEach((player)->{
             player.getPlayerBoard().getFaithPath().addObserver(this);
             Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(
@@ -203,17 +193,17 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         });
     }
 
-    private void setupMarbleMarket() {
+    public void setupMarbleMarket() {
         CustomLogger.getLogger().info("Setting up marble market");
         this.marbleMarket = MarbleMarket.getStartingMarket();
     }
 
-    private void setupCardsMarket() {
+    public void setupCardsMarket() {
         CustomLogger.getLogger().info("Setting up cards market");
         this.cardsMarket = CardsMarket.getStartingMarket();
     }
 
-    private void setupLeaderCards() {
+    public void setupLeaderCards() {
         CustomLogger.getLogger().info("Setting up leader cards");
         this.leaderCardsDeck = LeaderCardsDeck.getStartingDeck();
         this.leaderCardsDeck.shuffle();

@@ -18,6 +18,7 @@ public class Lobby extends Observable<Message> {
     private final int dimension;    // number of players
     private final Map<String, ClientConnection> clientConnectionMap= new HashMap<>();
     private final Game game = new Game();
+    private int playerReady = 0;
 
     public Lobby(String lobbyId, int dimension) {
         this.lobbyId = lobbyId;
@@ -74,6 +75,35 @@ public class Lobby extends Observable<Message> {
         return clientConnectionMap.size() == 0;
     }
 
+    public void setupMVC() {
+        playerReady++;
+
+        if (playerReady == dimension) {
+            ServerController gameController = new ServerController(game);
+            ServerMessageDecoder serverMessageDecoder = new ServerMessageDecoder(gameController);
+            ServerMessageEncoder serverMessageEncoder = new ServerMessageEncoder(this);
+            clientConnectionMap.values()
+                    .forEach(connection -> {
+                        SocketClientConnection socketClientConnection = (SocketClientConnection) connection;
+                        socketClientConnection.addObserver(serverMessageDecoder);
+                    });
+            ArrayList<Player> players = new ArrayList<>();
+            clientConnectionMap.keySet()
+                    .forEach(username -> {
+                        players.add(new Player(username));
+                    });
+            gameController.setupGame(players);
+            game.addObserver(serverMessageEncoder);
+            game.getPlayers().forEach((player)->{
+                Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(serverMessageEncoder));
+                player.getPlayerBoard().getFaithPath().addObserver(serverMessageEncoder);
+                player.getPlayerBoard().getLeaderCardsDeck().addObserver(serverMessageEncoder);
+                player.getPlayerBoard().getStrongbox().addObserver(serverMessageEncoder);
+                player.getPlayerBoard().getWarehouse().addObserver(serverMessageEncoder);
+            });
+            gameController.giveInitialAssets();
+        }
+    }
 
     public void init(){
         sendBroadcast(new GameStartedServiceMessage(new ArrayList<>(clientConnectionMap.keySet())));

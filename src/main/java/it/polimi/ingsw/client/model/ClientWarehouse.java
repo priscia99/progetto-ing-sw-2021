@@ -7,12 +7,13 @@ import it.polimi.ingsw.server.model.player_board.storage.*;
 
 public class ClientWarehouse {
 
-    private final ArrayList<ResourceDepot> resourceDepots;
+    private ArrayList<ResourceDepot> resourceDepots;
 
-    public ClientWarehouse(Warehouse warehouse) {
-        this.resourceDepots = warehouse.getResourceStocks()
-                .stream().map(resourceStock -> (ResourceDepot) resourceStock)
-                .collect(Collectors.toCollection(ArrayList::new));
+    public ClientWarehouse() {
+        this.resourceDepots = new ArrayList<>();
+//        this.resourceDepots = warehouse.getResourceStocks()
+//                .stream().map(resourceStock -> (ResourceDepot) resourceStock)
+//                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void setResourceDepots(ArrayList<ResourceDepot> resourceDepots) {

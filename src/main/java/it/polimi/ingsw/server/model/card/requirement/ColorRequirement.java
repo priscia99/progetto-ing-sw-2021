@@ -3,13 +3,15 @@ package it.polimi.ingsw.server.model.card.requirement;
 import it.polimi.ingsw.server.model.card.color.ColorPile;
 import it.polimi.ingsw.server.model.game.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Extension of Requirement to specify the requirement of specific card color.
  */
-public class ColorRequirement extends Requirement {
+public class ColorRequirement extends Requirement implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final ArrayList<ColorPile> colorPiles;
 
     /**

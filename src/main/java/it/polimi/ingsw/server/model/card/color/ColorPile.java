@@ -1,10 +1,13 @@
 package it.polimi.ingsw.server.model.card.color;
 
+import java.io.Serializable;
+
 /**
  * The ColorPile wraps a color value and add a quantity to it.
  */
-public class ColorPile {
+public class ColorPile implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final Color color;
     private final int quantity;
 

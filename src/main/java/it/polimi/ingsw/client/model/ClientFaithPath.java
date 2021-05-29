@@ -6,20 +6,24 @@ import it.polimi.ingsw.server.model.player_board.faith_path.*;
 
 public class ClientFaithPath {
 
-    private final int faithPoints;
-    private final ArrayList<Boolean> popeFavors;
+    private int faithPoints;
+    private ArrayList<Boolean> popeFavors;
 
-    public ClientFaithPath(FaithPath faithPath) {
-        this.faithPoints = faithPath.getFaithPoints();
-        popeFavors = Arrays
-                .stream(faithPath.getCells())
-                .filter(cell -> cell instanceof PopeCell)
-                .map(cell -> ((PopeCell) cell).getFavor().isUsed())
-                .collect(Collectors.toCollection(ArrayList::new));
+    public ClientFaithPath() {
+        this.faithPoints = 0;
+        this.popeFavors = new ArrayList<>();
     }
 
     public ClientFaithPath(int faithPoints, ArrayList<Boolean> popeFavors) {
         this.faithPoints = faithPoints;
+        this.popeFavors = popeFavors;
+    }
+
+    public void setFaithPoints(int faithPoints) {
+        this.faithPoints = faithPoints;
+    }
+
+    public void setPopeFavors(ArrayList<Boolean> popeFavors) {
         this.popeFavors = popeFavors;
     }
 

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.resource;
 
+import java.io.Serializable;
+
 public enum ResourcePosition {
     FIRST_DEPOT,
     SECOND_DEPOT,

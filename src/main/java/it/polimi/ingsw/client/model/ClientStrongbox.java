@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.model.player_board.storage.*;
 
 public class ClientStrongbox {
 
-    private final ArrayList<ResourceStock> resourceStocks;
+    private ArrayList<ResourceStock> resourceStocks;
 
     public ClientStrongbox() {
         this.resourceStocks = new ArrayList<>();

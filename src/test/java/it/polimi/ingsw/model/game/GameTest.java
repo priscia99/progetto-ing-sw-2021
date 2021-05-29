@@ -16,7 +16,13 @@ public class GameTest {
     @BeforeEach
     public void setUp(){
         game = new Game();
-        game.setup(MockProvider.getMockPlayers());
+        game.setPlayers(MockProvider.getMockPlayers());
+        game.setupVictoryObservations();
+        game.setupLeaderCards();
+        game.setupCardsMarket();
+        game.setupMarbleMarket();
+        game.giveLeaderCardsToPlayers();
+        game.giveInitialResources();
     }
 
     @Test

@@ -2,8 +2,11 @@ package it.polimi.ingsw.server.model.resource;
 
 import it.polimi.ingsw.exceptions.IllegalResourceException;
 
-public class ResourceStock {
+import java.io.Serializable;
 
+public class ResourceStock implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     protected ResourceType resourceType;
     private int quantity;
 

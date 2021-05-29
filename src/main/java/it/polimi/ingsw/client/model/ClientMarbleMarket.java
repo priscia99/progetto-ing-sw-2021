@@ -8,9 +8,9 @@ public class ClientMarbleMarket {
     private Marble[][] onSale;
     private Marble notForSale;
 
-    public ClientMarbleMarket(MarbleMarket marbleMarket) {
-        this.onSale = marbleMarket.getOnSale();
-        this.notForSale = marbleMarket.getNotForSale();
+    public ClientMarbleMarket() {
+        this.onSale = new Marble[0][];
+        this.notForSale = null;
     }
 
     public ClientMarbleMarket(Marble[][] onSale, Marble notForSale) {

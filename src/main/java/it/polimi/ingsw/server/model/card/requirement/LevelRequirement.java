@@ -3,11 +3,14 @@ package it.polimi.ingsw.server.model.card.requirement;
 import it.polimi.ingsw.server.model.card.color.Color;
 import it.polimi.ingsw.server.model.game.Player;
 
+import java.io.Serializable;
+
 /**
  * Extension of Requirement to specify the requirement of owning level 2 cards of specific colors.
  */
-public class LevelRequirement extends Requirement {
+public class LevelRequirement extends Requirement implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final Color color;
 
     /**

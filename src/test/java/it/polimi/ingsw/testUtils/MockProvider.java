@@ -36,7 +36,13 @@ public class MockProvider {
     static public Game getMockGame(){
         Game game = new Game();
         ArrayList<Player> players = getMockPlayers();
-        game.setup(players);
+        game.setPlayers(players);
+        game.setupVictoryObservations();
+        game.setupLeaderCards();
+        game.setupCardsMarket();
+        game.setupMarbleMarket();
+        game.giveLeaderCardsToPlayers();
+        game.giveInitialResources();
         game.nextTurn();
         return game;
     }
