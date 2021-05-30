@@ -5,6 +5,7 @@ import it.polimi.ingsw.exceptions.UserNotFoundException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_server.CurrentPlayerMessage;
 import it.polimi.ingsw.network.message.from_server.ExceptionMessage;
+import it.polimi.ingsw.network.message.from_server.GameReadyMessage;
 import it.polimi.ingsw.network.message.from_server.LastRoundMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
@@ -134,18 +135,20 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         final int numberCardsToGive = 4;
         for(Player player : players){
             CustomLogger.getLogger().info(String.format("Giving %s initial leader cards", player.getNickname()));
-            List<LeaderCard> cardsToGive = new ArrayList<>();
+            ArrayList<LeaderCard> cardsToGive = new ArrayList<>();
             for(int i = 0; i<numberCardsToGive; i++){
                 cardsToGive.add(this.leaderCardsDeck.pop());
             }
-            cardsToGive.forEach(c-> player.getPlayerBoard().getLeaderCardsDeck().addLeader(c));
+            player.setInitialLeadersToChoose(cardsToGive);
         }
     }
 
     public void tryStart(){
-        if(isReady()){
+        boolean ready = isReady();
+        notify(new GameReadyMessage(ready));
+        if(ready){
+            //TODO: check first player logic
             setFirstPlayer();
-            // TODO notify
             nextTurn();
         }
     }

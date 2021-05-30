@@ -1,6 +1,13 @@
 package it.polimi.ingsw.server.model.game;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.exceptions.InvalidActionException;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.from_server.ChooseInitialLeadersMessage;
+import it.polimi.ingsw.network.message.from_server.ChooseInitialResourcesMessage;
+import it.polimi.ingsw.network.message.from_server.LeadersReadyMessage;
+import it.polimi.ingsw.network.message.from_server.ResourceReadyMessage;
+import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.color.Color;
@@ -17,7 +24,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class Player {
+public class Player extends Observable<Message<ClientController>> {
 
     private String username;
 
@@ -118,7 +125,14 @@ public class Player {
 
     public void setInitialResourceToChoose(int value){
         initialResourceToChoose = value;
-        // TODO notify
+        notify(new ChooseInitialResourcesMessage(value));
+    }
+
+    public void setInitialLeadersToChoose(ArrayList<LeaderCard> cards){
+        for (LeaderCard card : cards) {
+            playerBoard.getLeaderCardsDeck().addLeader(card);
+        }
+        notify(new ChooseInitialLeadersMessage(cards));
     }
 
     public void hasChosenInitialResource(){
@@ -164,7 +178,8 @@ public class Player {
     public void pickedLeaderCards(ArrayList<LeaderCard> cards){
         this.playerBoard.getLeaderCardsDeck().clear();
         this.playerBoard.addToLeaderCardsDeck(cards);
-        setInitialLeadersReady(true);
+        initialLeadersReady = true;
+        notify(new LeadersReadyMessage(true));
     }
 
     public void pickedInitialResources(HashMap<ResourcePosition, ResourceType> toAdd){
@@ -172,7 +187,8 @@ public class Player {
         for (ResourcePosition depotIndex : toAdd.keySet()) {
             getPlayerBoard().getWarehouse().addToDepot(depotIndex.ordinal(), toAdd.get(depotIndex));
         }
-        setInitialResourcesReady(true);
+        initialLeadersReady = true;
+        notify(new ResourceReadyMessage(true));
     }
 
     public boolean hasLeaderCards(){
