@@ -11,11 +11,13 @@ public abstract class ClientCard implements Serializable {
     private final String id;
     private final Requirement requirement;
     private final Effect effect;
+    private final int victoryPoints;
 
-    public ClientCard(String id, Requirement requirement, Effect effect) {
+    public ClientCard(String id, Requirement requirement, Effect effect, int victoryPoints) {
         this.id = id;
         this.requirement = requirement;
         this.effect = effect;
+        this.victoryPoints = victoryPoints;
     }
 
     public String getId() {
@@ -28,5 +30,9 @@ public abstract class ClientCard implements Serializable {
 
     public Effect getEffect() {
         return effect;
+    }
+
+    public int getVictoryPoints() {
+        return victoryPoints;
     }
 }

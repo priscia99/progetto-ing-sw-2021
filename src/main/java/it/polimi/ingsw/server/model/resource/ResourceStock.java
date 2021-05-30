@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model.resource;
 import it.polimi.ingsw.exceptions.IllegalResourceException;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ResourceStock implements Serializable {
 
@@ -50,5 +51,21 @@ public class ResourceStock implements Serializable {
 
     public boolean contains(ResourceType resourceType) {
         return this.resourceType.equals(resourceType);
+    }
+
+    public static String stocksToString(ArrayList<ResourceStock> stocks) {
+        StringBuilder render = new StringBuilder();
+        stocks.forEach(
+                resourceStock -> {
+                    int quantity = resourceStock.getQuantity();
+                    String type = resourceStock.getResourceType().toString();
+                    render.append(quantity);
+                    render.append(" ");
+                    render.append(type);
+                    render.append(" ");
+                }
+        );
+        render.delete(render.length()-1, render.length());
+        return render.toString();
     }
 }

@@ -8,12 +8,12 @@ public class ClientLeaderCard extends ClientCard implements ClientAsset {
     private final boolean active;
 
     public ClientLeaderCard(LeaderCard leaderCard) {
-        super(leaderCard.getId(), leaderCard.getRequirement(), leaderCard.getEffect());
+        super(leaderCard.getId(), leaderCard.getRequirement(), leaderCard.getEffect(), leaderCard.getVictoryPoints());
         this.active = leaderCard.isActive();
     }
 
-    public ClientLeaderCard(String id, Requirement requirement, Effect effect, boolean active) {
-        super(id, requirement, effect);
+    public ClientLeaderCard(String id, Requirement requirement, Effect effect, int victoryPoints, boolean active) {
+        super(id, requirement, effect, victoryPoints);
         this.active = active;
     }
 
@@ -23,7 +23,7 @@ public class ClientLeaderCard extends ClientCard implements ClientAsset {
 
     @Override
     public String getAssetLink() {
-        // FIXME: complete
+        // FIXME: remove me (new getAssetLink in Representation)
         return null;
     }
 }

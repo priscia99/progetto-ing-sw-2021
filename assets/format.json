@@ -1,0 +1,18 @@
+{
+  "leader_card": "%d VP | %s | Requirement: %s |Effect: %s",
+  "development_card": "Color: %s | Lv %d | %d VP | Production: %s",
+
+  "production_effect": "[%s] ==> [%s]",
+  "change_effect": "WHITE MARBLE --> [%s]",
+  "depot_effect": "%s DEPOT (max 2)",
+  "discount_effect": "%s -1 REQUIRED",
+
+  "color_requirement": "[%s]",
+  "level_requirement": "%s Lv 2",
+  "resource_requirement": "[%s]",
+
+  "cards_market": "> GREEN:\nLv1) %s\nLv2) %s\nLv3) %s\n> YELLOW:\nLv1) %s\nLv2) %s\nLv3) %s\n> PURPLE:\nLv1) %s\nLv2) %s\nLv3) %s\n> BLUE:\nLv1) %s\nLv2) %s\nLv3) %s",
+  "marble_market": "  ||     1     |     2     |     3     |     4     |\n==||===========|===========|===========|===========|\n1 || %1$9s | %2$9s | %3$9s | %4$9S |\n2 || %5$9s | %6$9s | %7$9s | %8$9S |\n3 || %9$9s | %10$9s | %11$9s | %12$9S |\n\nNOT FOR SALE > %13s",
+  "faith_path": "Faith Points: %d\n[%c][%c][%c][%c]<[%c][%c][%c]{%c}>[%c][%c][%c]<[%c][%c][%c][%c]{%c}>[%c][%c]<[%c][%c][%c][%c][%c]{%c}>"
+
+}

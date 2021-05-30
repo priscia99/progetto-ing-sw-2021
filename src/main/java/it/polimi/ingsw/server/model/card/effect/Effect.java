@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.card.effect;
 
+import it.polimi.ingsw.client.view.representation.Representation;
+
 /**
  * Abstract class for effects.
  */
@@ -14,4 +16,6 @@ public abstract class Effect {
     public EffectType getEffectType() {
         return effectType;
     }
+
+    public abstract Representation toRepresentation();
 }

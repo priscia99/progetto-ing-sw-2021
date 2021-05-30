@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.card.effect;
 
+import it.polimi.ingsw.client.view.representation.DepotEffectRepresentation;
+import it.polimi.ingsw.client.view.representation.Representation;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
@@ -46,5 +48,10 @@ public class DepotEffect extends Effect implements Serializable {
     public String toString(){
         return "Effect type: ADDITIONARY DEPOT \n" +
                 "\tCreate a 2-resources capacity depot containing " + this.getResourceType().name() + "S";
+    }
+
+    @Override
+    public Representation toRepresentation() {
+        return new DepotEffectRepresentation("", getDepot());
     }
 }
