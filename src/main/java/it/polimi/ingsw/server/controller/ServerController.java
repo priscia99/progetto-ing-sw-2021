@@ -43,7 +43,7 @@ public class ServerController {
         game.getCurrentPlayer().setHasDoneMainAction(true);
     }
 
-    public void chooseInitialLeaders(ArrayList<LeaderCard> leadersChosen, String playerUsername) {
+    public void chooseInitialLeaders(ArrayList<String> leadersChosen, String playerUsername) {
         game.getPlayerByUsername(playerUsername).pickedLeaderCards(leadersChosen);
         game.tryStart();
     }

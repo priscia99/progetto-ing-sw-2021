@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class ChooseInitialLeadersMessage implements Message<ServerController>, Serializable {
 
     private static final long serialVersionUID = 1L;
-    private final ArrayList<LeaderCard> leadersChosen;
+    private final ArrayList<String> leadersChosen;
     private final String playerUsername;
 
-    public ChooseInitialLeadersMessage(ArrayList<LeaderCard> leaders, String username) {
-        this.leadersChosen = leaders;
+    public ChooseInitialLeadersMessage(ArrayList<String> leadersId, String username) {
+        this.leadersChosen = leadersId;
         this.playerUsername = username;
     }
 

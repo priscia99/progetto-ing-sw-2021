@@ -147,7 +147,6 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         boolean ready = isReady();
         notify(new GameReadyMessage(ready));
         if(ready){
-            //TODO: check first player logic
             setFirstPlayer();
             nextTurn();
         }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.game;
 
+import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.testUtils.MockProvider;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class GameTest {
@@ -68,8 +70,8 @@ public class GameTest {
     @Test
     @DisplayName("Test check players choose initial cards")
     public void testAllPlayersHaveStartingLeaderCard(){
-        game.getPlayers().get(0).pickedLeaderCards(MockProvider.getArrayListLeaderCardsMock());
-        game.getPlayers().get(1).pickedLeaderCards(MockProvider.getArrayListLeaderCardsMock());
+        game.getPlayers().get(0).pickedLeaderCards(new ArrayList<>(MockProvider.getArrayListLeaderCardsMock().stream().map(LeaderCard::getId).collect(Collectors.toList())));
+        game.getPlayers().get(1).pickedLeaderCards(new ArrayList<>(MockProvider.getArrayListLeaderCardsMock().stream().map(LeaderCard::getId).collect(Collectors.toList())));
         Assertions.assertTrue(game.allPlayersHaveStartingLeaderCards());
     }
 }

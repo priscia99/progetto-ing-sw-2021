@@ -18,10 +18,7 @@ import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Player extends Observable<Message<ClientController>> {
@@ -175,7 +172,11 @@ public class Player extends Observable<Message<ClientController>> {
                 .mapToInt(DevelopmentCardsDeck::getCardNumber).sum();
     }
 
-    public void pickedLeaderCards(ArrayList<LeaderCard> cards){
+    public void pickedLeaderCards(ArrayList<String> cardIDs){
+        ArrayList<LeaderCard> cards = new ArrayList<>(
+                this.playerBoard.getLeaderCardsDeck().getLeaderCards()
+                .stream().filter(c->cardIDs.contains(c.getId())).collect(Collectors.toList())
+        );
         this.playerBoard.getLeaderCardsDeck().clear();
         this.playerBoard.addToLeaderCardsDeck(cards);
         initialLeadersReady = true;

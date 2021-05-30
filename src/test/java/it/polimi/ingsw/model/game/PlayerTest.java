@@ -22,9 +22,11 @@ public class PlayerTest {
     @Test
     @DisplayName("Test picked leader cards")
     public void testPickedLeaderCards(){
-        ArrayList<LeaderCard> pickedCards = new ArrayList<>();
+        player.getPlayerBoard().addToLeaderCardsDeck(MockProvider.getArrayListLeaderCardsMock());
+        ArrayList<String> pickedCards = new ArrayList<>();
         LeaderCard cardToCheck = MockProvider.getLeaderCardMock();
-        pickedCards.add(cardToCheck);
+        player.getPlayerBoard().getLeaderCardsDeck().addLeader(cardToCheck);
+        pickedCards.add(cardToCheck.getId());
         player.pickedLeaderCards(pickedCards);
         Assertions.assertEquals(1, player.getPlayerBoard().getLeaderCardsDeck().getLeaderCards().size());
         Assertions.assertEquals(cardToCheck, player.getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0));
