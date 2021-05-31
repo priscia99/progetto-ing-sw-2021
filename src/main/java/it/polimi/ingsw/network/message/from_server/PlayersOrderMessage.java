@@ -23,7 +23,6 @@ public class PlayersOrderMessage implements Message<ClientController>, Serializa
     }
 
     public void execute(ClientController target) {
-
     }
 
 }

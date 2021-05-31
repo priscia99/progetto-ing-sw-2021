@@ -3,10 +3,7 @@ package it.polimi.ingsw.server.model.game;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.exceptions.InvalidActionException;
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.from_server.ChooseInitialLeadersMessage;
 import it.polimi.ingsw.network.message.from_server.ChooseInitialResourcesMessage;
-import it.polimi.ingsw.network.message.from_server.LeadersReadyMessage;
-import it.polimi.ingsw.network.message.from_server.ResourceReadyMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
@@ -17,6 +14,8 @@ import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
+import it.polimi.ingsw.network.message.from_server.*;
+import it.polimi.ingsw.network.message.from_client.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -122,14 +121,16 @@ public class Player extends Observable<Message<ClientController>> {
 
     public void setInitialResourceToChoose(int value){
         initialResourceToChoose = value;
-        notify(new ChooseInitialResourcesMessage(value));
+        System.out.println(username + " deve scegliere risorse");
+        System.out.println("Mi stanno osservando in " + super.observers.size());
+        notify(new ChooseInitialResourcesMessage(this.username, value));
     }
 
     public void setInitialLeadersToChoose(ArrayList<LeaderCard> cards){
         for (LeaderCard card : cards) {
             playerBoard.getLeaderCardsDeck().addLeader(card);
         }
-        notify(new ChooseInitialLeadersMessage(cards));
+        notify(new ChooseInitialLeadersMessage(cards, this.username));
     }
 
     public void hasChosenInitialResource(){

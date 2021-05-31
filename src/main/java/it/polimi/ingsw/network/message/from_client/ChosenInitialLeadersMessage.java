@@ -7,13 +7,13 @@ import it.polimi.ingsw.server.model.card.LeaderCard;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ChooseInitialLeadersMessage implements Message<ServerController>, Serializable {
+public class ChosenInitialLeadersMessage implements Message<ServerController>, Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ArrayList<String> leadersChosen;
     private final String playerUsername;
 
-    public ChooseInitialLeadersMessage(ArrayList<String> leadersId, String username) {
+    public ChosenInitialLeadersMessage(ArrayList<String> leadersId, String username) {
         this.leadersChosen = leadersId;
         this.playerUsername = username;
     }

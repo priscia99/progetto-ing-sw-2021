@@ -13,12 +13,15 @@ public class LeaderDeckView extends View implements Observer<ClientPlayerBoard> 
 
     @Override
     public void update(ClientPlayerBoard object) {
+        // FIXME fix constructors
+        /*
         object.getClientLeaderCards().stream().map(clientLeaderCard -> new LeaderCardRepresentation(
                 clientLeaderCard.getId(),
                 clientLeaderCard.getRequirement(),
                 clientLeaderCard.getEffect(),
                 clientLeaderCard.getVictoryPoints(),
                 clientLeaderCard.isActive()
-        ))
+        ));
+         */
     }
 }

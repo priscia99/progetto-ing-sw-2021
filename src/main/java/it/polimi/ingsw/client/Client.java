@@ -14,6 +14,7 @@ import it.polimi.ingsw.network.service_message.ServiceMessage;
 public class Client {
     private UI userInterface;               // type of chosen UI (CLI, GUI)
     private ClientController controller;
+    private ClientMessageEncoder clientMessageEncoder;
     private String myUsername;
     private final String ip;                // server IP
     private final int port;                 // server port
@@ -25,12 +26,13 @@ public class Client {
         this.ip = ip;
         this.port = port;
         this.userInterface = userInterface;
+        clientMessageEncoder = new ClientMessageEncoder(this);
     }
 
     public void setupMVC(ArrayList<String> players){
         ClientGame game = new ClientGame(myUsername, players.get(0), players);
-
-        this.controller = new ClientController(game);
+        this.controller = new ClientController(game, userInterface);
+        controller.addObserver(clientMessageEncoder);
     }
 
     public synchronized boolean isActive(){
@@ -57,12 +59,12 @@ public class Client {
                             manageAuth((String) inputObject);   // re-directing to authentication manager;
                         }
                         else if(inputObject instanceof ServiceMessage){
-                            System.out.println("Got service message from server");
+                            // System.out.println("Got service message from server");
                             ServiceMessage serviceMessage = (ServiceMessage) inputObject;
                             serviceMessage.execute(this);
                         }
                         else if(inputObject instanceof Message){
-                            System.out.println("Got message from server");
+                            // System.out.println("Ho ricevuto un: " + inputObject.getClass());
                             Message<ClientController> message = (Message<ClientController>) inputObject;
                             message.execute(this.controller);
                         }
@@ -157,6 +159,7 @@ public class Client {
 
     public Thread sendToSocket(Object objToSend){
         Thread t = new Thread(() -> {
+            // System.out.println("Sto inviando un: " + objToSend.getClass());
             try {
                 socketOut.writeObject(objToSend);
             } catch (IOException e) {

@@ -45,4 +45,5 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
     public String getMyUsername() {
         return myUsername;
     }
+
 }

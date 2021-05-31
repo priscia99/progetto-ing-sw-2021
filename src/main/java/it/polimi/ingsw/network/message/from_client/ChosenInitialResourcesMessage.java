@@ -8,13 +8,13 @@ import it.polimi.ingsw.server.model.resource.ResourceType;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class ChooseInitialResourcesMessage implements Message<ServerController>, Serializable {
+public class ChosenInitialResourcesMessage implements Message<ServerController>, Serializable {
 
     private static final long serialVersionUID = 1L;
     private final HashMap<ResourcePosition, ResourceType> resourcesToAdd;
     private final String username;
 
-    public ChooseInitialResourcesMessage(HashMap<ResourcePosition, ResourceType> resources, String username){
+    public ChosenInitialResourcesMessage(HashMap<ResourcePosition, ResourceType> resources, String username){
         this.resourcesToAdd = resources;
         this.username = username;
     }

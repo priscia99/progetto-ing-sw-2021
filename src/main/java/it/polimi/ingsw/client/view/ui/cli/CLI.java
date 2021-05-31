@@ -6,6 +6,8 @@ import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
+import it.polimi.ingsw.server.model.resource.ResourcePosition;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 
 public class CLI implements UI {
 
@@ -125,4 +127,91 @@ public class CLI implements UI {
     public void displayLeaderCard(ClientLeaderCard clientLeaderCard) {
         String outputFormat = "%s Lv%d - Victory Points: %d - [";
     }
+
+    public HashMap<ResourcePosition, ResourceType> chooseInitialResources(int toChoose){
+        int chosenResources = 0;
+        boolean validSelection = true;
+        HashMap<ResourcePosition, ResourceType> resources = new HashMap<>();
+        String tempResource, tempDepot;
+        ResourcePosition resourcePosition = null;
+        ResourceType resourceType = null;
+
+        System.out.println("You have to choose " + toChoose + " resource/s!");
+        while(chosenResources<toChoose){
+            do {
+                validSelection = true;
+                System.out.print("Choose resources #" + (chosenResources + 1) +
+                        " [STONE | SERVANT | SHIELD | COIN]: \n\t> ");
+                tempResource = in.nextLine();
+                switch (tempResource) {
+                    case "STONE":
+                        resourceType = ResourceType.STONE;
+                        break;
+                    case "SERVANT":
+                        resourceType = ResourceType.SERVANT;
+                        break;
+                    case "SHIELD":
+                        resourceType = ResourceType.SHIELD;
+                        break;
+                    case "COIN":
+                        resourceType = ResourceType.COIN;
+                        break;
+                    default:
+                        validSelection = false;
+                        System.out.println("Please choose a valid resource type!");
+                }
+            }while (!validSelection);
+
+            do {
+                validSelection = true;
+                System.out.print("Choose in which depot you want to put this resource [FIRST | SECOND | THIRD]: \n\t> ");
+                tempDepot = in.nextLine();
+                switch (tempDepot) {
+                    case "FIRST":
+                        resourcePosition = ResourcePosition.FIRST_DEPOT;
+                        break;
+                    case "SECOND":
+                        resourcePosition = ResourcePosition.SECOND_DEPOT;
+                        break;
+                    case "THIRD":
+                        resourcePosition = ResourcePosition.THIRD_DEPOT;
+                        break;
+                    default:
+                        validSelection = false;
+                        System.out.println("Please choose a valid resource position!");
+                }
+            }while (!validSelection);
+            resources.put(resourcePosition, resourceType);
+            chosenResources++;
+        }
+        return resources;
+    }
+
+    public ArrayList<String> chooseInitialLeaders(){
+        ArrayList<String> chosenLeaderCards = new ArrayList<>();
+        int cardsChosen = 0;
+        boolean validSelection = true;
+        System.out.println("You have to choose 2 leader cards!");
+        System.out.println("Your leader cards are: ");
+        // TODO print leader cards
+        while(cardsChosen < 2){
+            String chosenCardId;
+            validSelection = true;
+            do {
+                validSelection = true;
+                System.out.print("Choose leader cards #" + (cardsChosen + 1) + " [type card ID]: \n\t> ");
+                chosenCardId = in.nextLine();
+                System.out.println("You have chosen " + chosenCardId);
+                if(chosenLeaderCards.contains(chosenCardId)) {
+                    validSelection = false;
+                    System.out.println("You cannot choose the same leader card!");
+                }
+                // TODO check if the id is valid (if player has a leader card with that id)
+            }while(!validSelection);
+            chosenLeaderCards.add(chosenCardId);
+            cardsChosen++;
+        }
+        return chosenLeaderCards;
+    }
 }
+
