@@ -1,6 +1,6 @@
 {
   "leader_card": "%d VP | %s | Requirement: %s |Effect: %s",
-  "development_card": "Color: %s | Lv %d | %d VP | Production: %s",
+  "development_card": "Color: %s | Lv %d | %d VP | Cost: %s | Production: %s",
 
   "production_effect": "[%s] ==> [%s]",
   "change_effect": "WHITE MARBLE --> [%s]",

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.card.requirement;
 
+import it.polimi.ingsw.client.view.representation.Representation;
+import it.polimi.ingsw.client.view.representation.ResourceRequirementRepresentation;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 
@@ -47,5 +49,10 @@ public class ResourceRequirement extends Requirement implements Serializable {
             buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
         }
         return buffer.toString();
+    }
+
+    @Override
+    public Representation toRepresentation() {
+        return new ResourceRequirementRepresentation("", resourceStocks);
     }
 }

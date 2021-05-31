@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.card.requirement;
 
+import it.polimi.ingsw.client.view.representation.ColorRequirementRepresentation;
+import it.polimi.ingsw.client.view.representation.Representation;
 import it.polimi.ingsw.server.model.card.color.ColorPile;
 import it.polimi.ingsw.server.model.game.Player;
 
@@ -46,5 +48,10 @@ public class ColorRequirement extends Requirement implements Serializable {
             buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
         }
         return buffer.toString();
+    }
+
+    @Override
+    public Representation toRepresentation() {
+        return new ColorRequirementRepresentation("", colorPiles);
     }
 }

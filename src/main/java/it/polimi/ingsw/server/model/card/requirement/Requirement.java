@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.card.requirement;
 
+import it.polimi.ingsw.client.view.representation.Representation;
 import it.polimi.ingsw.server.model.game.Player;
 
 /**
@@ -13,4 +14,6 @@ public abstract class Requirement {
      * @return true if the requirement is fulfilled, false if not.
      */
     public abstract boolean isFulfilled(Player player);
+
+    public abstract Representation toRepresentation();
 }

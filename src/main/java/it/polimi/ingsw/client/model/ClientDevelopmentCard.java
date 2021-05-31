@@ -10,12 +10,12 @@ public class ClientDevelopmentCard extends ClientCard implements ClientAsset {
     private final Color color;
 
     public ClientDevelopmentCard(DevelopmentCard developmentCard) {
-        super(developmentCard.getId(), developmentCard.getRequirement(), developmentCard.getEffect());
+        super(developmentCard.getId(), developmentCard.getRequirement(), developmentCard.getEffect(), developmentCard.getVictoryPoints());
         this.color = developmentCard.getColor();
     }
 
-    public ClientDevelopmentCard(String id, Requirement requirement, Effect effect, Color color) {
-        super(id, requirement, effect);
+    public ClientDevelopmentCard(String id, Requirement requirement, Effect effect, Color color, int victoryPoints) {
+        super(id, requirement, effect, victoryPoints);
         this.color = color;
     }
 
