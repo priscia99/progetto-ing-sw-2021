@@ -75,10 +75,11 @@ public class Lobby extends Observable<Message> {
         return clientConnectionMap.size() == 0;
     }
 
-    public void setupMVC() {
+    public synchronized void setupMVC() {
         playerReady++;
-
+        System.out.println("LOBBY: Un giocatore e' pronto! (" + playerReady + " su " + dimension + ")");
         if (playerReady == dimension) {
+            System.out.println("LOBBY: Tutti i giocatori sono pronti!");
             ServerController gameController = new ServerController(game);
             ServerMessageDecoder serverMessageDecoder = new ServerMessageDecoder(gameController);
             ServerMessageEncoder serverMessageEncoder = new ServerMessageEncoder(this);
@@ -100,7 +101,9 @@ public class Lobby extends Observable<Message> {
                 player.getPlayerBoard().getLeaderCardsDeck().addObserver(serverMessageEncoder);
                 player.getPlayerBoard().getStrongbox().addObserver(serverMessageEncoder);
                 player.getPlayerBoard().getWarehouse().addObserver(serverMessageEncoder);
+                player.addObserver(serverMessageEncoder);
             });
+            System.out.println("Giving initial assets...");
             gameController.giveInitialAssets();
         }
     }

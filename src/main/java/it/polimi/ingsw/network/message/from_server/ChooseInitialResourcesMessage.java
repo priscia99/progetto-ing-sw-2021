@@ -16,11 +16,12 @@ public class ChooseInitialResourcesMessage implements Message<ClientController>,
     private int toChoose;
 
     public ChooseInitialResourcesMessage(int count){
+        System.out.println("LALALALLA");
         this.toChoose = count;
     }
 
     @Override
     public void execute(ClientController target) {
-
+        System.out.println("Devi scegliere!!\n");
     }
 }

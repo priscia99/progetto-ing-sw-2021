@@ -62,7 +62,7 @@ public class Client {
                             serviceMessage.execute(this);
                         }
                         else if(inputObject instanceof Message){
-                            System.out.println("Got message from server");
+                            System.out.println(inputObject.getClass());
                             Message<ClientController> message = (Message<ClientController>) inputObject;
                             message.execute(this.controller);
                         }
@@ -157,6 +157,7 @@ public class Client {
 
     public Thread sendToSocket(Object objToSend){
         Thread t = new Thread(() -> {
+            System.out.println("Sto inviando un: " + objToSend.getClass());
             try {
                 socketOut.writeObject(objToSend);
             } catch (IOException e) {

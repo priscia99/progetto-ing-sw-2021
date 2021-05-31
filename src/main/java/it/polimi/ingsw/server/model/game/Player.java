@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.model.game;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.exceptions.InvalidActionException;
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.from_server.ChooseInitialLeadersMessage;
+import it.polimi.ingsw.network.message.from_server.ChosenInitialLeadersMessage;
 import it.polimi.ingsw.network.message.from_server.ChooseInitialResourcesMessage;
 import it.polimi.ingsw.network.message.from_server.LeadersReadyMessage;
 import it.polimi.ingsw.network.message.from_server.ResourceReadyMessage;
@@ -122,6 +122,8 @@ public class Player extends Observable<Message<ClientController>> {
 
     public void setInitialResourceToChoose(int value){
         initialResourceToChoose = value;
+        System.out.println(username + " deve scegliere risorse");
+        System.out.println("Mi stanno osservando in " + super.observers.size());
         notify(new ChooseInitialResourcesMessage(value));
     }
 

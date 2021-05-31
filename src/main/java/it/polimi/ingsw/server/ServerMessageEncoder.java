@@ -27,6 +27,8 @@ public class ServerMessageEncoder implements Observer<Message<ClientController>>
      */
     @Override
     public void update(Message<ClientController> message) {
+        System.out.println("Sto mandando un: ");
+        System.out.println("\t\t" + message.getClass());
         this.lobby.sendBroadcast(message);
     }
 }

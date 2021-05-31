@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.card.effect;
 
+import it.polimi.ingsw.client.view.representation.Representation;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
@@ -78,5 +79,10 @@ public class ProductionEffect extends Effect implements Serializable {
             buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
         }
         return buffer.toString();
+    }
+
+    public Representation toRepresentation(){
+        // TODO implement toRepresentation method
+        return null;
     }
 }
