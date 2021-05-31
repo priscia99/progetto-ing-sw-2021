@@ -14,14 +14,16 @@ public class ChooseInitialLeadersMessage implements Message<ClientController>, S
     private static final long serialVersionUID = 1L;
 
     private ArrayList<ClientLeaderCard> leaderCards;
+    String playerUsername;
 
-    public ChooseInitialLeadersMessage(ArrayList<LeaderCard> cards){
+    public ChooseInitialLeadersMessage(ArrayList<LeaderCard> cards, String playerUsername){
         this.leaderCards = cards.stream().map(ClientLeaderCard::new)
                 .collect(Collectors.toCollection(ArrayList::new));
+        this.playerUsername = playerUsername;
     }
 
     @Override
     public void execute(ClientController target) {
-
+        target.chooseInitialLeaders(playerUsername);
     }
 }

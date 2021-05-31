@@ -14,14 +14,15 @@ public class ChooseInitialResourcesMessage implements Message<ClientController>,
     private static final long serialVersionUID = 1L;
 
     private int toChoose;
+    String playerUsername;
 
-    public ChooseInitialResourcesMessage(int count){
-        System.out.println("LALALALLA");
+    public ChooseInitialResourcesMessage(String playerUsername, int count){
         this.toChoose = count;
+        this.playerUsername = playerUsername;
     }
 
     @Override
     public void execute(ClientController target) {
-        System.out.println("Devi scegliere!!\n");
+        target.chooseInitialResources(toChoose, playerUsername);
     }
 }
