@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.model.card.requirement;
 
-import it.polimi.ingsw.client.view.representation.LevelRequirementRepresentation;
-import it.polimi.ingsw.client.view.representation.Representation;
 import it.polimi.ingsw.server.model.card.color.Color;
 import it.polimi.ingsw.server.model.game.Player;
 
@@ -40,10 +38,5 @@ public class LevelRequirement extends Requirement implements Serializable {
     public String toString(){
         return "Requirement type: LEVEL 2 DEVELOPMENT CARD\n" +
                 "\tRequired color: " + color.name() + "\n";
-    }
-
-    @Override
-    public Representation toRepresentation() {
-        return new LevelRequirementRepresentation("", color);
     }
 }

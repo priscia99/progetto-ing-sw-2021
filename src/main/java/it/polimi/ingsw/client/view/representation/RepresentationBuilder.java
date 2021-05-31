@@ -1,13 +1,8 @@
-package it.polimi.ingsw.representation;
+package it.polimi.ingsw.client.view.representation;
 
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.model.*;
-import it.polimi.ingsw.server.model.market.CardsMarket;
-import it.polimi.ingsw.server.model.market.MarbleMarket;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+// FIXME fix toString methods
 
 public class RepresentationBuilder {
 

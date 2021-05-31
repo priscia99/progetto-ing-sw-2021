@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.model.card.effect;
 
-import it.polimi.ingsw.client.view.representation.Representation;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.io.Serializable;
@@ -39,10 +38,5 @@ public class DiscountEffect extends Effect implements Serializable {
     public String toString(){
         return "Effect type: DISCOUNT\n" +
                 "\tSpecial discount for resource " + resourceType.name();
-    }
-
-    public Representation toRepresentation(){
-        // TODO fill toRepresentation method
-        return null;
     }
 }

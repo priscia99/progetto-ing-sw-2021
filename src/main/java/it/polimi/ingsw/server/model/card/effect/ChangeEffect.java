@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.model.card.effect;
 
-import it.polimi.ingsw.client.view.representation.ChangeEffectRepresentation;
-import it.polimi.ingsw.client.view.representation.Representation;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.io.Serializable;
@@ -40,10 +38,5 @@ public class ChangeEffect extends Effect implements Serializable {
     public String toString(){
         return "Effect type: CHANGE\n" +
                 "\tAny white marble become a " + resourceType.name();
-    }
-
-    @Override
-    public Representation toRepresentation() {
-        return new ChangeEffectRepresentation("", getResourceType());
     }
 }
