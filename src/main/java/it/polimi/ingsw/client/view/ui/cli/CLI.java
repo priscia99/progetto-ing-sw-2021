@@ -3,6 +3,8 @@ package it.polimi.ingsw.client.view.ui.cli;
 import java.util.*;
 
 import it.polimi.ingsw.client.model.ClientLeaderCard;
+import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
+import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
@@ -212,6 +214,11 @@ public class CLI implements UI {
             cardsChosen++;
         }
         return chosenLeaderCards;
+    }
+
+    @Override
+    public void displayLeaderCardDeck(ClientLeaderCardDeck clientLeaderCardDeck) {
+        System.out.println(RepresentationBuilder.render(clientLeaderCardDeck));
     }
 }
 

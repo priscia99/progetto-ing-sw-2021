@@ -5,8 +5,6 @@ import it.polimi.ingsw.client.model.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-// FIXME fix toString methods
-
 public class RepresentationBuilder {
 
     private static final String LEADER_CARD_FORMAT = "%d VP | %s | Requirement: %s | Effect: %s";

@@ -49,24 +49,5 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
         return developmentCards;
     }
 
-    public void addLeaderCard(ClientLeaderCard clientLeaderCard) {
-       /*
-       this.clientLeaderCards.addCard(clientLeaderCard);
-        */
-
-        /*
-        public void addCard(ClientLeaderCard clientLeaderCard) {
-            this.leaderCards.add(clientLeaderCard);
-            notify(clientLeaderCard);
-        }
-         */
-
-        /*
-        public void update(ClientLeaderCard clientLeaderCard) {
-            userInterface.displayLeaderCardInsertion();
-        }
-         */
-    }
-
     // TODO: add aggregators of data
 }

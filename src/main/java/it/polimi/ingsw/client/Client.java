@@ -6,15 +6,16 @@ import java.net.Socket;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientGame;
+import it.polimi.ingsw.client.view.LeaderDeckView;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.service_message.ServiceMessage;
 
 public class Client {
-    private UI userInterface;               // type of chosen UI (CLI, GUI)
+    private final UI userInterface;               // type of chosen UI (CLI, GUI)
     private ClientController controller;
-    private ClientMessageEncoder clientMessageEncoder;
+    private final ClientMessageEncoder clientMessageEncoder;
     private String myUsername;
     private final String ip;                // server IP
     private final int port;                 // server port
@@ -33,6 +34,7 @@ public class Client {
         ClientGame game = new ClientGame(myUsername, players.get(0), players);
         this.controller = new ClientController(game, userInterface);
         controller.addObserver(clientMessageEncoder);
+        game.getPlayerBoardMap().get(myUsername).getClientLeaderCards().addObserver(new LeaderDeckView(userInterface));
     }
 
     public synchronized boolean isActive(){
