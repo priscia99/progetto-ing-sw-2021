@@ -12,6 +12,7 @@ public class DepotEffect extends Effect implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ResourceDepot resourceDepot;
+    private static final String DEPOT_EFFECT_FORMAT = "%s DEPOT (max %d)";
 
     /**
      * Create a DepotEffect object.
@@ -44,7 +45,6 @@ public class DepotEffect extends Effect implements Serializable {
     }
 
     public String toString(){
-        return "Effect type: ADDITIONARY DEPOT \n" +
-                "\tCreate a 2-resources capacity depot containing " + this.getResourceType().name() + "S";
+        return String.format(DEPOT_EFFECT_FORMAT, resourceDepot.getResourceType().toString(), resourceDepot.getCapacity());
     }
 }

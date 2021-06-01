@@ -11,6 +11,7 @@ public class DiscountEffect extends Effect implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ResourceType resourceType;
+    private static final String DISCOUNT_EFFECT_FORMAT = "%s -1 REQUIRED";
 
     /**
      * Create a DiscountEffect object.
@@ -36,7 +37,6 @@ public class DiscountEffect extends Effect implements Serializable {
 
     @Override
     public String toString(){
-        return "Effect type: DISCOUNT\n" +
-                "\tSpecial discount for resource " + resourceType.name();
+        return String.format(DISCOUNT_EFFECT_FORMAT, resourceType.toString());
     }
 }

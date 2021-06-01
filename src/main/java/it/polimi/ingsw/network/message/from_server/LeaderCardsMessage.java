@@ -23,11 +23,6 @@ public class LeaderCardsMessage implements Message<ClientController>, Serializab
     }
 
     public void execute(ClientController target) {
-        String currentPlayer = target.getGame().getCurrentPlayer();
-        leaderCards.forEach(leaderCard -> {
-            target.getGame().getPlayerBoardMap().get(currentPlayer)
-                    .getClientLeaderCards()
-                    .add(leaderCard);
-        });
+        target.addLeaderCards(leaderCards);
     }
 }

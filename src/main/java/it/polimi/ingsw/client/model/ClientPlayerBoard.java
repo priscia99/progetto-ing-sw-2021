@@ -9,19 +9,19 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
     private final ClientFaithPath faithPath;
     private final ClientWarehouse warehouse;
     private final ClientStrongbox strongbox;
-    private final ArrayList<ClientLeaderCard> clientLeaderCards;
-    private final ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards;
+    private final ClientLeaderCardDeck clientLeaderCards;
+    private final ClientDevelopmentCardDecks developmentCards;
 
     public ClientPlayerBoard() {
         this.faithPath = new ClientFaithPath();
         this.warehouse = new ClientWarehouse();
         this.strongbox = new ClientStrongbox();
-        this.clientLeaderCards = new ArrayList<>();
-        this.developmentCards = new ArrayList<>();
+        this.clientLeaderCards = new ClientLeaderCardDeck();
+        this.developmentCards = new ClientDevelopmentCardDecks();
     }
 
     public ClientPlayerBoard(ClientFaithPath faithPath, ClientWarehouse warehouse, ClientStrongbox strongbox,
-                             ArrayList<ClientLeaderCard> clientLeaderCards, ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards) {
+                             ClientLeaderCardDeck clientLeaderCards, ClientDevelopmentCardDecks developmentCards) {
         this.faithPath = faithPath;
         this.warehouse = warehouse;
         this.strongbox = strongbox;
@@ -41,11 +41,11 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
         return strongbox;
     }
 
-    public ArrayList<ClientLeaderCard> getClientLeaderCards() {
+    public ClientLeaderCardDeck getClientLeaderCards() {
         return clientLeaderCards;
     }
 
-    public ArrayList<ArrayList<ClientDevelopmentCard>> getDevelopmentCards() {
+    public ClientDevelopmentCardDecks getDevelopmentCards() {
         return developmentCards;
     }
 

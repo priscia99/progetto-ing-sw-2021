@@ -13,6 +13,7 @@ public class ColorRequirement extends Requirement implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ArrayList<ColorPile> colorPiles;
+    private static final String COLOR_REQUIREMENT_FORMAT = "[%s]";
 
     /**
      * Create a ColorRequirement object with a given set of colors.
@@ -39,12 +40,7 @@ public class ColorRequirement extends Requirement implements Serializable {
 
     @Override
     public String toString(){
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("Requirement type: COLOR\n");
-        for(ColorPile pile : colorPiles){
-            buffer.append("\tColor: ").append(pile.getColor().name());
-            buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
-        }
-        return buffer.toString();
+        String colorString = ColorPile.pilesToString(colorPiles);
+        return String.format(COLOR_REQUIREMENT_FORMAT, colorString);
     }
 }

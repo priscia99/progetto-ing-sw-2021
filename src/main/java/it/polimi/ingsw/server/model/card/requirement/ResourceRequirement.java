@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ public class ResourceRequirement extends Requirement implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final List<ResourceStock> resourceStocks;
+    private static final String RESOURCE_REQUIREMENT_FORMAT = "[%s]";
 
     /**
      * Create a ResourceRequirement object with a given list of resource piles.
@@ -40,12 +42,7 @@ public class ResourceRequirement extends Requirement implements Serializable {
 
     @Override
     public String toString(){
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("Requirement type: RESOURCES\n");
-        for(ResourceStock pile : resourceStocks){
-            buffer.append("\tType: ").append(pile.getResourceType().name());
-            buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
-        }
-        return buffer.toString();
+        String resourceString = ResourceStock.stocksToString(new ArrayList<>(resourceStocks));
+        return String.format(RESOURCE_REQUIREMENT_FORMAT, resourceString);
     }
 }

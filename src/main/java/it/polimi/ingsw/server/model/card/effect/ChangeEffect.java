@@ -11,6 +11,7 @@ public class ChangeEffect extends Effect implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ResourceType resourceType;
+    private static final String CHANGE_EFFECT_FORMAT = "WHITE MARBLE --> [%s]";
 
     /**
      * Create a ChangeEffect object.
@@ -36,7 +37,6 @@ public class ChangeEffect extends Effect implements Serializable {
 
     @Override
     public String toString(){
-        return "Effect type: CHANGE\n" +
-                "\tAny white marble become a " + resourceType.name();
+        return String.format(CHANGE_EFFECT_FORMAT, resourceType.toString());
     }
 }

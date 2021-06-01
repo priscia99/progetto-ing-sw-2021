@@ -17,6 +17,7 @@ public class ProductionEffect extends Effect implements Serializable {
     private static final long serialVersionUID = 1L;
     private final ArrayList<ResourceStock> inStocks;
     private final ArrayList<ResourceStock> outStocks;
+    private static final String PRODUCTION_EFFECT_FORMAT = "[%s] ==> [%s]";
 
     /**
      * Create a ProductionEffect object.
@@ -65,18 +66,9 @@ public class ProductionEffect extends Effect implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("Effect type: PRODUCTION\n");
-        buffer.append("\tRequired resources: \n");
-        for(ResourceStock pile : inStocks){
-            buffer.append("\t\tType: ").append(pile.getResourceType().name());
-            buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
-        }
-        buffer.append("\tOutput resources: \n");
-        for(ResourceStock pile : outStocks){
-            buffer.append("\t\tType: ").append(pile.getResourceType().name());
-            buffer.append(" - Quantity: ").append(pile.getQuantity()).append("\n");
-        }
-        return buffer.toString();
+        // FIXME consider to fix in/out format
+        String inString = ResourceStock.stocksToString(inStocks);
+        String outString = ResourceStock.stocksToString(inStocks);
+        return String.format(PRODUCTION_EFFECT_FORMAT, inString, outString);
     }
 }

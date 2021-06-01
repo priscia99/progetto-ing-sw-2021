@@ -12,6 +12,7 @@ public class LevelRequirement extends Requirement implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final Color color;
+    private static final String LEVEL_REQUIREMENT_FORMAT = "%s Lv 2";
 
     /**
      * Create a LevelRequirement object with a given color.
@@ -36,7 +37,6 @@ public class LevelRequirement extends Requirement implements Serializable {
 
     @Override
     public String toString(){
-        return "Requirement type: LEVEL 2 DEVELOPMENT CARD\n" +
-                "\tRequired color: " + color.name() + "\n";
+        return String.format(LEVEL_REQUIREMENT_FORMAT, color.toString());
     }
 }
