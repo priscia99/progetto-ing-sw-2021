@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CardsMarketMessage implements Message<ClientController>, Serializable {
+public class CardsMarketMessage extends Message<ClientController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ArrayList<DevelopmentCard> developmentCards;

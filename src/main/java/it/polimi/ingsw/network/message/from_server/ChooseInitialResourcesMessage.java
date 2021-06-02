@@ -9,20 +9,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class ChooseInitialResourcesMessage implements Message<ClientController>, Serializable {
+public class ChooseInitialResourcesMessage extends Message<ClientController> implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
     private int toChoose;
-    String playerUsername;
 
     public ChooseInitialResourcesMessage(String playerUsername, int count){
         this.toChoose = count;
-        this.playerUsername = playerUsername;
+        super.setPlayerUsername(playerUsername);
     }
 
     @Override
     public void execute(ClientController target) {
-        target.chooseInitialResources(toChoose, playerUsername);
+        target.chooseInitialResources(toChoose, super.getPlayerUsername());
     }
 }

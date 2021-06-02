@@ -5,7 +5,7 @@ import it.polimi.ingsw.network.message.Message;
 
 import java.io.Serializable;
 
-public class LastRoundMessage implements Message<ClientController>, Serializable {
+public class LastRoundMessage extends Message<ClientController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

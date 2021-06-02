@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class StartProductionAction implements Message<ServerController>, Serializable {
+public class StartProductionAction extends Message<ServerController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     HashMap<ResourcePosition, ResourceStock> consumedResources;

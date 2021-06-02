@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.model.resource.ResourceStock;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class StrongboxMessage implements Message<ClientController>, Serializable {
+public class StrongboxMessage extends Message<ClientController> implements Serializable{
 
     private static final long serialVersionUID = 1L;
     private final ArrayList<ResourceStock> resourceStocks;

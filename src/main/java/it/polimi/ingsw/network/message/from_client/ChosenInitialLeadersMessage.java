@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.card.LeaderCard;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ChosenInitialLeadersMessage implements Message<ServerController>, Serializable {
+public class ChosenInitialLeadersMessage extends Message<ServerController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ArrayList<String> leadersChosen;

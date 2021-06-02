@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.model.resource.ResourceType;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class ChosenInitialResourcesMessage implements Message<ServerController>, Serializable {
+public class ChosenInitialResourcesMessage extends Message<ServerController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final HashMap<ResourcePosition, ResourceType> resourcesToAdd;

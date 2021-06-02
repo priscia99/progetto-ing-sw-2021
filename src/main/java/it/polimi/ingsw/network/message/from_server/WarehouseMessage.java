@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class WarehouseMessage implements Message<ClientController>, Serializable {
+public class WarehouseMessage extends Message<ClientController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ArrayList<ResourceDepot> resourceDepots;

@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.model.marble.Marble;
 
 import java.io.Serializable;
 
-public class MarbleMarketMessage implements Message<ClientController>, Serializable {
+public class MarbleMarketMessage extends Message<ClientController> implements Serializable{
 
     private static final long serialVersionUID = 1L;
     private final Marble[][] onSale;

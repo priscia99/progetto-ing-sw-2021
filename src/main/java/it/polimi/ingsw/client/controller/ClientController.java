@@ -32,6 +32,7 @@ public class ClientController extends Observable<Message<ServerController>> {
     }
 
     public void chooseInitialResources(int toChoose, String username){
+        System.out.println("Il giocatore che deve scegliere le risorse e': " + username);
         if(username.equals(game.getMyUsername())) {
             notify(new ChosenInitialResourcesMessage(userInterface.chooseInitialResources(toChoose), game.getMyUsername()));
         }
@@ -49,6 +50,7 @@ public class ClientController extends Observable<Message<ServerController>> {
     }
 
     public void addLeaderCards(ArrayList<ClientLeaderCard> cards, String player) {
+        System.out.println("Le carte sono di " + player + ", io sono " + game.getMyUsername());
         this.getGame().getPlayerBoardMap().get(player).getClientLeaderCards().addCards(cards);
     }
 }

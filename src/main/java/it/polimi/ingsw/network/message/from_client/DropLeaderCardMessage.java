@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.controller.ServerController;
 
 import java.io.Serializable;
 
-public class DropLeaderCardMessage implements Message<ServerController>, Serializable {
+public class DropLeaderCardMessage extends Message<ServerController> implements Serializable{
 
     private static final long serialVersionUID = 1L;
     private final String cardId;

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class PlayersOrderMessage implements Message<ClientController>, Serializable {
+public class PlayersOrderMessage extends Message<ClientController> implements Serializable{
 
     private static final long serialVersionUID = 1L;
     private final ArrayList<String> playersOrder;

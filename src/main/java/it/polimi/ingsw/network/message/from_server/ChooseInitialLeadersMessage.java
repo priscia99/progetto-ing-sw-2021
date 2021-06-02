@@ -9,21 +9,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class ChooseInitialLeadersMessage implements Message<ClientController>, Serializable {
+public class ChooseInitialLeadersMessage extends Message<ClientController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private ArrayList<ClientLeaderCard> leaderCards;
-    String playerUsername;
-
     public ChooseInitialLeadersMessage(ArrayList<LeaderCard> cards, String playerUsername){
         this.leaderCards = cards.stream().map(ClientLeaderCard::new)
                 .collect(Collectors.toCollection(ArrayList::new));
-        this.playerUsername = playerUsername;
+        super.setPlayerUsername(playerUsername);
     }
 
     @Override
     public void execute(ClientController target) {
-        target.chooseInitialLeaders(playerUsername);
+        target.addLeaderCards(leaderCards, super.getPlayerUsername());
+        target.chooseInitialLeaders(super.getPlayerUsername());
     }
 }

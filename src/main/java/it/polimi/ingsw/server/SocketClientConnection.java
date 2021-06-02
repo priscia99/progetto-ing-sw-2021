@@ -62,8 +62,8 @@ public class SocketClientConnection extends Observable<Message<ServerController>
     @Override
     public void asyncSend(Object message) {
         new Thread((Runnable) () -> {
-                send(message);
-            }).start();
+            send(message);
+        }).start();
     }
 
     private synchronized void send(Object message){
@@ -122,7 +122,10 @@ public class SocketClientConnection extends Observable<Message<ServerController>
                     ServiceMessage<Lobby> message = (ServiceMessage) inputObject;
                     message.execute(lobby);
                 }
-                // notify(inputObject);
+                else if(inputObject instanceof Message){
+                    System.out.println("Ho ricevuto un: " + inputObject.getClass());
+                    notify((Message<ServerController>) inputObject);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

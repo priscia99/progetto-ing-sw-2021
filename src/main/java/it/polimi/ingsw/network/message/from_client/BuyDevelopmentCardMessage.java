@@ -1,11 +1,12 @@
 package it.polimi.ingsw.network.message.from_client;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.server.controller.ServerController;
 
 import java.io.Serializable;
 
-public class BuyDevelopmentCardMessage implements Message<ServerController>, Serializable {
+public class BuyDevelopmentCardMessage extends Message<ServerController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final int positionX;

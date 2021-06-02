@@ -1,7 +1,18 @@
 package it.polimi.ingsw.network.message;
 
 
-public interface Message<T> {
+import java.io.Serializable;
 
-    void execute(T target);
+public abstract class Message<T> implements Serializable {
+    private static final long serialVersionUID = 1L;
+    protected String playerUsername = "";
+    public abstract void execute(T target);
+
+    public void setPlayerUsername(String playerUsername) {
+        this.playerUsername = playerUsername;
+    }
+
+    public String getPlayerUsername() {
+        return playerUsername;
+    }
 }

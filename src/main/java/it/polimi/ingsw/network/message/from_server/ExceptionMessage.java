@@ -6,7 +6,7 @@ import it.polimi.ingsw.network.message.Message;
 
 import java.io.Serializable;
 
-public class ExceptionMessage implements Message<ClientController>, Serializable {
+public class ExceptionMessage extends Message<ClientController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Exception exception;

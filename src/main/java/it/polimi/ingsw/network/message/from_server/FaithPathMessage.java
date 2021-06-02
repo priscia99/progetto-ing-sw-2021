@@ -7,7 +7,7 @@ import it.polimi.ingsw.network.message.Message;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FaithPathMessage implements Message<ClientController>, Serializable {
+public class FaithPathMessage extends Message<ClientController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final int faithPoints;

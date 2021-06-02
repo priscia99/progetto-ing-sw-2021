@@ -32,7 +32,6 @@ public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
 
     public void addCards(ArrayList<ClientLeaderCard> cards) {
         this.clientLeaderCards.addAll(cards);
-
         notify(this);
     }
 

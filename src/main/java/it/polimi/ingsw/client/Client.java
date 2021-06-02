@@ -34,7 +34,10 @@ public class Client {
         ClientGame game = new ClientGame(myUsername, players.get(0), players);
         this.controller = new ClientController(game, userInterface);
         controller.addObserver(clientMessageEncoder);
-        game.getPlayerBoardMap().get(myUsername).getClientLeaderCards().addObserver(new LeaderDeckView(userInterface));
+        LeaderDeckView leaderDeckView = new LeaderDeckView(userInterface);
+        game.getPlayerBoardMap().keySet().forEach(key -> {
+            game.getPlayerBoardMap().get(key).getClientLeaderCards().addObserver(leaderDeckView);
+        });
     }
 
     public synchronized boolean isActive(){
@@ -161,7 +164,7 @@ public class Client {
 
     public Thread sendToSocket(Object objToSend){
         Thread t = new Thread(() -> {
-            // System.out.println("Sto inviando un: " + objToSend.getClass());
+            System.out.println("Sto inviando un: " + objToSend.getClass());
             try {
                 socketOut.writeObject(objToSend);
             } catch (IOException e) {

@@ -28,6 +28,8 @@ public class CLI implements UI {
             " ||    || || || \\_))   ||   ||___ || \\\\ \\_))     \\\\_//  ||       || \\\\ ||___ || \\|| || || || \\_)) \\_)) || || || \\||  \\\\__ ||___\n" +
             "                                                                                                                               \n";
 
+    private final Integer out = 0;
+
     private ArrayList<Command> commands = new ArrayList<>();
     Scanner in = new Scanner(System.in);
 
@@ -58,167 +60,186 @@ public class CLI implements UI {
     @Override
     public AuthData requestAuth(){
         AuthData authData = null;
-        String playerUsername;
-        String choice;
-        System.out.println(ANSI_CYAN + TITLE + ANSI_RESET);
-        System.out.printf("Enter an username:\n\t> ");
-        playerUsername = in.nextLine();
-        do{
-            System.out.print("Welcome, " + playerUsername + "! Would you like to join [J] or create [C] a lobby?\n\t> ");
-            choice = in.nextLine();
-            if(choice.equalsIgnoreCase("J")) {
-                String lobbyToJoin;
-                System.out.print("Enter a valid lobby ID: \n\t> ");
-                lobbyToJoin = in.nextLine();
-                authData = AuthData.joinLobby(playerUsername, lobbyToJoin);
-            }
-            else if (choice.equalsIgnoreCase("C")){
-                int playerNumber;
-                do{
-                    System.out.print("Enter the maximum number of players for this lobby [1-4]: \n\t> ");
-                    playerNumber = in.nextInt();
-                }while(playerNumber<1 || playerNumber>4);
-                authData = AuthData.createLobby(playerUsername, playerNumber);
+        synchronized (out) {
+            String playerUsername;
+            String choice;
+            System.out.println(ANSI_CYAN + TITLE + ANSI_RESET);
+            System.out.printf("Enter an username:\n\t> ");
+            playerUsername = in.nextLine();
+            do {
+                System.out.print("Welcome, " + playerUsername + "! Would you like to join [J] or create [C] a lobby?\n\t> ");
+                choice = in.nextLine();
+                if (choice.equalsIgnoreCase("J")) {
+                    String lobbyToJoin;
+                    System.out.print("Enter a valid lobby ID: \n\t> ");
+                    lobbyToJoin = in.nextLine();
+                    authData = AuthData.joinLobby(playerUsername, lobbyToJoin);
+                } else if (choice.equalsIgnoreCase("C")) {
+                    int playerNumber;
+                    do {
+                        System.out.print("Enter the maximum number of players for this lobby [1-4]: \n\t> ");
+                        playerNumber = in.nextInt();
+                    } while (playerNumber < 1 || playerNumber > 4);
+                    authData = AuthData.createLobby(playerUsername, playerNumber);
                 }
-        }while(!choice.equalsIgnoreCase("J") && !choice.equalsIgnoreCase("C"));
+            } while (!choice.equalsIgnoreCase("J") && !choice.equalsIgnoreCase("C"));
+        }
         return authData;
     }
 
     @Override
     public void displayAuthFail(String errType) {
-        System.out.print("Failed to login! ");
-        switch (errType){
-            case "full_lobby":
-                System.out.println("Full lobby!");
-                break;
-            case "invalid_lobby":
-                System.out.println("Invalid lobby!");
-                break;
-            default:
-                System.out.println("Generic error while connecting to server.");
-                break;
+        synchronized (out) {
+            System.out.print("Failed to login! ");
+            switch (errType) {
+                case "full_lobby":
+                    System.out.println("Full lobby!");
+                    break;
+                case "invalid_lobby":
+                    System.out.println("Invalid lobby!");
+                    break;
+                default:
+                    System.out.println("Generic error while connecting to server.");
+                    break;
+            }
+            System.out.println("Trying again...");
         }
-        System.out.println("Trying again...");
     }
 
     @Override
     public void displayLobbyJoined(String lobbyId){
-        System.out.println("User logged successfully in lobby with ID: " + ANSI_YELLOW + lobbyId + ANSI_RESET);
+        synchronized (out) {
+            System.out.println("User logged successfully in lobby with ID: " + ANSI_YELLOW + lobbyId + ANSI_RESET);
+        }
     }
 
     @Override
     public void displayLobbyCreated(String lobbyId){
-        System.out.println("Lobby created succeffully in lobby with ID: " + ANSI_YELLOW + lobbyId + ANSI_RESET);
+        synchronized (out) {
+            System.out.println("Lobby created succeffully in lobby with ID: " + ANSI_YELLOW + lobbyId + ANSI_RESET);
+        }
     }
 
     @Override
     public void displayNewTurn(String player, Boolean myTurn){
-        if(myTurn){
-            System.out.println(player + ", IT'S YOUR TURN!");
-        } else {
-            System.out.println("It's " + player + "'s turn.");
+        synchronized (out) {
+            if (myTurn) {
+                System.out.println(player + ", IT'S YOUR TURN!");
+            } else {
+                System.out.println("It's " + player + "'s turn.");
+            }
         }
     }
 
     @Override
     public void displayGameStarted(){
-        System.out.println("Game has started!");
+        synchronized (out) {
+            System.out.println("Game has started!");
+        }
     }
 
     @Override
     public void displayLeaderCard(ClientLeaderCard clientLeaderCard) {
-        String outputFormat = "%s Lv%d - Victory Points: %d - [";
+        synchronized (out) {
+            String outputFormat = "%s Lv%d - Victory Points: %d - [";
+        }
     }
 
     public HashMap<ResourcePosition, ResourceType> chooseInitialResources(int toChoose){
-        int chosenResources = 0;
-        boolean validSelection = true;
         HashMap<ResourcePosition, ResourceType> resources = new HashMap<>();
-        String tempResource, tempDepot;
-        ResourcePosition resourcePosition = null;
-        ResourceType resourceType = null;
+        synchronized (out) {
+            int chosenResources = 0;
+            boolean validSelection = true;
+            String tempResource, tempDepot;
+            ResourcePosition resourcePosition = null;
+            ResourceType resourceType = null;
 
-        System.out.println("You have to choose " + toChoose + " resource/s!");
-        while(chosenResources<toChoose){
-            do {
-                validSelection = true;
-                System.out.print("Choose resources #" + (chosenResources + 1) +
-                        " [STONE | SERVANT | SHIELD | COIN]: \n\t> ");
-                tempResource = in.nextLine();
-                switch (tempResource) {
-                    case "STONE":
-                        resourceType = ResourceType.STONE;
-                        break;
-                    case "SERVANT":
-                        resourceType = ResourceType.SERVANT;
-                        break;
-                    case "SHIELD":
-                        resourceType = ResourceType.SHIELD;
-                        break;
-                    case "COIN":
-                        resourceType = ResourceType.COIN;
-                        break;
-                    default:
-                        validSelection = false;
-                        System.out.println("Please choose a valid resource type!");
-                }
-            }while (!validSelection);
+            System.out.println("You have to choose " + toChoose + " resource/s!");
+            while (chosenResources < toChoose) {
+                do {
+                    validSelection = true;
+                    System.out.print("Choose resources #" + (chosenResources + 1) +
+                            " [STONE | SERVANT | SHIELD | COIN]: \n\t> ");
+                    tempResource = in.nextLine();
+                    switch (tempResource) {
+                        case "STONE":
+                            resourceType = ResourceType.STONE;
+                            break;
+                        case "SERVANT":
+                            resourceType = ResourceType.SERVANT;
+                            break;
+                        case "SHIELD":
+                            resourceType = ResourceType.SHIELD;
+                            break;
+                        case "COIN":
+                            resourceType = ResourceType.COIN;
+                            break;
+                        default:
+                            validSelection = false;
+                            System.out.println("Please choose a valid resource type!");
+                    }
+                } while (!validSelection);
 
-            do {
-                validSelection = true;
-                System.out.print("Choose in which depot you want to put this resource [FIRST | SECOND | THIRD]: \n\t> ");
-                tempDepot = in.nextLine();
-                switch (tempDepot) {
-                    case "FIRST":
-                        resourcePosition = ResourcePosition.FIRST_DEPOT;
-                        break;
-                    case "SECOND":
-                        resourcePosition = ResourcePosition.SECOND_DEPOT;
-                        break;
-                    case "THIRD":
-                        resourcePosition = ResourcePosition.THIRD_DEPOT;
-                        break;
-                    default:
-                        validSelection = false;
-                        System.out.println("Please choose a valid resource position!");
-                }
-            }while (!validSelection);
-            resources.put(resourcePosition, resourceType);
-            chosenResources++;
+                do {
+                    validSelection = true;
+                    System.out.print("Choose in which depot you want to put this resource [FIRST | SECOND | THIRD]: \n\t> ");
+                    tempDepot = in.nextLine();
+                    switch (tempDepot) {
+                        case "FIRST":
+                            resourcePosition = ResourcePosition.FIRST_DEPOT;
+                            break;
+                        case "SECOND":
+                            resourcePosition = ResourcePosition.SECOND_DEPOT;
+                            break;
+                        case "THIRD":
+                            resourcePosition = ResourcePosition.THIRD_DEPOT;
+                            break;
+                        default:
+                            validSelection = false;
+                            System.out.println("Please choose a valid resource position!");
+                    }
+                } while (!validSelection);
+                resources.put(resourcePosition, resourceType);
+                chosenResources++;
+            }
         }
         return resources;
     }
 
     public ArrayList<String> chooseInitialLeaders(){
         ArrayList<String> chosenLeaderCards = new ArrayList<>();
-        int cardsChosen = 0;
-        boolean validSelection = true;
-        System.out.println("You have to choose 2 leader cards!");
-        System.out.println("Your leader cards are: ");
-        // TODO print leader cards
-        while(cardsChosen < 2){
-            String chosenCardId;
-            validSelection = true;
-            do {
+        synchronized (out) {
+            int cardsChosen = 0;
+            boolean validSelection = true;
+            System.out.println("You have to choose 2 leader cards!");
+            System.out.println("Your leader cards are: ");
+            // TODO print leader cards
+            while (cardsChosen < 2) {
+                String chosenCardId;
                 validSelection = true;
-                System.out.print("Choose leader cards #" + (cardsChosen + 1) + " [type card ID]: \n\t> ");
-                chosenCardId = in.nextLine();
-                System.out.println("You have chosen " + chosenCardId);
-                if(chosenLeaderCards.contains(chosenCardId)) {
-                    validSelection = false;
-                    System.out.println("You cannot choose the same leader card!");
-                }
-                // TODO check if the id is valid (if player has a leader card with that id)
-            }while(!validSelection);
-            chosenLeaderCards.add(chosenCardId);
-            cardsChosen++;
+                do {
+                    validSelection = true;
+                    System.out.print("Choose leader cards #" + (cardsChosen + 1) + " [type card ID]: \n\t> ");
+                    chosenCardId = in.nextLine();
+                    System.out.println("You have chosen " + chosenCardId);
+                    if (chosenLeaderCards.contains(chosenCardId)) {
+                        validSelection = false;
+                        System.out.println("You cannot choose the same leader card!");
+                    }
+                    // TODO check if the id is valid (if player has a leader card with that id)
+                } while (!validSelection);
+                chosenLeaderCards.add(chosenCardId);
+                cardsChosen++;
+            }
         }
         return chosenLeaderCards;
     }
 
     @Override
     public void displayLeaderCardDeck(ClientLeaderCardDeck clientLeaderCardDeck) {
-        System.out.println(RepresentationBuilder.render(clientLeaderCardDeck));
+        synchronized (out) {
+            System.out.println(RepresentationBuilder.render(clientLeaderCardDeck));
+        }
     }
 }
 

@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class LeaderCardsMessage implements Message<ClientController>, Serializable {
+public class LeaderCardsMessage extends Message<ClientController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ArrayList<ClientLeaderCard> leaderCards;

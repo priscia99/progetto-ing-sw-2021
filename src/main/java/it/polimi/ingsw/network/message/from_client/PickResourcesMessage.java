@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PickResourcesMessage implements Message<ServerController>, Serializable {
+public class PickResourcesMessage extends Message<ServerController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final MarbleSelection marbleSelection;

@@ -3,9 +3,10 @@ package it.polimi.ingsw.network.message.from_server;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.network.message.Message;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SetupMessage implements Message<ClientController> {
+public class SetupMessage extends Message<ClientController> implements Serializable {
 
     private final ArrayList<String> usernames;
     private final ArrayList<Integer> resourcesToChoose;

@@ -131,7 +131,6 @@ public class Game extends Observable<Message<ClientController>> implements Obser
 
     public void giveLeaderCardsToPlayers() {
         final int numberCardsToGive = 4;
-        this.setCurrentPlayerIndex(0);
         for(Player player : players){
             CustomLogger.getLogger().info(String.format("Giving %s initial leader cards", player.getNickname()));
             ArrayList<LeaderCard> cardsToGive = new ArrayList<>();
@@ -139,9 +138,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
                 cardsToGive.add(this.leaderCardsDeck.pop());
             }
             player.setInitialLeadersToChoose(cardsToGive);
-            this.setCurrentPlayerIndex(currentPlayerIndex++);
         }
-        this.setCurrentPlayerIndex(0);
     }
 
     public void tryStart(){

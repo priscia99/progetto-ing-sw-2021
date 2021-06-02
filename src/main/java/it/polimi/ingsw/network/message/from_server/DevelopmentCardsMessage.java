@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class DevelopmentCardsMessage implements Message<ClientController>, Serializable {
+public class DevelopmentCardsMessage extends Message<ClientController> implements Serializable{
 
     private static final long serialVersionUID = 1L;
     private int index = 0;  // FIXME link to actual stack

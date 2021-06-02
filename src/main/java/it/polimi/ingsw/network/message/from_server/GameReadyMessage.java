@@ -5,7 +5,7 @@ import it.polimi.ingsw.network.message.Message;
 
 import java.io.Serializable;
 
-public class GameReadyMessage implements Message<ClientController>, Serializable {
+public class GameReadyMessage extends Message<ClientController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

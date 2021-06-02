@@ -5,7 +5,7 @@ import it.polimi.ingsw.network.message.Message;
 
 import java.io.Serializable;
 
-public class CurrentPlayerMessage implements Message<ClientController>, Serializable {
+public class CurrentPlayerMessage extends Message<ClientController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String username;
