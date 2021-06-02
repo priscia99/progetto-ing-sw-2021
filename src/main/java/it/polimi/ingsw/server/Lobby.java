@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Lobby extends Observable<Message> {
-    private String lobbyId;
+    private final String lobbyId;
     private final int dimension;    // number of players
     private final Map<String, ClientConnection> clientConnectionMap= new HashMap<>();
     private final Game game = new Game();
@@ -96,6 +96,15 @@ public class Lobby extends Observable<Message> {
             gameController.setupGame(players);
             game.addObserver(serverMessageEncoder);
             game.getPlayers().forEach((player)->{
+                // SPECIFIC
+//                ServerPlayerMessageEncoder playerMessageEncoder = new ServerPlayerMessageEncoder(this, player.getNickname());
+//                Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(playerMessageEncoder));
+//                player.getPlayerBoard().getFaithPath().addObserver(playerMessageEncoder);
+//                player.getPlayerBoard().getLeaderCardsDeck().addObserver(playerMessageEncoder);
+//                player.getPlayerBoard().getStrongbox().addObserver(playerMessageEncoder);
+//                player.getPlayerBoard().getWarehouse().addObserver(playerMessageEncoder);
+//                player.addObserver(playerMessageEncoder);
+                // GENERAL
                 Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(serverMessageEncoder));
                 player.getPlayerBoard().getFaithPath().addObserver(serverMessageEncoder);
                 player.getPlayerBoard().getLeaderCardsDeck().addObserver(serverMessageEncoder);
@@ -122,10 +131,14 @@ public class Lobby extends Observable<Message> {
      * Send a message to every player in the lobby.
      */
     public void sendBroadcast(Object message) {
-        clientConnectionMap.keySet()
-                .forEach(key -> {
-                    clientConnectionMap.get(key).asyncSend(message);
-                });
+        for (String key : clientConnectionMap.keySet()) {
+            this.sendUnicast(message, key);
+        }
+    }
+
+    public void sendUnicast(Object message, String player) {
+        System.out.println("Sto inviando un messaggio a " + player);
+        clientConnectionMap.get(player).asyncSend(message);
     }
 
     public boolean contains(String username) {

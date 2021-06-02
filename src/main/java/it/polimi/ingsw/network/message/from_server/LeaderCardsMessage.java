@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class LeaderCardsMessage implements Message<ClientController>, Serializable {
 
     private static final long serialVersionUID = 1L;
-    private ArrayList<ClientLeaderCard> leaderCards;
+    private final ArrayList<ClientLeaderCard> leaderCards;
 
     public LeaderCardsMessage(ArrayList<LeaderCard> leaderCards) {
         this.leaderCards = leaderCards

@@ -24,10 +24,10 @@ public class DevelopmentCardsMessage implements Message<ClientController>, Seria
     }
 
     public void execute(ClientController target) {
-        String currentPlayer = target.getGame().getCurrentPlayer();
-        developmentCards.forEach(clientDevelopmentCard -> {
-            target.getGame().getPlayerBoardMap().get(currentPlayer)
-                            .getDevelopmentCards().get(index).add(clientDevelopmentCard);
-        });
+//        String currentPlayer = target.getGame().getCurrentPlayer();
+//        developmentCards.forEach(clientDevelopmentCard -> {
+//            target.getGame().getPlayerBoardMap().get(currentPlayer)
+//                            .getDevelopmentCards().get(index).add(clientDevelopmentCard);
+//        });
     }
 }

@@ -47,4 +47,8 @@ public class ClientController extends Observable<Message<ServerController>> {
         String currentPlayer = this.getGame().getCurrentPlayer();
         this.getGame().getPlayerBoardMap().get(currentPlayer).getClientLeaderCards().addCards(cards);
     }
+
+    public void addLeaderCards(ArrayList<ClientLeaderCard> cards, String player) {
+        this.getGame().getPlayerBoardMap().get(player).getClientLeaderCards().addCards(cards);
+    }
 }

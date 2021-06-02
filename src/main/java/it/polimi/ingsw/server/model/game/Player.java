@@ -127,9 +127,7 @@ public class Player extends Observable<Message<ClientController>> {
     }
 
     public void setInitialLeadersToChoose(ArrayList<LeaderCard> cards){
-        for (LeaderCard card : cards) {
-            playerBoard.getLeaderCardsDeck().addLeader(card);
-        }
+        playerBoard.getLeaderCardsDeck().addLeaders(cards);
         notify(new ChooseInitialLeadersMessage(cards, this.username));
     }
 

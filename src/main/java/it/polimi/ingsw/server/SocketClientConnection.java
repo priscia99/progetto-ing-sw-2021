@@ -15,10 +15,9 @@ import java.net.Socket;
 
 public class SocketClientConnection extends Observable<Message<ServerController>> implements ClientConnection, Runnable {
     private Lobby lobby;
-    private Socket socket;  // single socket connection with one client
+    private final Socket socket;  // single socket connection with one client
     private ObjectOutputStream out; // output stream to the client
-    private ObjectInputStream in;
-    private Server server;
+    private final Server server;
     private boolean alive = true;
 
     /**
@@ -69,6 +68,7 @@ public class SocketClientConnection extends Observable<Message<ServerController>
 
     private synchronized void send(Object message){
         try {
+            System.out.println("Sent message to " + this);
             out.reset();
             out.writeObject(message);
             out.flush();
@@ -85,7 +85,7 @@ public class SocketClientConnection extends Observable<Message<ServerController>
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
             this.asyncSend("auth_request");
-            in = new ObjectInputStream(socket.getInputStream());
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
             boolean success = true;
             do{

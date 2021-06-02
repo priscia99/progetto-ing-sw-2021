@@ -2,27 +2,22 @@ package it.polimi.ingsw.server;
 
 
 import it.polimi.ingsw.exceptions.InvalidLobbyException;
+import it.polimi.ingsw.utils.CustomLogger;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Server {
 
     private static final int PORT = 12345;
     private final ServerSocket serverSocket;
-    private final ExecutorService executor = Executors.newFixedThreadPool(128);
-    private ArrayList<Thread> threadArrayList;
     private final Map<String, Lobby> lobbyMap = new HashMap<>();
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
-        threadArrayList = new ArrayList<>();
     }
 
     /**
@@ -119,14 +114,13 @@ public class Server {
         while (true) {
             try {
                 Socket newSocket = serverSocket.accept();
-                System.out.println("New client connecting");
+                CustomLogger.getLogger().severe("New client handshaking");
                 SocketClientConnection socketClientConnection = new SocketClientConnection(newSocket, this);
                 Thread t = new Thread(socketClientConnection);
                 t.start();
-                System.out.println("thread started");
-                //t.join();
+                CustomLogger.getLogger().severe("Thread started");
             } catch (Exception e) {
-                System.out.println("Connection Error!");
+                CustomLogger.getLogger().severe("Connection Error!");
                 e.printStackTrace();
             }
         }

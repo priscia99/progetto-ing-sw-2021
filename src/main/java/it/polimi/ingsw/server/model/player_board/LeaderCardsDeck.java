@@ -75,6 +75,12 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
         notify(new LeaderCardsMessage(leaderCards));
     }
 
+    public void addLeaders(ArrayList<LeaderCard> leaderCards) {
+        this.leaderCards.addAll(leaderCards);
+
+        notify(new LeaderCardsMessage(leaderCards));
+    }
+
     public void playLeaderCard(int index) {
         leaderCards.get(index).play();
 
