@@ -15,7 +15,8 @@ public class LeaderCardsMessage extends Message<ClientController> implements Ser
     private static final long serialVersionUID = 1L;
     private final ArrayList<ClientLeaderCard> leaderCards;
 
-    public LeaderCardsMessage(ArrayList<LeaderCard> leaderCards) {
+    public LeaderCardsMessage(ArrayList<LeaderCard> leaderCards, String username) {
+        super.playerUsername = username;
         this.leaderCards = leaderCards
                 .stream()
                 .map(ClientLeaderCard::new)
@@ -23,6 +24,6 @@ public class LeaderCardsMessage extends Message<ClientController> implements Ser
     }
 
     public void execute(ClientController target) {
-        target.addLeaderCards(leaderCards);
+        target.refreshLeaderCards(leaderCards, super.playerUsername);
     }
 }

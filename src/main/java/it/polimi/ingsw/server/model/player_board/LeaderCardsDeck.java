@@ -72,7 +72,7 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
     public void addLeader(LeaderCard leaderCard) {
         leaderCards.add(leaderCard);
 
-        notify(new LeaderCardsMessage(leaderCards));
+//        notify(new LeaderCardsMessage(leaderCards));
     }
 
     public void addLeaders(ArrayList<LeaderCard> leaderCards) {
@@ -84,7 +84,7 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
     public void playLeaderCard(int index) {
         leaderCards.get(index).play();
 
-        notify(new LeaderCardsMessage(leaderCards));
+//        notify(new LeaderCardsMessage(leaderCards));
     }
 
     /**
@@ -113,7 +113,7 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
         else if (!leaderCards.removeIf(card-> card.getId().equals(cardId))) {
             throw new IllegalArgumentException("LeaderCard not present this player's deck");
         }
-
-        notify(new LeaderCardsMessage(leaderCards));
     }
+
+
 }

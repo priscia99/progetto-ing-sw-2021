@@ -23,9 +23,6 @@ public class Strongbox extends Storage {
         this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
                 .forEach(resourceStock -> resourceStock.incrementResource(resourceType));
-
-        notify(new StrongboxMessage(getResourceStocks()));
-
     }
 
     /**
@@ -36,8 +33,6 @@ public class Strongbox extends Storage {
         this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
                 .forEach(resourceStock -> resourceStock.decrementResource(resourceType));
-
-        notify(new StrongboxMessage(getResourceStocks()));
     }
 
     /**

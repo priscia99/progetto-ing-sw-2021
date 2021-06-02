@@ -9,13 +9,18 @@ import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.color.Color;
 import it.polimi.ingsw.server.model.player_board.DevelopmentCardsDeck;
+import it.polimi.ingsw.server.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.server.model.player_board.PlayerBoard;
+import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
+import it.polimi.ingsw.server.model.player_board.faith_path.PopeCell;
+import it.polimi.ingsw.server.model.player_board.storage.Strongbox;
+import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
+import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.network.message.from_server.*;
-import it.polimi.ingsw.network.message.from_client.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -47,9 +52,6 @@ public class Player extends Observable<Message<ClientController>> {
     public void setInitialResourcesReady(boolean initialResourcesReady) {
         this.initialResourcesReady = initialResourcesReady;
     }
-
-
-
 
     private int getInitialResourceToChoose() {
         return initialResourceToChoose;
@@ -170,13 +172,17 @@ public class Player extends Observable<Message<ClientController>> {
     }
 
     public void pickedLeaderCards(ArrayList<String> cardIDs){
-        ArrayList<LeaderCard> cards = new ArrayList<>(
-                this.playerBoard.getLeaderCardsDeck().getLeaderCards()
-                .stream().filter(c->cardIDs.contains(c.getId())).collect(Collectors.toList())
-        );
-        this.playerBoard.getLeaderCardsDeck().clear();
-        this.playerBoard.addToLeaderCardsDeck(cards);
+        ArrayList<LeaderCard> cards = this.playerBoard.getLeaderCardsDeck().getLeaderCards()
+                .stream()
+                .filter(c -> !cardIDs.contains(c.getId()))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        cards.forEach(leaderCard -> this.playerBoard.getLeaderCardsDeck().removeLeaderCardById(leaderCard.getId()));
+
         initialLeadersReady = true;
+
+        // TODO merge in LeadersReadyMessage ore delete it
+        notify(new LeaderCardsMessage(playerBoard.getLeaderCardsDeck().getLeaderCards(), username));
         notify(new LeadersReadyMessage(true));
     }
 
@@ -186,6 +192,15 @@ public class Player extends Observable<Message<ClientController>> {
             getPlayerBoard().addToDepot(depotIndex.ordinal(), toAdd.get(depotIndex));
         }
         initialLeadersReady = true;
+        Warehouse warehouse = getPlayerBoard().getWarehouse();
+
+        // TODO merge in ResourceReadyMessage ore delete it
+        notify(new WarehouseMessage(
+                warehouse.getResourceStocks()
+                        .stream().map(resourceStock -> (ResourceDepot) resourceStock)
+                        .collect(Collectors.toCollection(ArrayList::new)),
+                username
+        ));
         notify(new ResourceReadyMessage(true));
     }
 
@@ -257,7 +272,141 @@ public class Player extends Observable<Message<ClientController>> {
         return colors;
     }
 
+    /**
+     *
+     * @param index
+     */
+    public void dropLeaderCard(int index) {
+        // TODO fill
+    }
+
+    /**
+     *
+     * @param index
+     */
+    public void playLeaderCard(int index) {
+        // TODO fill
+    }
+
+    /**
+     *
+     * @param index
+     * @param card
+     */
+    public void addDevelopmentCard(int index, DevelopmentCard card) {
+        // TODO fill
+    }
+
+
+    /**
+     *
+     * @param count
+     */
     public void addFaithPoints(int count){
         this.playerBoard.addFaithPoints(count);
+        FaithPath faithPath = this.playerBoard.getFaithPath();
+
+        notify(new FaithPathMessage(faithPath.getFaithPoints(),
+                Arrays.stream(faithPath.getCells())
+                        .filter(cell -> cell instanceof PopeCell)
+                        .map(cell -> ((PopeCell) cell).getFavor().isUsed())
+                        .collect(Collectors.toCollection(ArrayList::new))));
+    }
+
+    /**
+     *
+     * @param index1
+     * @param index2
+     */
+    public void swapDepots(int index1, int index2) {
+        playerBoard.getWarehouse().swap(index1, index2);
+        ArrayList<ResourceStock> resourceStocks = playerBoard.getWarehouse().getResourceStocks();
+
+        notify(new WarehouseMessage(
+                resourceStocks
+                        .stream()
+                        .map(resourceStock -> (ResourceDepot) resourceStock)
+                        .collect(Collectors.toCollection(ArrayList::new)),
+                username
+        ));
+    }
+
+    /**
+     *
+     * @param index
+     * @param resourceType
+     */
+    public void addToDepot(int index, ResourceType resourceType) {
+        Warehouse warehouse = playerBoard.getWarehouse();
+
+        warehouse.addToDepot(index, resourceType);
+        notify(new WarehouseMessage(
+                warehouse.getResourceStocks()
+                        .stream().map(resourceStock -> (ResourceDepot) resourceStock)
+                        .collect(Collectors.toCollection(ArrayList::new)),
+                username
+                ));
+    }
+
+    /**
+     *
+     * @param index
+     * @param resourceType
+     */
+    public void removeFromDepot(int index, ResourceType resourceType) {
+        Warehouse warehouse = playerBoard.getWarehouse();
+
+        warehouse.removeFromDepot(index, resourceType);
+        notify(new WarehouseMessage(
+                warehouse.getResourceStocks()
+                        .stream().map(resourceStock -> (ResourceDepot) resourceStock)
+                        .collect(Collectors.toCollection(ArrayList::new)),
+                username
+        ));
+    }
+
+    /**
+     *
+     * @param resourceStocks
+     */
+    public void addToStrongbox(ArrayList<ResourceStock> resourceStocks) {
+        Strongbox strongbox = playerBoard.getStrongbox();
+
+        resourceStocks.forEach(resourceStock -> {
+            for (int i = 0; i < resourceStock.getQuantity(); i++) {
+                strongbox.addResource(resourceStock.getResourceType());
+            }
+        });
+        notify(new StrongboxMessage(strongbox.getResourceStocks(), username));
+    }
+
+    /**
+     *
+     * @param resourceStocks
+     */
+    public void removeFromStrongbox(ArrayList<ResourceStock> resourceStocks) {
+        Strongbox strongbox = playerBoard.getStrongbox();
+
+        resourceStocks.forEach(resourceStock -> {
+            for (int i = 0; i < resourceStock.getQuantity(); i++) {
+                strongbox.addResource(resourceStock.getResourceType());
+            }
+        });
+        notify(new StrongboxMessage(strongbox.getResourceStocks(), username));
+    }
+
+    /**
+     *
+     * @param id
+     */
+    public void dropLeaderCard(String id) {
+        LeaderCardsDeck leaderCardsDeck = playerBoard.getLeaderCardsDeck();
+
+        leaderCardsDeck.removeLeaderCardById(id);
+        notify(new LeaderCardsMessage(leaderCardsDeck.getLeaderCards(), username));
+    }
+
+    public void playLeaderCard(String id) {
+
     }
 }

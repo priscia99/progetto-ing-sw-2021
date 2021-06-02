@@ -44,14 +44,14 @@ public class ClientController extends Observable<Message<ServerController>> {
         }
     }
 
-    public void addLeaderCards(ArrayList<ClientLeaderCard> cards) {
+    public void refreshLeaderCards(ArrayList<ClientLeaderCard> cards) {
         String currentPlayer = this.getGame().getCurrentPlayer();
-        this.getGame().getPlayerBoardMap().get(currentPlayer).getClientLeaderCards().addCards(cards);
+        this.getGame().getPlayerBoardMap().get(currentPlayer).getClientLeaderCards().setClientLeaderCards(cards);
     }
 
-    public void addLeaderCards(ArrayList<ClientLeaderCard> cards, String player) {
-        System.out.println("Le carte sono di " + player + ", io sono " + game.getMyUsername());
-        this.getGame().getPlayerBoardMap().get(player).getClientLeaderCards().addCards(cards);
+    public void refreshLeaderCards(ArrayList<ClientLeaderCard> cards, String player) {
+        System.out.println(player + "'s leader cards have changed");
+        this.getGame().getPlayerBoardMap().get(player).getClientLeaderCards().setClientLeaderCards(cards);
     }
 
     public void refreshWarehouse(ArrayList<ResourceDepot> resourceDepots, String player){

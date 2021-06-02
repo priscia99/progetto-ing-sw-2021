@@ -99,7 +99,7 @@ public class WarehouseTest {
         Assertions.assertEquals(1, this.warehouse.getDepot(0).getCapacity());
         Assertions.assertEquals(2, this.warehouse.getDepot(1).getCapacity());
         // Swapping depots
-        this.warehouse.swapDepots(0,1);
+        this.warehouse.swap(0,1);
         Assertions.assertEquals(ResourceType.SERVANT, this.warehouse.getDepot(0).getResourceType());
         Assertions.assertEquals(ResourceType.COIN, this.warehouse.getDepot(1).getResourceType());
         Assertions.assertEquals(1, this.warehouse.getDepot(0).getQuantity());

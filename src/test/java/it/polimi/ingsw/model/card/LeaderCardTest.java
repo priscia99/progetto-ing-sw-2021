@@ -13,7 +13,7 @@ public class LeaderCardTest {
 
     @BeforeEach
     public void setUp(){
-        this.leaderCard = new LeaderCard(5, new DiscountEffect(ResourceType.COIN), null);
+        this.leaderCard = new LeaderCard(5, new DiscountEffect(ResourceType.COIN), null, "1");
     }
 
     @Test

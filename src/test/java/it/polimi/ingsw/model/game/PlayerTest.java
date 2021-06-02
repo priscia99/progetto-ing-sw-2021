@@ -47,10 +47,10 @@ public class PlayerTest {
         // setup player
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( 1, 1, null, Color.PURPLE, null),
+                new DevelopmentCard( 1, 1, null, Color.PURPLE, null, "1"),
                 0);
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( 1, 2, null, Color.BLUE, null),
+                new DevelopmentCard( 1, 2, null, Color.BLUE, null, "2"),
                 0
         );
         // test
@@ -64,10 +64,10 @@ public class PlayerTest {
         // setup player
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( 1, 1, null, Color.PURPLE, null),
+                new DevelopmentCard( 1, 1, null, Color.PURPLE, null, "1"),
                 0);
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( 1, 2, null, Color.PURPLE, null),
+                new DevelopmentCard( 1, 2, null, Color.PURPLE, null, "1"),
                 0
         );
         // test
@@ -81,10 +81,10 @@ public class PlayerTest {
         // setup player
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( 1, 1, null, Color.PURPLE, null),
+                new DevelopmentCard( 1, 1, null, Color.PURPLE, null, "1"),
                 0);
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( 1, 1, null, Color.BLUE, null),
+                new DevelopmentCard( 1, 1, null, Color.BLUE, null, "1"),
                 1
         );
         // test
@@ -98,16 +98,16 @@ public class PlayerTest {
         // setup player
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( 1, 1, null, Color.PURPLE, null),
+                new DevelopmentCard( 1, 1, null, Color.PURPLE, null, "1"),
                 0);
 
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( 1, 1, null, Color.GREEN, null),
+                new DevelopmentCard( 1, 1, null, Color.GREEN, null, "1"),
                 1
         );
 
         player.getPlayerBoard().addDevelopmentCard(
-                new DevelopmentCard( 1, 2, null, Color.BLUE, null),
+                new DevelopmentCard( 1, 2, null, Color.BLUE, null, "1"),
                 1
         );
 

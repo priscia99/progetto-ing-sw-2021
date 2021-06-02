@@ -15,4 +15,6 @@ public class LeaderDeckView extends View implements Observer<ClientLeaderCardDec
     public void update(ClientLeaderCardDeck deck) {
         userInterface.displayLeaderCardDeck(deck);
     }
+
+    // TODO add owner check
 }

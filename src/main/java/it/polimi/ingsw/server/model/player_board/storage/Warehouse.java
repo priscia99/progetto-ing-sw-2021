@@ -25,15 +25,13 @@ public class Warehouse extends Storage {
      * @param index2 index of the second depot (new index for the first depot)
      * @throws IllegalArgumentException if indexes are not in [0;2]
      */
-    public void swapDepots(int index1, int index2) {
+    public void swap(int index1, int index2) {
         this.checkValidIndex(index1);
         this.checkValidIndex(index2);
 
         Collections.swap(this.resourceStocks, index1, index2);
         ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index2+1);
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
-
-        notify(new WarehouseMessage(resourceStocks.stream().map(resourceStock -> (ResourceDepot) resourceStock).collect(Collectors.toCollection(ArrayList::new))));
     }
 
     /**

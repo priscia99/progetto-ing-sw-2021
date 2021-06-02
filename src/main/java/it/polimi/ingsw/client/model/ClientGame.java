@@ -20,7 +20,7 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
         this.clientCardsMarket = new ClientCardsMarket();
         this.clientMarbleMarket = new ClientMarbleMarket();
         players.forEach(player -> {
-            this.playerBoardMap.put(player, new ClientPlayerBoard());
+            this.playerBoardMap.put(player, new ClientPlayerBoard(player.equals(myUsername)));
         });
     }
 

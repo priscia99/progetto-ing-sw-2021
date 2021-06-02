@@ -21,8 +21,8 @@ public class DevelopmentCard extends Card {
      * @param color color of the card (PURPLE, GREEN, YELLOW, BLUE)
      * @param requirement cost of the card
      */
-    public DevelopmentCard(int victoryPoints, int level, ProductionEffect effect, Color color, Requirement requirement) {
-        super(victoryPoints, requirement);
+    public DevelopmentCard(int victoryPoints, int level, ProductionEffect effect, Color color, Requirement requirement, String id) {
+        super(victoryPoints, requirement, id);
         this.level = level;
         this.effect = effect;
         this.color = color;

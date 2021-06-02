@@ -20,6 +20,8 @@ public class ClientWarehouse extends Observable<ClientWarehouse> {
 
     public void setResourceDepots(ArrayList<ResourceDepot> resourceDepots) {
         this.resourceDepots = resourceDepots;
+
+        notify(this);
     }
 
     public ClientWarehouse(ArrayList<ResourceDepot> resourcePiles) {
@@ -29,4 +31,6 @@ public class ClientWarehouse extends Observable<ClientWarehouse> {
     public ResourceDepot getResourceDepot(int index) {
         return resourceDepots.get(index);
     }
+
+
 }

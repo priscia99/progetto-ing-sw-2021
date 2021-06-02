@@ -70,7 +70,8 @@ public class DevelopmentCardsBuilder {
                         cardObject.get("level").getAsInt(),
                         new ProductionEffect(inputPile, outputPile),
                         Color.valueOf(cardObject.get("color").getAsString()),
-                        new ResourceRequirement(requiredPiles)
+                        new ResourceRequirement(requiredPiles),
+                        "D" + Integer.toString(cardIterator)
                 ));
 
             }

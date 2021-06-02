@@ -14,22 +14,55 @@ import it.polimi.ingsw.server.model.resource.ResourceType;
 
 public class CLI implements UI {
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET  = "\u001B[0m";
+
+    public static final String ANSI_BLACK  = "\u001B[30m";
+    public static final String ANSI_RED    = "\u001B[31m";
+    public static final String ANSI_GREEN  = "\u001B[32m";
     public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_BLUE   = "\u001B[34m";
     public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_CYAN   = "\u001B[36m";
+    public static final String ANSI_WHITE  = "\u001B[37m";
+
+    public static final String ANSI_BRIGHT_BLACK  = "\u001B[90m";
+    public static final String ANSI_BRIGHT_RED    = "\u001B[91m";
+    public static final String ANSI_BRIGHT_GREEN  = "\u001B[92m";
+    public static final String ANSI_BRIGHT_YELLOW = "\u001B[93m";
+    public static final String ANSI_BRIGHT_BLUE   = "\u001B[94m";
+    public static final String ANSI_BRIGHT_PURPLE = "\u001B[95m";
+    public static final String ANSI_BRIGHT_CYAN   = "\u001B[96m";
+    public static final String ANSI_BRIGHT_WHITE  = "\u001B[97m";
+
+    public static final String ANSI_BG_BLACK  = "\u001B[40m";
+    public static final String ANSI_BG_RED    = "\u001B[41m";
+    public static final String ANSI_BG_GREEN  = "\u001B[42m";
+    public static final String ANSI_BG_YELLOW = "\u001B[43m";
+    public static final String ANSI_BG_BLUE   = "\u001B[44m";
+    public static final String ANSI_BG_PURPLE = "\u001B[45m";
+    public static final String ANSI_BG_CYAN   = "\u001B[46m";
+    public static final String ANSI_BG_WHITE  = "\u001B[47m";
+
+    public static final String ANSI_BRIGHT_BG_BLACK  = "\u001B[100m";
+    public static final String ANSI_BRIGHT_BG_RED    = "\u001B[101m";
+    public static final String ANSI_BRIGHT_BG_GREEN  = "\u001B[102m";
+    public static final String ANSI_BRIGHT_BG_YELLOW = "\u001B[103m";
+    public static final String ANSI_BRIGHT_BG_BLUE   = "\u001B[104m";
+    public static final String ANSI_BRIGHT_BG_PURPLE = "\u001B[105m";
+    public static final String ANSI_BRIGHT_BG_CYAN   = "\u001B[106m";
+    public static final String ANSI_BRIGHT_BG_WHITE  = "\u001B[107m";
+
+    public static final String ANSI_BOLD = "\\u001b[1m";
+    public static final String ANSI_UNDERLINE = "\u001b[4m";
+    public static final String ANSI_REVERSED = "\u001b[7m";
+
     private static final String TITLE = " ___  ___  ___   __  ______  ____ ____   __       ___    ____    ____   ____ __  __  ___  __  __   __   ___  __  __   ___  ____\n" +
             " ||\\\\//|| // \\\\ (( \\ | || | ||    || \\\\ (( \\     // \\\\  ||       || \\\\ ||    ||\\ || // \\\\ || (( \\ (( \\ // \\\\ ||\\ ||  //   ||   \n" +
             " || \\/ || ||=||  \\\\    ||   ||==  ||_//  \\\\     ((   )) ||==     ||_// ||==  ||\\\\|| ||=|| ||  \\\\   \\\\  ||=|| ||\\\\|| ((    ||== \n" +
             " ||    || || || \\_))   ||   ||___ || \\\\ \\_))     \\\\_//  ||       || \\\\ ||___ || \\|| || || || \\_)) \\_)) || || || \\||  \\\\__ ||___\n" +
             "                                                                                                                               \n";
 
-    private final Integer out = 0;
+    private final Integer semaphore = 0;
 
     private ArrayList<Command> commands = new ArrayList<>();
     Scanner in = new Scanner(System.in);
@@ -61,10 +94,10 @@ public class CLI implements UI {
     @Override
     public AuthData requestAuth(){
         AuthData authData = null;
-        synchronized (out) {
+        synchronized (semaphore) {
             String playerUsername;
             String choice;
-            System.out.println(ANSI_CYAN + TITLE + ANSI_RESET);
+            System.out.println(ANSI_BOLD + ANSI_BRIGHT_BLUE + TITLE + ANSI_RESET);
             System.out.printf("Enter an username:\n\t> ");
             playerUsername = in.nextLine();
             do {
@@ -101,7 +134,7 @@ public class CLI implements UI {
 
     @Override
     public void displayAuthFail(String errType) {
-        synchronized (out) {
+        synchronized (semaphore) {
             System.out.print("Failed to login! ");
             switch (errType) {
                 case "full_lobby":
@@ -120,21 +153,21 @@ public class CLI implements UI {
 
     @Override
     public void displayLobbyJoined(String lobbyId){
-        synchronized (out) {
+        synchronized (semaphore) {
             System.out.println("User logged successfully in lobby with ID: " + ANSI_YELLOW + lobbyId + ANSI_RESET);
         }
     }
 
     @Override
     public void displayLobbyCreated(String lobbyId){
-        synchronized (out) {
+        synchronized (semaphore) {
             System.out.println("Lobby created succeffully in lobby with ID: " + ANSI_YELLOW + lobbyId + ANSI_RESET);
         }
     }
 
     @Override
     public void displayNewTurn(String player, Boolean myTurn){
-        synchronized (out) {
+        synchronized (semaphore) {
             if (myTurn) {
                 System.out.println(player + ", IT'S YOUR TURN!");
             } else {
@@ -145,21 +178,21 @@ public class CLI implements UI {
 
     @Override
     public void displayGameStarted(){
-        synchronized (out) {
+        synchronized (semaphore) {
             System.out.println("Game has started!");
         }
     }
 
     @Override
     public void displayLeaderCard(ClientLeaderCard clientLeaderCard) {
-        synchronized (out) {
+        synchronized (semaphore) {
             String outputFormat = "%s Lv%d - Victory Points: %d - [";
         }
     }
 
     public HashMap<ResourcePosition, ResourceType> chooseInitialResources(int toChoose){
         HashMap<ResourcePosition, ResourceType> resources = new HashMap<>();
-        synchronized (out) {
+        synchronized (semaphore) {
             int chosenResources = 0;
             boolean validSelection = true;
             String tempResource, tempDepot;
@@ -220,7 +253,7 @@ public class CLI implements UI {
 
     public ArrayList<String> chooseInitialLeaders(){
         ArrayList<String> chosenLeaderCards = new ArrayList<>();
-        synchronized (out) {
+        synchronized (semaphore) {
             int cardsChosen = 0;
             boolean validSelection = true;
             System.out.println("You have to choose 2 leader cards!");
@@ -247,7 +280,7 @@ public class CLI implements UI {
 
     @Override
     public void displayLeaderCardDeck(ClientLeaderCardDeck clientLeaderCardDeck) {
-        synchronized (out) {
+        synchronized (semaphore) {
             System.out.println(RepresentationBuilder.render(clientLeaderCardDeck));
         }
     }

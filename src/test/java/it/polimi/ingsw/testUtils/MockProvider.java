@@ -29,7 +29,7 @@ public class MockProvider {
                     public boolean isFulfilled(Player player) {
                         return false;
                     }
-                }
+                }, "1"
         );
     }
 
@@ -56,13 +56,12 @@ public class MockProvider {
 
     static public ArrayList<DevelopmentCard> getArrayDevelopmentCardsMock(){
         ArrayList<DevelopmentCard> developmentCards = new ArrayList<>();
-        developmentCards.add(new DevelopmentCard(1, 1, null, Color.BLUE, null));
-        developmentCards.add(new DevelopmentCard(1, 1, null, Color.BLUE, null));
-        developmentCards.add(new DevelopmentCard(1, 1, null, Color.BLUE, null));
-        developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null));
-        developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null));
-        developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null));
-        developmentCards.add(new DevelopmentCard(1, 3, null, Color.BLUE, null));
+        developmentCards.add(new DevelopmentCard(1, 1, null, Color.BLUE, null, "1"));
+        developmentCards.add(new DevelopmentCard(1, 1, null, Color.BLUE, null, "2"));
+        developmentCards.add(new DevelopmentCard(1, 1, null, Color.BLUE, null, "3"));
+        developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null, "4"));
+        developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null, "5"));
+        developmentCards.add(new DevelopmentCard(1, 3, null, Color.BLUE, null, "6"));
         return developmentCards;
     }
 

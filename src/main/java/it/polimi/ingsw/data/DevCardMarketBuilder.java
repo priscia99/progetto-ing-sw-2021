@@ -75,7 +75,8 @@ public class DevCardMarketBuilder {
                         cardLevel,
                         new ProductionEffect(inputPile, outputPile),
                         cardColor,
-                        new ResourceRequirement(requiredPiles)
+                        new ResourceRequirement(requiredPiles),
+                        "D" + Integer.toString(cardIterator)
                 ));
             }
         }catch (Exception e){

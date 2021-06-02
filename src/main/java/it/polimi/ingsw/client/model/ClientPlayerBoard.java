@@ -6,22 +6,26 @@ import java.util.*;
 
 public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
 
+    private final boolean isMine;
     private final ClientFaithPath faithPath;
     private final ClientWarehouse warehouse;
     private final ClientStrongbox strongbox;
     private final ClientLeaderCardDeck clientLeaderCards;
     private final ClientDevelopmentCardDecks developmentCards;
 
-    public ClientPlayerBoard() {
+    public ClientPlayerBoard(boolean isMine) {
+        this.isMine = isMine;
         this.faithPath = new ClientFaithPath();
         this.warehouse = new ClientWarehouse();
         this.strongbox = new ClientStrongbox();
-        this.clientLeaderCards = new ClientLeaderCardDeck();
+        this.clientLeaderCards = new ClientLeaderCardDeck(isMine);
         this.developmentCards = new ClientDevelopmentCardDecks();
     }
 
     public ClientPlayerBoard(ClientFaithPath faithPath, ClientWarehouse warehouse, ClientStrongbox strongbox,
-                             ClientLeaderCardDeck clientLeaderCards, ClientDevelopmentCardDecks developmentCards) {
+                             ClientLeaderCardDeck clientLeaderCards, ClientDevelopmentCardDecks developmentCards,
+                             boolean isMine) {
+        this.isMine = isMine;
         this.faithPath = faithPath;
         this.warehouse = warehouse;
         this.strongbox = strongbox;

@@ -6,14 +6,17 @@ import java.util.ArrayList;
 
 public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
 
-    private final ArrayList<ClientLeaderCard> clientLeaderCards;
+    private ArrayList<ClientLeaderCard> clientLeaderCards;
+    private final boolean mine;
 
-    public ClientLeaderCardDeck(ArrayList<ClientLeaderCard> clientLeaderCards) {
+    public ClientLeaderCardDeck(ArrayList<ClientLeaderCard> clientLeaderCards, boolean mine) {
         this.clientLeaderCards = clientLeaderCards;
+        this.mine = mine;
     }
 
-    public ClientLeaderCardDeck() {
+    public ClientLeaderCardDeck(boolean mine) {
         this.clientLeaderCards = new ArrayList<>();
+        this.mine = mine;
     }
 
     public ArrayList<ClientLeaderCard> getClientLeaderCards() {
@@ -32,6 +35,7 @@ public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
 
     public void addCards(ArrayList<ClientLeaderCard> cards) {
         this.clientLeaderCards.addAll(cards);
+
         notify(this);
     }
 
@@ -45,6 +49,16 @@ public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
         for (int i = 0; i < indexes.length; i++) {
             this.clientLeaderCards.remove(this.clientLeaderCards.get(i));
         }
+
+        notify(this);
+    }
+
+    public boolean isMine() {
+        return mine;
+    }
+
+    public void setClientLeaderCards(ArrayList<ClientLeaderCard> clientLeaderCards) {
+        this.clientLeaderCards = clientLeaderCards;
 
         notify(this);
     }

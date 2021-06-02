@@ -57,13 +57,13 @@ public class RequirementTest {
     public void testLevelRequirement(){
         LevelRequirement requirement = new LevelRequirement(Color.YELLOW);
         Assertions.assertFalse(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.BLUE, null), 0);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.BLUE, null, "1"), 0);
         Assertions.assertFalse(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.YELLOW, null), 1);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.YELLOW, null, "5"), 1);
         Assertions.assertFalse(requirement.isFulfilled(player));
         player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 2, null, Color.YELLOW, null, "29"), 1);
         Assertions.assertTrue(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 3, null, Color.YELLOW, null), 1);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 3, null, Color.YELLOW, null, "30"), 1);
     }
 
     @Test
@@ -73,11 +73,11 @@ public class RequirementTest {
         toFulfil.add(new ColorPile(Color.BLUE, 2));
         ColorRequirement requirement = new ColorRequirement(toFulfil);
         Assertions.assertFalse(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.BLUE, null), 0);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.BLUE, null, "77"), 0);
         Assertions.assertFalse(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 2, null, Color.BLUE, null), 0);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 2, null, Color.BLUE, null, "333"), 0);
         Assertions.assertTrue(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 3, null, Color.BLUE, null), 0);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 3, null, Color.BLUE, null, "666"), 0);
         Assertions.assertTrue(requirement.isFulfilled(player));
     }
 
@@ -88,15 +88,15 @@ public class RequirementTest {
         toFulfil.add(new ColorPile(Color.BLUE, 2));
         toFulfil.add(new ColorPile(Color.YELLOW, 1));
         ColorRequirement requirement = new ColorRequirement(toFulfil);
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.BLUE, null), 0);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.BLUE, null, "23"),0);
         Assertions.assertFalse(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 2, null, Color.BLUE, null), 0);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 2, null, Color.BLUE, null, "34"), 0);
         Assertions.assertFalse(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.YELLOW, null), 2);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.YELLOW, null, "73"), 2);
         Assertions.assertTrue(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.GREEN, null), 1);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.GREEN, null, "98"), 1);
         Assertions.assertTrue(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 2, null, Color.GREEN, null), 1);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 2, null, Color.GREEN, null, "57"), 1);
         Assertions.assertTrue(requirement.isFulfilled(player));
     }
 }
