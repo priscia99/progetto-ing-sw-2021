@@ -22,12 +22,10 @@ import java.util.stream.Collectors;
 
 public class Player extends Observable<Message<ClientController>> {
 
-    private String username;
-
-
     private String id;
-    private PlayerBoard playerBoard;
+    private String username;
     private boolean first;
+    private PlayerBoard playerBoard;
     private int initialResourceToChoose;
     private boolean initialLeadersReady;
     private boolean initialResourcesReady;
