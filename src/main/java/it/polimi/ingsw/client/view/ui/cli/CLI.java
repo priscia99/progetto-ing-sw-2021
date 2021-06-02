@@ -4,6 +4,7 @@ import java.util.*;
 
 import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
+import it.polimi.ingsw.client.model.ClientWarehouse;
 import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
@@ -75,11 +76,22 @@ public class CLI implements UI {
                     lobbyToJoin = in.nextLine();
                     authData = AuthData.joinLobby(playerUsername, lobbyToJoin);
                 } else if (choice.equalsIgnoreCase("C")) {
-                    int playerNumber;
+                    int playerNumber = 0;
+                    boolean validNumber;
                     do {
+                        validNumber = true;
                         System.out.print("Enter the maximum number of players for this lobby [1-4]: \n\t> ");
-                        playerNumber = in.nextInt();
-                    } while (playerNumber < 1 || playerNumber > 4);
+                        try {
+                            playerNumber = Integer.parseInt(in.nextLine());
+                        }catch (NumberFormatException e){
+                            validNumber = false;
+                        }
+                        if(validNumber){
+                            if(playerNumber < 1 || playerNumber > 4){
+                                validNumber = false;
+                            }
+                        }
+                    } while (!validNumber);
                     authData = AuthData.createLobby(playerUsername, playerNumber);
                 }
             } while (!choice.equalsIgnoreCase("J") && !choice.equalsIgnoreCase("C"));
@@ -212,7 +224,6 @@ public class CLI implements UI {
             int cardsChosen = 0;
             boolean validSelection = true;
             System.out.println("You have to choose 2 leader cards!");
-            System.out.println("Your leader cards are: ");
             // TODO print leader cards
             while (cardsChosen < 2) {
                 String chosenCardId;
@@ -221,7 +232,6 @@ public class CLI implements UI {
                     validSelection = true;
                     System.out.print("Choose leader cards #" + (cardsChosen + 1) + " [type card ID]: \n\t> ");
                     chosenCardId = in.nextLine();
-                    System.out.println("You have chosen " + chosenCardId);
                     if (chosenLeaderCards.contains(chosenCardId)) {
                         validSelection = false;
                         System.out.println("You cannot choose the same leader card!");
@@ -239,6 +249,13 @@ public class CLI implements UI {
     public void displayLeaderCardDeck(ClientLeaderCardDeck clientLeaderCardDeck) {
         synchronized (out) {
             System.out.println(RepresentationBuilder.render(clientLeaderCardDeck));
+        }
+    }
+
+    @Override
+    public void displayWarehouse(ClientWarehouse warehouse) {
+        synchronized (semaphore){
+            System.out.println(RepresentationBuilder.render(warehouse));
         }
     }
 }

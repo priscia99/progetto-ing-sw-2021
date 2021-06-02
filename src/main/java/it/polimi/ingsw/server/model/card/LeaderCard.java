@@ -16,8 +16,8 @@ public class LeaderCard extends Card {
      * @param effect the effect of the card (can be null)
      * @param requirement the requirement to fulfill in order to play the card
      */
-    public LeaderCard(int victoryPoints, Effect effect, Requirement requirement) {
-        super(victoryPoints, requirement);
+    public LeaderCard(int victoryPoints, Effect effect, Requirement requirement, String id) {
+        super(victoryPoints, requirement, id);
         this.effect = effect;
     }
 

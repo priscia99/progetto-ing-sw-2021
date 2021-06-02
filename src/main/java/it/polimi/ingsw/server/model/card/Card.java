@@ -19,9 +19,8 @@ public abstract class Card {
      * @param victoryPoints the victory points rewarded by playing the card
      * @param requirement the requirement to fulfill in order to play/buy the card
      */
-    public Card(int victoryPoints, Requirement requirement) {
-        // FIXME: dangerous UUID
-        this.id = UUID.randomUUID().toString();
+    public Card(int victoryPoints, Requirement requirement, String id) {
+        this.id = id;
         this.active = false;
         this.victoryPoints = victoryPoints;
         this.requirement = requirement;

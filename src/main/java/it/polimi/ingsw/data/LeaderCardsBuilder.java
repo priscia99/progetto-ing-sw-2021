@@ -123,7 +123,8 @@ public class LeaderCardsBuilder{
                 leaderCardList.add(new LeaderCard(
                         tempObject.get("victory_points").getAsInt(),
                         effect,
-                        requirement
+                        requirement,
+                        "L" + Integer.toString(cardIterator)
                 ));
 
             }

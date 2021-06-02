@@ -12,11 +12,12 @@ public class WarehouseMessage extends Message<ClientController> implements Seria
     private static final long serialVersionUID = 1L;
     private final ArrayList<ResourceDepot> resourceDepots;
 
-    public WarehouseMessage(ArrayList<ResourceDepot> resourceDepots) {
+    public WarehouseMessage(ArrayList<ResourceDepot> resourceDepots, String playerUsername) {
         this.resourceDepots = resourceDepots;
+        super.setPlayerUsername(playerUsername);
     }
 
     public void execute(ClientController target) {
-
+        target.refreshWarehouse(resourceDepots, super.getPlayerUsername());
     }
 }

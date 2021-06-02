@@ -10,6 +10,7 @@ import it.polimi.ingsw.network.message.from_client.ChosenInitialLeadersMessage;
 import it.polimi.ingsw.network.message.from_client.ChosenInitialResourcesMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.server.model.resource.ResourceDepot;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,6 @@ public class ClientController extends Observable<Message<ServerController>> {
     }
 
     public void chooseInitialResources(int toChoose, String username){
-        System.out.println("Il giocatore che deve scegliere le risorse e': " + username);
         if(username.equals(game.getMyUsername())) {
             notify(new ChosenInitialResourcesMessage(userInterface.chooseInitialResources(toChoose), game.getMyUsername()));
         }
@@ -52,5 +52,9 @@ public class ClientController extends Observable<Message<ServerController>> {
     public void addLeaderCards(ArrayList<ClientLeaderCard> cards, String player) {
         System.out.println("Le carte sono di " + player + ", io sono " + game.getMyUsername());
         this.getGame().getPlayerBoardMap().get(player).getClientLeaderCards().addCards(cards);
+    }
+
+    public void refreshWarehouse(ArrayList<ResourceDepot> resourceDepots, String player){
+        this.getGame().getPlayerBoardMap().get(player).getWarehouse().setResourceDepots(resourceDepots);
     }
 }

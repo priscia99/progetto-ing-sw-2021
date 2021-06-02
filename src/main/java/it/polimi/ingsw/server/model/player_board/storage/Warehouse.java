@@ -84,7 +84,6 @@ public class Warehouse extends Storage {
         }
         this.getResourceStock(index).incrementResource(resourceType);
 
-        notify(new WarehouseMessage(resourceStocks.stream().map(resourceStock -> (ResourceDepot) resourceStock).collect(Collectors.toCollection(ArrayList::new))));
     }
 
     /**
@@ -99,7 +98,6 @@ public class Warehouse extends Storage {
             ((ResourceDepot) this.getResourceStock(index)).setResourceType(ResourceType.BLANK);
         }
 
-        notify(new WarehouseMessage(resourceStocks.stream().map(resourceStock -> (ResourceDepot) resourceStock).collect(Collectors.toCollection(ArrayList::new))));
     }
 
     /**

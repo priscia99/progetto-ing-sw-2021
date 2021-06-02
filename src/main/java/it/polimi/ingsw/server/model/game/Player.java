@@ -183,7 +183,7 @@ public class Player extends Observable<Message<ClientController>> {
     public void pickedInitialResources(HashMap<ResourcePosition, ResourceType> toAdd){
         if(toAdd.values().size() != initialResourceToChoose) throw new InvalidActionException();
         for (ResourcePosition depotIndex : toAdd.keySet()) {
-            getPlayerBoard().getWarehouse().addToDepot(depotIndex.ordinal(), toAdd.get(depotIndex));
+            getPlayerBoard().addToDepot(depotIndex.ordinal(), toAdd.get(depotIndex));
         }
         initialLeadersReady = true;
         notify(new ResourceReadyMessage(true));

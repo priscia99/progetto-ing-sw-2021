@@ -2,10 +2,12 @@ package it.polimi.ingsw.client.model;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.server.model.player_board.storage.*;
 
-public class ClientWarehouse {
+public class ClientWarehouse extends Observable<ClientWarehouse> {
 
     private ArrayList<ResourceDepot> resourceDepots;
 

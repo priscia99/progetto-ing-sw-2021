@@ -7,6 +7,7 @@ import java.net.Socket;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientGame;
 import it.polimi.ingsw.client.view.LeaderDeckView;
+import it.polimi.ingsw.client.view.WarehouseView;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.network.message.Message;
@@ -35,8 +36,12 @@ public class Client {
         this.controller = new ClientController(game, userInterface);
         controller.addObserver(clientMessageEncoder);
         LeaderDeckView leaderDeckView = new LeaderDeckView(userInterface);
+        WarehouseView warehouseView = new WarehouseView(userInterface);
         game.getPlayerBoardMap().keySet().forEach(key -> {
             game.getPlayerBoardMap().get(key).getClientLeaderCards().addObserver(leaderDeckView);
+        });
+        game.getPlayerBoardMap().keySet().forEach(key -> {
+            game.getPlayerBoardMap().get(key).getWarehouse().addObserver(warehouseView);
         });
     }
 
@@ -59,7 +64,7 @@ public class Client {
                 try {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
-                        System.out.println("Ho ricevuto un: " + inputObject.getClass());
+                        // System.out.println("Ho ricevuto un: " + inputObject.getClass());
                         if(inputObject instanceof String){
                             //FIXME switch from String to ServiceMessage in auth
                             manageAuth((String) inputObject);   // re-directing to authentication manager;
@@ -164,7 +169,7 @@ public class Client {
 
     public Thread sendToSocket(Object objToSend){
         Thread t = new Thread(() -> {
-            System.out.println("Sto inviando un: " + objToSend.getClass());
+            // System.out.println("Sto inviando un: " + objToSend.getClass());
             try {
                 socketOut.writeObject(objToSend);
             } catch (IOException e) {

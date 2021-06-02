@@ -11,7 +11,7 @@ public class WarehouseView extends View implements Observer<ClientWarehouse> {
     }
 
     @Override
-    public void update(ClientWarehouse object) {
-
+    public void update(ClientWarehouse warehouse) {
+        userInterface.displayWarehouse(warehouse);
     }
 }

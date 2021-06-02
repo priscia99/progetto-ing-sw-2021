@@ -13,8 +13,9 @@ public class StrongboxMessage extends Message<ClientController> implements Seria
     private static final long serialVersionUID = 1L;
     private final ArrayList<ResourceStock> resourceStocks;
 
-    public StrongboxMessage(ArrayList<ResourceStock> resourceStocks) {
+    public StrongboxMessage(ArrayList<ResourceStock> resourceStocks, String playerUsername) {
         this.resourceStocks = resourceStocks;
+        super.setPlayerUsername(playerUsername);
     }
 
     public void execute(ClientController target) {

@@ -61,7 +61,7 @@ public class RequirementTest {
         Assertions.assertFalse(requirement.isFulfilled(player));
         player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.YELLOW, null), 1);
         Assertions.assertFalse(requirement.isFulfilled(player));
-        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 2, null, Color.YELLOW, null), 1);
+        player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 2, null, Color.YELLOW, null, "29"), 1);
         Assertions.assertTrue(requirement.isFulfilled(player));
         player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 3, null, Color.YELLOW, null), 1);
     }
