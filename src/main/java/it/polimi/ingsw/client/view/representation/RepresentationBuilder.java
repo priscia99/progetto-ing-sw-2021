@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class RepresentationBuilder {
 
-    private static final String LEADER_CARD_FORMAT = "ID: %s) %s VP | %s | Requirement: %s | Effect: %s";
-    private static final String DEVELOPMENT_CARD_FORMAT = "ID: %s) Color: %s | Lv %d | %d VP | Cost: %s | Production: %s";
+    private static final String LEADER_CARD_FORMAT = "ID: %1s | %2s VP | %3s | " + whiteText(boldText("Requirement:")) + " %4s | " + whiteText(boldText("Effect:")) + " %5s";
+    private static final String DEVELOPMENT_CARD_FORMAT = "ID: %s | Color: %s | Lv %d | %d VP | " + whiteText(boldText("Cost:")) + " %s | " + whiteText(boldText("Production:")) + " %s";
     private static final String LEADER_CARD_DECK_FORMAT = "Leader cards:\n%s";
     private static final String DEVELOPMENT_CARD_DECK_FORMAT = "Development cards:\nSlot #1\n%s\nSlot #2\n%s\nSlot #3\n%s";
     private static final String CARD_MARKET_FORMAT = "> GREEN:\nLv1) %s\nLv2) %s\nLv3) %s\n> YELLOW:\nLv1) %s\nLv2) %s\nLv3) %s\n> PURPLE:\nLv1) %s\nLv2) %s\nLv3) %s\n> BLUE:\nLv1) %s\nLv2) %s\nLv3) %s";
@@ -35,11 +35,12 @@ public class RepresentationBuilder {
         String requirementString = card.getRequirement().toString();
         String effectString = card.getEffect().toString();
         return String.format(LEADER_CARD_FORMAT,
-                !card.isActive() && !isMine ? CLI.ANSI_BRIGHT_BG_WHITE + CLI.ANSI_BRIGHT_RED + " XXX " + CLI.ANSI_RESET : card.getId(),
-                !card.isActive() && !isMine ?  " XXX " : Integer.toString(card.getVictoryPoints()),
-                card.isActive() ? "ACTIVE" : "INACTIVE",
-                !card.isActive() && !isMine ? " XXX " : requirementString,
-                !card.isActive() && !isMine ? " XXX " : effectString);
+                !card.isActive() && !isMine ? hiddenText(" XXX ") : cyanText(underlineText(card.getId())),
+                !card.isActive() && !isMine ?  hiddenText(" XXX ") : Integer.toString(card.getVictoryPoints()),
+                card.isActive() ? positiveText("  ACTIVE  ") : negativeText(" INACTIVE "),
+                !card.isActive() && !isMine ? hiddenText(" XXX ") : requirementString,
+                !card.isActive() && !isMine ? hiddenText(" XXX ") : effectString
+        );
     }
 
     public static String render(ClientLeaderCardDeck deck) {
@@ -160,5 +161,57 @@ public class RepresentationBuilder {
     public static String getAsset() {
         // TODO complete
         return null;
+    }
+
+    private static String hiddenText(String text) {
+        return CLI.ANSI_BRIGHT_BG_WHITE + CLI.ANSI_BRIGHT_RED + text + CLI.ANSI_RESET;
+    }
+
+    private static String negativeText(String text) {
+        return CLI.ANSI_BRIGHT_BG_RED + CLI.ANSI_BRIGHT_WHITE + text + CLI.ANSI_RESET;
+    }
+
+    private static String positiveText(String text) {
+        return CLI.ANSI_BRIGHT_BG_GREEN + CLI.ANSI_BRIGHT_WHITE + text + CLI.ANSI_RESET;
+    }
+
+    private static String redText(String text) {
+        return CLI.ANSI_BRIGHT_RED + text + CLI.ANSI_RESET;
+    }
+
+    private static String greenText(String text) {
+        return CLI.ANSI_BRIGHT_GREEN + text + CLI.ANSI_RESET;
+    }
+
+    private static String blueText(String text) {
+        return CLI.ANSI_BRIGHT_BLUE + text + CLI.ANSI_RESET;
+    }
+
+    private static String purpleText(String text) {
+        return CLI.ANSI_BRIGHT_PURPLE + text + CLI.ANSI_RESET;
+    }
+
+    private static String yellowText(String text) {
+        return CLI.ANSI_BRIGHT_YELLOW + text + CLI.ANSI_RESET;
+    }
+
+    private static String cyanText(String text) {
+        return CLI.ANSI_BRIGHT_CYAN + text + CLI.ANSI_RESET;
+    }
+
+    private static String whiteText(String text) {
+        return CLI.ANSI_BRIGHT_WHITE + text + CLI.ANSI_RESET;
+    }
+
+    private static String underlineText(String text) {
+        return CLI.ANSI_UNDERLINE + text + CLI.ANSI_RESET;
+    }
+
+    private static String boldText(String text) {
+        return CLI.ANSI_BOLD + text + CLI.ANSI_RESET;
+    }
+
+    private static String reverseText(String text) {
+        return CLI.ANSI_REVERSED + text + CLI.ANSI_RESET;
     }
 }
