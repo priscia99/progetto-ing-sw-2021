@@ -13,7 +13,7 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
     private ClientCardsMarket clientCardsMarket;
     private ClientMarbleMarket clientMarbleMarket;
     private Map<String, ClientPlayerBoard> playerBoardMap = new HashMap<>();
-
+    private boolean gameStarted = false;
     public ClientGame(String myUsername, String currentPlayer, ArrayList<String> players) {
         this.myUsername = myUsername;
         this.currentPlayer = currentPlayer;
@@ -22,6 +22,14 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
         players.forEach(player -> {
             this.playerBoardMap.put(player, new ClientPlayerBoard(player.equals(myUsername)));
         });
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
     }
 
     public String getCurrentPlayer() {

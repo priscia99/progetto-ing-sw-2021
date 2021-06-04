@@ -6,8 +6,7 @@ import java.net.Socket;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientGame;
-import it.polimi.ingsw.client.view.LeaderDeckView;
-import it.polimi.ingsw.client.view.WarehouseView;
+import it.polimi.ingsw.client.view.*;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.network.message.Message;
@@ -32,16 +31,41 @@ public class Client {
     }
 
     public void setupMVC(ArrayList<String> players){
+
         ClientGame game = new ClientGame(myUsername, players.get(0), players);
         this.controller = new ClientController(game, userInterface);
+
+        // adding encoder to observers list
         controller.addObserver(clientMessageEncoder);
+
+        // adding leader cards view observer to all players
         LeaderDeckView leaderDeckView = new LeaderDeckView(userInterface);
-        WarehouseView warehouseView = new WarehouseView(userInterface);
         game.getPlayerBoardMap().keySet().forEach(key -> {
             game.getPlayerBoardMap().get(key).getClientLeaderCards().addObserver(leaderDeckView);
         });
+
+        // adding warehouse view observer to all players
+        WarehouseView warehouseView = new WarehouseView(userInterface);
         game.getPlayerBoardMap().keySet().forEach(key -> {
             game.getPlayerBoardMap().get(key).getWarehouse().addObserver(warehouseView);
+        });
+
+        // adding development cards view observer to all players
+        DevelopmentDeckView developmentDeckView = new DevelopmentDeckView(userInterface);
+        game.getPlayerBoardMap().keySet().forEach(key -> {
+            game.getPlayerBoardMap().get(key).getDevelopmentCards().addObserver(developmentDeckView);
+        });
+
+        // adding stronbox view observer to all players
+        StrongboxView strongboxView = new StrongboxView(userInterface);
+        game.getPlayerBoardMap().keySet().forEach(key -> {
+            game.getPlayerBoardMap().get(key).getStrongbox().addObserver(strongboxView);
+        });
+
+        // adding faithpath view observer to all players
+        FaithPathView faithPathView = new FaithPathView(userInterface);
+        game.getPlayerBoardMap().keySet().forEach(key -> {
+            game.getPlayerBoardMap().get(key).getFaithPath().addObserver(faithPathView);
         });
     }
 
@@ -64,7 +88,7 @@ public class Client {
                 try {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
-                        // System.out.println("Ho ricevuto un: " + inputObject.getClass());
+                        System.out.println("Ho ricevuto un: " + inputObject.getClass());
                         if(inputObject instanceof String){
                             //FIXME switch from String to ServiceMessage in auth
                             manageAuth((String) inputObject);   // re-directing to authentication manager;

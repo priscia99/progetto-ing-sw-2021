@@ -57,6 +57,11 @@ public class RepresentationBuilder {
     }
 
     public static String render(ClientDevelopmentCardDecks decks) {
+
+        if(!decks.isInitialized()){
+            return "The player's development cards decks are empty";
+        }
+
         ArrayList<String> tempStrings = new ArrayList<>();
         for (ArrayList<ClientDevelopmentCard> deck: decks.getDevelopmentCards()) {
             StringBuilder tempString = new StringBuilder();
@@ -138,19 +143,38 @@ public class RepresentationBuilder {
     }
 
     public static String render(ClientWarehouse warehouse) {
-        ResourceDepot depot1 = warehouse.getResourceDepot(0);
-        ResourceDepot depot2 = warehouse.getResourceDepot(1);
-        ResourceDepot depot3 = warehouse.getResourceDepot(2);
+        // FIXME fix return output when warehouse is not initialized
+        /*
+            Pizza, ho creato questa funzione isWarehouseInitialized giusto per non far crashare il client
+            Prova a sistemare il costruttore per inizializzare il warehouse ma senza le risorse al suo interno
+            E in seguito togli pure lo schifo che ho fatto ahahahah
+         */
+        if(warehouse.isInitialized()) {
+            ResourceDepot depot1 = warehouse.getResourceDepot(0);
+            ResourceDepot depot2 = warehouse.getResourceDepot(1);
+            ResourceDepot depot3 = warehouse.getResourceDepot(2);
+            return String.format(WAREHOUSE_FORMAT,
+                    depot1.getQuantity() == 1 ? depot1.getResourceType().toString() : " ",
+                    depot2.getQuantity() >= 1 ? depot2.getResourceType().toString() : " ",
+                    depot2.getQuantity() == 2 ? depot2.getResourceType().toString() : " ",
+                    depot3.getQuantity() >= 1 ? depot3.getResourceType().toString() : " ",
+                    depot3.getQuantity() >= 2 ? depot3.getResourceType().toString() : " ",
+                    depot3.getQuantity() == 3 ? depot3.getResourceType().toString() : " "
+            );
+        }
         return String.format(WAREHOUSE_FORMAT,
-                depot1.getQuantity()==1 ? depot1.getResourceType().toString() : " ",
-                depot2.getQuantity()>=1 ? depot2.getResourceType().toString() : " ",
-                depot2.getQuantity()==2 ? depot2.getResourceType().toString() : " ",
-                depot3.getQuantity()>=1 ? depot3.getResourceType().toString() : " ",
-                depot3.getQuantity()>=2 ? depot3.getResourceType().toString() : " ",
-                depot3.getQuantity()==3 ? depot3.getResourceType().toString() : " "
+                " ",
+                " ",
+                " ",
+                " ",
+                " ",
+                " "
         );
     }
     public static String render(ClientStrongbox strongbox) {
+        if(!strongbox.isInitialized()){
+            return String.format(STRONGBOX_FORMAT, 0, 0, 0, 0);
+        }
         int coinCount = strongbox.gerResourceStock(0).getQuantity();
         int servantCount = strongbox.gerResourceStock(1).getQuantity();
         int shieldCount = strongbox.gerResourceStock(2).getQuantity();

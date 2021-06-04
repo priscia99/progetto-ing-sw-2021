@@ -2,9 +2,11 @@ package it.polimi.ingsw.client.model;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.player_board.faith_path.*;
 
-public class ClientFaithPath {
+public class ClientFaithPath extends Observable<ClientFaithPath> {
 
     private int faithPoints;
     private ArrayList<Boolean> popeFavors;
@@ -12,6 +14,9 @@ public class ClientFaithPath {
     public ClientFaithPath() {
         this.faithPoints = 0;
         this.popeFavors = new ArrayList<>();
+        this.popeFavors.add(false);
+        this.popeFavors.add(false);
+        this.popeFavors.add(false);
     }
 
     public ClientFaithPath(int faithPoints, ArrayList<Boolean> popeFavors) {
@@ -37,5 +42,9 @@ public class ClientFaithPath {
 
     public boolean getPopeFavor(int index) {
         return popeFavors.get(index);
+    }
+
+    public void show(){
+        notify(this);
     }
 }

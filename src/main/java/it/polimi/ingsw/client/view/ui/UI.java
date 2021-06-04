@@ -27,4 +27,5 @@ public interface UI {
     void displayMarbleMarket(ClientMarbleMarket market);
     void displayStrongBox(ClientStrongbox strongbox);
     void displayFaithPath(ClientFaithPath path);
+    void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck);
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.ui.cli;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.*;
@@ -10,6 +11,7 @@ import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceType;
+import it.polimi.ingsw.utils.Pair;
 
 public class CLI implements UI {
 
@@ -88,14 +90,6 @@ public class CLI implements UI {
     Scanner in = new Scanner(System.in);
 
     public CLI(ArrayList<Command> commands) {
-        this.commands.add(new Command(
-                "help",
-                "Show the possible actions",
-                false,
-                () -> {
-                    this.commands.forEach(command -> System.out.printf("   > %s - %s\n", command.getKey(), command.getDescription()));
-                }
-                ));
         this.commands.addAll(commands);
     }
 
@@ -104,7 +98,7 @@ public class CLI implements UI {
         if (target == null) {
             throw new UnknownCommandException(String.format("No command identified by '%s' exists", key));
         }
-        target.execute();
+        // target.execute();
     }
 
     private void parseCommand(String command) {
@@ -327,7 +321,10 @@ public class CLI implements UI {
                 while (true) {
                     Scanner input = new Scanner(System.in);
                     String requestedCommand = input.nextLine();
-                    controller.executeCommand(requestedCommand);
+                    Pair<String, HashMap<String, String>> formattedCommand = this.getFormatedCommand(requestedCommand);
+                    if(formattedCommand != null){
+                        this.executeCommand(formattedCommand, controller);
+                    }
                 }
             }).start();
         }
@@ -357,6 +354,64 @@ public class CLI implements UI {
     public void displayFaithPath(ClientFaithPath path) {
         synchronized (outSemaphore){
             System.out.println(RepresentationBuilder.render(path));
+        }
+    }
+
+    public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck){
+        synchronized (outSemaphore){
+            System.out.println(RepresentationBuilder.render(deck));
+        }
+    }
+
+    public Pair<String, HashMap<String, String>> getFormatedCommand(String inputCommand){
+
+        if(inputCommand.equalsIgnoreCase("") || inputCommand.equalsIgnoreCase("\n")){
+            // The given command is empty
+            return null;
+        }
+
+        // Split the command string and check if the given command exists
+        String commandKey = inputCommand.split(" ")[0]; // First part of the string (command key)
+        Command requestedCommand = null;
+        if(commands.stream().map(com -> com.getKey()).noneMatch(key -> key.equalsIgnoreCase(commandKey))){
+            this.displayError("The given command doesn't exist");
+            return null;
+        } else{
+            // Fetch the proper requested command based on the given input command key
+            requestedCommand = commands.stream().filter(com -> com.getKey().equals(commandKey)).collect(Collectors.toCollection(ArrayList::new)).get(0);
+        }
+
+        // Split parameters and create hash map
+        HashMap<String, String> inputCommandParameters = new HashMap<>();
+        int inputParametersNumber = 0;
+        inputCommand = inputCommand.replace(inputCommand.split("-")[0] + "-", "");
+        String[] stringParameters = inputCommand.split("-");
+        try {
+            for (String par : stringParameters) {
+                String parKey = par.split(" " )[0];
+                String parValue = par.split(" " )[1];
+                inputCommandParameters.put(parKey, parValue);
+            }
+        }catch (Exception e){
+            displayError("Command parsing error. Check its format again");
+        }
+
+        // Check if all parameters coincide with requested parameters
+        if(!inputCommandParameters.keySet().equals(requestedCommand.getParameters().keySet())){
+            this.displayError("Some parameters do not coincide with requested parameters for command " + requestedCommand.getKey());
+            return null;
+        }
+
+        return new Pair<String, HashMap<String, String>>(requestedCommand.getKey(), inputCommandParameters);
+    }
+
+    public void executeCommand(Pair<String, HashMap<String, String>> inputCommand, ClientController targetController){
+        // TODO fill this method with other commands
+        switch (inputCommand.getFirst()){
+            case "view":
+                // Call viewContent method in client controller giving him command parameters
+                targetController.viewContent(inputCommand.getSecond());
+                break;
         }
     }
 

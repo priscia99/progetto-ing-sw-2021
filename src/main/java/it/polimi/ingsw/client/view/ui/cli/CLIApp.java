@@ -8,8 +8,6 @@ public class CLIApp {
 
     public static void main(String[] args) {
         ArrayList<Command> commands = new ArrayList<>();
-        commands.add(new Command("a", "test a" , false, () -> System.out.println("You entered a")));
-        commands.add(new Command("b", "test a" , true, () -> System.out.println("You say b")));
         CLI cli = new CLI(commands);
 
         Scanner scanner = new Scanner(System.in);

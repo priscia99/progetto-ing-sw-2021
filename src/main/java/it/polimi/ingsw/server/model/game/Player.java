@@ -191,7 +191,7 @@ public class Player extends Observable<Message<ClientController>> {
         for (ResourcePosition depotIndex : toAdd.keySet()) {
             getPlayerBoard().addToDepot(depotIndex.ordinal(), toAdd.get(depotIndex));
         }
-        initialLeadersReady = true;
+        initialResourcesReady = true;
         Warehouse warehouse = getPlayerBoard().getWarehouse();
 
         // TODO merge in ResourceReadyMessage ore delete it

@@ -1,17 +1,19 @@
 package it.polimi.ingsw.client.view.ui.cli;
 
+import java.util.HashMap;
+
 public class Command {
 
     private final String key;
     private final String description;
-    private final Runnable action;
+    private final HashMap<String, String> parameters;
     private final boolean active;
 
-    public Command(String key, String description, boolean active, Runnable action) {
+    public Command(String key, String description, boolean active, HashMap<String, String> parameters) {
         this.key = key;
         this.description = description;
-        this.action = action;
         this.active = active;
+        this.parameters = parameters;
     }
 
     public String getKey() {
@@ -30,7 +32,7 @@ public class Command {
         return active;
     }
 
-    public void execute() {
-        action.run();
+    public HashMap<String, String> getParameters() {
+        return parameters;
     }
 }

@@ -32,5 +32,11 @@ public class ClientWarehouse extends Observable<ClientWarehouse> {
         return resourceDepots.get(index);
     }
 
+    public void show(){
+        notify(this);
+    }
 
+    public boolean isInitialized(){
+        return resourceDepots.size() == 3;
+    }
 }

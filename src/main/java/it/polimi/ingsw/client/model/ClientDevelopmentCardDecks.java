@@ -52,4 +52,12 @@ public class ClientDevelopmentCardDecks extends Observable<ClientDevelopmentCard
         }
         notify(this);
     }
+
+    public void show(){
+        notify(this);
+    }
+
+    public boolean isInitialized(){
+        return developmentCards.size() != 0;
+    }
 }

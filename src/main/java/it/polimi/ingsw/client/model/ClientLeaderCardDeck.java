@@ -57,10 +57,11 @@ public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
         return mine;
     }
 
-    public void setClientLeaderCards(ArrayList<ClientLeaderCard> clientLeaderCards) {
+    public void setClientLeaderCards(ArrayList<ClientLeaderCard> clientLeaderCards, boolean displayToView) {
         this.clientLeaderCards = clientLeaderCards;
-
-        notify(this);
+        if(displayToView) {
+            notify(this);
+        }
     }
 
     public void show(){

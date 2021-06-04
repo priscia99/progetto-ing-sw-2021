@@ -8,12 +8,12 @@ import it.polimi.ingsw.observer.Observer;
 
 public class DevelopmentDeckView extends View implements Observer<ClientDevelopmentCardDecks> {
 
-    protected DevelopmentDeckView(UI userInterface) {
+    public DevelopmentDeckView(UI userInterface) {
         super(userInterface);
     }
 
     @Override
     public void update(ClientDevelopmentCardDecks deck) {
-
+        userInterface.displayDevelopmentCardDecks(deck);
     }
 }
