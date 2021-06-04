@@ -11,7 +11,7 @@ public class FaithPathView extends View implements Observer<ClientFaithPath> {
     }
 
     @Override
-    public void update(ClientFaithPath object) {
-        // fill
+    public void update(ClientFaithPath path) {
+        userInterface.displayFaithPath(path);
     }
 }

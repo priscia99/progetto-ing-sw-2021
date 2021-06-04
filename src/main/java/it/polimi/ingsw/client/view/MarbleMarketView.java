@@ -11,7 +11,7 @@ public class MarbleMarketView extends View implements Observer<ClientMarbleMarke
     }
 
     @Override
-    public void update(ClientMarbleMarket object) {
-
+    public void update(ClientMarbleMarket market) {
+        userInterface.displayMarbleMarket(market);
     }
 }
