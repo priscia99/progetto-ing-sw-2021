@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.ui;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
 import it.polimi.ingsw.client.model.ClientWarehouse;
@@ -23,4 +24,6 @@ public interface UI {
     ArrayList<String> chooseInitialLeaders(ArrayList<String> cardsIDs);
     void displayWarehouse(ClientWarehouse warehouse);
     void displayLeaderCardDeck(ClientLeaderCardDeck deck);
+    void startListening(ClientController controller);
+    void displayError(String error);
 }

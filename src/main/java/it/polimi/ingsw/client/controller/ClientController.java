@@ -64,4 +64,20 @@ public class ClientController extends Observable<Message<ServerController>> {
     public void refreshWarehouse(ArrayList<ResourceDepot> resourceDepots, String player){
         this.getGame().getPlayerBoardMap().get(player).getWarehouse().setResourceDepots(resourceDepots);
     }
+
+    public void startListening(){
+        userInterface.startListening(this);
+    }
+
+    public void executeCommand(String command){
+        if(command.contains("help")){
+            // TODO fill help
+        }
+        else if(command.contains("displayleadercards")){
+            game.getPlayerBoardMap().get(game.getMyUsername()).getClientLeaderCards().show();
+        }
+        else{
+            userInterface.displayError("Command not valid");
+        }
+    }
 }

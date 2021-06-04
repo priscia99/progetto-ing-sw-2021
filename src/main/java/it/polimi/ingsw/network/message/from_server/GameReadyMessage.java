@@ -17,6 +17,6 @@ public class GameReadyMessage extends Message<ClientController> implements Seria
 
     @Override
     public void execute(ClientController target) {
-
+        target.startListening();
     }
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.ui.cli;
 
 import java.util.*;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
 import it.polimi.ingsw.client.model.ClientWarehouse;
@@ -82,7 +83,8 @@ public class CLI implements UI {
                 "\u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m  \u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m\u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m\u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m  \u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m\u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m  \u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m\u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m\u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m\u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m\u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m  \u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m\u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m  \u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m \u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m\u001B[93m╚\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m═\u001B[0m\u001B[93m╝\u001B[0m\n";
     }
 
-    private final Integer semaphore = 0;
+    private final Integer outSemaphore = 0;
+    private boolean gameStarted = false;
 
     private ArrayList<Command> commands = new ArrayList<>();
     Scanner in = new Scanner(System.in);
@@ -114,7 +116,7 @@ public class CLI implements UI {
     @Override
     public AuthData requestAuth(){
         AuthData authData = null;
-        synchronized (semaphore) {
+        synchronized (outSemaphore) {
             String playerUsername;
             String choice;
             System.out.println(TITLE);
@@ -154,7 +156,7 @@ public class CLI implements UI {
 
     @Override
     public void displayAuthFail(String errType) {
-        synchronized (semaphore) {
+        synchronized (outSemaphore) {
             System.out.print("Failed to login! ");
             switch (errType) {
                 case "full_lobby":
@@ -173,21 +175,21 @@ public class CLI implements UI {
 
     @Override
     public void displayLobbyJoined(String lobbyId){
-        synchronized (semaphore) {
+        synchronized (outSemaphore) {
             System.out.println("User logged successfully in lobby with ID: " + ANSI_YELLOW + lobbyId + ANSI_RESET);
         }
     }
 
     @Override
     public void displayLobbyCreated(String lobbyId){
-        synchronized (semaphore) {
+        synchronized (outSemaphore) {
             System.out.println("Lobby created succeffully in lobby with ID: " + ANSI_YELLOW + lobbyId + ANSI_RESET);
         }
     }
 
     @Override
     public void displayNewTurn(String player, Boolean myTurn){
-        synchronized (semaphore) {
+        synchronized (outSemaphore) {
             if (myTurn) {
                 System.out.println(player + ", IT'S YOUR TURN!");
             } else {
@@ -198,21 +200,21 @@ public class CLI implements UI {
 
     @Override
     public void displayGameStarted(){
-        synchronized (semaphore) {
+        synchronized (outSemaphore) {
             System.out.println("Game has started!");
         }
     }
 
     @Override
     public void displayLeaderCard(ClientLeaderCard clientLeaderCard) {
-        synchronized (semaphore) {
+        synchronized (outSemaphore) {
             String outputFormat = "%s Lv%d - Victory Points: %d - [";
         }
     }
 
     public HashMap<ResourcePosition, ResourceType> chooseInitialResources(int toChoose){
         HashMap<ResourcePosition, ResourceType> resources = new HashMap<>();
-        synchronized (semaphore) {
+        synchronized (outSemaphore) {
             int chosenResources = 0;
             boolean validSelection = true;
             String tempResource, tempDepot;
@@ -273,7 +275,7 @@ public class CLI implements UI {
 
     public ArrayList<String> chooseInitialLeaders(ArrayList<String> cardsIDs){
         ArrayList<String> chosenLeaderCards = new ArrayList<>();
-        synchronized (semaphore) {
+        synchronized (outSemaphore) {
             int cardsChosen = 0;
             boolean validSelection = true;
             System.out.println("You have to choose 2 leader cards!");
@@ -302,16 +304,40 @@ public class CLI implements UI {
 
     @Override
     public void displayLeaderCardDeck(ClientLeaderCardDeck clientLeaderCardDeck) {
-        synchronized (semaphore) {
+        synchronized (outSemaphore) {
             System.out.println(RepresentationBuilder.render(clientLeaderCardDeck));
         }
     }
 
     @Override
     public void displayWarehouse(ClientWarehouse warehouse) {
-        synchronized (semaphore){
+        synchronized (outSemaphore){
             System.out.println(RepresentationBuilder.render(warehouse));
         }
     }
+
+    public void startListening(ClientController controller){
+        if(gameStarted == false){
+            gameStarted = true;
+            new Thread(() -> {
+                synchronized (outSemaphore) {
+                    System.out.println(ANSI_BG_GREEN + "GAME HAS STARTED!" + ANSI_RESET);
+                    System.out.println(ANSI_BG_GREEN + "You can now type commands. Type 'help' for commands list." + ANSI_RESET);
+                }
+                while (true) {
+                    Scanner input = new Scanner(System.in);
+                    String requestedCommand = input.nextLine();
+                    controller.executeCommand(requestedCommand);
+                }
+            }).start();
+        }
+    }
+
+    public void displayError(String error){
+        synchronized (outSemaphore){
+            System.out.println(ANSI_BG_RED + error + ANSI_RESET);
+        }
+    }
+
 }
 

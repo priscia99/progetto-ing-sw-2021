@@ -62,4 +62,8 @@ public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
 
         notify(this);
     }
+
+    public void show(){
+        notify(this);
+    }
 }
