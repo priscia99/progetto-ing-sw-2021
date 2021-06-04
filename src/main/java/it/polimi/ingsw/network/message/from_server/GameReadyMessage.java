@@ -9,10 +9,7 @@ public class GameReadyMessage extends Message<ClientController> implements Seria
 
     private static final long serialVersionUID = 1L;
 
-    private boolean isReady;
-
-    public GameReadyMessage(boolean ready){
-        this.isReady = ready;
+    public GameReadyMessage(){
     }
 
     @Override

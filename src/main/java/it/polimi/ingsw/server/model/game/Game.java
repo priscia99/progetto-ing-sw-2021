@@ -116,6 +116,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     public void setFirstPlayer(){
         Collections.shuffle(this.players);
         players.get(1).setFirst(true);
+        notify(new PlayersOrderMessage(players));
     }
 
     public Player getCurrentPlayer(){
@@ -142,11 +143,8 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     }
 
     public void tryStart(){
-        boolean ready = isReady();
-        notify(new GameReadyMessage(ready));
-        if(ready){
-            setFirstPlayer();
-            notify(new PlayersOrderMessage(players));
+        if(isReady()) {
+            notify(new GameReadyMessage());
             nextTurn();
         }
     }

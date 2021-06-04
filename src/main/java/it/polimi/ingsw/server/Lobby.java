@@ -96,15 +96,6 @@ public class Lobby extends Observable<Message> {
             gameController.setupGame(players);
             game.addObserver(serverMessageEncoder);
             game.getPlayers().forEach((player)->{
-                // SPECIFIC
-//                ServerPlayerMessageEncoder playerMessageEncoder = new ServerPlayerMessageEncoder(this, player.getNickname());
-//                Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(playerMessageEncoder));
-//                player.getPlayerBoard().getFaithPath().addObserver(playerMessageEncoder);
-//                player.getPlayerBoard().getLeaderCardsDeck().addObserver(playerMessageEncoder);
-//                player.getPlayerBoard().getStrongbox().addObserver(playerMessageEncoder);
-//                player.getPlayerBoard().getWarehouse().addObserver(playerMessageEncoder);
-//                player.addObserver(playerMessageEncoder);
-                // GENERAL
                 Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(serverMessageEncoder));
                 player.getPlayerBoard().getFaithPath().addObserver(serverMessageEncoder);
                 player.getPlayerBoard().getLeaderCardsDeck().addObserver(serverMessageEncoder);

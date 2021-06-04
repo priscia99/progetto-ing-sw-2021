@@ -32,6 +32,7 @@ public class ServerController {
     }
 
     public void giveInitialAssets() {
+        game.setFirstPlayer();
         System.out.println("Giving leader cards to players...");
         game.giveLeaderCardsToPlayers();
         System.out.println("Giving resources to players...");
