@@ -169,6 +169,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
 
     public void giveInitialResources() {
         System.out.println("Number of players: " + players.size());
+        players.get(1).setInitialResourcesReady(true);
         if(players.size()>1){
             players.get(1).setInitialResourceToChoose(1);
             if(players.size()>2){
