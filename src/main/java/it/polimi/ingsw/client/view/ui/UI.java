@@ -20,7 +20,7 @@ public interface UI {
     void displayNewTurn(String player, Boolean myTurn);
     void displayLeaderCard(ClientLeaderCard clientLeaderCard);
     HashMap<ResourcePosition, ResourceType> chooseInitialResources(int toChoose);
-    ArrayList<String> chooseInitialLeaders();
+    ArrayList<String> chooseInitialLeaders(ArrayList<String> cardsIDs);
     void displayWarehouse(ClientWarehouse warehouse);
     void displayLeaderCardDeck(ClientLeaderCardDeck deck);
 }

@@ -271,13 +271,12 @@ public class CLI implements UI {
         return resources;
     }
 
-    public ArrayList<String> chooseInitialLeaders(){
+    public ArrayList<String> chooseInitialLeaders(ArrayList<String> cardsIDs){
         ArrayList<String> chosenLeaderCards = new ArrayList<>();
         synchronized (semaphore) {
             int cardsChosen = 0;
             boolean validSelection = true;
             System.out.println("You have to choose 2 leader cards!");
-            // TODO print leader cards
             while (cardsChosen < 2) {
                 String chosenCardId;
                 validSelection = true;
@@ -287,9 +286,12 @@ public class CLI implements UI {
                     chosenCardId = in.nextLine();
                     if (chosenLeaderCards.contains(chosenCardId)) {
                         validSelection = false;
-                        System.out.println("You cannot choose the same leader card!");
+                        System.out.println( CLI.ANSI_BG_RED + "You cannot choose the same leader card!" + CLI.ANSI_RESET);
                     }
-                    // TODO check if the id is valid (if player has a leader card with that id)
+                    else if(!cardsIDs.contains(chosenCardId)){
+                        validSelection = false;
+                        System.out.println(CLI.ANSI_BG_RED + "You must choose a valid leader card from your deck!" + CLI.ANSI_RESET);
+                    }
                 } while (!validSelection);
                 chosenLeaderCards.add(chosenCardId);
                 cardsChosen++;

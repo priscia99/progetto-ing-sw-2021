@@ -13,6 +13,7 @@ import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ClientController extends Observable<Message<ServerController>> {
 
@@ -40,7 +41,13 @@ public class ClientController extends Observable<Message<ServerController>> {
 
     public void chooseInitialLeaders(String username){
         if(username.equals(game.getMyUsername())){
-            notify(new ChosenInitialLeadersMessage(userInterface.chooseInitialLeaders(), game.getMyUsername()));
+            notify(new ChosenInitialLeadersMessage(
+                    userInterface.chooseInitialLeaders(
+                            game.getPlayerBoardMap().get(game.getMyUsername()).getClientLeaderCards().getClientLeaderCards()
+                                    .stream()
+                                    .map(card -> card.getId())
+                                    .collect(Collectors.toCollection(ArrayList::new))),
+                    game.getMyUsername()));
         }
     }
 
