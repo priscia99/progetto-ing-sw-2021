@@ -30,7 +30,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     public Game() {
         CustomLogger.getLogger().info("Creating Game");
         this.isLastRound = false;
-        this.currentPlayerIndex = 0;
+        this.currentPlayerIndex = -1;
         CustomLogger.getLogger().info("Game created");
     }
 
@@ -115,7 +115,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
 
     public void setFirstPlayer(){
         Collections.shuffle(this.players);
-        players.get(1).setFirst(true);
+        players.get(0).setFirst(true);
         notify(new PlayersOrderMessage(players));
     }
 
@@ -169,15 +169,15 @@ public class Game extends Observable<Message<ClientController>> implements Obser
 
     public void giveInitialResources() {
         System.out.println("Number of players: " + players.size());
-        players.get(1).setInitialResourcesReady(true);
+        players.get(0).setInitialResourcesReady(true);
         if(players.size()>1){
-            players.get(2).setInitialResourceToChoose(1);
+            players.get(1).setInitialResourceToChoose(1);
             if(players.size()>2){
-                players.get(3).setInitialResourceToChoose(1);
-                players.get(3).addFaithPoints(1);
+                players.get(2).setInitialResourceToChoose(1);
+                players.get(2).addFaithPoints(1);
                 if(players.size()>3){
-                    players.get(0).setInitialResourceToChoose(2);
-                    players.get(0).addFaithPoints(1);
+                    players.get(3).setInitialResourceToChoose(2);
+                    players.get(3).addFaithPoints(1);
                 }
             }
         }

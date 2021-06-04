@@ -88,7 +88,7 @@ public class Client {
                 try {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
-                        System.out.println("Ho ricevuto un: " + inputObject.getClass());
+                        // System.out.println("Ho ricevuto un: " + inputObject.getClass());
                         if(inputObject instanceof String){
                             //FIXME switch from String to ServiceMessage in auth
                             manageAuth((String) inputObject);   // re-directing to authentication manager;
