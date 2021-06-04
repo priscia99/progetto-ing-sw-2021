@@ -74,7 +74,8 @@ public class MockProvider {
         developmentCards.add(new DevelopmentCard(1, 1, null, Color.BLUE, null, "3"));
         developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null, "4"));
         developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null, "5"));
-        developmentCards.add(new DevelopmentCard(1, 3, null, Color.BLUE, null, "6"));
+        developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null, "6"));
+        developmentCards.add(new DevelopmentCard(1, 3, null, Color.BLUE, null, "7"));
         return developmentCards;
     }
 
