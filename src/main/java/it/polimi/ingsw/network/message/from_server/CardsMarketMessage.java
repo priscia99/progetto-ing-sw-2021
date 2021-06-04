@@ -17,6 +17,6 @@ public class CardsMarketMessage extends Message<ClientController> implements Ser
     }
 
     public void execute(ClientController target) {
-
+        
     }
 }

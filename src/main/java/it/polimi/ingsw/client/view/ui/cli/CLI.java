@@ -3,9 +3,7 @@ package it.polimi.ingsw.client.view.ui.cli;
 import java.util.*;
 
 import it.polimi.ingsw.client.controller.ClientController;
-import it.polimi.ingsw.client.model.ClientLeaderCard;
-import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
-import it.polimi.ingsw.client.model.ClientWarehouse;
+import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
@@ -309,6 +307,8 @@ public class CLI implements UI {
         }
     }
 
+
+
     @Override
     public void displayWarehouse(ClientWarehouse warehouse) {
         synchronized (outSemaphore){
@@ -336,6 +336,27 @@ public class CLI implements UI {
     public void displayError(String error){
         synchronized (outSemaphore){
             System.out.println(ANSI_BG_RED + error + ANSI_RESET);
+        }
+    }
+
+    @Override
+    public void displayMarbleMarket(ClientMarbleMarket market) {
+        synchronized (outSemaphore){
+            System.out.println(RepresentationBuilder.render(market));
+        }
+    }
+
+    @Override
+    public void displayStrongBox(ClientStrongbox strongbox) {
+        synchronized (outSemaphore){
+            System.out.println(RepresentationBuilder.render(strongbox));
+        }
+    }
+
+    @Override
+    public void displayFaithPath(ClientFaithPath path) {
+        synchronized (outSemaphore){
+            System.out.println(RepresentationBuilder.render(path));
         }
     }
 

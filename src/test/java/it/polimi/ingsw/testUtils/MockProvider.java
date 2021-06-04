@@ -33,6 +33,19 @@ public class MockProvider {
         );
     }
 
+    static public LeaderCard getLeaderCardMockWithId(String id){
+        return new LeaderCard(
+                5,
+                new DepotEffect(ResourceType.COIN),
+                new Requirement() {
+                    @Override
+                    public boolean isFulfilled(Player player) {
+                        return false;
+                    }
+                }, id
+        );
+    }
+
     static public Game getMockGame(){
         Game game = new Game();
         ArrayList<Player> players = getMockPlayers();
@@ -49,8 +62,8 @@ public class MockProvider {
 
     static public ArrayList<LeaderCard> getArrayListLeaderCardsMock(){
         ArrayList<LeaderCard> leaderCards = new ArrayList<>();
-        leaderCards.add(getLeaderCardMock());
-        leaderCards.add(getLeaderCardMock());
+        leaderCards.add(getLeaderCardMockWithId("3"));
+        leaderCards.add(getLeaderCardMockWithId("4"));
         return leaderCards;
     }
 

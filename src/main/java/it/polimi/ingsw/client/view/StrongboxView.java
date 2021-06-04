@@ -11,7 +11,7 @@ public class StrongboxView extends View implements Observer<ClientStrongbox> {
     }
 
     @Override
-    public void update(ClientStrongbox object) {
-
+    public void update(ClientStrongbox strongBox) {
+        userInterface.displayStrongBox(strongBox);
     }
 }
