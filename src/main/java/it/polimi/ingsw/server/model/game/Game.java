@@ -171,13 +171,13 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         System.out.println("Number of players: " + players.size());
         players.get(1).setInitialResourcesReady(true);
         if(players.size()>1){
-            players.get(1).setInitialResourceToChoose(1);
+            players.get(2).setInitialResourceToChoose(1);
             if(players.size()>2){
-                players.get(2).setInitialResourceToChoose(1);
-                players.get(2).addFaithPoints(1);
+                players.get(3).setInitialResourceToChoose(1);
+                players.get(3).addFaithPoints(1);
                 if(players.size()>3){
-                    players.get(3).setInitialResourceToChoose(2);
-                    players.get(3).addFaithPoints(1);
+                    players.get(0).setInitialResourceToChoose(2);
+                    players.get(0).addFaithPoints(1);
                 }
             }
         }
