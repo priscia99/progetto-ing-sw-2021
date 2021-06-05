@@ -16,10 +16,9 @@ public class PlayersOrderMessage extends Message<ClientController> implements Se
     public PlayersOrderMessage(ArrayList<Player> players) {
         this.playersOrder = new ArrayList<>();
         //First player is in position 1 of array
-        for(int i = 1; i<players.size(); i++){
+        for(int i = 0; i<players.size(); i++){
             playersOrder.add(players.get(i).getNickname());
         }
-        playersOrder.add(players.get(0).getNickname());
     }
 
     public void execute(ClientController target) {
