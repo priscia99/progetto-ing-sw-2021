@@ -336,6 +336,12 @@ public class CLI implements UI {
         }
     }
 
+    public void displayInfo(String info){
+        synchronized (outSemaphore){
+            System.out.println(ANSI_BLUE + info + ANSI_RESET);
+        }
+    }
+
     @Override
     public void displayMarbleMarket(ClientMarbleMarket market) {
         synchronized (outSemaphore){
@@ -357,9 +363,20 @@ public class CLI implements UI {
         }
     }
 
+    @Override
     public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck){
         synchronized (outSemaphore){
             System.out.println(RepresentationBuilder.render(deck));
+        }
+    }
+
+    @Override
+    public void displayOtherPlayersUsername(ArrayList<String> names) {
+        synchronized (outSemaphore){
+            StringBuilder playersList = new StringBuilder();
+            names.stream().forEach(player -> playersList.append(player).append(" | "));
+            playersList.delete(playersList.length()-3, playersList.length());
+            this.displayInfo("[" + playersList + "]");
         }
     }
 
@@ -409,10 +426,39 @@ public class CLI implements UI {
         // TODO fill this method with other commands
         switch (inputCommand.getFirst()){
             case "view":
-                // Call viewContent method in client controller giving him command parameters
-                targetController.viewContent(inputCommand.getSecond());
+                viewCommandHandler(inputCommand.getSecond(), targetController);
                 break;
         }
+    }
+
+    private void viewCommandHandler(HashMap<String, String> params, ClientController controller) {
+            String targetedPlayer = params.get("p");
+            String targetedContent = params.get("v");
+            try{
+                switch(targetedContent){
+                    case "leadercards":
+                        controller.viewLeaderCards(targetedPlayer);
+                        break;
+                    case "developmentcards":
+                        controller.viewDevelopmentCards(targetedPlayer);
+                        break;
+                    case "warehouse":
+                        controller.viewWarehouse(targetedPlayer);
+                        break;
+                    case "strongbox":
+                        controller.viewStrongbox(targetedPlayer);
+                        break;
+                    case "faithpath":
+                        controller.viewFaithPath(targetedPlayer);
+                        break;
+                    default:
+                        this.displayError("Input parameters are not correct");
+                        this.displayError("Choose between -v [leadercards | developmentcards | warehouse | strongbox | faithpath]");
+                }
+            }catch (Exception e){
+                this.displayError("The targeted player doesn't exists, choose between: ");
+                controller.viewOtherPlayersUsername();
+            }
     }
 
 }

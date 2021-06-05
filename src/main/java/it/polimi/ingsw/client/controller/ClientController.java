@@ -73,51 +73,28 @@ public class ClientController extends Observable<Message<ServerController>> {
         userInterface.startListening(this);
     }
 
-    public void executeCommand(String command){
-        if(command.contains("help")){
-            // TODO fill help
-        }
-        else if(command.contains("displayleadercards")){
-            game.getPlayerBoardMap().get(game.getMyUsername()).getClientLeaderCards().show();
-        }
-        else{
-            userInterface.displayError("Command not valid");
-        }
+    public void viewLeaderCards(String player){
+        game.getPlayerBoardMap().get(player).getClientLeaderCards().show();
     }
 
-    public void viewContent(HashMap<String, String> inputParameters){
-        String targetedPlayer = inputParameters.get("p");
-        String targeredContent = inputParameters.get("v");
-        // leadercards -- developmentcards -- warehouse -- strongbox -- faithpath
-        try{
-            switch(targeredContent){
-                case "leadercards":
-                    game.getPlayerBoardMap().get(targetedPlayer).getClientLeaderCards().show();
-                    break;
-                case "developmentcards":
-                    game.getPlayerBoardMap().get(targetedPlayer).getDevelopmentCards().show();
-                    break;
-                case "warehouse":
-                    game.getPlayerBoardMap().get(targetedPlayer).getWarehouse().show();
-                    break;
-                case "strongbox":
-                    game.getPlayerBoardMap().get(targetedPlayer).getStrongbox().show();
-                    break;
-                case "faithpath":
-                    game.getPlayerBoardMap().get(targetedPlayer).getFaithPath().show();
-                    break;
-                default:
-                    userInterface.displayError("Input parameters are not correct");
-                    userInterface.displayError("Choose between -v [leadercards | developmentcards | warehouse | strongbox | faithpath]");
-            }
-        }catch (Exception e){
-            StringBuilder playersList = new StringBuilder();
-            game.getPlayerBoardMap().keySet().stream().forEach(player -> playersList.append(player).append(" | "));
-            playersList.delete(playersList.length()-3, playersList.length());
-            // un-comment print stack trace if player is valid -> it's a serious error
-            // e.printStackTrace();
-            userInterface.displayError("The targeted player doesn't exixsts");
-            userInterface.displayError("Choose between -p [" + playersList + "]");
-        }
+    public void viewDevelopmentCards(String player){
+        game.getPlayerBoardMap().get(player).getDevelopmentCards().show();
+    }
+
+    public void viewWarehouse(String player){
+        game.getPlayerBoardMap().get(player).getWarehouse().show();
+    }
+
+    public void viewStrongbox(String player){
+        game.getPlayerBoardMap().get(player).getStrongbox().show();
+    }
+
+    public void viewFaithPath(String player){
+        game.getPlayerBoardMap().get(player).getFaithPath().show();
+    }
+
+    public void viewOtherPlayersUsername(){
+        ArrayList<String> usernames = new ArrayList<>(game.getPlayerBoardMap().keySet());
+        userInterface.displayOtherPlayersUsername(usernames);
     }
 }

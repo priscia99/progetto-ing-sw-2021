@@ -57,4 +57,5 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
     public void displayError(String string){
         notify(new Pair<>(string, false));
     }
+
 }

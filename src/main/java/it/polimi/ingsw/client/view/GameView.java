@@ -5,6 +5,8 @@ import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.utils.Pair;
 
+import java.util.ArrayList;
+
 public class GameView extends View implements Observer<Pair<String, Boolean>> {
 
     public GameView(UI userInterface) {

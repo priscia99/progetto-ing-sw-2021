@@ -60,10 +60,8 @@ public class Server {
 
        private void startLobbyIsFull(Lobby lobby) {
         if (lobby.isFull()) {
-            // start game
             lobby.startGame();
             lobby.sendBroadcast("Lobby completed: GAME STARTED");
-            // TODO: send model to views
         }
     }
 

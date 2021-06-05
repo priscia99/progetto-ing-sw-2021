@@ -24,8 +24,10 @@ public interface UI {
     void displayLeaderCardDeck(ClientLeaderCardDeck deck);
     void startListening(ClientController controller);
     void displayError(String error);
+    void displayInfo(String info);
     void displayMarbleMarket(ClientMarbleMarket market);
     void displayStrongBox(ClientStrongbox strongbox);
     void displayFaithPath(ClientFaithPath path);
     void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck);
+    void displayOtherPlayersUsername(ArrayList<String> usernames);
 }
