@@ -313,6 +313,18 @@ public class Player extends Observable<Message<ClientController>> {
                         .collect(Collectors.toCollection(ArrayList::new))));
     }
 
+    public int getVictoryPoints(){
+        int developmentCardsPoints = Arrays.stream(this.playerBoard.getDevelopmentCardsDecks()).mapToInt(deck-> deck.getDeck().stream().mapToInt(DevelopmentCard::getVictoryPoints).sum()).sum();
+        int faithPoints = this.playerBoard.getFaithPath().getVictoryPoints();
+        int leaderPoints = this.playerBoard.getLeaderCardsDeck().getLeaderCards().stream().mapToInt(leader-> leader.isActive() ? leader.getVictoryPoints() : 0).sum();
+        int resourcePoints = (int) (Math.floor(this.playerBoard.getStrongbox().getResourceCount()/5.0) + Math.floor(this.playerBoard.getWarehouse().getResourceCount()/5.0));
+        return developmentCardsPoints + faithPoints + leaderPoints + resourcePoints;
+    }
+
+    public int getResourceCount(){
+        return this.playerBoard.getStrongbox().getResourceCount() + this.playerBoard.getWarehouse().getResourceCount();
+    }
+
     /**
      *
      * @param index1

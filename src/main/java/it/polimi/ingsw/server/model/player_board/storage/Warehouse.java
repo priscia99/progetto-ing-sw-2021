@@ -127,4 +127,5 @@ public class Warehouse extends Storage {
             throw new IllegalArgumentException("Indexes must be in [0;2]");
         }
     }
+
 }

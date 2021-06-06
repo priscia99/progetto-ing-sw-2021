@@ -48,4 +48,8 @@ public abstract class Storage extends Observable<Message<ClientController>> {
      * @return the number of resources of that type
      */
     public abstract int countByResourceType(ResourceType resourceType);
+
+    public int getResourceCount(){
+        return this.resourceStocks.stream().mapToInt(ResourceStock::getQuantity).sum();
+    }
 }

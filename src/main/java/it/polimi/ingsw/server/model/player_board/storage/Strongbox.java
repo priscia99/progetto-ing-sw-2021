@@ -58,4 +58,6 @@ public class Strongbox extends Storage {
         return this.resourceStocks.stream()
                 .anyMatch(resourceStock -> resourceStock.getResourceType().equals(resourceType) && resourceStock.getQuantity() > 0);
     }
+
+
 }

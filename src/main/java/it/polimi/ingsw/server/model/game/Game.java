@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.game;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.exceptions.MissingMaxResourcesException;
 import it.polimi.ingsw.exceptions.UserNotFoundException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_server.*;
@@ -12,10 +13,7 @@ import it.polimi.ingsw.server.model.market.MarbleMarket;
 import it.polimi.ingsw.server.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.utils.CustomLogger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Game extends Observable<Message<ClientController>> implements Observer<Message<ClientController>>, Cloneable {
@@ -110,7 +108,21 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     }
 
     private void finalizeGame(){
-        //TODO: for each player calculate and set victory points
+        for (Player player : this.players) {
+            notify(new VictoryPointsMessage(player.getVictoryPoints(), player.getNickname()));
+        }
+        notify(new WinnerMessage(this.getWinnersUsername()));
+    }
+
+    private ArrayList<String> getWinnersUsername() throws MissingMaxResourcesException{
+        ArrayList<Player> sorted = this.players.stream().sorted(Comparator.comparing(Player::getVictoryPoints)).collect(Collectors.toCollection(ArrayList::new));
+        int maxVictoryPoints = sorted.get(0).getVictoryPoints();
+        sorted = sorted.stream().filter(player->player.getVictoryPoints() == maxVictoryPoints).collect(Collectors.toCollection(ArrayList::new));
+        OptionalInt maxResourcesResult = sorted.stream().mapToInt(Player::getResourceCount).max();
+        if(!maxResourcesResult.isPresent()) throw new MissingMaxResourcesException();
+        int maxResources = maxResourcesResult.getAsInt();
+        sorted = sorted.stream().filter(player->player.getResourceCount() == maxResources).collect(Collectors.toCollection(ArrayList::new));
+        return sorted.stream().map(Player::getNickname).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void setFirstPlayer(){
