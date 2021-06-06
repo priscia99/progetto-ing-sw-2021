@@ -125,4 +125,8 @@ public class ServerController {
             game.notifyError("Leader not found!", game.getCurrentPlayer().getNickname());
         }
     }
+
+    public void nextTurn(){
+        game.nextTurn();
+    }
 }

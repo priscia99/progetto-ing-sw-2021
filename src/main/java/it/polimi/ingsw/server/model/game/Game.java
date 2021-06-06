@@ -157,6 +157,8 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     public void tryStart(){
         if(isReady()) {
             notify(new GameReadyMessage());
+            notify(new CardsMarketMessage(getCardMarket()));
+            notify(new MarbleMarketMessage(getMarbleMarket()));
             nextTurn();
         }
     }

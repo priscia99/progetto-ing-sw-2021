@@ -1,16 +1,10 @@
 package it.polimi.ingsw.client.controller;
 
 import it.polimi.ingsw.client.Client;
-import it.polimi.ingsw.client.model.ClientCard;
-import it.polimi.ingsw.client.model.ClientGame;
-import it.polimi.ingsw.client.model.ClientLeaderCard;
-import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
+import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.client.view.ui.UI;
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.from_client.ChosenInitialLeadersMessage;
-import it.polimi.ingsw.network.message.from_client.ChosenInitialResourcesMessage;
-import it.polimi.ingsw.network.message.from_client.DropLeaderCardMessage;
-import it.polimi.ingsw.network.message.from_client.PlayLeaderCardMessage;
+import it.polimi.ingsw.network.message.from_client.*;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
@@ -88,6 +82,10 @@ public class ClientController extends Observable<Message<ServerController>> {
         this.getGame().getPlayerBoardMap().get(player).getWarehouse().setResourceDepots(resourceDepots);
     }
 
+    public void refreshCardMarket(ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> decks){
+        this.getGame().getClientCardsMarket().setDecks(decks);
+    }
+
     public void startListening(){
         this.getGame().setGameStarted(true);
         userInterface.startListening(this);
@@ -126,6 +124,14 @@ public class ClientController extends Observable<Message<ServerController>> {
         userInterface.displayTurnInfo(new ArrayList<>(game.getPlayerBoardMap().keySet()), game.getCurrentPlayer());
     }
 
+    public void viewMarbleMarket(){
+        userInterface.displayMarbleMarket(game.getClientMarbleMarket());
+    }
+
+    public void viewCardMarket(){
+        userInterface.displayCardMarket(game.getClientCardsMarket());
+    }
+
     public void viewPossibleActions(){
         boolean isMyTurn = game.getCurrentPlayer().equals(game.getMyUsername());
         userInterface.displayPossibleActions(isMyTurn, game.isMainActionDone());
@@ -144,6 +150,12 @@ public class ClientController extends Observable<Message<ServerController>> {
     public void dropLeaderCard(String cardId){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
             notify(new DropLeaderCardMessage(cardId));
+        }
+    }
+
+    public void endTurn(){
+        if(game.getCurrentPlayer().equals(game.getMyUsername())){
+            notify(new EndTurnMessage());
         }
     }
 }

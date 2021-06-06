@@ -21,6 +21,15 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
     private boolean isMainActionDone;
     private String myUsername;
     private ClientCardsMarket clientCardsMarket;
+
+    public ClientCardsMarket getClientCardsMarket() {
+        return clientCardsMarket;
+    }
+
+    public ClientMarbleMarket getClientMarbleMarket() {
+        return clientMarbleMarket;
+    }
+
     private ClientMarbleMarket clientMarbleMarket;
     private Map<String, ClientPlayerBoard> playerBoardMap = new HashMap<>();
     private boolean gameStarted = false;

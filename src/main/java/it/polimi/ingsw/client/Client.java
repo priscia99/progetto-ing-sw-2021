@@ -53,6 +53,12 @@ public class Client {
             game.getPlayerBoardMap().get(key).getWarehouse().addObserver(warehouseView);
         });
 
+        MarbleMarketView marbleMarketView = new MarbleMarketView(userInterface);
+        game.getClientMarbleMarket().addObserver(marbleMarketView);
+
+        CardsMarketView cardsMarketView = new CardsMarketView(userInterface);
+        game.getClientCardsMarket().addObserver(cardsMarketView);
+
         // adding development cards view observer to all players
         DevelopmentDeckView developmentDeckView = new DevelopmentDeckView(userInterface);
         game.getPlayerBoardMap().keySet().forEach(key -> {

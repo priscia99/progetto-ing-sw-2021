@@ -2,7 +2,9 @@ package it.polimi.ingsw.server.model.marble;
 
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
-public class Marble {
+import java.io.Serializable;
+
+public class Marble implements Serializable {
 
     private final ResourceType resourceType;
 

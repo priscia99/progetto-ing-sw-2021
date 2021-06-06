@@ -12,13 +12,16 @@ public class CLICommandsBuilder {
         toReturn.add(getActionCommand());
         toReturn.add(getActivateCommand());
         toReturn.add(getDropCommand());
+        toReturn.add(getMarbleMarketCommand());
+        toReturn.add(getCardMarketCommand());
+        toReturn.add(getEndTurnCommand());
         return toReturn;
     }
 
     private static Command getViewCommand(){
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("p", "[player] The name of the player whose content is to be displayed");
-        parameters.put("v", "[type] Type of content to be displayed");
+        parameters.put("t", "[type] Type of content to be displayed");
         return new Command(
                 "view",
                 "Displays the content of a certain player.",
@@ -42,12 +45,24 @@ public class CLICommandsBuilder {
     private static Command getActivateCommand(){
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("c", "[card-id] The id of the leader card to activate.");
-        return new Command("activate", "Activate leader card selected.", false, parameters);
+        return new Command("activate", "Activate leader card selected.", true, parameters);
     }
 
     private static Command getDropCommand(){
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("c", "[card-id] The id of the leader card to drop.");
-        return new Command("drop", "Drop leader card selected.", false, parameters);
+        return new Command("drop", "Drop leader card selected.", true, parameters);
+    }
+
+    private static Command getMarbleMarketCommand(){
+        return new Command("marblemarket", "View content of marble market", false, new HashMap<>());
+    }
+
+    private static Command getCardMarketCommand(){
+        return new Command("cardmarket", "View content of card market", false, new HashMap<>());
+    }
+
+    private static Command getEndTurnCommand(){
+        return new Command("endturn", "Ends turn", true, new HashMap<>());
     }
 }

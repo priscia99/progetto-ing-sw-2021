@@ -1,9 +1,10 @@
 package it.polimi.ingsw.client.model;
 
+import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.marble.*;
 import it.polimi.ingsw.server.model.market.*;
 
-public class ClientMarbleMarket {
+public class ClientMarbleMarket extends Observable<ClientMarbleMarket> {
 
     private Marble[][] onSale;
     private Marble notForSale;
@@ -18,11 +19,9 @@ public class ClientMarbleMarket {
         this.notForSale = notForSale;
     }
 
-    public void setOnSale(Marble[][] onSale) {
-        this.onSale = onSale;
-    }
 
-    public void setNotForSale(Marble notForSale) {
+    public void refreshMarbleMarket(Marble[][] onSale, Marble notForSale){
+        this.onSale = onSale;
         this.notForSale = notForSale;
     }
 

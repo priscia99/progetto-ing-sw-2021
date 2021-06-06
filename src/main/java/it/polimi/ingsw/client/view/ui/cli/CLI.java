@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.ui.cli;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
@@ -365,6 +366,13 @@ public class CLI implements UI {
     }
 
     @Override
+    public void displayCardMarket(ClientCardsMarket market) {
+        synchronized (outSemaphore){
+            System.out.println(RepresentationBuilder.render(market));
+        }
+    }
+
+    @Override
     public void displayPossibleActions(boolean isMyTurn, boolean isMainActionDone){
         if(!isMyTurn){
             displayInfo("Wait for your turn to make actions.");
@@ -427,12 +435,15 @@ public class CLI implements UI {
             case "actions" -> actionsCommandHandler(targetController);
             case "activate" -> activateCommandHandler(inputCommand.getSecond(), targetController);
             case "drop" -> dropCommandHandler(inputCommand.getSecond(), targetController);
+            case "marblemarket" -> marbleMarketCommandHandler(targetController);
+            case "cardmarket" -> cardMarketCommandHandler(targetController);
+            case "endturn" -> endTurnCommandHandler(targetController);
         }
     }
 
     private void viewCommandHandler(HashMap<String, String> params, ClientController controller) {
             String targetedPlayer = params.get("p");
-            String targetedContent = params.get("v");
+            String targetedContent = params.get("t");
             try{
                 switch (targetedContent) {
                     case "leadercards" -> controller.viewLeaderCards(targetedPlayer);
@@ -458,7 +469,7 @@ public class CLI implements UI {
                     Welcome to Master of Renaissance help desk.
                     To play the game, this are the available CLI commands:
                         
-                        View command, used to display game data.
+                        View command, used to display playerboard data.
                         Usage:
                         view -v <[developmentcards | leadercards | faithpath | warehouse | strongbox | marblemarket | cardmarket]> -p <playerUsername>
                         
@@ -470,6 +481,25 @@ public class CLI implements UI {
                         Usage:
                         actions
                         
+                        Activate leader card command, used to activate a leader card.
+                        Usage:
+                        activate -c <card-id>
+                        
+                        Drop leader card command, used to drop a leader card.
+                        Usage:
+                        drop -c <card-id>
+                        
+                        Marble market command, used to view content of marble market.
+                        Usage:
+                        marblemarket
+                        
+                        Card market command, used to view content of card market.
+                        Usage:
+                        cardmarket
+                        
+                        End turn command, used to end your turn.
+                        Usage:
+                        endturn
                 """
         );
     }
@@ -494,6 +524,18 @@ public class CLI implements UI {
     private void dropCommandHandler(HashMap<String, String> params, ClientController controller){
         String cardId = params.get("c");
         controller.dropLeaderCard(cardId);
+    }
+
+    private void marbleMarketCommandHandler(ClientController controller){
+        controller.viewMarbleMarket();
+    }
+
+    private void cardMarketCommandHandler(ClientController controller){
+        controller.viewCardMarket();
+    }
+
+    private void endTurnCommandHandler(ClientController controller){
+        controller.endTurn();
     }
 }
 

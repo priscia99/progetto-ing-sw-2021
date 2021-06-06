@@ -11,7 +11,7 @@ public class CardsMarketView extends View implements Observer<ClientCardsMarket>
     }
 
     @Override
-    public void update(ClientCardsMarket object) {
-
+    public void update(ClientCardsMarket market) {
+        userInterface.displayCardMarket(market);
     }
 }

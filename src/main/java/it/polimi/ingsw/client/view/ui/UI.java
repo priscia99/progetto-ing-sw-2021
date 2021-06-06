@@ -26,6 +26,7 @@ public interface UI {
     void displayError(String error);
     void displayInfo(String info);
     void displayMarbleMarket(ClientMarbleMarket market);
+    void displayCardMarket(ClientCardsMarket market);
     void displayStrongBox(ClientStrongbox strongbox);
     void displayFaithPath(ClientFaithPath path);
     void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck);

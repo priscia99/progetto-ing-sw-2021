@@ -1,11 +1,12 @@
 package it.polimi.ingsw.client.model;
 
+import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.card.*;
 import it.polimi.ingsw.server.model.market.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ClientCardsMarket{
+public class ClientCardsMarket extends Observable<ClientCardsMarket> {
     private ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> decks = new ArrayList<>();
 
     public ClientCardsMarket() {}
@@ -45,6 +46,7 @@ public class ClientCardsMarket{
 
     public void setDecks(ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> decks) {
         this.decks = decks;
+        notify(this);
     }
 
     public ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> getDecks() {
