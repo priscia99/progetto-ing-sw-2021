@@ -39,6 +39,7 @@ public class GameTest {
     public void testNextTurn(){
         game.setFirstPlayer();
         ArrayList<Player> players = game.getPlayers();
+        game.nextTurn();
         Assertions.assertTrue(players.get(0).equals(game.getCurrentPlayer()));
         game.nextTurn();
         Assertions.assertTrue(players.get(1).equals(game.getCurrentPlayer()));
@@ -50,7 +51,7 @@ public class GameTest {
     @DisplayName("Test game sets isFirst to first player")
     public void testSetFirstPlayer(){
         game.setFirstPlayer();
-        Assertions.assertTrue(game.getPlayers().get(1).isFirst());
+        Assertions.assertTrue(game.getPlayers().get(0).isFirst());
     }
 
     @Test
