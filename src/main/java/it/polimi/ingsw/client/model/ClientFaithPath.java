@@ -47,4 +47,8 @@ public class ClientFaithPath extends Observable<ClientFaithPath> {
     public void show(){
         notify(this);
     }
+
+    public void show(boolean toView){
+        if(toView) notify(this);
+    }
 }

@@ -235,8 +235,8 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         });
     }
 
-    public void notifyError(Exception exception){
-        notify(new ExceptionMessage(exception));
+    public void notifyError(String errorMessage, String player){
+        notify(new ExceptionMessage(errorMessage, player));
     }
 
 }

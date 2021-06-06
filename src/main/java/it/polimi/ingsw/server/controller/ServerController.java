@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.exceptions.InvalidActionException;
+import it.polimi.ingsw.network.message.from_server.ExceptionMessage;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
@@ -14,6 +15,7 @@ import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class ServerController {
 
@@ -56,8 +58,13 @@ public class ServerController {
         game.tryStart();
     }
     public void dropLeaderCard(String cardId) {
-        game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().removeLeaderCardById(cardId);
-        game.getCurrentPlayer().addFaithPoints(1);
+        Optional<LeaderCard> toDrop = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().stream().filter(c->c.getId().equals(cardId)).findFirst();
+        if(toDrop.isPresent()){
+            game.getCurrentPlayer().dropLeaderCardById(cardId);
+            game.getCurrentPlayer().addFaithPoints(1);
+        } else {
+            game.notifyError("Leader not found!", game.getCurrentPlayer().getNickname());
+        }
     }
 
     public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions) {
@@ -107,6 +114,15 @@ public class ServerController {
     }
 
     public void playLeaderCard(String cardId) {
-        game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().activateLeaderCardById(cardId);
+        Optional<LeaderCard> toActivate = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().stream().filter(c->c.getId().equals(cardId)).findFirst();
+        if(toActivate.isPresent()){
+            if(toActivate.get().getRequirement().isFulfilled(game.getCurrentPlayer())){
+                game.getCurrentPlayer().playLeaderCardById(cardId);
+            } else {
+               game.notifyError("Leader requirements are not fulfilled!", game.getCurrentPlayer().getNickname());
+            }
+        } else {
+            game.notifyError("Leader not found!", game.getCurrentPlayer().getNickname());
+        }
     }
 }

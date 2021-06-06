@@ -9,6 +9,16 @@ import java.util.*;
 public class ClientGame extends Observable<Pair<String, Boolean>> {
 
     private String currentPlayer;
+
+    public boolean isMainActionDone() {
+        return isMainActionDone;
+    }
+
+    public void setMainActionDone(boolean mainActionDone) {
+        isMainActionDone = mainActionDone;
+    }
+
+    private boolean isMainActionDone;
     private String myUsername;
     private ClientCardsMarket clientCardsMarket;
     private ClientMarbleMarket clientMarbleMarket;
@@ -38,7 +48,6 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
 
     public void setCurrentPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer;
-
         notify(new Pair<String, Boolean>(this.currentPlayer, this.currentPlayer.equals(this.myUsername)));
     }
 

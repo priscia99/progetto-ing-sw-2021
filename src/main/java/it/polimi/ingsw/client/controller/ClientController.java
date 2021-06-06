@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.controller;
 
 import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.model.ClientCard;
 import it.polimi.ingsw.client.model.ClientGame;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
@@ -8,6 +9,8 @@ import it.polimi.ingsw.client.view.ui.UI;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_client.ChosenInitialLeadersMessage;
 import it.polimi.ingsw.network.message.from_client.ChosenInitialResourcesMessage;
+import it.polimi.ingsw.network.message.from_client.DropLeaderCardMessage;
+import it.polimi.ingsw.network.message.from_client.PlayLeaderCardMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
@@ -31,6 +34,10 @@ public class ClientController extends Observable<Message<ServerController>> {
         game.setCurrentPlayer(player);
     }
 
+    public void setMainActionDone(boolean done){
+        game.setMainActionDone(done);
+    }
+
     public ClientGame getGame() {
         return game;
     }
@@ -47,7 +54,7 @@ public class ClientController extends Observable<Message<ServerController>> {
                     userInterface.chooseInitialLeaders(
                             game.getPlayerBoardMap().get(game.getMyUsername()).getClientLeaderCards().getClientLeaderCards()
                                     .stream()
-                                    .map(card -> card.getId())
+                                    .map(ClientCard::getId)
                                     .collect(Collectors.toCollection(ArrayList::new))),
                     game.getMyUsername()));
         }
@@ -62,6 +69,19 @@ public class ClientController extends Observable<Message<ServerController>> {
                 System.out.println(player + "'s leader cards have changed" );
         }
         this.getGame().getPlayerBoardMap().get(player).getClientLeaderCards().setClientLeaderCards(cards, displayToView);
+    }
+
+    public void refreshFaithPath(int faithPoints, ArrayList<Boolean> popeFavors, String player){
+        boolean displayToView = getGame().isGameStarted() || player.equals(getGame().getMyUsername());
+        if(displayToView){
+            if(player.equals(getGame().getMyUsername()))
+                System.out.println("Your faith path is changed!");
+            else
+                System.out.println(player + "'s faith path is changed" );
+        }
+        this.getGame().getPlayerBoardMap().get(player).getFaithPath().setPopeFavors(popeFavors);
+        this.getGame().getPlayerBoardMap().get(player).getFaithPath().setFaithPoints(faithPoints);
+        this.getGame().getPlayerBoardMap().get(player).getFaithPath().show(displayToView);
     }
 
     public void refreshWarehouse(ArrayList<ResourceDepot> resourceDepots, String player){
@@ -96,5 +116,34 @@ public class ClientController extends Observable<Message<ServerController>> {
     public void viewOtherPlayersUsername(){
         ArrayList<String> usernames = new ArrayList<>(game.getPlayerBoardMap().keySet());
         userInterface.displayOtherPlayersUsername(usernames);
+    }
+
+    public void viewHelpMessage(){
+        userInterface.displayHelpMessage();
+    }
+
+    public void viewTurnInfo(){
+        userInterface.displayTurnInfo(new ArrayList<>(game.getPlayerBoardMap().keySet()), game.getCurrentPlayer());
+    }
+
+    public void viewPossibleActions(){
+        boolean isMyTurn = game.getCurrentPlayer().equals(game.getMyUsername());
+        userInterface.displayPossibleActions(isMyTurn, game.isMainActionDone());
+    }
+
+    public void viewErrorMessage(String message){
+        userInterface.displayError(message);
+    }
+
+    public void activateLeaderCard(String cardId){
+        if(game.getCurrentPlayer().equals(game.getMyUsername())){
+            notify(new PlayLeaderCardMessage(cardId));
+        }
+    }
+
+    public void dropLeaderCard(String cardId){
+        if(game.getCurrentPlayer().equals(game.getMyUsername())){
+            notify(new DropLeaderCardMessage(cardId));
+        }
     }
 }

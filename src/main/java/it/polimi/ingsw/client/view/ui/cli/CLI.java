@@ -86,24 +86,17 @@ public class CLI implements UI {
     private final Integer outSemaphore = 0;
     private boolean gameStarted = false;
 
-    private ArrayList<Command> commands = new ArrayList<>();
+    private final ArrayList<Command> commands = new ArrayList<>();
     Scanner in = new Scanner(System.in);
 
-    public CLI(ArrayList<Command> commands) {
-        this.commands.addAll(commands);
+    public CLI() {
+        initCommands();
     }
 
-    public void execute(String key) throws UnknownCommandException {
-        Command target = commands.stream().filter(command -> command.identifiedBy(key)).findAny().orElse(null);
-        if (target == null) {
-            throw new UnknownCommandException(String.format("No command identified by '%s' exists", key));
-        }
-        // target.execute();
+    private void initCommands(){
+        this.commands.addAll(CLICommandsBuilder.getCommands());
     }
 
-    private void parseCommand(String command) {
-
-    }
 
     @Override
     public AuthData requestAuth(){
@@ -112,7 +105,7 @@ public class CLI implements UI {
             String playerUsername;
             String choice;
             System.out.println(TITLE);
-            System.out.printf("Enter an username:\n\t> ");
+            System.out.print("Enter an username:\n\t> ");
             playerUsername = in.nextLine();
             do {
                 System.out.print("Welcome, " + playerUsername + "! Would you like to join [J] or create [C] a lobby?\n\t> ");
@@ -151,15 +144,9 @@ public class CLI implements UI {
         synchronized (outSemaphore) {
             System.out.print("Failed to login! ");
             switch (errType) {
-                case "full_lobby":
-                    System.out.println("Full lobby!");
-                    break;
-                case "invalid_lobby":
-                    System.out.println("Invalid lobby!");
-                    break;
-                default:
-                    System.out.println("Generic error while connecting to server.");
-                    break;
+                case "full_lobby" -> System.out.println("Full lobby!");
+                case "invalid_lobby" -> System.out.println("Invalid lobby!");
+                default -> System.out.println("Generic error while connecting to server.");
             }
             System.out.println("Trying again...");
         }
@@ -221,21 +208,14 @@ public class CLI implements UI {
                             " [STONE | SERVANT | SHIELD | COIN]: \n\t> ");
                     tempResource = in.nextLine();
                     switch (tempResource) {
-                        case "STONE":
-                            resourceType = ResourceType.STONE;
-                            break;
-                        case "SERVANT":
-                            resourceType = ResourceType.SERVANT;
-                            break;
-                        case "SHIELD":
-                            resourceType = ResourceType.SHIELD;
-                            break;
-                        case "COIN":
-                            resourceType = ResourceType.COIN;
-                            break;
-                        default:
+                        case "STONE" -> resourceType = ResourceType.STONE;
+                        case "SERVANT" -> resourceType = ResourceType.SERVANT;
+                        case "SHIELD" -> resourceType = ResourceType.SHIELD;
+                        case "COIN" -> resourceType = ResourceType.COIN;
+                        default -> {
                             validSelection = false;
                             System.out.println("Please choose a valid resource type!");
+                        }
                     }
                 } while (!validSelection);
 
@@ -244,18 +224,13 @@ public class CLI implements UI {
                     System.out.print("Choose in which depot you want to put this resource [FIRST | SECOND | THIRD]: \n\t> ");
                     tempDepot = in.nextLine();
                     switch (tempDepot) {
-                        case "FIRST":
-                            resourcePosition = ResourcePosition.FIRST_DEPOT;
-                            break;
-                        case "SECOND":
-                            resourcePosition = ResourcePosition.SECOND_DEPOT;
-                            break;
-                        case "THIRD":
-                            resourcePosition = ResourcePosition.THIRD_DEPOT;
-                            break;
-                        default:
+                        case "FIRST" -> resourcePosition = ResourcePosition.FIRST_DEPOT;
+                        case "SECOND" -> resourcePosition = ResourcePosition.SECOND_DEPOT;
+                        case "THIRD" -> resourcePosition = ResourcePosition.THIRD_DEPOT;
+                        default -> {
                             validSelection = false;
                             System.out.println("Please choose a valid resource position!");
+                        }
                     }
                 } while (!validSelection);
                 resources.put(resourcePosition, resourceType);
@@ -273,7 +248,6 @@ public class CLI implements UI {
             System.out.println("You have to choose 2 leader cards!");
             while (cardsChosen < 2) {
                 String chosenCardId;
-                validSelection = true;
                 do {
                     validSelection = true;
                     System.out.print("Choose leader cards #" + (cardsChosen + 1) + " [type card ID]: \n\t> ");
@@ -311,7 +285,7 @@ public class CLI implements UI {
     }
 
     public void startListening(ClientController controller){
-        if(gameStarted == false){
+        if(!gameStarted){
             gameStarted = true;
             new Thread(() -> {
                 synchronized (outSemaphore) {
@@ -321,7 +295,7 @@ public class CLI implements UI {
                 while (true) {
                     Scanner input = new Scanner(System.in);
                     String requestedCommand = input.nextLine();
-                    Pair<String, HashMap<String, String>> formattedCommand = this.getFormatedCommand(requestedCommand);
+                    Pair<String, HashMap<String, String>> formattedCommand = this.getFormattedCommand(requestedCommand);
                     if(formattedCommand != null){
                         this.executeCommand(formattedCommand, controller);
                     }
@@ -374,13 +348,34 @@ public class CLI implements UI {
     public void displayOtherPlayersUsername(ArrayList<String> names) {
         synchronized (outSemaphore){
             StringBuilder playersList = new StringBuilder();
-            names.stream().forEach(player -> playersList.append(player).append(" | "));
+            names.forEach(player -> playersList.append(player).append(" | "));
             playersList.delete(playersList.length()-3, playersList.length());
             this.displayInfo("[" + playersList + "]");
         }
     }
 
-    public Pair<String, HashMap<String, String>> getFormatedCommand(String inputCommand){
+    @Override
+    public void displayTurnInfo(ArrayList<String> names, String current){
+        synchronized (outSemaphore){
+            StringBuilder playersList = new StringBuilder();
+            names.forEach(player -> playersList.append(player).append(" -> "));
+            this.displayInfo("[" + playersList + "]");
+            this.displayInfo("Current player is: " + current);
+        }
+    }
+
+    @Override
+    public void displayPossibleActions(boolean isMyTurn, boolean isMainActionDone){
+        if(!isMyTurn){
+            displayInfo("Wait for your turn to make actions.");
+        } else {
+            displayInfo("Possible actions:");
+            String actions = isMainActionDone ? "activate | drop" : "activate | drop | produce | buy | pick";
+            displayInfo(actions);
+        }
+    }
+
+    public Pair<String, HashMap<String, String>> getFormattedCommand(String inputCommand){
 
         if(inputCommand.equalsIgnoreCase("") || inputCommand.equalsIgnoreCase("\n")){
             // The given command is empty
@@ -390,7 +385,7 @@ public class CLI implements UI {
         // Split the command string and check if the given command exists
         String commandKey = inputCommand.split(" ")[0]; // First part of the string (command key)
         Command requestedCommand = null;
-        if(commands.stream().map(com -> com.getKey()).noneMatch(key -> key.equalsIgnoreCase(commandKey))){
+        if(commands.stream().map(Command::getKey).noneMatch(key -> key.equalsIgnoreCase(commandKey))){
             this.displayError("The given command doesn't exist");
             return null;
         } else{
@@ -400,18 +395,20 @@ public class CLI implements UI {
 
         // Split parameters and create hash map
         HashMap<String, String> inputCommandParameters = new HashMap<>();
-        int inputParametersNumber = 0;
         inputCommand = inputCommand.replace(inputCommand.split("-")[0] + "-", "");
-        String[] stringParameters = inputCommand.split("-");
-        try {
-            for (String par : stringParameters) {
-                String parKey = par.split(" " )[0];
-                String parValue = par.split(" " )[1];
-                inputCommandParameters.put(parKey, parValue);
+        if(!inputCommand.equals(requestedCommand.getKey())) {
+            String[] stringParameters = inputCommand.split("-");
+            try {
+                for (String par : stringParameters) {
+                    String parKey = par.split(" " )[0];
+                    String parValue = par.split(" " )[1];
+                    inputCommandParameters.put(parKey, parValue);
+                }
+            }catch (Exception e){
+                displayError("Command parsing error. Check its format again");
             }
-        }catch (Exception e){
-            displayError("Command parsing error. Check its format again");
         }
+
 
         // Check if all parameters coincide with requested parameters
         if(!inputCommandParameters.keySet().equals(requestedCommand.getParameters().keySet())){
@@ -423,11 +420,13 @@ public class CLI implements UI {
     }
 
     public void executeCommand(Pair<String, HashMap<String, String>> inputCommand, ClientController targetController){
-        // TODO fill this method with other commands
-        switch (inputCommand.getFirst()){
-            case "view":
-                viewCommandHandler(inputCommand.getSecond(), targetController);
-                break;
+        switch (inputCommand.getFirst()) {
+            case "view" -> viewCommandHandler(inputCommand.getSecond(), targetController);
+            case "turn" -> turnCommandHandler(targetController);
+            case "help" -> helpCommandHandler(targetController);
+            case "actions" -> actionsCommandHandler(targetController);
+            case "activate" -> activateCommandHandler(inputCommand.getSecond(), targetController);
+            case "drop" -> dropCommandHandler(inputCommand.getSecond(), targetController);
         }
     }
 
@@ -435,25 +434,16 @@ public class CLI implements UI {
             String targetedPlayer = params.get("p");
             String targetedContent = params.get("v");
             try{
-                switch(targetedContent){
-                    case "leadercards":
-                        controller.viewLeaderCards(targetedPlayer);
-                        break;
-                    case "developmentcards":
-                        controller.viewDevelopmentCards(targetedPlayer);
-                        break;
-                    case "warehouse":
-                        controller.viewWarehouse(targetedPlayer);
-                        break;
-                    case "strongbox":
-                        controller.viewStrongbox(targetedPlayer);
-                        break;
-                    case "faithpath":
-                        controller.viewFaithPath(targetedPlayer);
-                        break;
-                    default:
+                switch (targetedContent) {
+                    case "leadercards" -> controller.viewLeaderCards(targetedPlayer);
+                    case "developmentcards" -> controller.viewDevelopmentCards(targetedPlayer);
+                    case "warehouse" -> controller.viewWarehouse(targetedPlayer);
+                    case "strongbox" -> controller.viewStrongbox(targetedPlayer);
+                    case "faithpath" -> controller.viewFaithPath(targetedPlayer);
+                    default -> {
                         this.displayError("Input parameters are not correct");
                         this.displayError("Choose between -v [leadercards | developmentcards | warehouse | strongbox | faithpath]");
+                    }
                 }
             }catch (Exception e){
                 this.displayError("The targeted player doesn't exists, choose between: ");
@@ -461,5 +451,49 @@ public class CLI implements UI {
             }
     }
 
+    @Override
+    public void displayHelpMessage(){
+        this.displayInfo(
+                """
+                    Welcome to Master of Renaissance help desk.
+                    To play the game, this are the available CLI commands:
+                        
+                        View command, used to display game data.
+                        Usage:
+                        view -v <[developmentcards | leadercards | faithpath | warehouse | strongbox | marblemarket | cardmarket]> -p <playerUsername>
+                        
+                        Turn command, used to display turn order and current player.
+                        Usage:
+                        turn
+                        
+                        Actions command, used to display possible actions.
+                        Usage:
+                        actions
+                        
+                """
+        );
+    }
+
+    private void helpCommandHandler(ClientController controller){
+        controller.viewHelpMessage();
+    }
+
+    private void turnCommandHandler(ClientController controller){
+        controller.viewTurnInfo();
+    }
+
+    private void actionsCommandHandler(ClientController controller){
+        controller.viewPossibleActions();
+    }
+
+    private void activateCommandHandler(HashMap<String, String> params, ClientController controller){
+        String cardId = params.get("c");
+        controller.activateLeaderCard(cardId);
+    }
+
+    private void dropCommandHandler(HashMap<String, String> params, ClientController controller){
+        String cardId = params.get("c");
+        controller.dropLeaderCard(cardId);
+    }
 }
 

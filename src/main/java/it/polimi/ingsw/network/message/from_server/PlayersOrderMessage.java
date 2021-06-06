@@ -21,6 +21,8 @@ public class PlayersOrderMessage extends Message<ClientController> implements Se
     }
 
     public void execute(ClientController target) {
+        //TODO: reorder map
+        //target.getGame().getPlayerBoardMap().
     }
 
 }

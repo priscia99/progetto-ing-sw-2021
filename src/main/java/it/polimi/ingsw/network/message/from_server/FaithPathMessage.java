@@ -13,12 +13,13 @@ public class FaithPathMessage extends Message<ClientController> implements Seria
     private final int faithPoints;
     private final ArrayList<Boolean> popeFavors;
 
-    public FaithPathMessage(int faithPoints, ArrayList<Boolean> popeFavors) {
+    public FaithPathMessage(int faithPoints, ArrayList<Boolean> popeFavors, String username) {
+        super.setPlayerUsername(username);
         this.faithPoints = faithPoints;
         this.popeFavors = popeFavors;
     }
 
     public void execute(ClientController target) {
-
+        target.refreshFaithPath(faithPoints, popeFavors, super.playerUsername);
     }
 }

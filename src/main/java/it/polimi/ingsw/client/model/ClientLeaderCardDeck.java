@@ -27,6 +27,11 @@ public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
         return this.clientLeaderCards.get(index);
     }
 
+    public void activateById(String id){
+        this.clientLeaderCards.stream().filter(c->c.getId().equals(id)).findFirst().get().setActive(true);
+        notify(this);
+    }
+
     public void addCard(ClientLeaderCard card) {
         this.clientLeaderCards.add(card);
 

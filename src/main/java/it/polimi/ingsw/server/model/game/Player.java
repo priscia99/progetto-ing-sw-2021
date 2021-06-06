@@ -101,6 +101,7 @@ public class Player extends Observable<Message<ClientController>> {
 
     public void setHasDoneMainAction(boolean hasDoneMainAction) {
         this.hasDoneMainAction = hasDoneMainAction;
+        notify(new MainActionDoneMessage(hasDoneMainAction));
     }
 
 
@@ -272,30 +273,17 @@ public class Player extends Observable<Message<ClientController>> {
         return colors;
     }
 
-    /**
-     *
-     * @param index
-     */
-    public void dropLeaderCard(int index) {
-        // TODO fill
+    public void dropLeaderCardById(String id) {
+        this.playerBoard.getLeaderCardsDeck().removeLeaderCardById(id);
+        notify(new LeaderCardsMessage(this.playerBoard.getLeaderCardsDeck().getLeaderCards(), username));
     }
 
-    /**
-     *
-     * @param index
-     */
-    public void playLeaderCard(int index) {
-        // TODO fill
+
+    public void playLeaderCardById(String cardId) {
+        this.playerBoard.getLeaderCardsDeck().activateLeaderCardById(cardId);
+        notify(new LeaderCardsMessage(this.getPlayerBoard().getLeaderCardsDeck().getLeaderCards(), username));
     }
 
-    /**
-     *
-     * @param index
-     * @param card
-     */
-    public void addDevelopmentCard(int index, DevelopmentCard card) {
-        // TODO fill
-    }
 
 
     /**
@@ -310,7 +298,7 @@ public class Player extends Observable<Message<ClientController>> {
                 Arrays.stream(faithPath.getCells())
                         .filter(cell -> cell instanceof PopeCell)
                         .map(cell -> ((PopeCell) cell).getFavor().isUsed())
-                        .collect(Collectors.toCollection(ArrayList::new))));
+                        .collect(Collectors.toCollection(ArrayList::new)), username));
     }
 
     public int getVictoryPoints(){

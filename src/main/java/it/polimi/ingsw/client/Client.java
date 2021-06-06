@@ -38,6 +38,9 @@ public class Client {
         // adding encoder to observers list
         controller.addObserver(clientMessageEncoder);
 
+        GameView gameView = new GameView(userInterface);
+        game.addObserver(gameView);
+
         // adding leader cards view observer to all players
         LeaderDeckView leaderDeckView = new LeaderDeckView(userInterface);
         game.getPlayerBoardMap().keySet().forEach(key -> {

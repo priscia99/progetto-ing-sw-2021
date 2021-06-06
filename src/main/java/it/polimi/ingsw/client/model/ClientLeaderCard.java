@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.model.card.requirement.*;
 import it.polimi.ingsw.server.model.card.effect.*;
 public class ClientLeaderCard extends ClientCard implements ClientAsset {
 
-    private final boolean active;
+    private boolean active;
 
     public ClientLeaderCard(LeaderCard leaderCard) {
         super(leaderCard.getId(), leaderCard.getRequirement(), leaderCard.getEffect(), leaderCard.getVictoryPoints());
@@ -19,6 +19,10 @@ public class ClientLeaderCard extends ClientCard implements ClientAsset {
 
     public boolean isActive() {
         return active;
+    }
+
+    public void setActive(boolean active){
+        this.active = active;
     }
 
     @Override

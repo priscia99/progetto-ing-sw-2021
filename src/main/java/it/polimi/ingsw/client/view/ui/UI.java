@@ -30,4 +30,7 @@ public interface UI {
     void displayFaithPath(ClientFaithPath path);
     void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck);
     void displayOtherPlayersUsername(ArrayList<String> usernames);
+    void displayHelpMessage();
+    void displayTurnInfo(ArrayList<String> names, String current);
+    void displayPossibleActions(boolean myTurn, boolean mainActionDone);
 }
