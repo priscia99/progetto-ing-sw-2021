@@ -158,4 +158,10 @@ public class ClientController extends Observable<Message<ServerController>> {
             notify(new EndTurnMessage());
         }
     }
+
+    public void swapDepots(int first, int second){
+        if(game.getCurrentPlayer().equals(game.getMyUsername())){
+            notify(new SwapDepotsMessage(first, second));
+        }
+    }
 }

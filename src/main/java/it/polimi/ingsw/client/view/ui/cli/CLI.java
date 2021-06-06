@@ -438,6 +438,7 @@ public class CLI implements UI {
             case "marblemarket" -> marbleMarketCommandHandler(targetController);
             case "cardmarket" -> cardMarketCommandHandler(targetController);
             case "endturn" -> endTurnCommandHandler(targetController);
+            case "swap" -> swapCommandHandler(inputCommand.getSecond(), targetController);
         }
     }
 
@@ -500,6 +501,10 @@ public class CLI implements UI {
                         End turn command, used to end your turn.
                         Usage:
                         endturn
+                        
+                        Swap depots command, used to move resources inside your warehouse.
+                        Usage:
+                        swap -a <first-depot-index> -b <second-depot-index>
                 """
         );
     }
@@ -536,6 +541,12 @@ public class CLI implements UI {
 
     private void endTurnCommandHandler(ClientController controller){
         controller.endTurn();
+    }
+
+    private void swapCommandHandler(HashMap<String, String> params, ClientController controller){
+        int first = Integer.parseInt(params.get("a"));
+        int second = Integer.parseInt(params.get("b"));
+        controller.swapDepots(first, second);
     }
 }
 

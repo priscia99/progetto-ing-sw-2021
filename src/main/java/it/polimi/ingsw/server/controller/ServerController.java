@@ -126,6 +126,10 @@ public class ServerController {
         }
     }
 
+    public void swapDepots(int first, int second){
+        game.getCurrentPlayer().swapDepots(first, second);
+    }
+
     public void nextTurn(){
         game.nextTurn();
     }
