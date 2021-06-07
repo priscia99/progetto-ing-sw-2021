@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
+import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
@@ -17,6 +18,7 @@ import it.polimi.ingsw.server.model.resource.ResourceType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ServerController {
 
@@ -90,7 +92,30 @@ public class ServerController {
     }
 
     public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions) {
-        if(game.getCurrentPlayer().hasDoneMainAction()) throw new InvalidActionException();
+        Player currentPlayer = game.getCurrentPlayer();
+        if(currentPlayer.hasDoneMainAction()) {
+            game.notifyError("You have already done main action this turn!", game.getCurrentPlayer().getNickname());
+            return;
+        }
+        ArrayList<Marble> validateSelection = game.getMarbleMarket().getSelectedMarbles(marbleSelection);
+        Warehouse validateWarehouse = currentPlayer.getPlayerBoard().getWarehouse().getCopy();
+        for(int i = 0; i<validateSelection.size(); i++){
+            ResourceType resourceToAdd = validateSelection.get(i).getResourceType();
+            ResourcePosition selectedPosition = positions.get(i);
+            if(selectedPosition != ResourcePosition.DROPPED){
+                if(selectedPosition == ResourcePosition.STRONG_BOX){
+                    game.notifyError("Cannot insert resources in strongbox!", currentPlayer.getNickname());
+                    return;
+                }
+                try{
+                    validateWarehouse.addToDepot(selectedPosition.ordinal(), resourceToAdd);
+                } catch(Exception e){
+                    game.notifyError("Cannot insert selected marbles in those position!", currentPlayer.getNickname());
+                    return;
+                }
+            }
+        }
+
         ArrayList<Marble> selectedMarbles = game.getMarbleMarket().sell(marbleSelection);
         for(int i = 0; i<selectedMarbles.size(); i++){
             ResourceType resourceToAdd = selectedMarbles.get(i).getResourceType();
@@ -98,36 +123,36 @@ public class ServerController {
             if(selectedPosition == ResourcePosition.DROPPED){
                 game.currentPlayerDropsResource();
             } else {
-                game.getCurrentPlayer().addResourceToDepot(resourceToAdd, selectedPosition.ordinal());
+                currentPlayer.addResourceToDepot(resourceToAdd, selectedPosition.ordinal());
             }
         }
-        game.getCurrentPlayer().setHasDoneMainAction(true);
+        currentPlayer.setHasDoneMainAction(true);
     }
 
     public void startProduction(HashMap<ResourcePosition, ResourceStock> consumedResources, ArrayList<ProductionEffect> productionsToActivate) {
-        if(game.getCurrentPlayer().hasDoneMainAction()) throw new InvalidActionException();
-        consumedResources.keySet().forEach((resourcePosition)->{
-            switch (resourcePosition){
-                case DROPPED: game.currentPlayerDropsResource(); break;
-                case STRONG_BOX:
-                    for(int i = 0; i<consumedResources.get(resourcePosition).getQuantity(); i++){
-                        game.getCurrentPlayer()
-                                .getPlayerBoard()
-                                .getStrongbox()
-                                .removeResource(consumedResources.get(resourcePosition).getResourceType());
-                    }
-                    break;
-                default:
-                    for(int i = 0; i<consumedResources.get(resourcePosition).getQuantity(); i++){
-                        game.getCurrentPlayer()
-                                .getPlayerBoard()
-                                .getWarehouse()
-                                .removeFromDepot(resourcePosition.ordinal(), consumedResources.get(resourcePosition).getResourceType());
-                    }
-            }
-        });
-        ArrayList<ProductionEffect> productionsSelected = productionsToActivate;
-        for(ProductionEffect productionToActivate : productionsSelected){
+        Player currentPlayer = game.getCurrentPlayer();
+        if(currentPlayer.hasDoneMainAction()) {
+            game.notifyError("You have already done main action this turn!", game.getCurrentPlayer().getNickname());
+            return;
+        }
+
+        ArrayList<ResourceStock> inStocks = new ArrayList<>();
+        for (ProductionEffect productionEffect : productionsToActivate) {
+            inStocks.addAll(productionEffect.getInStocks());
+        }
+        ResourceRequirement globalProductionsRequirement = ResourceRequirement.merge(inStocks);
+        if(!currentPlayer.canConsume(consumedResources)){
+            game.notifyError("You can't consume resources defined, check them and try again!", currentPlayer.getNickname());
+            return;
+        }
+
+        if(!globalProductionsRequirement.isFulfilled(consumedResources)){
+            game.notifyError("Selected resources does not correspond to those requested by productions!", currentPlayer.getNickname());
+            return;
+        }
+
+        currentPlayer.consumeResources(consumedResources);
+        for(ProductionEffect productionToActivate : productionsToActivate){
             productionToActivate.getOutStocks().forEach(
                     resourcePile -> game.getCurrentPlayer().addResourcesToStrongBox(resourcePile)
             );

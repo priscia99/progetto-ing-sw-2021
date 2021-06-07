@@ -62,4 +62,20 @@ public class ResourceRequirement extends Requirement implements Serializable {
         String resourceString = ResourceStock.stocksToString(new ArrayList<>(resourceStocks));
         return String.format(RESOURCE_REQUIREMENT_FORMAT, resourceString);
     }
+
+    static public ResourceRequirement merge(ArrayList<ResourceStock> requirements){
+        ArrayList<ResourceStock> stocks = new ArrayList<>();
+
+        requirements.forEach(stock->{
+
+                Optional<ResourceStock> resourceTypeStock = stocks.stream()
+                        .filter(s->s.getResourceType().equals(stock.getResourceType())).findFirst();
+                if(resourceTypeStock.isPresent()){
+                    resourceTypeStock.get().incrementResource(stock.getResourceType(), stock.getQuantity());
+                } else {
+                    stocks.add(stock);
+                }
+        });
+        return new ResourceRequirement(stocks);
+    }
 }

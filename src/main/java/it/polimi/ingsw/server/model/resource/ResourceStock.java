@@ -40,6 +40,13 @@ public class ResourceStock implements Serializable {
         this.quantity++;
     }
 
+    public void incrementResource(ResourceType resourceType, int quantity){
+        if (!resourceType.equals(this.resourceType)) {
+            throw new IllegalResourceException();
+        }
+        this.quantity+=quantity;
+    }
+
     public void decrementResource(ResourceType resourceType) {
         if (!resourceType.equals(this.resourceType)) {
             throw new IllegalResourceException();

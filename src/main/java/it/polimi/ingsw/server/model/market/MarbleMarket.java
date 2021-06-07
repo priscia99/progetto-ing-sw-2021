@@ -35,6 +35,17 @@ public class MarbleMarket extends Observable<MarbleMarket> {
         return notForSale;
     }
 
+    public ArrayList<Marble> getSelectedMarbles(MarbleSelection selection){
+        int index = selection.getIndex();
+        if (selection.getOrientation().equals(Orientation.HORIZONTAL)) {
+            return new ArrayList<>(Arrays.asList(this.onSale[index]));
+        } else {
+            return Arrays.stream(this.onSale)
+                    .map(marbles -> marbles[index])
+                    .collect(Collectors.toCollection(ArrayList::new));
+        }
+    }
+
     public ArrayList<Marble> sell(MarbleSelection selection) {
         if (selection.getOrientation().equals(Orientation.HORIZONTAL)) {
             int index = selection.getIndex();

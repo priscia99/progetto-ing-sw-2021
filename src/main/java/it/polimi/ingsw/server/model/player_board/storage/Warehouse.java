@@ -35,6 +35,15 @@ public class Warehouse extends Storage {
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
     }
 
+    public Warehouse getCopy(){
+        Warehouse toReturn = new Warehouse();
+        for(int i = 0; i<3; i++){
+            int quantityToAdd = this.resourceStocks.get(i).getQuantity();
+            for(int j=0; j<quantityToAdd; j++) toReturn.addToDepot(i, resourceStocks.get(i).getResourceType());
+        }
+        return toReturn;
+    }
+
     /**
      * Returns the depot that matches with the address given as input
      * @param index index of the depot to return
