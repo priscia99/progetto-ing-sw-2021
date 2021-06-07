@@ -164,4 +164,10 @@ public class ClientController extends Observable<Message<ServerController>> {
             notify(new SwapDepotsMessage(first, second));
         }
     }
+
+    public void buyDevelopmentCard(){
+        if(game.getCurrentPlayer().equals(game.getMyUsername())){
+            //notify(new BuyDevelopmentCardMessage());
+        }
+    }
 }

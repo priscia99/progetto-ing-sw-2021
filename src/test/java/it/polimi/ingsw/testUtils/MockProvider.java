@@ -27,7 +27,7 @@ public class MockProvider {
                 new Requirement() {
                     @Override
                     public boolean isFulfilled(Player player) {
-                        return false;
+                        return true;
                     }
                 }, "1"
         );

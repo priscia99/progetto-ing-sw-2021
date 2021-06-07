@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model.player_board.storage;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
@@ -51,5 +52,11 @@ public abstract class Storage extends Observable<Message<ClientController>> {
 
     public int getResourceCount(){
         return this.resourceStocks.stream().mapToInt(ResourceStock::getQuantity).sum();
+    }
+
+    public void consume(ResourceStock toConsume){
+        ResourceStock consumed = this.resourceStocks.stream().filter(resourceStock -> resourceStock.getResourceType().equals(toConsume.getResourceType()))
+                .findFirst().get();
+        for(int i = 0; i<toConsume.getQuantity(); i++) consumed.decrementResource(toConsume.getResourceType());
     }
 }

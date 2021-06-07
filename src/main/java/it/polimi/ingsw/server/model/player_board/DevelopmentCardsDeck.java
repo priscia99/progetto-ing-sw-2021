@@ -48,8 +48,6 @@ public class DevelopmentCardsDeck extends Observable<Message<ClientController>> 
             throw new IllegalArgumentException("The development card level is not valid for this deck");
         }
         deck.add(developmentCard);
-
-        notify(new DevelopmentCardsMessage(deck));
     }
 
     /**
@@ -75,5 +73,11 @@ public class DevelopmentCardsDeck extends Observable<Message<ClientController>> 
     public DevelopmentCard getTopCard() {
         // Top card is located in index size-1 (last array index)
         return deck.get(deck.size()-1);
+    }
+
+    public boolean canAddCard(DevelopmentCard card){
+        boolean isFirstLevelOne =  (deck.size() == 0 && card.getLevel() == 1);
+        boolean hasCorrectLevel = (deck.size() != 0 && getTopCard().getLevel() == card.getLevel()-1);
+        return !this.isFull() && (isFirstLevelOne || hasCorrectLevel);
     }
 }

@@ -13,21 +13,19 @@ import java.util.stream.Collectors;
 public class DevelopmentCardsMessage extends Message<ClientController> implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    private int index = 0;  // FIXME link to actual stack
-    private ArrayList<ClientDevelopmentCard> developmentCards;
+    private int index;
+    private ClientDevelopmentCard developmentCard;
 
-    public DevelopmentCardsMessage(ArrayList<DevelopmentCard> developmentCards) {
-        this.developmentCards = developmentCards
-                .stream()
-                .map(ClientDevelopmentCard::new)
-                .collect(Collectors.toCollection(ArrayList::new));
+
+    public DevelopmentCardsMessage(DevelopmentCard developmentCard, int index, String username) {
+        super.setPlayerUsername(username);
+        this.index = index;
+        this.developmentCard = new ClientDevelopmentCard(developmentCard);
     }
 
     public void execute(ClientController target) {
-//        String currentPlayer = target.getGame().getCurrentPlayer();
-//        developmentCards.forEach(clientDevelopmentCard -> {
-//            target.getGame().getPlayerBoardMap().get(currentPlayer)
-//                            .getDevelopmentCards().get(index).add(clientDevelopmentCard);
-//        });
+         String currentPlayer = target.getGame().getCurrentPlayer();
+         target.getGame().getPlayerBoardMap().get(currentPlayer)
+                .getDevelopmentCards().getDeck(index).add(developmentCard);
     }
 }

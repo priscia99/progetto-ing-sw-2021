@@ -439,6 +439,7 @@ public class CLI implements UI {
             case "cardmarket" -> cardMarketCommandHandler(targetController);
             case "endturn" -> endTurnCommandHandler(targetController);
             case "swap" -> swapCommandHandler(inputCommand.getSecond(), targetController);
+            case "buy" -> buyCommandHandler(inputCommand.getSecond(), targetController);
         }
     }
 
@@ -466,46 +467,7 @@ public class CLI implements UI {
     @Override
     public void displayHelpMessage(){
         this.displayInfo(
-                """
-                    Welcome to Master of Renaissance help desk.
-                    To play the game, this are the available CLI commands:
-                        
-                        View command, used to display playerboard data.
-                        Usage:
-                        view -v <[developmentcards | leadercards | faithpath | warehouse | strongbox | marblemarket | cardmarket]> -p <playerUsername>
-                        
-                        Turn command, used to display turn order and current player.
-                        Usage:
-                        turn
-                        
-                        Actions command, used to display possible actions.
-                        Usage:
-                        actions
-                        
-                        Activate leader card command, used to activate a leader card.
-                        Usage:
-                        activate -c <card-id>
-                        
-                        Drop leader card command, used to drop a leader card.
-                        Usage:
-                        drop -c <card-id>
-                        
-                        Marble market command, used to view content of marble market.
-                        Usage:
-                        marblemarket
-                        
-                        Card market command, used to view content of card market.
-                        Usage:
-                        cardmarket
-                        
-                        End turn command, used to end your turn.
-                        Usage:
-                        endturn
-                        
-                        Swap depots command, used to move resources inside your warehouse.
-                        Usage:
-                        swap -a <first-depot-index> -b <second-depot-index>
-                """
+               ""
         );
     }
 
@@ -547,6 +509,12 @@ public class CLI implements UI {
         int first = Integer.parseInt(params.get("a"));
         int second = Integer.parseInt(params.get("b"));
         controller.swapDepots(first, second);
+    }
+
+    private void buyCommandHandler(HashMap<String, String> params, ClientController controller){
+        String cardId = params.get("c");
+        String resourcesDefinition = params.get("r");
+        int i = 0;
     }
 }
 

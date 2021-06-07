@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model.player_board.storage;
 import it.polimi.ingsw.network.message.from_server.FaithPathMessage;
 import it.polimi.ingsw.network.message.from_server.WarehouseMessage;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
+import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
@@ -126,6 +127,12 @@ public class Warehouse extends Storage {
         if(index < 0 || index > 2) {
             throw new IllegalArgumentException("Indexes must be in [0;2]");
         }
+    }
+
+    public boolean canConsumeFromDepot(ResourcePosition depot, ResourceStock resources){
+        boolean isCorrectResource = this.resourceStocks.get(depot.ordinal()).getResourceType() == resources.getResourceType();
+        boolean areEnoughResources = this.resourceStocks.get(depot.ordinal()).getQuantity() >= resources.getQuantity();
+        return isCorrectResource && areEnoughResources;
     }
 
 }

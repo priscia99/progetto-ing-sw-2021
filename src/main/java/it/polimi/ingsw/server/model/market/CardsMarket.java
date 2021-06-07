@@ -53,6 +53,10 @@ public class CardsMarket extends Observable<CardsMarket> {
         return decks;
     }
 
+    public DevelopmentCard getCard(int row, int column){
+        return this.decks[row][column].get(0);
+    }
+
     public DevelopmentCard sell(int row, int column, Player player) {
         if (this.decks[row][column].peek().getRequirement().isFulfilled(player)) {
             DevelopmentCard card = this.decks[row][column].pop();

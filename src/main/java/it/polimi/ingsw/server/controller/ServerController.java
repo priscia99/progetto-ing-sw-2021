@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.message.from_server.ExceptionMessage;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.server.model.card.requirement.ResourceRequirement;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.marble.Marble;
@@ -41,11 +42,32 @@ public class ServerController {
         game.giveInitialResources();
     }
 
-    public void buyDevelopmentCard(int positionX, int positionY, int deckIndex) {
-        if(game.getCurrentPlayer().hasDoneMainAction()) throw new InvalidActionException();
-        DevelopmentCard cardBought = game.getCardMarket().sell(positionX,positionY, game.getCurrentPlayer());
-        game.getCurrentPlayer().getPlayerBoard().addDevelopmentCard(cardBought, deckIndex);
-        game.getCurrentPlayer().setHasDoneMainAction(true);
+    public void buyDevelopmentCard(int positionX, int positionY, int deckIndex, HashMap<ResourcePosition, ResourceStock> toConsume) {
+        //TODO: use wrapper for functions, catch errors and send game.notifyError based on exception
+        //if(game.getCurrentPlayer().hasDoneMainAction()) throw new InvalidActionException();
+        Player currentPlayer = game.getCurrentPlayer();
+        if(currentPlayer.hasDoneMainAction()) {
+            game.notifyError("You have already done main action this turn!", game.getCurrentPlayer().getNickname());
+            return;
+        }
+        DevelopmentCard toBuy = game.getCardMarket().getCard(positionX, positionY);
+        ResourceRequirement requirement = (ResourceRequirement) toBuy.getRequirement();
+        if(requirement.isFulfilled(toConsume)) {
+            if(currentPlayer.canConsume(toConsume)){
+                if(currentPlayer.canAddDevelopmentCard(toBuy, deckIndex)){
+                    DevelopmentCard cardBought = game.getCardMarket().sell(positionX,positionY, currentPlayer);
+                    currentPlayer.addDevelopmentCard(cardBought, deckIndex);
+                    currentPlayer.consumeResources(toConsume);
+                    currentPlayer.setHasDoneMainAction(true);
+                } else {
+                    game.notifyError("You can't add development card to selected deck!", currentPlayer.getNickname());
+                }
+            } else {
+                game.notifyError("You do not own resources selected!", currentPlayer.getNickname());
+            }
+        } else {
+            game.notifyError("Wrong resources to buy card!", currentPlayer.getNickname());
+        }
     }
 
     public void chooseInitialLeaders(ArrayList<String> leadersChosen, String playerUsername) {

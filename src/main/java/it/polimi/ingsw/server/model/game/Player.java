@@ -380,33 +380,41 @@ public class Player extends Observable<Message<ClientController>> {
         notify(new StrongboxMessage(strongbox.getResourceStocks(), username));
     }
 
-    /**
-     *
-     * @param resourceStocks
-     */
-    public void removeFromStrongbox(ArrayList<ResourceStock> resourceStocks) {
-        Strongbox strongbox = playerBoard.getStrongbox();
+    public boolean canAddDevelopmentCard(DevelopmentCard card, int index){
+        return this.playerBoard.getDevelopmentCardsDecks()[index].canAddCard(card);
+    }
 
-        resourceStocks.forEach(resourceStock -> {
-            for (int i = 0; i < resourceStock.getQuantity(); i++) {
-                strongbox.addResource(resourceStock.getResourceType());
+    public boolean canConsume(HashMap<ResourcePosition, ResourceStock> toConsume){
+        return !toConsume.keySet().stream().map(position -> {
+            if(position == ResourcePosition.STRONG_BOX){
+                return this.playerBoard.getStrongbox().canConsume(toConsume.get(position));
+            } else {
+                return this.playerBoard.getWarehouse().canConsumeFromDepot(position, toConsume.get(position));
             }
-        });
-        notify(new StrongboxMessage(strongbox.getResourceStocks(), username));
+        }).collect(Collectors.toList()).contains(false);
     }
 
-    /**
-     *
-     * @param id
-     */
-    public void dropLeaderCard(String id) {
-        LeaderCardsDeck leaderCardsDeck = playerBoard.getLeaderCardsDeck();
-
-        leaderCardsDeck.removeLeaderCardById(id);
-        notify(new LeaderCardsMessage(leaderCardsDeck.getLeaderCards(), username));
+    public void consumeResources(HashMap<ResourcePosition, ResourceStock> toConsume){
+        toConsume.keySet().forEach(
+                position -> {
+                    if(position == ResourcePosition.STRONG_BOX){
+                        this.playerBoard.getStrongbox().consume(toConsume.get(position));
+                    } else {
+                        this.playerBoard.getWarehouse().consume(toConsume.get(position));
+                    }
+                }
+        );
+        notify(new StrongboxMessage(this.playerBoard.getStrongbox().getResourceStocks(), username));
+        notify(new WarehouseMessage(
+                this.playerBoard.getWarehouse().getResourceStocks()
+                        .stream().map(resourceStock -> (ResourceDepot) resourceStock)
+                        .collect(Collectors.toCollection(ArrayList::new)),
+                username
+        ));
     }
 
-    public void playLeaderCard(String id) {
-
+    public void addDevelopmentCard(DevelopmentCard card, int deckIndex){
+        this.playerBoard.addDevelopmentCard(card, deckIndex);
+        notify(new DevelopmentCardsMessage(card, deckIndex, username));
     }
 }

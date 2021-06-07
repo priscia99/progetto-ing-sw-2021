@@ -16,6 +16,7 @@ public class CLICommandsBuilder {
         toReturn.add(getCardMarketCommand());
         toReturn.add(getEndTurnCommand());
         toReturn.add(getSwapDepotsCommand());
+        toReturn.add(buyCommand());
         return toReturn;
     }
 
@@ -72,5 +73,12 @@ public class CLICommandsBuilder {
         parameters.put("a", "[first-index] The first depot index to move");
         parameters.put("b", "[second-index] The second depot inted to move");
         return new Command("swap", "Swap depots", true, parameters);
+    }
+
+    private static Command buyCommand(){
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("c", "[card-id] The id of the card to buy.");
+        parameters.put("r", "[resource-definition] The resources used to buy the card.");
+        return new Command("buy", "Buy development card", true, parameters);
     }
 }

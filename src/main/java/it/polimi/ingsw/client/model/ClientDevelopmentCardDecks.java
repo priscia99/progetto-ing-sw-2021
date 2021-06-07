@@ -25,6 +25,8 @@ public class ClientDevelopmentCardDecks extends Observable<ClientDevelopmentCard
         return this.developmentCards.get(coordinates.getFirst()).get(coordinates.getSecond());
     }
 
+    public ArrayList<ClientDevelopmentCard> getDeck(int index){return this.developmentCards.get(index);}
+
     public void addCard(ClientDevelopmentCard card, int index) {
         this.developmentCards.get(index).add(card);
 
