@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.ui.cli;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.sun.management.HotSpotDiagnosticMXBean;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.*;
@@ -11,6 +12,7 @@ import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
+import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.Pair;
 
@@ -516,12 +518,46 @@ public class CLI implements UI {
     }
 
     private void buyCommandHandler(HashMap<String, String> params, ClientController controller){
+        HashMap<ResourcePosition, ResourceStock> resourcesSelected = new HashMap<>();
+        int index = 0;
+        String cardId;
         synchronized (inSemaphore){
             Scanner in = new Scanner(System.in);
-            System.out.println("Dimmi qualcosa");
-            String s = in.nextLine();
-            System.out.println("Hai scritto " + s);
+            controller.viewCardMarket();
+            System.out.println("Insert id of card to buy: ('quit' to choose another action)");
+            cardId = in.nextLine();
+            if(cardId.equals("quit")) return;
+            controller.viewDevelopmentCards();
+            System.out.println("Insert deck in which to add card. | 0 | 1 | 2 | ");
+            String deckIndex = in.nextLine();
+            try{
+                index = Integer.parseInt(deckIndex);
+            } catch (Exception e){
+                displayError("Error parsing deck index, try again.");
+            }
+            controller.viewStrongbox();
+            controller.viewWarehouse();
+            String confirmString = "add";
+            while(!confirmString.equals("ok")){
+                System.out.println("Add resource stock to buy card: <position> <quantity> <type> ('quit' to choose another action)");
+                System.out.println("Positions are: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | STRONGBOX |");
+                String rawInput = in.nextLine();
+                if(rawInput.equals("quit")) return;
+                String[] resourseSelectionRaw = rawInput.split(" ");
+                try{
+                    ResourcePosition positionSelected = ResourcePosition.valueOf(resourseSelectionRaw[0]);
+                    int quantitySelected = Integer.parseInt(resourseSelectionRaw[1]);
+                    ResourceType typeSelected = ResourceType.valueOf(resourseSelectionRaw[2]);
+                    ResourceStock stockSelected = new ResourceStock(typeSelected, quantitySelected);
+                    resourcesSelected.put(positionSelected, stockSelected);
+                } catch(Exception e ){
+                    displayError("Error while parsing command, try again or write 'quit' to choose another action.");
+                }
+                System.out.println("Stock added correctly, press enter to add another stock, 'ok' to buy card.");
+                confirmString = in.nextLine();
+            }
         }
+        controller.buyDevelopmentCard(cardId, index, resourcesSelected);
     }
 }
 

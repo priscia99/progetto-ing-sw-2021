@@ -12,19 +12,17 @@ import java.util.HashMap;
 public class BuyDevelopmentCardMessage extends Message<ServerController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private final int positionX;
-    private final int positionY;
+    private final String cardId;
     private final int deckIndex;
     private final HashMap<ResourcePosition, ResourceStock> toConsume;
 
-    public BuyDevelopmentCardMessage(int posX, int posY, int index, HashMap<ResourcePosition, ResourceStock> toConsume) {
-        this.positionX = posX;
-        this.positionY = posY;
+    public BuyDevelopmentCardMessage(String cardId, int index, HashMap<ResourcePosition, ResourceStock> toConsume) {
+        this.cardId = cardId;
         this.deckIndex = index;
         this.toConsume = toConsume;
     }
 
     public void execute(ServerController target){
-        target.buyDevelopmentCard(positionX, positionY, deckIndex, toConsume);
+        target.buyDevelopmentCard(cardId, deckIndex, toConsume);
     }
 }

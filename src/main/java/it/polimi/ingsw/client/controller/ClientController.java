@@ -8,6 +8,8 @@ import it.polimi.ingsw.network.message.from_client.*;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
+import it.polimi.ingsw.server.model.resource.ResourcePosition;
+import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.utils.Pair;
 
 import java.util.ArrayList;
@@ -99,12 +101,24 @@ public class ClientController extends Observable<Message<ServerController>> {
         game.getPlayerBoardMap().get(player).getDevelopmentCards().show();
     }
 
+    public void viewDevelopmentCards(){
+        game.getPlayerBoardMap().get(game.getCurrentPlayer()).getDevelopmentCards().show();
+    }
+
     public void viewWarehouse(String player){
         game.getPlayerBoardMap().get(player).getWarehouse().show();
     }
 
+    public void viewWarehouse(){
+        game.getPlayerBoardMap().get(game.getCurrentPlayer()).getWarehouse().show();
+    }
+
     public void viewStrongbox(String player){
         game.getPlayerBoardMap().get(player).getStrongbox().show();
+    }
+
+    public void viewStrongbox(){
+        game.getPlayerBoardMap().get(game.getCurrentPlayer()).getStrongbox().show();
     }
 
     public void viewFaithPath(String player){
@@ -165,9 +179,9 @@ public class ClientController extends Observable<Message<ServerController>> {
         }
     }
 
-    public void buyDevelopmentCard(){
+    public void buyDevelopmentCard(String cardId, int deckIndex,  HashMap<ResourcePosition, ResourceStock> toConsume){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
-            //notify(new BuyDevelopmentCardMessage());
+           notify(new BuyDevelopmentCardMessage(cardId, deckIndex,toConsume ));
         }
     }
 }

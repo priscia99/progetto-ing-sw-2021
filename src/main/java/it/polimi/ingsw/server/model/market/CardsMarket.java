@@ -54,15 +54,32 @@ public class CardsMarket extends Observable<CardsMarket> {
     }
 
     public DevelopmentCard getCard(int row, int column){
-        return this.decks[row][column].get(0);
+        return this.decks[row][column].peek();
     }
 
-    public DevelopmentCard sell(int row, int column, Player player) {
-        if (this.decks[row][column].peek().getRequirement().isFulfilled(player)) {
-            DevelopmentCard card = this.decks[row][column].pop();
+    public DevelopmentCard getCardById(String id){
+        for(int i = 0; i<4; i++){
+            for(int j = 0; j<4; j++){
+                if(this.decks[i][j].get(0).getId().equals(id)) return this.decks[i][j].peek();
+            }
+        }
+        return null;
+    }
 
+    public DevelopmentCard popCardById(String id){
+        for(int i = 0; i<4; i++){
+            for(int j = 0; j<4; j++){
+                if(this.decks[i][j].get(0).getId().equals(id)) return this.decks[i][j].pop();
+            }
+        }
+        return null;
+    }
+
+    public DevelopmentCard sell(String id, Player player) {
+        DevelopmentCard card = getCardById(id);
+        if (card.getRequirement().isFulfilled(player)) {
+            card = popCardById(id);
             notify(this);
-
             return card;
         }
         else {

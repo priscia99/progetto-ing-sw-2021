@@ -44,20 +44,19 @@ public class ServerController {
         game.giveInitialResources();
     }
 
-    public void buyDevelopmentCard(int positionX, int positionY, int deckIndex, HashMap<ResourcePosition, ResourceStock> toConsume) {
-        //TODO: use wrapper for functions, catch errors and send game.notifyError based on exception
+    public void buyDevelopmentCard(String cardId, int deckIndex, HashMap<ResourcePosition, ResourceStock> toConsume) {
         //if(game.getCurrentPlayer().hasDoneMainAction()) throw new InvalidActionException();
         Player currentPlayer = game.getCurrentPlayer();
         if(currentPlayer.hasDoneMainAction()) {
             game.notifyError("You have already done main action this turn!", game.getCurrentPlayer().getNickname());
             return;
         }
-        DevelopmentCard toBuy = game.getCardMarket().getCard(positionX, positionY);
+        DevelopmentCard toBuy = game.getCardMarket().getCardById(cardId);
         ResourceRequirement requirement = (ResourceRequirement) toBuy.getRequirement();
         if(requirement.isFulfilled(toConsume)) {
             if(currentPlayer.canConsume(toConsume)){
                 if(currentPlayer.canAddDevelopmentCard(toBuy, deckIndex)){
-                    DevelopmentCard cardBought = game.getCardMarket().sell(positionX,positionY, currentPlayer);
+                    DevelopmentCard cardBought = game.getCardMarket().sell(cardId, currentPlayer);
                     currentPlayer.addDevelopmentCard(cardBought, deckIndex);
                     currentPlayer.consumeResources(toConsume);
                     currentPlayer.setHasDoneMainAction(true);
