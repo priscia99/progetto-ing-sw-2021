@@ -85,6 +85,7 @@ public class CLI implements UI {
     }
 
     private final Integer outSemaphore = 0;
+    private final Integer inSemaphore = 0;
     private boolean gameStarted = false;
 
     private final ArrayList<Command> commands = new ArrayList<>();
@@ -294,8 +295,11 @@ public class CLI implements UI {
                     System.out.println(ANSI_BG_GREEN + "You can now type commands. Type 'help' for commands list." + ANSI_RESET);
                 }
                 while (true) {
-                    Scanner input = new Scanner(System.in);
-                    String requestedCommand = input.nextLine();
+                    String requestedCommand = null;
+                    synchronized (inSemaphore) {
+                        Scanner input = new Scanner(System.in);
+                        requestedCommand = input.nextLine();
+                    }
                     Pair<String, HashMap<String, String>> formattedCommand = this.getFormattedCommand(requestedCommand);
                     if(formattedCommand != null){
                         this.executeCommand(formattedCommand, controller);
@@ -512,9 +516,12 @@ public class CLI implements UI {
     }
 
     private void buyCommandHandler(HashMap<String, String> params, ClientController controller){
-        String cardId = params.get("c");
-        String resourcesDefinition = params.get("r");
-        int i = 0;
+        synchronized (inSemaphore){
+            Scanner in = new Scanner(System.in);
+            System.out.println("Dimmi qualcosa");
+            String s = in.nextLine();
+            System.out.println("Hai scritto " + s);
+        }
     }
 }
 
