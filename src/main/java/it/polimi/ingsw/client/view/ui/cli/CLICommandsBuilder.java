@@ -41,7 +41,7 @@ public class CLICommandsBuilder {
     }
 
     private static Command getActionCommand(){
-        return new Command("action", "Display list of action turn available.", false, new HashMap<>());
+        return new Command("actions", "Display list of action turn available.", false, new HashMap<>());
     }
 
     private static Command getActivateCommand(){
