@@ -85,6 +85,7 @@ public class CLI implements UI {
     }
 
     private final Integer outSemaphore = 0;
+    private final Integer inSemaphore = 0;
     private boolean gameStarted = false;
 
     private final ArrayList<Command> commands = new ArrayList<>();
@@ -294,8 +295,11 @@ public class CLI implements UI {
                     System.out.println(ANSI_BG_GREEN + "You can now type commands. Type 'help' for commands list." + ANSI_RESET);
                 }
                 while (true) {
-                    Scanner input = new Scanner(System.in);
-                    String requestedCommand = input.nextLine();
+                    String requestedCommand = null;
+                    synchronized (inSemaphore) {
+                        Scanner input = new Scanner(System.in);
+                        requestedCommand = input.nextLine();
+                    }
                     Pair<String, HashMap<String, String>> formattedCommand = this.getFormattedCommand(requestedCommand);
                     if(formattedCommand != null){
                         this.executeCommand(formattedCommand, controller);
@@ -466,15 +470,9 @@ public class CLI implements UI {
 
     @Override
     public void displayHelpMessage(){
-        commands.forEach(command->{
-            displayInfo("Command Key: " + command.getKey());
-            displayInfo("Description: " + command.getDescription());
-            displayInfo("Only available for current turn player: " + command.isOnlyForCurrent());
-            for (String param : command.getParameters().keySet()) {
-                displayInfo("Param -"+param + ": " + command.getParameters().get(param));
-            }
-            displayInfo("#############");
-        });
+        this.displayInfo(
+               ""
+        );
     }
 
     private void helpCommandHandler(ClientController controller){
@@ -518,7 +516,12 @@ public class CLI implements UI {
     }
 
     private void buyCommandHandler(HashMap<String, String> params, ClientController controller){
-
+        synchronized (inSemaphore){
+            Scanner in = new Scanner(System.in);
+            System.out.println("Dimmi qualcosa");
+            String s = in.nextLine();
+            System.out.println("Hai scritto " + s);
+        }
     }
 }
 
