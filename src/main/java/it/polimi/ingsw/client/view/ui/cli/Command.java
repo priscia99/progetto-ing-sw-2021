@@ -7,12 +7,12 @@ public class Command {
     private final String key;
     private final String description;
     private final HashMap<String, String> parameters;
-    private final boolean onyForCurrent;
+    private final boolean onlyForCurrent;
 
     public Command(String key, String description, boolean onyForCurrent, HashMap<String, String> parameters) {
         this.key = key;
         this.description = description;
-        this.onyForCurrent = onyForCurrent;
+        this.onlyForCurrent = onyForCurrent;
         this.parameters = parameters;
     }
 
@@ -29,7 +29,7 @@ public class Command {
     }
 
     public boolean isOnlyForCurrent() {
-        return onyForCurrent;
+        return onlyForCurrent;
     }
 
     public HashMap<String, String> getParameters() {

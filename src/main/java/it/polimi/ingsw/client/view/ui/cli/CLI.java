@@ -466,9 +466,15 @@ public class CLI implements UI {
 
     @Override
     public void displayHelpMessage(){
-        this.displayInfo(
-               ""
-        );
+        commands.forEach(command->{
+            displayInfo("Command Key: " + command.getKey());
+            displayInfo("Description: " + command.getDescription());
+            displayInfo("Only available for current turn player: " + command.isOnlyForCurrent());
+            for (String param : command.getParameters().keySet()) {
+                displayInfo("Param -"+param + ": " + command.getParameters().get(param));
+            }
+            displayInfo("#############");
+        });
     }
 
     private void helpCommandHandler(ClientController controller){
@@ -512,9 +518,7 @@ public class CLI implements UI {
     }
 
     private void buyCommandHandler(HashMap<String, String> params, ClientController controller){
-        String cardId = params.get("c");
-        String resourcesDefinition = params.get("r");
-        int i = 0;
+
     }
 }
 
