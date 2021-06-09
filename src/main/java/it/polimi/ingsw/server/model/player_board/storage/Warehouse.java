@@ -138,6 +138,13 @@ public class Warehouse extends Storage {
         }
     }
 
+    public ArrayList<ResourceDepot> getDepots(){
+        return this.resourceStocks
+                .stream().map(resourceStock -> (ResourceDepot) resourceStock)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+
     public boolean canConsumeFromDepot(ResourcePosition depot, ResourceStock resources){
         boolean isCorrectResource = this.resourceStocks.get(depot.ordinal()).getResourceType() == resources.getResourceType();
         boolean areEnoughResources = this.resourceStocks.get(depot.ordinal()).getQuantity() >= resources.getQuantity();

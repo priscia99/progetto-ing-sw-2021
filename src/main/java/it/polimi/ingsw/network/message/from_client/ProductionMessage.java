@@ -10,14 +10,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class StartProductionAction extends Message<ServerController> implements Serializable {
+public class ProductionMessage extends Message<ServerController> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     HashMap<ResourcePosition, ResourceStock> consumedResources;
     ArrayList<ProductionEffect> productionsToActivate;
 
-    public StartProductionAction(HashMap<ResourcePosition, ResourceStock> consumed,
-                                 ArrayList<ProductionEffect> productions) {
+    public ProductionMessage(HashMap<ResourcePosition, ResourceStock> consumed,
+                             ArrayList<ProductionEffect> productions) {
         consumedResources = consumed;
         productionsToActivate = productions;
     }

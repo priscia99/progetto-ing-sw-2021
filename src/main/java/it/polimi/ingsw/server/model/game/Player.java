@@ -211,6 +211,7 @@ public class Player extends Observable<Message<ClientController>> {
 
     public void addResourceToDepot(ResourceType resourceType, int depotIndex){
         playerBoard.getWarehouse().addToDepot(depotIndex, resourceType);
+        notify(new WarehouseMessage(this.playerBoard.getWarehouse().getDepots(), username));
     }
 
     public void addResourcesToStrongBox(ResourceStock resources){

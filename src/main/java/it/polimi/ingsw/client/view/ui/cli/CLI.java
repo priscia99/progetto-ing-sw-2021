@@ -11,6 +11,9 @@ import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
+import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.server.model.marble.MarbleSelection;
+import it.polimi.ingsw.server.model.marble.Orientation;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
@@ -172,13 +175,13 @@ public class CLI implements UI {
 
     @Override
     public void displayNewTurn(String player, Boolean myTurn){
-        synchronized (outSemaphore) {
-            if (myTurn) {
-                System.out.println(player + ", IT'S YOUR TURN!");
-            } else {
-                System.out.println("It's " + player + "'s turn.");
+            synchronized (outSemaphore) {
+                if (myTurn) {
+                    System.out.println(player + ", IT'S YOUR TURN!");
+                } else {
+                    System.out.println("It's " + player + "'s turn.");
+                }
             }
-        }
     }
 
     @Override
@@ -298,14 +301,11 @@ public class CLI implements UI {
                 }
                 while (true) {
                     String requestedCommand = null;
-                    synchronized (inSemaphore) {
-                        Scanner input = new Scanner(System.in);
-                        requestedCommand = input.nextLine();
-                    }
-                    Pair<String, HashMap<String, String>> formattedCommand = this.getFormattedCommand(requestedCommand);
-                    if(formattedCommand != null){
-                        this.executeCommand(formattedCommand, controller);
-                    }
+                        requestedCommand = in.nextLine();
+                        Pair<String, HashMap<String, String>> formattedCommand = this.getFormattedCommand(requestedCommand);
+                        if (formattedCommand != null) {
+                            this.executeCommand(formattedCommand, controller);
+                        }
                 }
             }).start();
         }
@@ -373,9 +373,10 @@ public class CLI implements UI {
 
     @Override
     public void displayCardMarket(ClientCardsMarket market) {
-        synchronized (outSemaphore){
-            System.out.println(RepresentationBuilder.render(market));
-        }
+            synchronized (outSemaphore){
+
+                System.out.println(RepresentationBuilder.render(market));
+            }
     }
 
     @Override
@@ -445,7 +446,9 @@ public class CLI implements UI {
             case "cardmarket" -> cardMarketCommandHandler(targetController);
             case "endturn" -> endTurnCommandHandler(targetController);
             case "swap" -> swapCommandHandler(inputCommand.getSecond(), targetController);
-            case "buy" -> buyCommandHandler(inputCommand.getSecond(), targetController);
+            case "buy" -> buyCommandHandler( targetController);
+            case "pick" -> pickCommandHandler(targetController);
+            case "produce" -> produceCommandHandler(targetController);
         }
     }
 
@@ -472,9 +475,15 @@ public class CLI implements UI {
 
     @Override
     public void displayHelpMessage(){
-        this.displayInfo(
-               ""
-        );
+        commands.forEach(command->{
+            displayInfo("Command Key: " + command.getKey());
+            displayInfo("Description: " + command.getDescription());
+            displayInfo("Only available for current turn player: " + command.isOnlyForCurrent());
+            for (String param : command.getParameters().keySet()) {
+                displayInfo("Param -"+param + ": " + command.getParameters().get(param));
+            }
+            displayInfo("#############");
+        });
     }
 
     private void helpCommandHandler(ClientController controller){
@@ -517,18 +526,15 @@ public class CLI implements UI {
         controller.swapDepots(first, second);
     }
 
-    private void buyCommandHandler(HashMap<String, String> params, ClientController controller){
-        HashMap<ResourcePosition, ResourceStock> resourcesSelected = new HashMap<>();
+    private void buyCommandHandler(ClientController controller){
         int index = 0;
         String cardId;
-        synchronized (inSemaphore){
-            Scanner in = new Scanner(System.in);
             controller.viewCardMarket();
-            System.out.println("Insert id of card to buy: ('quit' to choose another action)");
+            displayInfo("Insert id of card to buy: ('quit' to choose another action)");
             cardId = in.nextLine();
             if(cardId.equals("quit")) return;
             controller.viewDevelopmentCards();
-            System.out.println("Insert deck in which to add card. | 0 | 1 | 2 | ");
+            displayInfo("Insert deck in which to add card. | 0 | 1 | 2 | ");
             String deckIndex = in.nextLine();
             try{
                 index = Integer.parseInt(deckIndex);
@@ -537,27 +543,89 @@ public class CLI implements UI {
             }
             controller.viewStrongbox();
             controller.viewWarehouse();
-            String confirmString = "add";
-            while(!confirmString.equals("ok")){
-                System.out.println("Add resource stock to buy card: <position> <quantity> <type> ('quit' to choose another action)");
-                System.out.println("Positions are: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | STRONGBOX |");
-                String rawInput = in.nextLine();
-                if(rawInput.equals("quit")) return;
-                String[] resourseSelectionRaw = rawInput.split(" ");
-                try{
-                    ResourcePosition positionSelected = ResourcePosition.valueOf(resourseSelectionRaw[0]);
-                    int quantitySelected = Integer.parseInt(resourseSelectionRaw[1]);
-                    ResourceType typeSelected = ResourceType.valueOf(resourseSelectionRaw[2]);
-                    ResourceStock stockSelected = new ResourceStock(typeSelected, quantitySelected);
-                    resourcesSelected.put(positionSelected, stockSelected);
-                } catch(Exception e ){
-                    displayError("Error while parsing command, try again or write 'quit' to choose another action.");
-                }
-                System.out.println("Stock added correctly, press enter to add another stock, 'ok' to buy card.");
-                confirmString = in.nextLine();
-            }
-        }
+            HashMap<ResourcePosition, ResourceStock> resourcesSelected = askResourceSelection();
+            if(resourcesSelected==null) return;
         controller.buyDevelopmentCard(cardId, index, resourcesSelected);
+    }
+
+    private void pickCommandHandler(ClientController controller){
+            ArrayList<ResourcePosition> positions = new ArrayList<>();
+            Orientation orientationSelected;
+            int index = 0;
+            controller.viewMarbleMarket();
+            displayInfo("Select marble to pick:");
+            displayInfo("Insert axis: | HORIZONTAL | VERTICAL |");
+            String orientationRaw = in.nextLine();
+            try{
+                orientationSelected = Orientation.valueOf(orientationRaw);
+            } catch (Exception e){
+                displayError("Error while parsing orientation. Try again.");
+                return;
+            }
+            displayInfo("Insert index: | 0 | 1 | 2 | 3 |");
+            String indexRaw = in.nextLine();
+            try{
+                index = Integer.parseInt(indexRaw);
+            } catch (Exception e){
+                displayError("Error while parsing index. Try again.");
+                return;
+            }
+            controller.viewWarehouse();
+            for(int i = 0; i<4; i++){
+                displayInfo("Insert position in which you want to add marble number " + i);
+                displayInfo("Positions are: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | DROPPED |");
+                String positionRaw = in.nextLine();
+                try{
+                    positions.add(ResourcePosition.valueOf(positionRaw));
+                } catch(Exception e){
+                    displayError("Error while parsing position. Try again.");
+                    return;
+                }
+            }
+            MarbleSelection selection = new MarbleSelection(orientationSelected, index);
+            controller.pickResources(selection, positions);
+    }
+
+    private void produceCommandHandler(ClientController controller){
+        HashMap<ResourcePosition, ResourceStock> consumed;
+        String[] cardIds;
+        controller.viewDevelopmentCards();
+        displayInfo("Insert IDs of card to use, separated by space: ");
+        String productionsRaw = in.nextLine();
+        try{
+            cardIds = productionsRaw.split(" ");
+        } catch (Exception e){
+            displayError("Cannot parse ids, try again.");
+            return;
+        }
+        consumed = askResourceSelection();
+        if(consumed == null) return;
+        controller.produceResources(consumed, new ArrayList<>(Arrays.asList(cardIds)));
+
+    }
+
+    private HashMap<ResourcePosition, ResourceStock> askResourceSelection(){
+        HashMap<ResourcePosition, ResourceStock> resourcesSelected = new HashMap<>();
+        String confirmString = "add";
+        while(!confirmString.equals("ok")){
+            displayInfo("Add resource stock to buy card: <position> <quantity> <type> ('quit' to choose another action)");
+            displayInfo("Positions are: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | STRONGBOX |");
+            String rawInput = in.nextLine();
+            if(rawInput.equals("quit")) return null;
+            String[] resourseSelectionRaw = rawInput.split(" ");
+            try{
+                ResourcePosition positionSelected = ResourcePosition.valueOf(resourseSelectionRaw[0]);
+                int quantitySelected = Integer.parseInt(resourseSelectionRaw[1]);
+                ResourceType typeSelected = ResourceType.valueOf(resourseSelectionRaw[2]);
+                ResourceStock stockSelected = new ResourceStock(typeSelected, quantitySelected);
+                resourcesSelected.put(positionSelected, stockSelected);
+                displayInfo("Stock added correctly, press enter to add another stock, 'ok' to buy card.");
+            } catch(Exception e ){
+                displayError("Error while parsing command, try again or write 'quit' to choose another action.");
+            }
+            confirmString = in.nextLine();
+        }
+        return resourcesSelected;
     }
 }
 

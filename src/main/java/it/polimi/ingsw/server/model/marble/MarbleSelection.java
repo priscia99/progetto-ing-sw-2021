@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.model.marble;
 
-public class MarbleSelection {
+import javax.sql.rowset.serial.SerialStruct;
+import java.io.Serializable;
+
+public class MarbleSelection implements Serializable {
 
     private final Orientation orientation;
     private final int index;

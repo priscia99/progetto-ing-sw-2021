@@ -1,9 +1,12 @@
 package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.utils.Pair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class ClientDevelopmentCardDecks extends Observable<ClientDevelopmentCardDecks> {
 
@@ -26,6 +29,13 @@ public class ClientDevelopmentCardDecks extends Observable<ClientDevelopmentCard
     }
 
     public ArrayList<ClientDevelopmentCard> getDeck(int index){return this.developmentCards.get(index);}
+
+    public ArrayList<ProductionEffect> getProductionAvailable(ArrayList<String> ids){
+        return new ArrayList<>(this.developmentCards.stream()
+                .filter(deck->ids.contains(deck.get(0).getId()))
+                .map(deck->(ProductionEffect) deck.get(0).getEffect()).collect(Collectors.toList()));
+    }
+
 
     public void addCard(ClientDevelopmentCard card, int index) {
         this.developmentCards.get(index).add(card);

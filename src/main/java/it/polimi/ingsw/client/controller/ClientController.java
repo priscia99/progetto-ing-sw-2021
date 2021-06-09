@@ -7,6 +7,8 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_client.*;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
@@ -158,30 +160,58 @@ public class ClientController extends Observable<Message<ServerController>> {
     public void activateLeaderCard(String cardId){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
             notify(new PlayLeaderCardMessage(cardId));
+        } else {
+            userInterface.displayError("This action is available only for current turn player!");
         }
     }
 
     public void dropLeaderCard(String cardId){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
             notify(new DropLeaderCardMessage(cardId));
+        } else {
+            userInterface.displayError("This action is available only for current turn player!");
         }
     }
 
     public void endTurn(){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
             notify(new EndTurnMessage());
+        } else {
+            userInterface.displayError("This action is available only for current turn player!");
         }
     }
 
     public void swapDepots(int first, int second){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
             notify(new SwapDepotsMessage(first, second));
+        } else {
+            userInterface.displayError("This action is available only for current turn player!");
         }
     }
 
     public void buyDevelopmentCard(String cardId, int deckIndex,  HashMap<ResourcePosition, ResourceStock> toConsume){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
            notify(new BuyDevelopmentCardMessage(cardId, deckIndex,toConsume ));
+        } else {
+            userInterface.displayError("This action is available only for current turn player!");
+        }
+    }
+
+    public void pickResources(MarbleSelection selection, ArrayList<ResourcePosition> positions){
+        if(game.getCurrentPlayer().equals(game.getMyUsername())){
+            notify(new PickResourcesMessage(selection, positions));
+        } else {
+            userInterface.displayError("This action is available only for current turn player!");
+        }
+    }
+
+    public void produceResources(HashMap<ResourcePosition, ResourceStock> consumed, ArrayList<String> ids){
+        if(game.getCurrentPlayer().equals(game.getMyUsername())){
+            ArrayList<ProductionEffect> toActivate = game.getPlayerBoardMap()
+                    .get(game.getCurrentPlayer()).getDevelopmentCards().getProductionAvailable(ids);
+            notify(new ProductionMessage(consumed, toActivate));
+        } else {
+            userInterface.displayError("This action is available only for current turn player!");
         }
     }
 }
