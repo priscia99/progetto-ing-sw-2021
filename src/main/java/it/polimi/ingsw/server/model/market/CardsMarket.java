@@ -1,15 +1,19 @@
 package it.polimi.ingsw.server.model.market;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.data.DevCardMarketBuilder;
 import it.polimi.ingsw.exceptions.NotFulfilledException;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.from_server.CardsMarketMessage;
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.model.card.Card;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.color.Color;
 import it.polimi.ingsw.server.model.game.Player;
 
 import java.util.Stack;
 
-public class CardsMarket extends Observable<CardsMarket> {
+public class CardsMarket extends Observable<Message<ClientController>> {
 
     private final Stack<DevelopmentCard>[][] decks;
 
@@ -79,7 +83,7 @@ public class CardsMarket extends Observable<CardsMarket> {
         DevelopmentCard card = getCardById(id);
         if (card.getRequirement().isFulfilled(player)) {
             card = popCardById(id);
-            notify(this);
+            notify(new CardsMarketMessage(this));
             return card;
         }
         else {

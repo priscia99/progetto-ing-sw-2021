@@ -95,6 +95,8 @@ public class Lobby extends Observable<Message> {
                     });
             gameController.setupGame(players);
             game.addObserver(serverMessageEncoder);
+            game.getMarbleMarket().addObserver(serverMessageEncoder);
+            game.getCardMarket().addObserver(serverMessageEncoder);
             game.getPlayers().forEach((player)->{
                 Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(serverMessageEncoder));
                 player.getPlayerBoard().getFaithPath().addObserver(serverMessageEncoder);

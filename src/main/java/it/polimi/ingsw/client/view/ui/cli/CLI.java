@@ -11,7 +11,9 @@ import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
+import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.marble.Orientation;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
@@ -93,6 +95,7 @@ public class CLI implements UI {
     private final Integer inSemaphore = 0;
     private boolean gameStarted = false;
 
+    private ClientController controller;
     private final ArrayList<Command> commands = new ArrayList<>();
     Scanner in = new Scanner(System.in);
 
@@ -104,6 +107,9 @@ public class CLI implements UI {
         this.commands.addAll(CLICommandsBuilder.getCommands());
     }
 
+    public void setController(ClientController c){
+        this.controller = c;
+    }
 
     @Override
     public AuthData requestAuth(){
@@ -291,7 +297,7 @@ public class CLI implements UI {
         }
     }
 
-    public void startListening(ClientController controller){
+    public void startListening(){
         if(!gameStarted){
             gameStarted = true;
             new Thread(() -> {
@@ -304,7 +310,7 @@ public class CLI implements UI {
                         requestedCommand = in.nextLine();
                         Pair<String, HashMap<String, String>> formattedCommand = this.getFormattedCommand(requestedCommand);
                         if (formattedCommand != null) {
-                            this.executeCommand(formattedCommand, controller);
+                            this.executeCommand(formattedCommand);
                         }
                 }
             }).start();
@@ -434,25 +440,25 @@ public class CLI implements UI {
         return new Pair<String, HashMap<String, String>>(requestedCommand.getKey(), inputCommandParameters);
     }
 
-    public void executeCommand(Pair<String, HashMap<String, String>> inputCommand, ClientController targetController){
+    public void executeCommand(Pair<String, HashMap<String, String>> inputCommand){
         switch (inputCommand.getFirst()) {
-            case "view" -> viewCommandHandler(inputCommand.getSecond(), targetController);
-            case "turn" -> turnCommandHandler(targetController);
-            case "help" -> helpCommandHandler(targetController);
-            case "actions" -> actionsCommandHandler(targetController);
-            case "activate" -> activateCommandHandler(inputCommand.getSecond(), targetController);
-            case "drop" -> dropCommandHandler(inputCommand.getSecond(), targetController);
-            case "marblemarket" -> marbleMarketCommandHandler(targetController);
-            case "cardmarket" -> cardMarketCommandHandler(targetController);
-            case "endturn" -> endTurnCommandHandler(targetController);
-            case "swap" -> swapCommandHandler(inputCommand.getSecond(), targetController);
-            case "buy" -> buyCommandHandler( targetController);
-            case "pick" -> pickCommandHandler(targetController);
-            case "produce" -> produceCommandHandler(targetController);
+            case "view" -> viewCommandHandler(inputCommand.getSecond());
+            case "turn" -> turnCommandHandler();
+            case "help" -> helpCommandHandler();
+            case "actions" -> actionsCommandHandler();
+            case "activate" -> activateCommandHandler(inputCommand.getSecond());
+            case "drop" -> dropCommandHandler(inputCommand.getSecond());
+            case "marblemarket" -> marbleMarketCommandHandler();
+            case "cardmarket" -> cardMarketCommandHandler();
+            case "endturn" -> endTurnCommandHandler();
+            case "swap" -> swapCommandHandler(inputCommand.getSecond());
+            case "buy" -> buyCommandHandler();
+            case "pick" -> pickCommandParser(inputCommand.getSecond());
+            case "produce" -> produceCommandHandler();
         }
     }
 
-    private void viewCommandHandler(HashMap<String, String> params, ClientController controller) {
+    private void viewCommandHandler(HashMap<String, String> params) {
             String targetedPlayer = params.get("p");
             String targetedContent = params.get("t");
             try{
@@ -486,47 +492,47 @@ public class CLI implements UI {
         });
     }
 
-    private void helpCommandHandler(ClientController controller){
+    private void helpCommandHandler(){
         controller.viewHelpMessage();
     }
 
-    private void turnCommandHandler(ClientController controller){
+    private void turnCommandHandler(){
         controller.viewTurnInfo();
     }
 
-    private void actionsCommandHandler(ClientController controller){
+    private void actionsCommandHandler(){
         controller.viewPossibleActions();
     }
 
-    private void activateCommandHandler(HashMap<String, String> params, ClientController controller){
+    private void activateCommandHandler(HashMap<String, String> params){
         String cardId = params.get("c");
         controller.activateLeaderCard(cardId);
     }
 
-    private void dropCommandHandler(HashMap<String, String> params, ClientController controller){
+    private void dropCommandHandler(HashMap<String, String> params){
         String cardId = params.get("c");
         controller.dropLeaderCard(cardId);
     }
 
-    private void marbleMarketCommandHandler(ClientController controller){
+    private void marbleMarketCommandHandler(){
         controller.viewMarbleMarket();
     }
 
-    private void cardMarketCommandHandler(ClientController controller){
+    private void cardMarketCommandHandler(){
         controller.viewCardMarket();
     }
 
-    private void endTurnCommandHandler(ClientController controller){
+    private void endTurnCommandHandler(){
         controller.endTurn();
     }
 
-    private void swapCommandHandler(HashMap<String, String> params, ClientController controller){
+    private void swapCommandHandler(HashMap<String, String> params){
         int first = Integer.parseInt(params.get("a"));
         int second = Integer.parseInt(params.get("b"));
         controller.swapDepots(first, second);
     }
 
-    private void buyCommandHandler(ClientController controller){
+    private void buyCommandHandler(){
         int index = 0;
         String cardId;
             controller.viewCardMarket();
@@ -548,45 +554,59 @@ public class CLI implements UI {
         controller.buyDevelopmentCard(cardId, index, resourcesSelected);
     }
 
-    private void pickCommandHandler(ClientController controller){
-            ArrayList<ResourcePosition> positions = new ArrayList<>();
-            Orientation orientationSelected;
-            int index = 0;
-            controller.viewMarbleMarket();
-            displayInfo("Select marble to pick:");
-            displayInfo("Insert axis: | HORIZONTAL | VERTICAL |");
-            String orientationRaw = in.nextLine();
-            try{
-                orientationSelected = Orientation.valueOf(orientationRaw);
-            } catch (Exception e){
-                displayError("Error while parsing orientation. Try again.");
-                return;
-            }
-            displayInfo("Insert index: | 0 | 1 | 2 | 3 |");
-            String indexRaw = in.nextLine();
-            try{
-                index = Integer.parseInt(indexRaw);
-            } catch (Exception e){
-                displayError("Error while parsing index. Try again.");
-                return;
-            }
-            controller.viewWarehouse();
-            for(int i = 0; i<4; i++){
-                displayInfo("Insert position in which you want to add marble number " + i);
-                displayInfo("Positions are: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | DROPPED |");
-                String positionRaw = in.nextLine();
-                try{
-                    positions.add(ResourcePosition.valueOf(positionRaw));
-                } catch(Exception e){
-                    displayError("Error while parsing position. Try again.");
-                    return;
-                }
-            }
-            MarbleSelection selection = new MarbleSelection(orientationSelected, index);
-            controller.pickResources(selection, positions);
+    private void pickCommandParser(HashMap<String, String> params){
+        MarbleSelection selection;
+        try{
+            Orientation orientation = Orientation.valueOf(params.get("o"));
+            int index = Integer.parseInt(params.get("i"));
+            selection = new MarbleSelection(orientation, index);
+            controller.pickCommandHandler(selection);
+        } catch (Exception e){
+            displayError("Error while parsing params, try again.");
+        }
     }
 
-    private void produceCommandHandler(ClientController controller){
+    public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects){
+            ArrayList<ResourcePosition> positions = new ArrayList<>();
+            ArrayList<ResourceType> conversions = new ArrayList<>();
+            controller.viewWarehouse();
+            try{
+                for(Marble marble : selected){
+                    if(marble.getResourceType().equals(ResourceType.FAITH)) continue;
+                    if(marble.getResourceType().equals(ResourceType.BLANK)){
+                        switch (changeEffects.size()){
+                            case 0: continue;
+                            case 1:
+                                conversions.add(changeEffects.get(0).getResourceType());
+                                displayInfo("Insert position in which you want to add " + changeEffects.get(0).getResourceType().toString() + " (was blank, converted thanks to Leader Card Effect!)");
+                            case 2:
+                                displayInfo("Select type to convert blank marble into, available types: ");
+                                for(ChangeEffect effect : changeEffects) displayInfo(effect.getResourceType().toString());
+                                String choiceRaw = in.nextLine();
+                                try{
+                                    ResourceType conversion = ResourceType.valueOf(choiceRaw);
+                                    conversions.add(conversion);
+                                    displayInfo("Insert position in which you want to add " + conversion.toString());
+                                } catch (Exception e){
+                                    displayError("Error parsing the resource type.");
+                                    return;
+                                }
+                        }
+                    }
+                    if(!marble.getResourceType().equals(ResourceType.BLANK)){
+                        displayInfo("Insert position in which you want to add " + marble.getResourceType().toString());
+                    }
+                    displayInfo("Positions are: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | DROPPED |");
+                    String positionRaw = in.nextLine();
+                    positions.add(ResourcePosition.valueOf(positionRaw));
+                }
+                controller.pickResources(selection, positions, conversions);
+            } catch(Exception e){
+                displayError("Error while parsing position.");
+            }
+    }
+
+    private void produceCommandHandler(){
         HashMap<ResourcePosition, ResourceStock> consumed;
         String[] cardIds;
         controller.viewDevelopmentCards();

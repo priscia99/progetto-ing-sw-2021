@@ -7,11 +7,16 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_client.*;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.server.model.card.LeaderCard;
+import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
+import it.polimi.ingsw.server.model.card.effect.EffectType;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.Pair;
 
 import java.util.ArrayList;
@@ -92,7 +97,8 @@ public class ClientController extends Observable<Message<ServerController>> {
 
     public void startListening(){
         this.getGame().setGameStarted(true);
-        userInterface.startListening(this);
+        userInterface.setController(this);
+        userInterface.startListening();
     }
 
     public void viewLeaderCards(String player){
@@ -197,9 +203,9 @@ public class ClientController extends Observable<Message<ServerController>> {
         }
     }
 
-    public void pickResources(MarbleSelection selection, ArrayList<ResourcePosition> positions){
+    public void pickResources(MarbleSelection selection, ArrayList<ResourcePosition> positions, ArrayList<ResourceType> conversions){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
-            notify(new PickResourcesMessage(selection, positions));
+            notify(new PickResourcesMessage(selection, positions, conversions));
         } else {
             userInterface.displayError("This action is available only for current turn player!");
         }
@@ -212,6 +218,25 @@ public class ClientController extends Observable<Message<ServerController>> {
             notify(new ProductionMessage(consumed, toActivate));
         } else {
             userInterface.displayError("This action is available only for current turn player!");
+        }
+    }
+
+    public void pickCommandHandler(MarbleSelection selection){
+        try{
+            ArrayList<ChangeEffect> changeEffects = new ArrayList<>();
+            ArrayList<Marble> selected = game.getClientMarbleMarket().getSelectedMarbles(selection);
+            if(selected.stream().map(Marble::getResourceType).collect(Collectors.toList()).contains(ResourceType.BLANK)){
+                ArrayList<ClientLeaderCard> cards = game.getPlayerBoardMap().get(game.getCurrentPlayer()).getClientLeaderCards().getClientLeaderCards();
+                for(ClientLeaderCard card : cards){
+                    if(card.isActive() && card.getEffect().getEffectType().equals(EffectType.CHANGE)){
+                        changeEffects.add((ChangeEffect) card.getEffect());
+                    }
+                }
+
+            }
+            userInterface.displayPickResourceMenu(selection, selected, changeEffects);
+        } catch (Exception e){
+            userInterface.displayError("Cannot retrieve marbles from that position!");
         }
     }
 }

@@ -90,8 +90,10 @@ public class ServerController {
         }
     }
 
-    public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions) {
+    public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) {
         Player currentPlayer = game.getCurrentPlayer();
+        int posIndex = 0;
+        int convIndex = 0;
         if(currentPlayer.hasDoneMainAction()) {
             game.notifyError("You have already done main action this turn!", game.getCurrentPlayer().getNickname());
             return;
@@ -100,29 +102,51 @@ public class ServerController {
         Warehouse validateWarehouse = currentPlayer.getPlayerBoard().getWarehouse().getCopy();
         for(int i = 0; i<validateSelection.size(); i++){
             ResourceType resourceToAdd = validateSelection.get(i).getResourceType();
-            ResourcePosition selectedPosition = positions.get(i);
+            if(resourceToAdd.equals(ResourceType.FAITH)) continue;
+            if(resourceToAdd.equals(ResourceType.BLANK) && converted.isEmpty()) continue;
+            ResourcePosition selectedPosition = positions.get(posIndex);
+            posIndex++;
             if(selectedPosition != ResourcePosition.DROPPED){
                 if(selectedPosition == ResourcePosition.STRONG_BOX){
                     game.notifyError("Cannot insert resources in strongbox!", currentPlayer.getNickname());
                     return;
                 }
                 try{
-                    validateWarehouse.addToDepot(selectedPosition.ordinal(), resourceToAdd);
+                    if(resourceToAdd.equals(ResourceType.BLANK)){
+                        validateWarehouse.addToDepot(selectedPosition.ordinal(), converted.get(convIndex));
+                        convIndex++;
+                    } else {
+                        validateWarehouse.addToDepot(selectedPosition.ordinal(), resourceToAdd);
+                    }
                 } catch(Exception e){
                     game.notifyError("Cannot insert selected marbles in those position!", currentPlayer.getNickname());
                     return;
                 }
             }
         }
-
+        posIndex = 0;
+        convIndex= 0;
         ArrayList<Marble> selectedMarbles = game.getMarbleMarket().sell(marbleSelection);
         for(int i = 0; i<selectedMarbles.size(); i++){
             ResourceType resourceToAdd = selectedMarbles.get(i).getResourceType();
-            ResourcePosition selectedPosition = positions.get(i);
-            if(selectedPosition == ResourcePosition.DROPPED){
-                game.currentPlayerDropsResource();
-            } else {
-                currentPlayer.addResourceToDepot(resourceToAdd, selectedPosition.ordinal());
+            switch(resourceToAdd){
+                case FAITH:
+                    game.getCurrentPlayer().addFaithPoints(1);
+                    break;
+                default:
+                    if(resourceToAdd.equals(ResourceType.BLANK) && converted.isEmpty()) break;
+                    ResourcePosition selectedPosition = positions.get(posIndex);
+                    posIndex++;
+                    if(selectedPosition == ResourcePosition.DROPPED){
+                        game.currentPlayerDropsResource();
+                    } else {
+                        if(resourceToAdd.equals(ResourceType.BLANK)){
+                            currentPlayer.addResourceToDepot(converted.get(convIndex), selectedPosition.ordinal());
+                            convIndex++;
+                        } else {
+                            currentPlayer.addResourceToDepot(resourceToAdd, selectedPosition.ordinal());
+                        }
+                    }
             }
         }
         currentPlayer.setHasDoneMainAction(true);

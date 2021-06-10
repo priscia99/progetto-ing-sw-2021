@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.model.market;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.data.MarbleMarketBuilder;
+import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.from_server.MarbleMarketMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
@@ -10,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class MarbleMarket extends Observable<MarbleMarket> {
+public class MarbleMarket extends Observable<Message<ClientController>> {
 
     // 4 columns
     // 3 rows
@@ -60,7 +63,7 @@ public class MarbleMarket extends Observable<MarbleMarket> {
             this.onSale[index][3] = this.notForSale;
             this.notForSale = tempNotForSale;
 
-            notify(this);
+            notify(new MarbleMarketMessage(this));
 
             return soldMarbles;
 
@@ -80,7 +83,7 @@ public class MarbleMarket extends Observable<MarbleMarket> {
             this.onSale[2][index] = this.notForSale;
             this.notForSale = tempNotForSale;
 
-            notify(this);
+            notify(new MarbleMarketMessage(this));
 
             return soldMarbles;
 

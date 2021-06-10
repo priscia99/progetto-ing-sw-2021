@@ -4,6 +4,7 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,13 +14,15 @@ public class PickResourcesMessage extends Message<ServerController> implements S
     private static final long serialVersionUID = 1L;
     private final MarbleSelection marbleSelection;
     private final ArrayList<ResourcePosition> positions;
+    ArrayList<ResourceType> conversions;
 
-    public PickResourcesMessage(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions) {
+    public PickResourcesMessage(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> conversions) {
         this.marbleSelection = marbleSelection;
         this.positions = positions;
+        this.conversions = conversions;
     }
 
     public void execute(ServerController target) {
-        target.pickResources(marbleSelection, positions);
+        target.pickResources(marbleSelection, positions, conversions);
     }
 }

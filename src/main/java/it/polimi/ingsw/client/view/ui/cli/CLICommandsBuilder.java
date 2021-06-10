@@ -81,6 +81,9 @@ public class CLICommandsBuilder {
     }
 
     private static Command pickCommand(){
-        return new Command("pick", "Pick resources from marble market", true, new HashMap<>());
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("o", "[orientation] The orientation of marbles to pick. Can be | HORIZONTAL | VERTICAL |");
+        parameters.put("i", "[second-index] The index of marble market");
+        return new Command("pick", "Pick resources from marble market", true, parameters);
     }
 }
