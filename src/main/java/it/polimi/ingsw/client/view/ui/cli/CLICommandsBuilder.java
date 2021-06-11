@@ -77,7 +77,9 @@ public class CLICommandsBuilder {
     }
 
     private static Command buyCommand(){
-        return new Command("buy", "Buy development card", true, new HashMap<>());
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("c", "[card-id] Id of the card to buy");
+        return new Command("buy", "Buy development card", true, parameters);
     }
 
     private static Command pickCommand(){

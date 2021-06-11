@@ -40,4 +40,5 @@ public interface UI {
     void displayTurnInfo(ArrayList<String> names, String current);
     void displayPossibleActions(boolean myTurn, boolean mainActionDone);
     void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects);
+    void displayBuyDevelopmentCardMenu(String id);
 }

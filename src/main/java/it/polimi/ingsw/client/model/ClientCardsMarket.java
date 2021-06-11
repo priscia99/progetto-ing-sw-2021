@@ -49,6 +49,15 @@ public class ClientCardsMarket extends Observable<ClientCardsMarket> {
         notify(this);
     }
 
+    public ClientDevelopmentCard getCardById(String id){
+        for(int i = 0; i<4; i++){
+            for(int j = 0; j<4; j++){
+                if(this.decks.get(i).get(j).get(0).getId().equals(id)) return this.decks.get(i).get(j).get(0);
+            }
+        }
+        return null;
+    }
+
     public ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> getDecks() {
         return decks;
     }

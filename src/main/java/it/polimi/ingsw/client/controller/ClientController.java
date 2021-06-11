@@ -239,4 +239,12 @@ public class ClientController extends Observable<Message<ServerController>> {
             userInterface.displayError("Cannot retrieve marbles from that position!");
         }
     }
+
+    public void buyCommandHandler(String id){
+        if(game.getClientCardsMarket().getCardById(id)==null){
+            userInterface.displayError("Cannot buy card with that id!");
+        } else {
+            userInterface.displayBuyDevelopmentCardMenu(id);
+        }
+    }
 }

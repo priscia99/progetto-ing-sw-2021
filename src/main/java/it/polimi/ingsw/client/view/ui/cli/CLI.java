@@ -452,7 +452,7 @@ public class CLI implements UI {
             case "cardmarket" -> cardMarketCommandHandler();
             case "endturn" -> endTurnCommandHandler();
             case "swap" -> swapCommandHandler(inputCommand.getSecond());
-            case "buy" -> buyCommandHandler();
+            case "buy" -> buyCommandParser(inputCommand.getSecond());
             case "pick" -> pickCommandParser(inputCommand.getSecond());
             case "produce" -> produceCommandHandler();
         }
@@ -532,26 +532,9 @@ public class CLI implements UI {
         controller.swapDepots(first, second);
     }
 
-    private void buyCommandHandler(){
-        int index = 0;
-        String cardId;
-            controller.viewCardMarket();
-            displayInfo("Insert id of card to buy: ('quit' to choose another action)");
-            cardId = in.nextLine();
-            if(cardId.equals("quit")) return;
-            controller.viewDevelopmentCards();
-            displayInfo("Insert deck in which to add card. | 0 | 1 | 2 | ");
-            String deckIndex = in.nextLine();
-            try{
-                index = Integer.parseInt(deckIndex);
-            } catch (Exception e){
-                displayError("Error parsing deck index, try again.");
-            }
-            controller.viewStrongbox();
-            controller.viewWarehouse();
-            HashMap<ResourcePosition, ResourceStock> resourcesSelected = askResourceSelection();
-            if(resourcesSelected==null) return;
-        controller.buyDevelopmentCard(cardId, index, resourcesSelected);
+    private void buyCommandParser(HashMap<String, String> params){
+        String cardId = params.get("c");
+        controller.buyCommandHandler(cardId);
     }
 
     private void pickCommandParser(HashMap<String, String> params){
@@ -606,6 +589,23 @@ public class CLI implements UI {
             }
     }
 
+    public void displayBuyDevelopmentCardMenu(String id){
+        int index = 0;
+        displayInfo("Insert deck in which to add card. | 0 | 1 | 2 | ");
+        String deckIndex = in.nextLine();
+        try{
+            index = Integer.parseInt(deckIndex);
+        } catch (Exception e){
+            displayError("Error parsing deck index, try again.");
+            return;
+        }
+        controller.viewStrongbox();
+        controller.viewWarehouse();
+        HashMap<ResourcePosition, ResourceStock> resourcesSelected = askResourceSelection();
+        if(resourcesSelected==null) return;
+        controller.buyDevelopmentCard(id, index, resourcesSelected);
+    }
+
     private void produceCommandHandler(){
         HashMap<ResourcePosition, ResourceStock> consumed;
         String[] cardIds;
@@ -642,6 +642,7 @@ public class CLI implements UI {
                 displayInfo("Stock added correctly, press enter to add another stock, 'ok' to buy card.");
             } catch(Exception e ){
                 displayError("Error while parsing command, try again or write 'quit' to choose another action.");
+                return null;
             }
             confirmString = in.nextLine();
         }
