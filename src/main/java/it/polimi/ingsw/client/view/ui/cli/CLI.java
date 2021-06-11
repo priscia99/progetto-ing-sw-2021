@@ -455,7 +455,7 @@ public class CLI implements UI {
             case "swap" -> swapCommandHandler(inputCommand.getSecond());
             case "buy" -> buyCommandParser(inputCommand.getSecond());
             case "pick" -> pickCommandParser(inputCommand.getSecond());
-            case "produce" -> produceCommandHandler();
+            case "produce" -> displayProduceMenu();
         }
     }
 
@@ -608,13 +608,14 @@ public class CLI implements UI {
                 displayInfo(discount.toString());
             }
         }
-        HashMap<ResourcePosition, ResourceStock> resourcesSelected = askResourceSelection();
+        HashMap<ResourcePosition, ResourceStock> resourcesSelected = askResourceSelection(null);
         if(resourcesSelected==null) return;
         controller.buyDevelopmentCard(id, index, resourcesSelected);
     }
 
-    private void produceCommandHandler(){
-        HashMap<ResourcePosition, ResourceStock> consumed;
+    private void displayProduceMenu(){
+        HashMap<ResourcePosition, ResourceStock> consumed = new HashMap<>();
+        Optional<ProductionEffect> genericProduction = null;
         String[] cardIds;
         controller.viewDevelopmentCards();
         displayInfo("Insert IDs of card to use, separated by space: ");
@@ -625,28 +626,55 @@ public class CLI implements UI {
             displayError("Cannot parse ids, try again.");
             return;
         }
-        consumed = askResourceSelection();
-        if(consumed == null) return;
-        controller.produceResources(consumed, new ArrayList<>(Arrays.asList(cardIds)));
+        displayInfo("If you want to use generic production, type the resource type to produce, else 'next':" );
+        try{
+            String selectedRaw = in.nextLine();
+            if(!selectedRaw.equals("next")){
+
+                ResourceType resourceFromGenericProduction = ResourceType.valueOf(selectedRaw);
+                HashMap<ResourcePosition, ResourceStock> toConsumeForGeneric = askResourceSelection(Optional.of(2));
+                if(toConsumeForGeneric==null)return;
+                for (ResourcePosition resourcePosition : toConsumeForGeneric.keySet()) {
+                    consumed.put(resourcePosition, toConsumeForGeneric.get(resourcePosition));
+                }
+                genericProduction = Optional.of(new ProductionEffect(
+                        new ArrayList<>(toConsumeForGeneric.values()),
+                        new ArrayList<>(Arrays.asList(new ResourceStock(resourceFromGenericProduction, 1)))));
+
+            }
+        } catch(Exception e){
+            displayError("Cannot parse resource type.");
+            return;
+        }
+
+        HashMap<ResourcePosition, ResourceStock> toConsume = askResourceSelection(null);
+        if(toConsume == null) return;
+        for (ResourcePosition resourcePosition : toConsume.keySet()) {
+            consumed.put(resourcePosition, toConsume.get(resourcePosition));
+        }
+        controller.produceResources(consumed, new ArrayList<>(Arrays.asList(cardIds)), genericProduction);
 
     }
 
-    private HashMap<ResourcePosition, ResourceStock> askResourceSelection(){
+    private HashMap<ResourcePosition, ResourceStock> askResourceSelection(Optional<Integer> quantity){
         HashMap<ResourcePosition, ResourceStock> resourcesSelected = new HashMap<>();
         String confirmString = "add";
-        while(!confirmString.equals("ok")){
-            displayInfo("Add resource stock to buy card: <position> <quantity> <type> ('quit' to choose another action)");
+        while(!confirmString.equals("ok") && quantity.isPresent() ? (quantity.get()==resourcesSelected.size()) : (true)){
+            displayInfo("Add resource stock: <position> <quantity> <type> ('quit' to choose another action)");
             displayInfo("Positions are: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | STRONGBOX |");
             String rawInput = in.nextLine();
             if(rawInput.equals("quit")) return null;
-            String[] resourseSelectionRaw = rawInput.split(" ");
+            String[] resourceSelectionRaw = rawInput.split(" ");
             try{
-                ResourcePosition positionSelected = ResourcePosition.valueOf(resourseSelectionRaw[0]);
-                int quantitySelected = Integer.parseInt(resourseSelectionRaw[1]);
-                ResourceType typeSelected = ResourceType.valueOf(resourseSelectionRaw[2]);
+                ResourcePosition positionSelected = ResourcePosition.valueOf(resourceSelectionRaw[0]);
+                int quantitySelected = Integer.parseInt(resourceSelectionRaw[1]);
+                ResourceType typeSelected = ResourceType.valueOf(resourceSelectionRaw[2]);
                 ResourceStock stockSelected = new ResourceStock(typeSelected, quantitySelected);
                 resourcesSelected.put(positionSelected, stockSelected);
-                displayInfo("Stock added correctly, press enter to add another stock, 'ok' to buy card.");
+                if(quantity.isPresent()){
+                    if(resourcesSelected.keySet().size() == quantity.get()) return resourcesSelected;
+                }
+                displayInfo("Stock added correctly, press enter to add another stock, 'ok' to continue.");
             } catch(Exception e ){
                 displayError("Error while parsing command, try again or write 'quit' to choose another action.");
                 return null;

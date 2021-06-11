@@ -22,6 +22,7 @@ import it.polimi.ingsw.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ClientController extends Observable<Message<ServerController>> {
@@ -212,10 +213,11 @@ public class ClientController extends Observable<Message<ServerController>> {
         }
     }
 
-    public void produceResources(HashMap<ResourcePosition, ResourceStock> consumed, ArrayList<String> ids){
+    public void produceResources(HashMap<ResourcePosition, ResourceStock> consumed, ArrayList<String> ids, Optional<ProductionEffect> generic){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
             ArrayList<ProductionEffect> toActivate = game.getPlayerBoardMap()
                     .get(game.getCurrentPlayer()).getDevelopmentCards().getProductionAvailable(ids);
+            if(generic.isPresent()) toActivate.add(generic.get());
             notify(new ProductionMessage(consumed, toActivate));
         } else {
             userInterface.displayError("This action is available only for current turn player!");

@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
