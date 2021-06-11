@@ -12,6 +12,7 @@ import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
+import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
@@ -589,7 +590,7 @@ public class CLI implements UI {
             }
     }
 
-    public void displayBuyDevelopmentCardMenu(String id){
+    public void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts){
         int index = 0;
         displayInfo("Insert deck in which to add card. | 0 | 1 | 2 | ");
         String deckIndex = in.nextLine();
@@ -601,6 +602,12 @@ public class CLI implements UI {
         }
         controller.viewStrongbox();
         controller.viewWarehouse();
+        if(!discounts.isEmpty()){
+            displayInfo("When choosing resources, consider having the following discounts:");
+            for(DiscountEffect discount : discounts){
+                displayInfo(discount.toString());
+            }
+        }
         HashMap<ResourcePosition, ResourceStock> resourcesSelected = askResourceSelection();
         if(resourcesSelected==null) return;
         controller.buyDevelopmentCard(id, index, resourcesSelected);

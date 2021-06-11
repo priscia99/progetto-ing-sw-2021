@@ -8,6 +8,8 @@ import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.color.Color;
+import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
+import it.polimi.ingsw.server.model.card.effect.EffectType;
 import it.polimi.ingsw.server.model.player_board.DevelopmentCardsDeck;
 import it.polimi.ingsw.server.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.server.model.player_board.PlayerBoard;
@@ -417,5 +419,13 @@ public class Player extends Observable<Message<ClientController>> {
     public void addDevelopmentCard(DevelopmentCard card, int deckIndex){
         this.playerBoard.addDevelopmentCard(card, deckIndex);
         notify(new DevelopmentCardsMessage(card, deckIndex, username));
+    }
+
+    public ArrayList<DiscountEffect> getDiscounts(){
+        return this.playerBoard.getLeaderCardsDeck()
+                .getLeaderCards().stream().filter(LeaderCard::isActive)
+                .filter(card->card.getEffect().getEffectType().equals(EffectType.DISCOUNT))
+                .map(card->(DiscountEffect) card.getEffect())
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

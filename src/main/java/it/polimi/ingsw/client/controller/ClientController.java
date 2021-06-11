@@ -9,6 +9,7 @@ import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
+import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.EffectType;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.marble.Marble;
@@ -244,7 +245,14 @@ public class ClientController extends Observable<Message<ServerController>> {
         if(game.getClientCardsMarket().getCardById(id)==null){
             userInterface.displayError("Cannot buy card with that id!");
         } else {
-            userInterface.displayBuyDevelopmentCardMenu(id);
+            ArrayList<DiscountEffect> discounts = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                    .getClientLeaderCards().getClientLeaderCards()
+                    .stream().filter(ClientLeaderCard::isActive)
+                    .filter(card->card.getEffect().getEffectType().equals(EffectType.DISCOUNT))
+                    .map(card->(DiscountEffect) card.getEffect())
+                    .collect(Collectors.toCollection(ArrayList::new));
+
+            userInterface.displayBuyDevelopmentCardMenu(id, discounts);
         }
     }
 }

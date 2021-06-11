@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.card.requirement;
 
+import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
@@ -77,5 +78,17 @@ public class ResourceRequirement extends Requirement implements Serializable {
                 }
         });
         return new ResourceRequirement(stocks);
+    }
+
+    public void applyDiscounts(ArrayList<DiscountEffect> discounts){
+        for(DiscountEffect discount : discounts){
+            for(ResourceStock stock : resourceStocks){
+                if(discount.getResourceType().equals(stock.getResourceType())){
+                    if(stock.getQuantity() != 0){
+                        stock.decrementResource(discount.getResourceType());
+                    }
+                }
+            }
+        }
     }
 }

@@ -45,7 +45,6 @@ public class ServerController {
     }
 
     public void buyDevelopmentCard(String cardId, int deckIndex, HashMap<ResourcePosition, ResourceStock> toConsume) {
-        //if(game.getCurrentPlayer().hasDoneMainAction()) throw new InvalidActionException();
         Player currentPlayer = game.getCurrentPlayer();
         if(currentPlayer.hasDoneMainAction()) {
             game.notifyError("You have already done main action this turn!", game.getCurrentPlayer().getNickname());
@@ -53,6 +52,7 @@ public class ServerController {
         }
         DevelopmentCard toBuy = game.getCardMarket().getCardById(cardId);
         ResourceRequirement requirement = (ResourceRequirement) toBuy.getRequirement();
+        requirement.applyDiscounts(game.getCurrentPlayer().getDiscounts());
         if(requirement.isFulfilled(toConsume)) {
             if(currentPlayer.canConsume(toConsume)){
                 if(currentPlayer.canAddDevelopmentCard(toBuy, deckIndex)){
