@@ -553,117 +553,135 @@ public class CLI implements UI {
     public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects){
             ArrayList<ResourcePosition> positions = new ArrayList<>();
             ArrayList<ResourceType> conversions = new ArrayList<>();
-            controller.viewWarehouse();
             try{
                 for(Marble marble : selected){
                     if(marble.getResourceType().equals(ResourceType.FAITH)) continue;
                     if(marble.getResourceType().equals(ResourceType.BLANK)){
-                        switch (changeEffects.size()){
-                            case 0: continue;
-                            case 1:
-                                conversions.add(changeEffects.get(0).getResourceType());
-                                displayInfo("Insert position in which you want to add " + changeEffects.get(0).getResourceType().toString() + " (was blank, converted thanks to Leader Card Effect!)");
-                            case 2:
-                                displayInfo("Select type to convert blank marble into, available types: ");
-                                for(ChangeEffect effect : changeEffects) displayInfo(effect.getResourceType().toString());
-                                String choiceRaw = in.nextLine();
-                                try{
-                                    ResourceType conversion = ResourceType.valueOf(choiceRaw);
-                                    conversions.add(conversion);
-                                    displayInfo("Insert position in which you want to add " + conversion.toString());
-                                } catch (Exception e){
-                                    displayError("Error parsing the resource type.");
-                                    return;
-                                }
-                        }
-                    }
-                    if(!marble.getResourceType().equals(ResourceType.BLANK)){
+                        if(!changeEffects.isEmpty()) conversions.add(askForConversions(changeEffects));
+                    } else {
                         displayInfo("Insert position in which you want to add " + marble.getResourceType().toString());
                     }
-                    displayInfo("Positions are: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | DROPPED |");
+                    displayInfo("Select between: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | DROPPED |");
                     String positionRaw = in.nextLine();
-                    positions.add(ResourcePosition.valueOf(positionRaw));
+                    positions.add(parseResourcePosition(positionRaw));
                 }
                 controller.pickResources(selection, positions, conversions);
             } catch(Exception e){
-                displayError("Error while parsing position.");
+                displayError(e.getMessage());
             }
     }
 
-    public void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts){
-        int index = 0;
-        displayInfo("Insert deck in which to add card. | 0 | 1 | 2 | ");
-        String deckIndex = in.nextLine();
-        try{
-            index = Integer.parseInt(deckIndex);
-        } catch (Exception e){
-            displayError("Error parsing deck index, try again.");
-            return;
+    private ResourceType askForConversions(ArrayList<ChangeEffect> changeEffects) throws Exception {
+        switch (changeEffects.size()){
+            case 1:
+                return changeEffects.get(0).getResourceType();
+            case 2:
+                displayInfo("Select type to convert blank marble into, available types: ");
+                for(ChangeEffect effect : changeEffects) displayInfo(effect.getResourceType().toString());
+                String choiceRaw = in.nextLine();
+                return parseResourceType(choiceRaw);
         }
-        controller.viewStrongbox();
-        controller.viewWarehouse();
+        throw new Exception("Invalid size of change effects.");
+    }
+
+    public void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts){
+        try{
+            int index = askDevelopmentDeckIndex();
+            displayUserDiscounts(discounts);
+            HashMap<ResourcePosition, ResourceStock> resourcesSelected = askResourcesToUse(Optional.empty());
+            controller.buyDevelopmentCard(id, index, resourcesSelected);
+        } catch(Exception e){
+            displayError(e.getMessage());
+        }
+    }
+
+    private void displayUserDiscounts(ArrayList<DiscountEffect> discounts){
         if(!discounts.isEmpty()){
             displayInfo("When choosing resources, consider having the following discounts:");
             for(DiscountEffect discount : discounts){
                 displayInfo(discount.toString());
             }
         }
-        HashMap<ResourcePosition, ResourceStock> resourcesSelected = askResourceSelection(null);
-        if(resourcesSelected==null) return;
-        controller.buyDevelopmentCard(id, index, resourcesSelected);
+    }
+
+    private int askDevelopmentDeckIndex() throws Exception {
+        displayInfo("Insert deck in which to add card. | 0 | 1 | 2 | ");
+        String deckIndex = in.nextLine();
+        try{
+            return Integer.parseInt(deckIndex);
+        } catch (Exception e){
+            throw new Exception("Error parsing deck index, try again.");
+        }
     }
 
     private void displayProduceMenu(){
-        HashMap<ResourcePosition, ResourceStock> consumed = new HashMap<>();
-        Optional<ProductionEffect> genericProduction = null;
-        String[] cardIds;
-        controller.viewDevelopmentCards();
-        displayInfo("Insert IDs of card to use, separated by space: ");
-        String productionsRaw = in.nextLine();
         try{
-            cardIds = productionsRaw.split(" ");
-        } catch (Exception e){
-            displayError("Cannot parse ids, try again.");
-            return;
-        }
-        displayInfo("If you want to use generic production, type the resource type to produce, else 'next':" );
-        try{
-            String selectedRaw = in.nextLine();
-            if(!selectedRaw.equals("next")){
-
-                ResourceType resourceFromGenericProduction = ResourceType.valueOf(selectedRaw);
-                HashMap<ResourcePosition, ResourceStock> toConsumeForGeneric = askResourceSelection(Optional.of(2));
-                if(toConsumeForGeneric==null)return;
-                for (ResourcePosition resourcePosition : toConsumeForGeneric.keySet()) {
-                    consumed.put(resourcePosition, toConsumeForGeneric.get(resourcePosition));
-                }
-                genericProduction = Optional.of(new ProductionEffect(
-                        new ArrayList<>(toConsumeForGeneric.values()),
-                        new ArrayList<>(Arrays.asList(new ResourceStock(resourceFromGenericProduction, 1)))));
-
+            HashMap<ResourcePosition, ResourceStock> consumed = new HashMap<>();
+            Optional<ProductionEffect> genericProduction;
+            ArrayList<String> cardIds;
+            genericProduction = askForGenericProduction(consumed);
+            cardIds = askForListOfIds();
+            HashMap<ResourcePosition, ResourceStock> toConsume = askResourcesToUse(Optional.empty());
+            for (ResourcePosition resourcePosition : toConsume.keySet()) {
+                consumed.put(resourcePosition, toConsume.get(resourcePosition));
             }
-        } catch(Exception e){
-            displayError("Cannot parse resource type.");
-            return;
+            controller.produceResources(consumed, cardIds, genericProduction);
+        } catch (Exception e){
+            displayError(e.getMessage());
         }
-
-        HashMap<ResourcePosition, ResourceStock> toConsume = askResourceSelection(null);
-        if(toConsume == null) return;
-        for (ResourcePosition resourcePosition : toConsume.keySet()) {
-            consumed.put(resourcePosition, toConsume.get(resourcePosition));
-        }
-        controller.produceResources(consumed, new ArrayList<>(Arrays.asList(cardIds)), genericProduction);
 
     }
 
-    private HashMap<ResourcePosition, ResourceStock> askResourceSelection(Optional<Integer> quantity){
+    private ArrayList<String> askForListOfIds() throws Exception {
+        try{
+            displayInfo("Insert IDs of card to use, separated by space: ");
+            String productionsRaw = in.nextLine();
+            return (ArrayList<String>) Arrays.asList(productionsRaw.split(" "));
+        } catch (Exception e){
+            throw new Exception("Cannot parse ids, try again.");
+        }
+    }
+
+    private Optional<ProductionEffect> askForGenericProduction(HashMap<ResourcePosition, ResourceStock> consumed) throws Exception {
+        displayInfo("If you want to use generic production, type the resource type to produce, else 'next':" );
+            String selectedRaw = in.nextLine();
+            if(!selectedRaw.equals("next")){
+                ResourceType resourceFromGenericProduction = parseResourceType(selectedRaw);
+                HashMap<ResourcePosition, ResourceStock> toConsumeForGeneric = askResourcesToUse(Optional.of(2));
+                for (ResourcePosition resourcePosition : toConsumeForGeneric.keySet()) {
+                    consumed.put(resourcePosition, toConsumeForGeneric.get(resourcePosition));
+                }
+                return Optional.of(new ProductionEffect(
+                        new ArrayList<>(toConsumeForGeneric.values()),
+                        new ArrayList<>(Arrays.asList(new ResourceStock(resourceFromGenericProduction, 1)))));
+            }
+            return Optional.empty();
+    }
+
+    private ResourcePosition parseResourcePosition(String raw) throws Exception {
+        try{
+            return ResourcePosition.valueOf(raw);
+        } catch (Exception e){
+            throw new Exception("Cannot parse resource type.");
+        }
+    }
+
+    private ResourceType parseResourceType(String raw) throws Exception {
+        try{
+            return ResourceType.valueOf(raw);
+        } catch (Exception e){
+            throw new Exception("Cannot parse resource type.");
+        }
+    }
+
+    private HashMap<ResourcePosition, ResourceStock> askResourcesToUse(Optional<Integer> needed) throws Exception {
         HashMap<ResourcePosition, ResourceStock> resourcesSelected = new HashMap<>();
         String confirmString = "add";
-        while(!confirmString.equals("ok") && quantity.isPresent() ? (quantity.get()==resourcesSelected.size()) : (true)){
+        while(!confirmString.equals("ok") && (needed.isEmpty() || (needed.get() == resourcesSelected.size()))){
             displayInfo("Add resource stock: <position> <quantity> <type> ('quit' to choose another action)");
             displayInfo("Positions are: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | STRONGBOX |");
             String rawInput = in.nextLine();
-            if(rawInput.equals("quit")) return null;
+            if(rawInput.equals("quit")) throw new Exception("User stopped action.");
             String[] resourceSelectionRaw = rawInput.split(" ");
             try{
                 ResourcePosition positionSelected = ResourcePosition.valueOf(resourceSelectionRaw[0]);
@@ -671,13 +689,12 @@ public class CLI implements UI {
                 ResourceType typeSelected = ResourceType.valueOf(resourceSelectionRaw[2]);
                 ResourceStock stockSelected = new ResourceStock(typeSelected, quantitySelected);
                 resourcesSelected.put(positionSelected, stockSelected);
-                if(quantity.isPresent()){
-                    if(resourcesSelected.keySet().size() == quantity.get()) return resourcesSelected;
+                if(needed.isPresent()){
+                    if(resourcesSelected.keySet().size() == needed.get()) return resourcesSelected;
                 }
                 displayInfo("Stock added correctly, press enter to add another stock, 'ok' to continue.");
             } catch(Exception e ){
-                displayError("Error while parsing command, try again or write 'quit' to choose another action.");
-                return null;
+                throw new Exception("Error while parsing resources.");
             }
             confirmString = in.nextLine();
         }
