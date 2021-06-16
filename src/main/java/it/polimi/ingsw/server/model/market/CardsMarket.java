@@ -61,25 +61,26 @@ public class CardsMarket extends Observable<Message<ClientController>> {
         return this.decks[row][column].peek();
     }
 
-    public DevelopmentCard getCardById(String id){
+    public DevelopmentCard getCardById(String id) throws Exception{
         for(int i = 0; i<4; i++){
-            for(int j = 0; j<4; j++){
-                if(this.decks[i][j].get(0).getId().equals(id)) return this.decks[i][j].peek();
+            for(int j = 0; j<3; j++){
+                System.out.println("ID: " + this.decks[i][j].get(0).getId());
+                if(this.decks[i][j].peek().getId().equals(id)) return this.decks[i][j].peek();
             }
         }
-        return null;
+        throw new Exception("The requested card is not available in the market");
     }
 
     public DevelopmentCard popCardById(String id){
         for(int i = 0; i<4; i++){
-            for(int j = 0; j<4; j++){
-                if(this.decks[i][j].get(0).getId().equals(id)) return this.decks[i][j].pop();
+            for(int j = 0; j<3; j++){
+                if(this.decks[i][j].peek().getId().equals(id)) return this.decks[i][j].pop();
             }
         }
         return null;
     }
 
-    public DevelopmentCard sell(String id, Player player) {
+    public DevelopmentCard sell(String id, Player player) throws Exception{
         DevelopmentCard card = getCardById(id);
         if (card.getRequirement().isFulfilled(player)) {
             card = popCardById(id);

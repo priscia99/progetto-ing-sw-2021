@@ -27,7 +27,7 @@ public class DropLeaderCardMessageTest {
         int deckSize = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().size();
         LeaderCard cardToDrop = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0);
         DropLeaderCardMessage message = new DropLeaderCardMessage(cardId);
-        message.execute(controller);
+        controller.tryAction(()-> message.execute(controller));
         int deckSizeAfterDrop = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().size();
         Assertions.assertEquals(deckSize -1, deckSizeAfterDrop );
         for(LeaderCard card : game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards()){
@@ -41,7 +41,7 @@ public class DropLeaderCardMessageTest {
         String cardId = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(0).getId();
         int faithPoints = game.getCurrentPlayer().getPlayerBoard().getFaithPath().getFaithPoints();
         DropLeaderCardMessage action = new DropLeaderCardMessage(cardId);
-        action.execute(controller);
+        controller.tryAction(()-> action.execute(controller));
         int faithPointsAfterDrop = game.getCurrentPlayer().getPlayerBoard().getFaithPath().getFaithPoints();
         Assertions.assertEquals(faithPointsAfterDrop, faithPoints +1);
     }

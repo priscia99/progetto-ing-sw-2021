@@ -29,7 +29,7 @@ public class PlayLeaderCardActionTest {
         int index = (int)(game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().stream().count()) -1;
         Assertions.assertFalse(game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(index).isActive());
         PlayLeaderCardMessage action = new PlayLeaderCardMessage(cardId);
-        action.execute(controller);
+        controller.tryAction(()-> action.execute(controller));
         Assertions.assertTrue(game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().get(index).isActive());
     }
 

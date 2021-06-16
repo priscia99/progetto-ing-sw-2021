@@ -14,6 +14,7 @@ import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
+import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.CustomRunnable;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class ServerController {
         try{
             action.tryRun();
         } catch (Exception e){
+            CustomLogger.getLogger().severe("[PLAYER: " + game.getCurrentPlayer() + "] " + e.getMessage());
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
         }
     }
