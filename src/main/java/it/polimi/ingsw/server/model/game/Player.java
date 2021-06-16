@@ -17,10 +17,7 @@ import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.server.model.player_board.faith_path.PopeCell;
 import it.polimi.ingsw.server.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
-import it.polimi.ingsw.server.model.resource.ResourceDepot;
-import it.polimi.ingsw.server.model.resource.ResourcePosition;
-import it.polimi.ingsw.server.model.resource.ResourceStock;
-import it.polimi.ingsw.server.model.resource.ResourceType;
+import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.network.message.from_server.*;
 
@@ -387,23 +384,28 @@ public class Player extends Observable<Message<ClientController>> {
         return this.playerBoard.getDevelopmentCardsDecks()[index].canAddCard(card);
     }
 
-    public boolean canConsume(HashMap<ResourcePosition, ResourceStock> toConsume){
-        return !toConsume.keySet().stream().map(position -> {
-            if(position == ResourcePosition.STRONG_BOX){
-                return this.playerBoard.getStrongbox().canConsume(toConsume.get(position));
+    public boolean canConsume(ConsumeTarget toConsume){
+        return !toConsume.getPositions().stream().map(position -> {
+            if(position.equals(ResourcePosition.STRONG_BOX)){
+                return !toConsume.getToConsumeFromStrongBox().stream()
+                        .map(stock->this.playerBoard.getStrongbox().canConsume(stock))
+                        .collect(Collectors.toList()).contains(false);
             } else {
-                return this.playerBoard.getWarehouse().canConsumeFromDepot(position, toConsume.get(position));
+                    return this.playerBoard.getWarehouse()
+                            .canConsumeFromDepot(position, toConsume.getToConsumeFromDepot(position));
             }
         }).collect(Collectors.toList()).contains(false);
     }
 
-    public void consumeResources(HashMap<ResourcePosition, ResourceStock> toConsume){
-        toConsume.keySet().forEach(
+    public void consumeResources(ConsumeTarget toConsume){
+        toConsume.getPositions().forEach(
                 position -> {
                     if(position == ResourcePosition.STRONG_BOX){
-                        this.playerBoard.getStrongbox().consume(toConsume.get(position));
+                        toConsume.getToConsumeFromStrongBox()
+                                .forEach(stock-> this.playerBoard.getStrongbox().consume(stock)
+                        );
                     } else {
-                        this.playerBoard.getWarehouse().consume(toConsume.get(position));
+                        this.playerBoard.getWarehouse().consume(toConsume.getToConsumeFromDepot(position));
                     }
                 }
         );

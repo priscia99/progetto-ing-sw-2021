@@ -11,10 +11,12 @@ import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
+import it.polimi.ingsw.server.model.resource.ConsumeTarget;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomRunnable;
+import it.polimi.ingsw.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +56,7 @@ public class ServerController {
         game.giveInitialResources();
     }
 
-    public void buyDevelopmentCard(String cardId, int deckIndex, HashMap<ResourcePosition, ResourceStock> toConsume) throws Exception {
+    public void buyDevelopmentCard(String cardId, int deckIndex, ConsumeTarget toConsume) throws Exception {
         Player currentPlayer = game.getCurrentPlayer();
         if(currentPlayer.hasDoneMainAction()) throw new Exception("You have already done main action this turn!");
         DevelopmentCard toBuy = game.getCardMarket().getCardById(cardId);
@@ -80,7 +82,7 @@ public class ServerController {
     }
     public void dropLeaderCard(String cardId) throws Exception {
         Optional<LeaderCard> toDrop = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().stream().filter(c->c.getId().equals(cardId)).findFirst();
-        if(!toDrop.isPresent()) throw new Exception("Leader not found!");
+        if(toDrop.isEmpty()) throw new Exception("Leader not found!");
         game.getCurrentPlayer().dropLeaderCardById(cardId);
         game.getCurrentPlayer().addFaithPoints(1);
     }
@@ -92,51 +94,50 @@ public class ServerController {
         if(currentPlayer.hasDoneMainAction()) throw new Exception("You have already done main action this turn!");
         ArrayList<Marble> validateSelection = game.getMarbleMarket().getSelectedMarbles(marbleSelection);
         Warehouse validateWarehouse = currentPlayer.getPlayerBoard().getWarehouse().getCopy();
-        for(int i = 0; i<validateSelection.size(); i++){
-            ResourceType resourceToAdd = validateSelection.get(i).getResourceType();
-            if(resourceToAdd.equals(ResourceType.FAITH)) continue;
-            if(resourceToAdd.equals(ResourceType.BLANK) && converted.isEmpty()) continue;
+        for (Marble marble : validateSelection) {
+            ResourceType resourceToAdd = marble.getResourceType();
+            if (resourceToAdd.equals(ResourceType.FAITH)) continue;
+            if (resourceToAdd.equals(ResourceType.BLANK) && converted.isEmpty()) continue;
             ResourcePosition selectedPosition = positions.get(posIndex);
             posIndex++;
-            if(selectedPosition != ResourcePosition.DROPPED){
-                if(selectedPosition == ResourcePosition.STRONG_BOX) throw new Exception("Cannot insert resources in strongbox!");
-                    if(resourceToAdd.equals(ResourceType.BLANK)){
-                        validateWarehouse.addToDepot(selectedPosition.ordinal(), converted.get(convIndex));
-                        convIndex++;
-                    } else {
-                        validateWarehouse.addToDepot(selectedPosition.ordinal(), resourceToAdd);
-                    }
+            if (selectedPosition != ResourcePosition.DROPPED) {
+                if (selectedPosition == ResourcePosition.STRONG_BOX)
+                    throw new Exception("Cannot insert resources in strongbox!");
+                if (resourceToAdd.equals(ResourceType.BLANK)) {
+                    validateWarehouse.addToDepot(selectedPosition.ordinal(), converted.get(convIndex));
+                    convIndex++;
+                } else {
+                    validateWarehouse.addToDepot(selectedPosition.ordinal(), resourceToAdd);
+                }
             }
         }
         posIndex = 0;
         convIndex= 0;
         ArrayList<Marble> selectedMarbles = game.getMarbleMarket().sell(marbleSelection);
-        for(int i = 0; i<selectedMarbles.size(); i++){
-            ResourceType resourceToAdd = selectedMarbles.get(i).getResourceType();
-            switch(resourceToAdd){
-                case FAITH:
-                    game.getCurrentPlayer().addFaithPoints(1);
-                    break;
-                default:
-                    if(resourceToAdd.equals(ResourceType.BLANK) && converted.isEmpty()) break;
-                    ResourcePosition selectedPosition = positions.get(posIndex);
-                    posIndex++;
-                    if(selectedPosition == ResourcePosition.DROPPED){
-                        game.currentPlayerDropsResource();
+        for (Marble selectedMarble : selectedMarbles) {
+            ResourceType resourceToAdd = selectedMarble.getResourceType();
+            if (resourceToAdd == ResourceType.FAITH) {
+                game.getCurrentPlayer().addFaithPoints(1);
+            } else {
+                if (resourceToAdd.equals(ResourceType.BLANK) && converted.isEmpty()) continue;
+                ResourcePosition selectedPosition = positions.get(posIndex);
+                posIndex++;
+                if (selectedPosition == ResourcePosition.DROPPED) {
+                    game.currentPlayerDropsResource();
+                } else {
+                    if (resourceToAdd.equals(ResourceType.BLANK)) {
+                        currentPlayer.addResourceToDepot(converted.get(convIndex), selectedPosition.ordinal());
+                        convIndex++;
                     } else {
-                        if(resourceToAdd.equals(ResourceType.BLANK)){
-                            currentPlayer.addResourceToDepot(converted.get(convIndex), selectedPosition.ordinal());
-                            convIndex++;
-                        } else {
-                            currentPlayer.addResourceToDepot(resourceToAdd, selectedPosition.ordinal());
-                        }
+                        currentPlayer.addResourceToDepot(resourceToAdd, selectedPosition.ordinal());
                     }
+                }
             }
         }
         currentPlayer.setHasDoneMainAction(true);
     }
 
-    public void startProduction(HashMap<ResourcePosition, ResourceStock> consumedResources, ArrayList<ProductionEffect> productionsToActivate) throws Exception {
+    public void startProduction(ConsumeTarget consumedResources, ArrayList<ProductionEffect> productionsToActivate) throws Exception {
         Player currentPlayer = game.getCurrentPlayer();
         if(currentPlayer.hasDoneMainAction()) throw new Exception("You have already done main action this turn!");
         ArrayList<ResourceStock> inStocks = new ArrayList<>();
@@ -157,7 +158,7 @@ public class ServerController {
 
     public void playLeaderCard(String cardId) throws Exception {
         Optional<LeaderCard> toActivate = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().stream().filter(c->c.getId().equals(cardId)).findFirst();
-        if(!toActivate.isPresent()) throw new Exception("Leader not found!");
+        if(toActivate.isEmpty()) throw new Exception("Leader not found!");
         if(!toActivate.get().getRequirement().isFulfilled(game.getCurrentPlayer())) throw new Exception("Leader requirements are not fulfilled!");
         game.getCurrentPlayer().playLeaderCardById(cardId);
     }

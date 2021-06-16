@@ -14,10 +14,7 @@ import it.polimi.ingsw.server.model.card.effect.EffectType;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
-import it.polimi.ingsw.server.model.resource.ResourceDepot;
-import it.polimi.ingsw.server.model.resource.ResourcePosition;
-import it.polimi.ingsw.server.model.resource.ResourceStock;
-import it.polimi.ingsw.server.model.resource.ResourceType;
+import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.utils.Pair;
 
 import java.util.ArrayList;
@@ -197,7 +194,7 @@ public class ClientController extends Observable<Message<ServerController>> {
         }
     }
 
-    public void buyDevelopmentCard(String cardId, int deckIndex,  HashMap<ResourcePosition, ResourceStock> toConsume){
+    public void buyDevelopmentCard(String cardId, int deckIndex,  ConsumeTarget toConsume){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
            notify(new BuyDevelopmentCardMessage(cardId, deckIndex,toConsume ));
         } else {
@@ -213,11 +210,11 @@ public class ClientController extends Observable<Message<ServerController>> {
         }
     }
 
-    public void produceResources(HashMap<ResourcePosition, ResourceStock> consumed, ArrayList<String> ids, Optional<ProductionEffect> generic){
+    public void produceResources(ConsumeTarget consumed, ArrayList<String> ids, Optional<ProductionEffect> genericProduction){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
             ArrayList<ProductionEffect> toActivate = game.getPlayerBoardMap()
                     .get(game.getCurrentPlayer()).getDevelopmentCards().getProductionAvailable(ids);
-            if(generic.isPresent()) toActivate.add(generic.get());
+            genericProduction.ifPresent(toActivate::add);
             notify(new ProductionMessage(consumed, toActivate));
         } else {
             userInterface.displayError("This action is available only for current turn player!");

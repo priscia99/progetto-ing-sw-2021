@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model.card.requirement;
 
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.game.Player;
+import it.polimi.ingsw.server.model.resource.ConsumeTarget;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
@@ -46,14 +47,11 @@ public class ResourceRequirement extends Requirement implements Serializable {
                          player.countByResource(resourcePile.getResourceType()) >= resourcePile.getQuantity());
     }
 
-    public boolean isFulfilled(HashMap<ResourcePosition, ResourceStock> toConsume){
+    public boolean isFulfilled(ConsumeTarget toConsume){
         return !this.resourceStocks.stream().map(
                 stock-> {
-                    Optional<ResourceStock> consumedType = toConsume.values().stream()
-                            .filter( c -> c.getResourceType() == stock.getResourceType())
-                            .findFirst();
-                    int quantity = consumedType.map(ResourceStock::getQuantity).orElse(0);
-                    return quantity == stock.getQuantity();
+                    int quantityConsumable = toConsume.countResourceType(stock.getResourceType());
+                    return quantityConsumable == stock.getQuantity();
                 }
         ).collect(Collectors.toList()).contains(false);
     }
