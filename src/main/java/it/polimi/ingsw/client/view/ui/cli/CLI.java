@@ -298,11 +298,7 @@ public class CLI implements UI {
         }
     }
 
-<<<<<<< Updated upstream
     public void startListening(){
-=======
-    public void startListening(ClientController controller){
->>>>>>> Stashed changes
         if(!gameStarted){
             gameStarted = true;
             new Thread(() -> {
