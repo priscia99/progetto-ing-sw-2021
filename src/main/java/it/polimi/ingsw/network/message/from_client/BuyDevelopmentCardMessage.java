@@ -22,7 +22,7 @@ public class BuyDevelopmentCardMessage extends Message<ServerController> impleme
         this.toConsume = toConsume;
     }
 
-    public void execute(ServerController target){
+    public void execute(ServerController target) throws Exception {
         target.buyDevelopmentCard(cardId, deckIndex, toConsume);
     }
 }

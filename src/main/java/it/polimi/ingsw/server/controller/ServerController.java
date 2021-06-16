@@ -14,10 +14,12 @@ import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
+import it.polimi.ingsw.utils.CustomRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class ServerController {
@@ -26,6 +28,14 @@ public class ServerController {
 
     public ServerController(Game game){
         this.game = game;
+    }
+
+    public void tryAction(CustomRunnable action){
+        try{
+            action.tryRun();
+        } catch (Exception e){
+            game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
+        }
     }
 
     public void setupGame(ArrayList<Player> players){
@@ -44,31 +54,19 @@ public class ServerController {
         game.giveInitialResources();
     }
 
-    public void buyDevelopmentCard(String cardId, int deckIndex, HashMap<ResourcePosition, ResourceStock> toConsume) {
+    public void buyDevelopmentCard(String cardId, int deckIndex, HashMap<ResourcePosition, ResourceStock> toConsume) throws Exception {
         Player currentPlayer = game.getCurrentPlayer();
-        if(currentPlayer.hasDoneMainAction()) {
-            game.notifyError("You have already done main action this turn!", game.getCurrentPlayer().getNickname());
-            return;
-        }
+        if(currentPlayer.hasDoneMainAction()) throw new Exception("You have already done main action this turn!");
         DevelopmentCard toBuy = game.getCardMarket().getCardById(cardId);
         ResourceRequirement requirement = (ResourceRequirement) toBuy.getRequirement();
         requirement.applyDiscounts(game.getCurrentPlayer().getDiscounts());
-        if(requirement.isFulfilled(toConsume)) {
-            if(currentPlayer.canConsume(toConsume)){
-                if(currentPlayer.canAddDevelopmentCard(toBuy, deckIndex)){
-                    DevelopmentCard cardBought = game.getCardMarket().sell(cardId, currentPlayer);
-                    currentPlayer.addDevelopmentCard(cardBought, deckIndex);
-                    currentPlayer.consumeResources(toConsume);
-                    currentPlayer.setHasDoneMainAction(true);
-                } else {
-                    game.notifyError("You can't add development card to selected deck!", currentPlayer.getNickname());
-                }
-            } else {
-                game.notifyError("You do not own resources selected!", currentPlayer.getNickname());
-            }
-        } else {
-            game.notifyError("Wrong resources to buy card!", currentPlayer.getNickname());
-        }
+        if(!requirement.isFulfilled(toConsume)) throw new Exception("Wrong resources to buy card!");
+        if(!currentPlayer.canConsume(toConsume)) throw new Exception("You do not own resources selected!");
+        if(!currentPlayer.canAddDevelopmentCard(toBuy, deckIndex)) throw new Exception("You can't add development card to selected deck!");
+        DevelopmentCard cardBought = game.getCardMarket().sell(cardId, currentPlayer);
+        currentPlayer.addDevelopmentCard(cardBought, deckIndex);
+        currentPlayer.consumeResources(toConsume);
+        currentPlayer.setHasDoneMainAction(true);
     }
 
     public void chooseInitialLeaders(ArrayList<String> leadersChosen, String playerUsername) {
@@ -90,14 +88,11 @@ public class ServerController {
         }
     }
 
-    public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) {
+    public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) throws Exception {
         Player currentPlayer = game.getCurrentPlayer();
         int posIndex = 0;
         int convIndex = 0;
-        if(currentPlayer.hasDoneMainAction()) {
-            game.notifyError("You have already done main action this turn!", game.getCurrentPlayer().getNickname());
-            return;
-        }
+        if(currentPlayer.hasDoneMainAction()) throw new Exception("You have already done main action this turn!");
         ArrayList<Marble> validateSelection = game.getMarbleMarket().getSelectedMarbles(marbleSelection);
         Warehouse validateWarehouse = currentPlayer.getPlayerBoard().getWarehouse().getCopy();
         for(int i = 0; i<validateSelection.size(); i++){
@@ -107,21 +102,13 @@ public class ServerController {
             ResourcePosition selectedPosition = positions.get(posIndex);
             posIndex++;
             if(selectedPosition != ResourcePosition.DROPPED){
-                if(selectedPosition == ResourcePosition.STRONG_BOX){
-                    game.notifyError("Cannot insert resources in strongbox!", currentPlayer.getNickname());
-                    return;
-                }
-                try{
+                if(selectedPosition == ResourcePosition.STRONG_BOX) throw new Exception("Cannot insert resources in strongbox!");
                     if(resourceToAdd.equals(ResourceType.BLANK)){
                         validateWarehouse.addToDepot(selectedPosition.ordinal(), converted.get(convIndex));
                         convIndex++;
                     } else {
                         validateWarehouse.addToDepot(selectedPosition.ordinal(), resourceToAdd);
                     }
-                } catch(Exception e){
-                    game.notifyError("Cannot insert selected marbles in those position!", currentPlayer.getNickname());
-                    return;
-                }
             }
         }
         posIndex = 0;
@@ -152,28 +139,16 @@ public class ServerController {
         currentPlayer.setHasDoneMainAction(true);
     }
 
-    public void startProduction(HashMap<ResourcePosition, ResourceStock> consumedResources, ArrayList<ProductionEffect> productionsToActivate) {
+    public void startProduction(HashMap<ResourcePosition, ResourceStock> consumedResources, ArrayList<ProductionEffect> productionsToActivate) throws Exception {
         Player currentPlayer = game.getCurrentPlayer();
-        if(currentPlayer.hasDoneMainAction()) {
-            game.notifyError("You have already done main action this turn!", game.getCurrentPlayer().getNickname());
-            return;
-        }
-
+        if(currentPlayer.hasDoneMainAction()) throw new Exception("You have already done main action this turn!");
         ArrayList<ResourceStock> inStocks = new ArrayList<>();
         for (ProductionEffect productionEffect : productionsToActivate) {
             inStocks.addAll(productionEffect.getInStocks());
         }
         ResourceRequirement globalProductionsRequirement = ResourceRequirement.merge(inStocks);
-        if(!currentPlayer.canConsume(consumedResources)){
-            game.notifyError("You can't consume resources defined, check them and try again!", currentPlayer.getNickname());
-            return;
-        }
-
-        if(!globalProductionsRequirement.isFulfilled(consumedResources)){
-            game.notifyError("Selected resources does not correspond to those requested by productions!", currentPlayer.getNickname());
-            return;
-        }
-
+        if(!currentPlayer.canConsume(consumedResources)) throw new Exception("You can't consume resources defined, check them and try again!");
+        if(!globalProductionsRequirement.isFulfilled(consumedResources)) throw new Exception("Selected resources does not correspond to those requested by productions!");
         currentPlayer.consumeResources(consumedResources);
         for(ProductionEffect productionToActivate : productionsToActivate){
             productionToActivate.getOutStocks().forEach(

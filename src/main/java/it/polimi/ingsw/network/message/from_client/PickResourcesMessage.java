@@ -22,7 +22,7 @@ public class PickResourcesMessage extends Message<ServerController> implements S
         this.conversions = conversions;
     }
 
-    public void execute(ServerController target) {
+    public void execute(ServerController target) throws Exception {
         target.pickResources(marbleSelection, positions, conversions);
     }
 }

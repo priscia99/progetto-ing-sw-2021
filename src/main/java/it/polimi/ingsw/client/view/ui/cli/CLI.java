@@ -588,7 +588,8 @@ public class CLI implements UI {
         try{
             int index = askDevelopmentDeckIndex();
             displayUserDiscounts(discounts);
-            HashMap<ResourcePosition, ResourceStock> resourcesSelected = askResourcesToUse(Optional.empty());
+            Optional<Integer> specificQuantity = Optional.empty();
+            HashMap<ResourcePosition, ResourceStock> resourcesSelected = askResourcesToUse(specificQuantity);
             controller.buyDevelopmentCard(id, index, resourcesSelected);
         } catch(Exception e){
             displayError(e.getMessage());

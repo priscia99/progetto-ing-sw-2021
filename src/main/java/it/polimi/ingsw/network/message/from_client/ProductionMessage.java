@@ -23,7 +23,7 @@ public class ProductionMessage extends Message<ServerController> implements Seri
         productionsToActivate = productions;
     }
 
-    public void execute(ServerController target) {
+    public void execute(ServerController target) throws Exception {
         target.startProduction(consumedResources, productionsToActivate);
     }
 }

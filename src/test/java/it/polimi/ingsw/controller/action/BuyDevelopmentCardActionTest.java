@@ -35,7 +35,7 @@ public class BuyDevelopmentCardActionTest {
         HashMap<ResourcePosition, ResourceStock> toConsume = new HashMap<>();
         requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
         BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage("1" , 1, toConsume);
-        action.execute(controller);
+        controller.tryAction(()->action.execute(controller));
         Assertions.assertEquals(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 1);
     }
 
@@ -48,7 +48,7 @@ public class BuyDevelopmentCardActionTest {
         HashMap<ResourcePosition, ResourceStock> toConsume = new HashMap<>();
         requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
         BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage("1",1, toConsume);
-        action.execute(controller);
+        controller.tryAction(()->action.execute(controller));
         Assertions.assertTrue(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[1].getTopCard() == cardToBuy);
     }
 
@@ -61,7 +61,7 @@ public class BuyDevelopmentCardActionTest {
         HashMap<ResourcePosition, ResourceStock> toConsume = new HashMap<>();
         requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
         BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage("1",1, toConsume);
-        action.execute(controller);
+        controller.tryAction(()->action.execute(controller));
         Assertions.assertEquals(game.getCardMarket().getDecks()[0][0].size(), 3);
         Assertions.assertTrue(game.getCardMarket().getDecks()[0][0].get(2) != cardToBuy);
     }
