@@ -299,6 +299,10 @@ public class CLI implements UI {
     }
 
     public void startListening(){
+
+    }
+
+    public void startListening(ClientController controller){
         if(!gameStarted){
             gameStarted = true;
             new Thread(() -> {
@@ -330,6 +334,7 @@ public class CLI implements UI {
         }
     }
 
+    @Override
     public void displayMarbleMarket(ClientMarbleMarket market) {
         synchronized (outSemaphore){
             System.out.println(RepresentationBuilder.render(market));
