@@ -14,7 +14,7 @@ public class DropLeaderCardMessage extends Message<ServerController> implements 
         this.cardId = id;
     }
 
-    public void execute(ServerController target) {
+    public void execute(ServerController target) throws Exception {
         target.dropLeaderCard(cardId);
     }
 }
