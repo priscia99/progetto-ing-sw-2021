@@ -20,6 +20,7 @@ import it.polimi.ingsw.utils.Pair;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.concurrent.RunnableFuture;
 import java.util.stream.Collectors;
 
 public class ClientController extends Observable<Message<ServerController>> {
@@ -162,63 +163,46 @@ public class ClientController extends Observable<Message<ServerController>> {
         userInterface.displayError(message);
     }
 
-    public void activateLeaderCard(String cardId){
+    private void executeIfCurrentPlayer(Runnable action){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
-            notify(new PlayLeaderCardMessage(cardId));
+            action.run();
         } else {
             userInterface.displayError("This action is available only for current turn player!");
         }
+    }
+
+    public void activateLeaderCard(String cardId){
+        executeIfCurrentPlayer(()->notify(new PlayLeaderCardMessage(cardId)));
     }
 
     public void dropLeaderCard(String cardId){
-        if(game.getCurrentPlayer().equals(game.getMyUsername())){
-            notify(new DropLeaderCardMessage(cardId));
-        } else {
-            userInterface.displayError("This action is available only for current turn player!");
-        }
+        executeIfCurrentPlayer(()->notify(new DropLeaderCardMessage(cardId)));
     }
 
     public void endTurn(){
-        if(game.getCurrentPlayer().equals(game.getMyUsername())){
-            notify(new EndTurnMessage());
-        } else {
-            userInterface.displayError("This action is available only for current turn player!");
-        }
+        executeIfCurrentPlayer(()->notify(new EndTurnMessage()));
     }
 
     public void swapDepots(int first, int second){
-        if(game.getCurrentPlayer().equals(game.getMyUsername())){
-            notify(new SwapDepotsMessage(first, second));
-        } else {
-            userInterface.displayError("This action is available only for current turn player!");
-        }
+        executeIfCurrentPlayer(()->notify(new SwapDepotsMessage(first, second)));
     }
 
     public void buyDevelopmentCard(String cardId, int deckIndex,  ConsumeTarget toConsume){
-        if(game.getCurrentPlayer().equals(game.getMyUsername())){
-           notify(new BuyDevelopmentCardMessage(cardId, deckIndex,toConsume ));
-        } else {
-            userInterface.displayError("This action is available only for current turn player!");
-        }
+        executeIfCurrentPlayer(()->notify(new BuyDevelopmentCardMessage(cardId, deckIndex,toConsume)));
     }
 
     public void pickResources(MarbleSelection selection, ArrayList<ResourcePosition> positions, ArrayList<ResourceType> conversions){
-        if(game.getCurrentPlayer().equals(game.getMyUsername())){
-            notify(new PickResourcesMessage(selection, positions, conversions));
-        } else {
-            userInterface.displayError("This action is available only for current turn player!");
-        }
+        executeIfCurrentPlayer(()->notify(new PickResourcesMessage(selection, positions, conversions)));
     }
 
     public void produceResources(ConsumeTarget consumed, ArrayList<String> ids, Optional<ProductionEffect> genericProduction){
-        if(game.getCurrentPlayer().equals(game.getMyUsername())){
-            ArrayList<ProductionEffect> toActivate = game.getPlayerBoardMap()
-                    .get(game.getCurrentPlayer()).getDevelopmentCards().getProductionAvailable(ids);
-            genericProduction.ifPresent(toActivate::add);
-            notify(new ProductionMessage(consumed, toActivate));
-        } else {
-            userInterface.displayError("This action is available only for current turn player!");
-        }
+        executeIfCurrentPlayer(()-> {
+                    ArrayList<ProductionEffect> toActivate = game.getPlayerBoardMap()
+                            .get(game.getCurrentPlayer()).getDevelopmentCards().getProductionAvailable(ids);
+                    genericProduction.ifPresent(toActivate::add);
+                    notify(new ProductionMessage(consumed, toActivate));
+            }
+        );
     }
 
     public void pickCommandHandler(MarbleSelection selection){
