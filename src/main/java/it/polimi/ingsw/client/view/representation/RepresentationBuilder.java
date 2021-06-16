@@ -191,11 +191,11 @@ public class RepresentationBuilder {
         return CLI.ANSI_BRIGHT_BG_WHITE + CLI.ANSI_BRIGHT_RED + text + CLI.ANSI_RESET;
     }
 
-    private static String negativeText(String text) {
+    public static String negativeText(String text) {
         return CLI.ANSI_BRIGHT_BG_RED + CLI.ANSI_BRIGHT_WHITE + text + CLI.ANSI_RESET;
     }
 
-    private static String positiveText(String text) {
+    public static String positiveText(String text) {
         return CLI.ANSI_BRIGHT_BG_GREEN + CLI.ANSI_BRIGHT_WHITE + text + CLI.ANSI_RESET;
     }
 

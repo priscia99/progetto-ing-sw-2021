@@ -268,11 +268,11 @@ public class CLI implements UI {
                     chosenCardId = in.nextLine();
                     if (chosenLeaderCards.contains(chosenCardId)) {
                         validSelection = false;
-                        System.out.println( CLI.ANSI_BG_RED + "You cannot choose the same leader card!" + CLI.ANSI_RESET);
+                        System.out.println(ANSI_BRIGHT_BG_RED + ANSI_BRIGHT_WHITE + " You cannot choose the same leader card! " + ANSI_RESET);
                     }
                     else if(!cardsIDs.contains(chosenCardId)){
                         validSelection = false;
-                        System.out.println(CLI.ANSI_BG_RED + "You must choose a valid leader card from your deck!" + CLI.ANSI_RESET);
+                        System.out.println(ANSI_BRIGHT_BG_RED + ANSI_BRIGHT_WHITE + " You must choose a valid leader card from your deck! " + ANSI_RESET);
                     }
                 } while (!validSelection);
                 chosenLeaderCards.add(chosenCardId);
@@ -298,13 +298,17 @@ public class CLI implements UI {
         }
     }
 
+<<<<<<< Updated upstream
     public void startListening(){
+=======
+    public void startListening(ClientController controller){
+>>>>>>> Stashed changes
         if(!gameStarted){
             gameStarted = true;
             new Thread(() -> {
                 synchronized (outSemaphore) {
-                    System.out.println(ANSI_BG_GREEN + "GAME HAS STARTED!" + ANSI_RESET);
-                    System.out.println(ANSI_BG_GREEN + "You can now type commands. Type 'help' for commands list." + ANSI_RESET);
+                    System.out.println(ANSI_BRIGHT_BG_GREEN + ANSI_BRIGHT_WHITE + " GAME HAS STARTED! " + ANSI_RESET);
+                    System.out.println(ANSI_BRIGHT_BG_GREEN + ANSI_BRIGHT_WHITE + " You can now type commands. Type 'help' for commands list. " + ANSI_RESET);
                 }
                 while (true) {
                     String requestedCommand = null;
