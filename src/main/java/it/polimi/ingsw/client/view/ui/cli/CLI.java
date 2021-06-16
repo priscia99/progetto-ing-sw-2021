@@ -330,7 +330,6 @@ public class CLI implements UI {
         }
     }
 
-    @Override
     public void displayMarbleMarket(ClientMarbleMarket market) {
         synchronized (outSemaphore){
             System.out.println(RepresentationBuilder.render(market));
