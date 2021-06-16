@@ -78,14 +78,11 @@ public class ServerController {
         game.getPlayerByUsername(username).pickedInitialResources(resourcesToAdd);
         game.tryStart();
     }
-    public void dropLeaderCard(String cardId) {
+    public void dropLeaderCard(String cardId) throws Exception {
         Optional<LeaderCard> toDrop = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().stream().filter(c->c.getId().equals(cardId)).findFirst();
-        if(toDrop.isPresent()){
-            game.getCurrentPlayer().dropLeaderCardById(cardId);
-            game.getCurrentPlayer().addFaithPoints(1);
-        } else {
-            game.notifyError("Leader not found!", game.getCurrentPlayer().getNickname());
-        }
+        if(!toDrop.isPresent()) throw new Exception("Leader not found!");
+        game.getCurrentPlayer().dropLeaderCardById(cardId);
+        game.getCurrentPlayer().addFaithPoints(1);
     }
 
     public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) throws Exception {
@@ -158,17 +155,11 @@ public class ServerController {
         game.getCurrentPlayer().setHasDoneMainAction(true);
     }
 
-    public void playLeaderCard(String cardId) {
+    public void playLeaderCard(String cardId) throws Exception {
         Optional<LeaderCard> toActivate = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().stream().filter(c->c.getId().equals(cardId)).findFirst();
-        if(toActivate.isPresent()){
-            if(toActivate.get().getRequirement().isFulfilled(game.getCurrentPlayer())){
-                game.getCurrentPlayer().playLeaderCardById(cardId);
-            } else {
-               game.notifyError("Leader requirements are not fulfilled!", game.getCurrentPlayer().getNickname());
-            }
-        } else {
-            game.notifyError("Leader not found!", game.getCurrentPlayer().getNickname());
-        }
+        if(!toActivate.isPresent()) throw new Exception("Leader not found!");
+        if(!toActivate.get().getRequirement().isFulfilled(game.getCurrentPlayer())) throw new Exception("Leader requirements are not fulfilled!");
+        game.getCurrentPlayer().playLeaderCardById(cardId);
     }
 
     public void swapDepots(int first, int second){
