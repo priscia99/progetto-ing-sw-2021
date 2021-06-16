@@ -15,6 +15,7 @@ import it.polimi.ingsw.server.model.resource.ConsumeTarget;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
+import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.CustomRunnable;
 import it.polimi.ingsw.utils.Pair;
 
@@ -36,6 +37,7 @@ public class ServerController {
         try{
             action.tryRun();
         } catch (Exception e){
+            CustomLogger.getLogger().severe("[PLAYER: " + game.getCurrentPlayer() + "] " + e.getMessage());
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
         }
     }

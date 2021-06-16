@@ -27,7 +27,11 @@ public class CardsMarketTest {
         player.addResourcesToStrongBox(new ResourceStock(ResourceType.COIN, 10));
         player.addResourcesToStrongBox(new ResourceStock(ResourceType.SHIELD, 10));
         player.addResourcesToStrongBox(new ResourceStock(ResourceType.STONE, 10));
-        Assertions.assertEquals(toSell, cardsMarket.sell("1", player));
+        try {
+            Assertions.assertEquals(toSell, cardsMarket.sell("1", player));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         DevelopmentCard showedCard = cardsMarket.getDecks()[0][0].peek();
         Assertions.assertTrue(showedCard != toSell);
     }

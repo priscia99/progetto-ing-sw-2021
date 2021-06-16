@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class BuyDevelopmentCardActionTest {
     private Game game;
     private ServerController controller;
@@ -29,27 +31,52 @@ public class BuyDevelopmentCardActionTest {
     @Test
     @DisplayName("Test player has new card")
     public void testPlayerHasNewCard(){
-        Assertions.assertEquals(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
+        assertEquals(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
         TestHelper.makeHimRich(game.getCurrentPlayer());
         ResourceRequirement requirement = (ResourceRequirement) game.getCardMarket().getCard(0,0).getRequirement();
         HashMap<ResourcePosition, ResourceStock> toConsume = new HashMap<>();
         requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
         BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage("1" , 1, toConsume);
         controller.tryAction(()->action.execute(controller));
-        Assertions.assertEquals(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 1);
+        assertEquals(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 1);
     }
 
     @Test
-    @DisplayName("Test player get bought card")
-    public void testPlayerGetBoughtCard(){
+    @DisplayName("Test player tries to buy a wrong card")
+    public void testPlayerBuyWrongCard(){
         DevelopmentCard cardToBuy = game.getCardMarket().getDecks()[0][0].get(3);
         TestHelper.makeHimRich(game.getCurrentPlayer());
         ResourceRequirement requirement = (ResourceRequirement) game.getCardMarket().getCard(0,0).getRequirement();
         HashMap<ResourcePosition, ResourceStock> toConsume = new HashMap<>();
         requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
         BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage("1",1, toConsume);
-        controller.tryAction(()->action.execute(controller));
-        Assertions.assertTrue(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[1].getTopCard() == cardToBuy);
+        Exception exception = assertThrows(Exception.class, () -> {
+            action.execute(controller);
+        });
+        String expectedMessage = "The requested card is not available in the market";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    @DisplayName("Test player buy new card")
+    public void testPlayerGetBoughtCard(){
+        // FIXME Fix HashMap toResource -> cannot add multiple resource stock for the same STRONGBOX!!
+        DevelopmentCard cardToBuy = game.getCardMarket().getCard(0,0);
+        TestHelper.makeHimRich(game.getCurrentPlayer());
+        ResourceRequirement requirement = (ResourceRequirement) cardToBuy.getRequirement();
+        HashMap<ResourcePosition, ResourceStock> toConsume = new HashMap<>();
+        requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
+        for (ResourceStock stock : requirement.getResourceStocks()) {
+            toConsume.put(ResourcePosition.STRONG_BOX, stock);
+        }
+        BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage(cardToBuy.getId(),1, toConsume);
+        try {
+            action.execute(controller);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        assertEquals(1, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[1].getCardNumber());
     }
 
     @Test
@@ -62,7 +89,7 @@ public class BuyDevelopmentCardActionTest {
         requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
         BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage("1",1, toConsume);
         controller.tryAction(()->action.execute(controller));
-        Assertions.assertEquals(game.getCardMarket().getDecks()[0][0].size(), 3);
-        Assertions.assertTrue(game.getCardMarket().getDecks()[0][0].get(2) != cardToBuy);
+        assertEquals(game.getCardMarket().getDecks()[0][0].size(), 3);
+        assertTrue(game.getCardMarket().getDecks()[0][0].get(2) != cardToBuy);
     }
 }
