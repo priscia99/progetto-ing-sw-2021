@@ -80,6 +80,6 @@ public class ConsumeTarget {
     }
 
     private boolean isPositionPresent(ResourcePosition position){
-        return toConsume.get(position) == null;
+        return toConsume.get(position) != null;
     }
 }
