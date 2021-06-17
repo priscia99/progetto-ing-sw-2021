@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BuyDevelopmentCardActionTest {
+public class BuyDevelopmentCardMessageTest {
     private Game game;
     private ServerController controller;
     @BeforeEach

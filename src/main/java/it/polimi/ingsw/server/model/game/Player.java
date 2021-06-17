@@ -172,6 +172,7 @@ public class Player extends Observable<Message<ClientController>> {
     }
 
     public void pickedLeaderCards(ArrayList<String> cardIDs){
+
         ArrayList<LeaderCard> cards = this.playerBoard.getLeaderCardsDeck().getLeaderCards()
                 .stream()
                 .filter(c -> !cardIDs.contains(c.getId()))
