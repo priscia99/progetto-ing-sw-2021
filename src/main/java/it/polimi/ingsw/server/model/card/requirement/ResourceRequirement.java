@@ -78,6 +78,10 @@ public class ResourceRequirement extends Requirement implements Serializable {
         return new ResourceRequirement(stocks);
     }
 
+    /**
+     * Apply discounts when trying to buy from the market
+     * @param discounts list of discount effects
+     */
     public void applyDiscounts(ArrayList<DiscountEffect> discounts){
         for(DiscountEffect discount : discounts){
             for(ResourceStock stock : resourceStocks){

@@ -3,9 +3,12 @@ package it.polimi.ingsw.controller.action;
 
 import it.polimi.ingsw.network.message.from_client.BuyDevelopmentCardMessage;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.server.model.card.requirement.Requirement;
 import it.polimi.ingsw.server.model.card.requirement.ResourceRequirement;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.card.*;
+import it.polimi.ingsw.server.model.game.Player;
+import it.polimi.ingsw.server.model.resource.ConsumeTarget;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.testUtils.MockProvider;
@@ -29,67 +32,212 @@ public class BuyDevelopmentCardActionTest {
     }
 
     @Test
-    @DisplayName("Test player has new card")
-    public void testPlayerHasNewCard(){
-        assertEquals(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
+    @DisplayName("Test player buy successfully a development card")
+    public void testPlayerBuyDevelopmentCardSuccess(){
+        // Check if player has no development cards inside his personal decks
+        assertEquals(0, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
+        // Make the player rich giving him some resources
         TestHelper.makeHimRich(game.getCurrentPlayer());
-        ResourceRequirement requirement = (ResourceRequirement) game.getCardMarket().getCard(0,0).getRequirement();
-        HashMap<ResourcePosition, ResourceStock> toConsume = new HashMap<>();
-        requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
-        BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage("1" , 1, toConsume);
-        controller.tryAction(()->action.execute(controller));
-        assertEquals(game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 1);
+        // Randomly try to buy a development card from whose available in the market
+        DevelopmentCard cardToBuy = game.getCardMarket().getCard(0,0);
+        // Check if development cards market is filled correctly and selected card is not removed yet
+        assertEquals(4, game.getCardMarket().getDecks()[0][0].size());
+        assertTrue(game.getCardMarket().getCard(0,0).getId() == cardToBuy.getId());
+        ResourceRequirement cardRequirement = (ResourceRequirement) cardToBuy.getRequirement();   // retrieve resource requirements for that card
+        ConsumeTarget consumeTarget = new ConsumeTarget();  // Create consume target
+        // Iterate through the required resource stocks and create a proper consume target object
+        assertDoesNotThrow(() ->{
+            for(ResourceStock stock : cardRequirement.getResourceStocks()){
+                consumeTarget.put(ResourcePosition.STRONG_BOX, stock);
+            }
+        });
+        // Create the proper message giving valid parameters
+        BuyDevelopmentCardMessage message = new BuyDevelopmentCardMessage(cardToBuy.getId(), 0, consumeTarget);
+        assertDoesNotThrow(() -> {
+            message.execute(controller);
+        });
+        // Check if card is inserted into proper player deck
+        assertEquals(1, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[0].getCardNumber());
+        assertEquals(cardToBuy.getId(), game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[0].getTopCard().getId());
+        // Check if development cards market is renewed
+        assertEquals(3, game.getCardMarket().getDecks()[0][0].size());
+        assertFalse(game.getCardMarket().getCard(0,0).getId() == cardToBuy.getId());
     }
 
     @Test
-    @DisplayName("Test player tries to buy a wrong card")
-    public void testPlayerBuyWrongCard(){
-        DevelopmentCard cardToBuy = game.getCardMarket().getDecks()[0][0].get(3);
-        TestHelper.makeHimRich(game.getCurrentPlayer());
-        ResourceRequirement requirement = (ResourceRequirement) game.getCardMarket().getCard(0,0).getRequirement();
-        HashMap<ResourcePosition, ResourceStock> toConsume = new HashMap<>();
-        requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
-        BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage("1",1, toConsume);
+    @DisplayName("Test player tries to buy an invalid card")
+    public void testPlayerBuyDevelopmentCardNotValid(){
+        BuyDevelopmentCardMessage message = new BuyDevelopmentCardMessage("D99", 0, new ConsumeTarget());
         Exception exception = assertThrows(Exception.class, () -> {
-            action.execute(controller);
+            message.execute(controller);
         });
         String expectedMessage = "The requested card is not available in the market";
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(exception.getMessage().contains(expectedMessage));
     }
 
     @Test
-    @DisplayName("Test player buy new card")
-    public void testPlayerGetBoughtCard(){
-        // FIXME Fix HashMap toResource -> cannot add multiple resource stock for the same STRONGBOX!!
+    @DisplayName("Test player tries to buy a valid card without giving resources")
+    public void testPlayerBuyDevelopmentCardWithoutResources(){
+        // Make the player rich giving him some resources
+        TestHelper.makeHimRich(game.getCurrentPlayer());
+        // Randomly try to buy a development card from whose available in the market
         DevelopmentCard cardToBuy = game.getCardMarket().getCard(0,0);
-        TestHelper.makeHimRich(game.getCurrentPlayer());
-        ResourceRequirement requirement = (ResourceRequirement) cardToBuy.getRequirement();
-        HashMap<ResourcePosition, ResourceStock> toConsume = new HashMap<>();
-        requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
-        for (ResourceStock stock : requirement.getResourceStocks()) {
-            toConsume.put(ResourcePosition.STRONG_BOX, stock);
-        }
-        BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage(cardToBuy.getId(),1, toConsume);
-        try {
-            action.execute(controller);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        assertEquals(1, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[1].getCardNumber());
+        ResourceRequirement cardRequirement = (ResourceRequirement) cardToBuy.getRequirement();   // retrieve resource requirements for that card
+        // Create the proper without giving correct target consume
+        BuyDevelopmentCardMessage message = new BuyDevelopmentCardMessage(cardToBuy.getId(), 0, new ConsumeTarget());
+        Exception exception = assertThrows(Exception.class, () -> {
+            message.execute(controller);
+        });
+        String expectedMessage = "Wrong resources to buy card!";
+        assertTrue(exception.getMessage().contains(expectedMessage));
     }
 
     @Test
-    @DisplayName("Test cards market renew")
-    public void testCardsMaketRenew(){
-        DevelopmentCard cardToBuy = game.getCardMarket().getDecks()[0][0].get(3);
-        TestHelper.makeHimRich(game.getCurrentPlayer());
-        ResourceRequirement requirement = (ResourceRequirement) game.getCardMarket().getCard(0,0).getRequirement();
-        HashMap<ResourcePosition, ResourceStock> toConsume = new HashMap<>();
-        requirement.getResourceStocks().forEach(stock-> toConsume.put(ResourcePosition.STRONG_BOX, stock));
-        BuyDevelopmentCardMessage action = new BuyDevelopmentCardMessage("1",1, toConsume);
-        controller.tryAction(()->action.execute(controller));
-        assertEquals(game.getCardMarket().getDecks()[0][0].size(), 3);
-        assertTrue(game.getCardMarket().getDecks()[0][0].get(2) != cardToBuy);
+    @DisplayName("Test player tries to buy a valid card without having resources")
+    public void testPlayerBuyDevelopmentCardHavingNothing(){
+        // Randomly try to buy a development card from whose available in the market
+        DevelopmentCard cardToBuy = game.getCardMarket().getCard(0,0);
+        ResourceRequirement cardRequirement = (ResourceRequirement) cardToBuy.getRequirement();   // retrieve resource requirements for that card
+        ConsumeTarget consumeTarget = new ConsumeTarget();  // Create consume target
+        // Iterate through the required resource stocks and create a proper consume target object
+        assertDoesNotThrow(() ->{
+            for(ResourceStock stock : cardRequirement.getResourceStocks()){
+                consumeTarget.put(ResourcePosition.STRONG_BOX, stock);
+            }
+        });
+        // Create the proper message
+        BuyDevelopmentCardMessage message = new BuyDevelopmentCardMessage(cardToBuy.getId(), 0, consumeTarget);
+        Exception exception = assertThrows(Exception.class, () -> {
+            message.execute(controller);
+        });
+        String expectedMessage = "You do not own resources selected!";
+        assertTrue(exception.getMessage().contains(expectedMessage));
     }
+
+    @Test
+    @DisplayName("Test add a development card with a wrong level")
+    public void testPlayerAddDevelopmentCardWrongLevel(){
+        // Check if player has no development cards inside his personal decks
+        assertEquals(0, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
+        // Make the player rich giving him some resources
+        TestHelper.makeHimRich(game.getCurrentPlayer());
+        // Randomly try to buy a development card from whose available in the market
+        DevelopmentCard cardToBuy = game.getCardMarket().getCard(0,1);
+        ResourceRequirement cardRequirement = (ResourceRequirement) cardToBuy.getRequirement();   // retrieve resource requirements for that card
+        ConsumeTarget consumeTarget = new ConsumeTarget();  // Create consume target
+        // Iterate through the required resource stocks and create a proper consume target object
+        assertDoesNotThrow(() ->{
+            for(ResourceStock stock : cardRequirement.getResourceStocks()){
+                consumeTarget.put(ResourcePosition.STRONG_BOX, stock);
+            }
+        });
+        // Create the proper message
+        BuyDevelopmentCardMessage message = new BuyDevelopmentCardMessage(cardToBuy.getId(), 0, consumeTarget);
+        Exception exception = assertThrows(Exception.class, () -> {
+            message.execute(controller);
+        });
+        String expectedMessage = "You can't add development card to selected deck!";
+        assertTrue(exception.getMessage().contains(expectedMessage));
+    }
+
+    @Test
+    @DisplayName("Test add successfully a development card with an higher level")
+    public void testPlayerAddDevelopmentCardHigherLevel(){
+        // FIRST PLAYER
+        Player testPlayer = game.getCurrentPlayer();
+        // Check if player has no development cards inside his personal decks
+        assertEquals(0, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
+        // Make the player rich giving him some resources
+        TestHelper.makeHimRich(game.getCurrentPlayer());
+        // Randomly try to buy a development card from whose available in the market
+        DevelopmentCard cardToBuy = game.getCardMarket().getCard(0,0);
+        final ResourceRequirement cardRequirement = (ResourceRequirement) cardToBuy.getRequirement();   // retrieve resource requirements for that card
+        final ConsumeTarget consumeTarget = new ConsumeTarget();  // Create consume target
+        // Iterate through the required resource stocks and create a proper consume target object
+        assertDoesNotThrow(() ->{
+            for(ResourceStock stock : cardRequirement.getResourceStocks()){
+                consumeTarget.put(ResourcePosition.STRONG_BOX, stock);
+            }
+        });
+        // Create the proper message giving valid parameters
+        BuyDevelopmentCardMessage message = new BuyDevelopmentCardMessage(cardToBuy.getId(), 0, consumeTarget);
+        assertDoesNotThrow(() -> {
+            message.execute(controller);
+        });
+        // Check if card is inserted into proper player deck
+        assertEquals(1, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[0].getCardNumber());
+        assertEquals(cardToBuy.getId(), game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[0].getTopCard().getId());
+        // Iterating through turns until it's testPlayer's turn again
+        do {
+            game.nextTurn();
+        }while(!testPlayer.getNickname().equals(game.getCurrentPlayer().getNickname()));
+        cardToBuy = game.getCardMarket().getCard(0,1);  // Same color, higher level
+        // Make the player rich giving him some resources again
+        TestHelper.makeHimRich(game.getCurrentPlayer());
+        final ResourceRequirement secondCardRequirement = (ResourceRequirement) cardToBuy.getRequirement();   // retrieve resource requirements for that card
+        final ConsumeTarget secondConsumeTarget = new ConsumeTarget();  // Create consume target
+        // Iterate through the required resource stocks and create a proper consume target object
+        assertDoesNotThrow(() ->{
+            for(ResourceStock stock : secondCardRequirement.getResourceStocks()){
+                secondConsumeTarget.put(ResourcePosition.STRONG_BOX, stock);
+            }
+        });
+        // Create the proper message giving valid parameters
+        BuyDevelopmentCardMessage secondMessage = new BuyDevelopmentCardMessage(cardToBuy.getId(), 0, secondConsumeTarget);
+        assertDoesNotThrow(() -> {
+            secondMessage.execute(controller);
+        });
+        assertEquals(2, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[0].getCardNumber());
+        assertEquals(cardToBuy.getId(), game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[0].getTopCard().getId());
+    }
+
+    @Test
+    @DisplayName("Test player tries to buy another card in the same turn")
+    public void testPlayerBuyAnotherCardInSameTurn(){
+        // FIRST TRY TO BUY A DEVELOPMENT CARD -> SUCCESS
+        Player testPlayer = game.getCurrentPlayer();
+        // Check if player has no development cards inside his personal decks
+        assertEquals(0, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
+        // Make the player rich giving him some resources
+        TestHelper.makeHimRich(game.getCurrentPlayer());
+        // Randomly try to buy a development card from whose available in the market
+        DevelopmentCard cardToBuy = game.getCardMarket().getCard(0,0);
+        final ResourceRequirement cardRequirement = (ResourceRequirement) cardToBuy.getRequirement();   // retrieve resource requirements for that card
+        final ConsumeTarget consumeTarget = new ConsumeTarget();  // Create consume target
+        // Iterate through the required resource stocks and create a proper consume target object
+        assertDoesNotThrow(() ->{
+            for(ResourceStock stock : cardRequirement.getResourceStocks()){
+                consumeTarget.put(ResourcePosition.STRONG_BOX, stock);
+            }
+        });
+        // Create the proper message giving valid parameters
+        BuyDevelopmentCardMessage message = new BuyDevelopmentCardMessage(cardToBuy.getId(), 0, consumeTarget);
+        assertDoesNotThrow(() -> {
+            message.execute(controller);
+        });
+        // Check if card is inserted into proper player deck
+        assertEquals(1, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[0].getCardNumber());
+        assertEquals(cardToBuy.getId(), game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[0].getTopCard().getId());
+
+        // SECOND TRY TU BUY A NEW DEVELOPMENT CARD IN SAME ACTION -> SHOULD FAIL
+        cardToBuy = game.getCardMarket().getCard(0,1);  // Same color, higher level
+        // Make the player rich giving him some resources again
+        TestHelper.makeHimRich(game.getCurrentPlayer());
+        final ResourceRequirement secondCardRequirement = (ResourceRequirement) cardToBuy.getRequirement();   // retrieve resource requirements for that card
+        final ConsumeTarget secondConsumeTarget = new ConsumeTarget();  // Create consume target
+        // Iterate through the required resource stocks and create a proper consume target object
+        assertDoesNotThrow(() ->{
+            for(ResourceStock stock : secondCardRequirement.getResourceStocks()){
+                secondConsumeTarget.put(ResourcePosition.STRONG_BOX, stock);
+            }
+        });
+        // Create the proper message giving valid parameters
+        BuyDevelopmentCardMessage secondMessage = new BuyDevelopmentCardMessage(cardToBuy.getId(), 0, secondConsumeTarget);
+        Exception exception = assertThrows(Exception.class, () -> {
+            secondMessage.execute(controller);
+        });
+        String expectedMessage = "You have already done main action this turn!";
+        assertTrue(exception.getMessage().contains(expectedMessage));
+    }
+
 }

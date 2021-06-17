@@ -61,7 +61,7 @@ public class ConsumeTarget {
                 toConsume.put(position, new ArrayList<>(Collections.singletonList(stock)));
             }
         }
-        if(isPositionPresent(position)){
+        else if(isPositionPresent(position)){
             if(!toConsume.get(position).get(0).getResourceType().equals(stock.getResourceType())){
                 throw new Exception("Cannot select different resource types from the same depot.");
             }
