@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.player_board.storage;
 
+import it.polimi.ingsw.exceptions.IllegalResourceException;
 import it.polimi.ingsw.network.message.from_server.FaithPathMessage;
 import it.polimi.ingsw.network.message.from_server.WarehouseMessage;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
@@ -35,7 +36,7 @@ public class Warehouse extends Storage {
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
     }
 
-    public Warehouse getCopy(){
+    public Warehouse getCopy() throws Exception{
         Warehouse toReturn = new Warehouse();
         for(int i = 0; i<3; i++){
             int quantityToAdd = this.resourceStocks.get(i).getQuantity();
@@ -81,7 +82,7 @@ public class Warehouse extends Storage {
      * @param index index of the depot
      * @param resourceType type of the resource to insert
      */
-    public void addToDepot(int index, ResourceType resourceType){
+    public void addToDepot(int index, ResourceType resourceType) throws IllegalResourceException {
         this.checkValidIndex(index);
         if (this.getResourceStock(index).isEmpty()) {
             if (this.contains(resourceType)) {

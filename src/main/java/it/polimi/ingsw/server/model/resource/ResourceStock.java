@@ -33,9 +33,9 @@ public class ResourceStock implements Serializable {
         return this.quantity == 0;
     }
 
-    public void incrementResource(ResourceType resourceType) {
+    public void incrementResource(ResourceType resourceType) throws IllegalResourceException{
         if (!resourceType.equals(this.resourceType)) {
-            throw new IllegalResourceException();
+            throw new IllegalResourceException("You cannot have different resource types in the same depot");
         }
         this.quantity++;
     }

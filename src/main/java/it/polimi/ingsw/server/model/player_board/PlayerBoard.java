@@ -119,7 +119,7 @@ public class PlayerBoard {
      * @param depotIndex the index of the target depot
      * @param resourceType the type of the resource to add
      */
-    public void addToDepot(int depotIndex, ResourceType resourceType) {
+    public void addToDepot(int depotIndex, ResourceType resourceType){
         warehouse.addToDepot(depotIndex, resourceType);
     }
 

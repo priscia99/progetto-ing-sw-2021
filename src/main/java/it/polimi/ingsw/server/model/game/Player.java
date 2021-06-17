@@ -337,7 +337,7 @@ public class Player extends Observable<Message<ClientController>> {
      * @param index
      * @param resourceType
      */
-    public void addToDepot(int index, ResourceType resourceType) {
+    public void addToDepot(int index, ResourceType resourceType) throws Exception{
         Warehouse warehouse = playerBoard.getWarehouse();
 
         warehouse.addToDepot(index, resourceType);

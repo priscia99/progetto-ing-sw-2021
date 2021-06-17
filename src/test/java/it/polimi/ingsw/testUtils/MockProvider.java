@@ -7,6 +7,8 @@ import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.requirement.Requirement;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
+import it.polimi.ingsw.server.model.marble.Marble;
+import it.polimi.ingsw.server.model.market.MarbleMarket;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.util.ArrayList;
@@ -77,6 +79,16 @@ public class MockProvider {
         developmentCards.add(new DevelopmentCard(1, 2, null, Color.BLUE, null, "6"));
         developmentCards.add(new DevelopmentCard(1, 3, null, Color.BLUE, null, "7"));
         return developmentCards;
+    }
+
+    static public void generateMockMarbleMarket(Game game){
+        MarbleMarket market = game.getMarbleMarket();
+        Marble marbles[][] = market.getOnSale();
+        marbles[0][0] = new Marble(ResourceType.STONE);
+        marbles[0][1] = new Marble(ResourceType.SERVANT);
+        marbles[0][2] = new Marble(ResourceType.FAITH);
+        marbles[0][3] = new Marble(ResourceType.SERVANT);
+
     }
 
 }
