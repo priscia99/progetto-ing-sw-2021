@@ -207,39 +207,45 @@ public class ClientController extends Observable<Message<ServerController>> {
     }
 
     public void pickCommandHandler(MarbleSelection selection){
-        try{
-            ArrayList<ChangeEffect> changeEffects = new ArrayList<>();
-            ArrayList<Marble> selected = game.getClientMarbleMarket().getSelectedMarbles(selection);
-            if(selected.stream().map(Marble::getResourceType).collect(Collectors.toList()).contains(ResourceType.BLANK)){
-                ArrayList<ClientLeaderCard> cards = game.getPlayerBoardMap().get(game.getCurrentPlayer()).getClientLeaderCards().getClientLeaderCards();
-                for(ClientLeaderCard card : cards){
-                    if(card.isActive() && card.getEffect().getEffectType().equals(EffectType.CHANGE)){
-                        changeEffects.add((ChangeEffect) card.getEffect());
+        executeIfCurrentPlayer(()->{
+            try{
+                ArrayList<ChangeEffect> changeEffects = new ArrayList<>();
+                ArrayList<Marble> selected = game.getClientMarbleMarket().getSelectedMarbles(selection);
+                if(selected.stream().map(Marble::getResourceType).collect(Collectors.toList()).contains(ResourceType.BLANK)){
+                    ArrayList<ClientLeaderCard> cards = game.getPlayerBoardMap().get(game.getCurrentPlayer()).getClientLeaderCards().getClientLeaderCards();
+                    for(ClientLeaderCard card : cards){
+                        if(card.isActive() && card.getEffect().getEffectType().equals(EffectType.CHANGE)){
+                            changeEffects.add((ChangeEffect) card.getEffect());
+                        }
                     }
-                }
 
+                }
+                userInterface.displayPickResourceMenu(selection, selected, changeEffects);
+            } catch (Exception e){
+                userInterface.displayError("Cannot retrieve marbles from that position!");
             }
-            userInterface.displayPickResourceMenu(selection, selected, changeEffects);
-        } catch (Exception e){
-            userInterface.displayError("Cannot retrieve marbles from that position!");
-        }
+        });
     }
 
     public void buyCommandHandler(String id){
-        if(game.getClientCardsMarket().getCardById(id)==null){
-            userInterface.displayError("Cannot buy card with that id!");
-        } else {
-            ArrayList<DiscountEffect> discounts = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                    .getClientLeaderCards().getClientLeaderCards(EffectType.DISCOUNT);
+        executeIfCurrentPlayer(()->{
+            if(game.getClientCardsMarket().getCardById(id)==null){
+                userInterface.displayError("Cannot buy card with that id!");
+            } else {
+                ArrayList<DiscountEffect> discounts = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                        .getClientLeaderCards().getClientLeaderCards(EffectType.DISCOUNT);
 
 
-            userInterface.displayBuyDevelopmentCardMenu(id, discounts);
-        }
+                userInterface.displayBuyDevelopmentCardMenu(id, discounts);
+            }
+        });
     }
 
     public void produceCommandHandler(){
-        ArrayList<ProductionEffect> leaderProductions = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                .getClientLeaderCards().getClientLeaderCards(EffectType.PRODUCTION);
-        userInterface.displayProduceMenu(leaderProductions);
+        executeIfCurrentPlayer(()->{
+            ArrayList<ProductionEffect> leaderProductions = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                    .getClientLeaderCards().getClientLeaderCards(EffectType.PRODUCTION);
+            userInterface.displayProduceMenu(leaderProductions);
+        });
     }
 }
