@@ -538,7 +538,7 @@ public class CLI implements UI {
         MarbleSelection selection;
         try{
             Orientation orientation = Orientation.valueOf(params.get("o"));
-            int index = Integer.parseInt(params.get("i"));
+            int index = Integer.parseInt(params.get("i")+1);
             selection = new MarbleSelection(orientation, index);
             controller.pickCommandHandler(selection);
         } catch (Exception e){
