@@ -14,6 +14,7 @@ public class GameReadyMessage extends Message<ClientController> implements Seria
 
     @Override
     public void execute(ClientController target) {
+        System.out.println("Game ready " + target);
         target.startListening();
     }
 }
