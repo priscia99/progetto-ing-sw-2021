@@ -31,7 +31,7 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
     }
 
     private ClientMarbleMarket clientMarbleMarket;
-    private Map<String, ClientPlayerBoard> playerBoardMap = new HashMap<>();
+    private Map<String, ClientPlayerBoard> playerBoardMap = new LinkedHashMap<>();
     private boolean gameStarted = false;
     public ClientGame(String myUsername, String currentPlayer, ArrayList<String> players) {
         this.myUsername = myUsername;

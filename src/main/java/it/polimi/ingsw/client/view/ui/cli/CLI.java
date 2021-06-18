@@ -369,7 +369,10 @@ public class CLI implements UI {
     public void displayTurnInfo(ArrayList<String> names, String current){
         synchronized (outSemaphore){
             StringBuilder playersList = new StringBuilder();
-            names.forEach(player -> playersList.append(player).append(" -> "));
+            names.forEach(player -> {
+                if(names.get(names.size()-1).equals(player)){
+                    playersList.append(player).append(" -> ");
+                }});
             this.displayInfo("[" + playersList + "]");
             this.displayInfo("Current player is: " + current);
         }
@@ -529,7 +532,7 @@ public class CLI implements UI {
             int second = ResourcePosition.valueOf(params.get("b")).ordinal();
             controller.swapDepots(first, second);
         } catch (Exception e){
-            displayError("Cannot ");
+            displayError("Cannot parse depot position.");
         }
 
     }
