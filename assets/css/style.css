@@ -1,0 +1,131 @@
+#player-summary {
+    -fx-background-color: blue;
+}
+
+#player-board-navbar {
+    -fx-background-color: yellow;
+}
+
+#player-board {
+    /*-fx-background-color: red;*/
+    -fx-background-image: url('../img/playerboard.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#markets {
+    -fx-background-color: green;
+}
+
+#marble-market {
+    -fx-background-image: url('../img/marble-market.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-1-1 {
+    -fx-background-image: url('../img/cards/front/development-card-1.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-1-2 {
+    -fx-background-image: url('../img/cards/front/development-card-2.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-1-3 {
+    -fx-background-image: url('../img/cards/front/development-card-3.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-1-4 {
+    -fx-background-image: url('../img/cards/front/development-card-4.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-2-1 {
+    -fx-background-image: url('../img/cards/front/development-card-5.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-2-2 {
+    -fx-background-image: url('../img/cards/front/development-card-6.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-2-3 {
+    -fx-background-image: url('../img/cards/front/development-card-7.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-2-4 {
+    -fx-background-image: url('../img/cards/front/development-card-8.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-3-1 {
+    -fx-background-image: url('../img/cards/front/development-card-9.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-3-2 {
+    -fx-background-image: url('../img/cards/front/development-card-10.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-3-3 {
+    -fx-background-image: url('../img/cards/front/development-card-11.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#card-3-4 {
+    -fx-background-image: url('../img/cards/front/development-card-12.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#dev-slot-1 {
+    -fx-background-image: url('../img/cards/front/development-card-32.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#dev-slot-2 {
+    -fx-background-image: url('../img/cards/front/development-card-33.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#dev-slot-3 {
+    -fx-background-image: url('../img/cards/front/development-card-33.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
