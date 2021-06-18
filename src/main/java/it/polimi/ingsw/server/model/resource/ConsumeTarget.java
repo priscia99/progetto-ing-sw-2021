@@ -52,6 +52,10 @@ public class ConsumeTarget {
         return this.toConsume.values().stream().mapToInt(ArrayList::size).sum();
     }
 
+    public int countResources() {return this.toConsume.values().stream().mapToInt(
+            list -> list.stream().mapToInt(ResourceStock::getQuantity).sum()
+    ).sum();}
+
     public void put(ResourcePosition position, ResourceStock stock) throws Exception {
         if(position.equals(ResourcePosition.DROPPED)) throw new Exception("Error while selecting consumable resources.");
         if(position.equals(ResourcePosition.STRONG_BOX)){

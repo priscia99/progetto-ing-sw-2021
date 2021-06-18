@@ -211,6 +211,12 @@ public class Player extends Observable<Message<ClientController>> {
 
     public void addResourceToDepot(ResourceType resourceType, int depotIndex){
         playerBoard.getWarehouse().addToDepot(depotIndex, resourceType);
+    }
+
+    public void addAllResourceToDepots(ArrayList<ResourceType> types, ArrayList<Integer> indexes){
+        for(int i = 0; i< types.size(); i++){
+            addResourceToDepot(types.get(i), indexes.get(i));
+        }
         notify(new WarehouseMessage(this.playerBoard.getWarehouse().getDepots(), username));
     }
 

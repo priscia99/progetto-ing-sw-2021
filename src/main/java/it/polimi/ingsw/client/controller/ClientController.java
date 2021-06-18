@@ -195,11 +195,12 @@ public class ClientController extends Observable<Message<ServerController>> {
         executeIfCurrentPlayer(()->notify(new PickResourcesMessage(selection, positions, conversions)));
     }
 
-    public void produceResources(ConsumeTarget consumed, ArrayList<String> ids, Optional<ProductionEffect> genericProduction){
+    public void produceResources(ConsumeTarget consumed, ArrayList<String> ids, Optional<ProductionEffect> genericProduction, ArrayList<ProductionEffect> leadersProductions){
         executeIfCurrentPlayer(()-> {
                     ArrayList<ProductionEffect> toActivate = game.getPlayerBoardMap()
                             .get(game.getCurrentPlayer()).getDevelopmentCards().getProductionAvailable(ids);
                     genericProduction.ifPresent(toActivate::add);
+                    toActivate.addAll(leadersProductions);
                     notify(new ProductionMessage(consumed, toActivate));
             }
         );

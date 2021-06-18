@@ -116,6 +116,8 @@ public class ServerController {
         posIndex = 0;
         convIndex= 0;
         ArrayList<Marble> selectedMarbles = game.getMarbleMarket().sell(marbleSelection);
+        ArrayList<ResourceType> typesSelected = new ArrayList<>();
+        ArrayList<Integer> depotsSelected = new ArrayList<>();
         for (Marble selectedMarble : selectedMarbles) {
             ResourceType resourceToAdd = selectedMarble.getResourceType();
             if (resourceToAdd == ResourceType.FAITH) {
@@ -128,14 +130,17 @@ public class ServerController {
                     game.currentPlayerDropsResource();
                 } else {
                     if (resourceToAdd.equals(ResourceType.BLANK)) {
-                        currentPlayer.addResourceToDepot(converted.get(convIndex), selectedPosition.ordinal());
+                        typesSelected.add(converted.get(convIndex));
+                        depotsSelected.add(selectedPosition.ordinal());
                         convIndex++;
                     } else {
-                        currentPlayer.addResourceToDepot(resourceToAdd, selectedPosition.ordinal());
+                        typesSelected.add(resourceToAdd);
+                        depotsSelected.add(selectedPosition.ordinal());
                     }
                 }
             }
         }
+        currentPlayer.addAllResourceToDepots(typesSelected, depotsSelected);
         currentPlayer.setHasDoneMainAction(true);
     }
 
