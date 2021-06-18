@@ -615,14 +615,14 @@ public class CLI implements UI {
         try{
             ConsumeTarget consumed = new ConsumeTarget();
             Optional<ProductionEffect> genericProduction;
-            ArrayList<ProductionEffect> leaderProduction;
+            ArrayList<ProductionEffect> leaderProductions;
             ArrayList<String> cardIds;
             genericProduction = askForGenericProduction(consumed);
-            leaderProduction = askForLeaderProduction(leaderEffects);
+            leaderProductions = askForLeaderProduction(leaderEffects);
             cardIds = askForListOfIds();
             ConsumeTarget toConsume = askResourcesToUse(Optional.empty());
             consumed.putAll(toConsume);
-            controller.produceResources(consumed, cardIds, genericProduction);
+            controller.produceResources(consumed, cardIds, genericProduction, leaderProductions);
         } catch (Exception e){
             displayError(e.getMessage());
         }
@@ -705,6 +705,7 @@ public class CLI implements UI {
                 if(needed.isPresent()){
                     if(resourcesSelected.countStocks() == needed.get()) return resourcesSelected;
                 }
+                if(needed.isPresent() && needed.get() > resourcesSelected.countResources()) throw new Exception("Exceeded resources that you can provide!");
                 displayInfo("Stock added correctly, press enter to add another stock, 'ok' to continue.");
             } catch(Exception e ){
                 throw new Exception("Error while parsing resources.");
