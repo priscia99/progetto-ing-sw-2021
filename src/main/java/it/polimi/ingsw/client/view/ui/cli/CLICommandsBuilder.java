@@ -71,8 +71,8 @@ public class CLICommandsBuilder {
 
     private static Command getSwapDepotsCommand() {
         HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("a", "[first-index] The first depot index to move");
-        parameters.put("b", "[second-index] The second depot inted to move");
+        parameters.put("a", "[first-depot] The first depot to move | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT |");
+        parameters.put("b", "[second-second] The second depot to move | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT |");
         return new Command("swap", "Swap depots", true, parameters);
     }
 

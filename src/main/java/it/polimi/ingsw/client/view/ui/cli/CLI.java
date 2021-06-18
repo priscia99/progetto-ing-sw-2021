@@ -524,9 +524,14 @@ public class CLI implements UI {
     }
 
     private void swapCommandHandler(HashMap<String, String> params){
-        int first = Integer.parseInt(params.get("a"));
-        int second = Integer.parseInt(params.get("b"));
-        controller.swapDepots(first, second);
+        try{
+            int first = ResourcePosition.valueOf(params.get("a")).ordinal();
+            int second = ResourcePosition.valueOf(params.get("b")).ordinal();
+            controller.swapDepots(first, second);
+        } catch (Exception e){
+            displayError("Cannot ");
+        }
+
     }
 
     private void buyCommandParser(HashMap<String, String> params){
