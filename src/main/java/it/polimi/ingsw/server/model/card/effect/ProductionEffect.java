@@ -47,7 +47,7 @@ public class ProductionEffect extends Effect implements Serializable {
      *
      * @return the input piles of resources
      */
-    public List<ResourceStock> getInStocks() {
+    public ArrayList<ResourceStock> getInStocks() {
         return inStocks;
     }
 
@@ -57,6 +57,18 @@ public class ProductionEffect extends Effect implements Serializable {
      */
     public List<ResourceStock> getOutStocks() {
         return outStocks;
+    }
+
+    public ArrayList<ResourceStock> getOutStockConverted(ResourceType converted){
+        ArrayList<ResourceStock> toReturn = new ArrayList<>();
+        for(ResourceStock stock : outStocks){
+            if(stock.getResourceType().equals(ResourceType.GENERIC)){
+                toReturn.add(new ResourceStock(converted, stock.getQuantity()));
+            } else {
+                toReturn.add(stock);
+            }
+        }
+        return toReturn;
     }
 
     @Override

@@ -1,8 +1,12 @@
 package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
+import it.polimi.ingsw.server.model.card.effect.Effect;
+import it.polimi.ingsw.server.model.card.effect.EffectType;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
 
@@ -25,6 +29,13 @@ public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
 
     public ClientLeaderCard getCard(int index) {
         return this.clientLeaderCards.get(index);
+    }
+
+    public <T> ArrayList<T> getClientLeaderCards(EffectType effect){
+        return this.clientLeaderCards.stream().filter(ClientLeaderCard::isActive)
+                .filter(card->card.getEffect().getEffectType().equals(effect))
+                .map(card->(T) card.getEffect())
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void activateById(String id){

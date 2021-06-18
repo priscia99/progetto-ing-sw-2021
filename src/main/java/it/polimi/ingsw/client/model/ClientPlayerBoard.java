@@ -49,6 +49,8 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
         return clientLeaderCards;
     }
 
+
+
     public ClientDevelopmentCardDecks getDevelopmentCards() {
         return developmentCards;
     }

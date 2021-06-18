@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
+import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
@@ -42,4 +43,5 @@ public interface UI {
     void displayPossibleActions(boolean myTurn, boolean mainActionDone);
     void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects);
     void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts);
+    void displayProduceMenu(ArrayList<ProductionEffect> effects);
 }

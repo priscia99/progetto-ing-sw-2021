@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.ui.cli;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -450,7 +451,7 @@ public class CLI implements UI {
             case "swap" -> swapCommandHandler(inputCommand.getSecond());
             case "buy" -> buyCommandParser(inputCommand.getSecond());
             case "pick" -> pickCommandParser(inputCommand.getSecond());
-            case "produce" -> displayProduceMenu();
+            case "produce" -> controller.produceCommandHandler();
         }
     }
 
@@ -610,12 +611,14 @@ public class CLI implements UI {
         }
     }
 
-    private void displayProduceMenu(){
+    public void displayProduceMenu(ArrayList<ProductionEffect> leaderEffects){
         try{
             ConsumeTarget consumed = new ConsumeTarget();
             Optional<ProductionEffect> genericProduction;
+            ArrayList<ProductionEffect> leaderProduction;
             ArrayList<String> cardIds;
             genericProduction = askForGenericProduction(consumed);
+            leaderProduction = askForLeaderProduction(leaderEffects);
             cardIds = askForListOfIds();
             ConsumeTarget toConsume = askResourcesToUse(Optional.empty());
             consumed.putAll(toConsume);
@@ -634,6 +637,24 @@ public class CLI implements UI {
         } catch (Exception e){
             throw new Exception("Cannot parse ids, try again.");
         }
+    }
+
+    private ArrayList<ProductionEffect> askForLeaderProduction(ArrayList<ProductionEffect> leadersEffect){
+        ArrayList<ProductionEffect> productionsSelected = new ArrayList<>();
+        for(ProductionEffect effect : leadersEffect){
+            displayInfo("This leader production effect is available:");
+            displayInfo(effect.toString());
+            displayInfo("If you want to use it, type the resource type you want to produce: [press enter to continue]");
+            try{
+                ResourceType selectedType = ResourceType.valueOf(in.nextLine());
+                productionsSelected.add(
+                        new ProductionEffect(effect.getInStocks(), effect.getOutStockConverted(selectedType)));
+
+            } catch (Exception ignored){
+            }
+
+        }
+        return productionsSelected;
     }
 
     private Optional<ProductionEffect> askForGenericProduction(ConsumeTarget consumed) throws Exception {

@@ -229,13 +229,16 @@ public class ClientController extends Observable<Message<ServerController>> {
             userInterface.displayError("Cannot buy card with that id!");
         } else {
             ArrayList<DiscountEffect> discounts = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                    .getClientLeaderCards().getClientLeaderCards()
-                    .stream().filter(ClientLeaderCard::isActive)
-                    .filter(card->card.getEffect().getEffectType().equals(EffectType.DISCOUNT))
-                    .map(card->(DiscountEffect) card.getEffect())
-                    .collect(Collectors.toCollection(ArrayList::new));
+                    .getClientLeaderCards().getClientLeaderCards(EffectType.DISCOUNT);
+
 
             userInterface.displayBuyDevelopmentCardMenu(id, discounts);
         }
+    }
+
+    public void produceCommandHandler(){
+        ArrayList<ProductionEffect> leaderProductions = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                .getClientLeaderCards().getClientLeaderCards(EffectType.PRODUCTION);
+        userInterface.displayProduceMenu(leaderProductions);
     }
 }
