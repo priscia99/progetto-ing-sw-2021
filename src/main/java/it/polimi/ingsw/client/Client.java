@@ -8,6 +8,8 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientGame;
 import it.polimi.ingsw.client.view.*;
 import it.polimi.ingsw.client.view.ui.*;
+import it.polimi.ingsw.client.view.ui.cli.CLI;
+import it.polimi.ingsw.client.view.ui.gui.GUI;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.service_message.ServiceMessage;
@@ -180,9 +182,13 @@ public class Client {
             String[] command = authInfo.split("#");
             switch (command[0]){
                 case "auth_request":
-                    AuthData authData = userInterface.requestAuth();
-                    this.myUsername = authData.getUsername();
-                    sendToSocket(authData);
+                    if(userInterface instanceof CLI) {
+                        AuthData authData = userInterface.requestAuth();
+                        this.myUsername = authData.getUsername();
+                        sendToSocket(authData);
+                    }else if(userInterface instanceof GUI){
+                        ((GUI)userInterface).loadAuthScreen(this);
+                    }
                     break;
                 case "auth_joined":
                     userInterface.displayLobbyJoined(command[1]);
