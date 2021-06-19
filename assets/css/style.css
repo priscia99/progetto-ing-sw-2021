@@ -317,13 +317,6 @@
     -fx-background-repeat: no-repeat;
 }
 
-#warehouse {
-    -fx-background-image: url('../img/warehouse.png');
-    -fx-background-size: stretch;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat;
-}
-
 #mm-r1, #mm-r2, #mm-r3 {
     -fx-background-image: url('../img/ico/arrow_left.png');
     -fx-background-size: contain;
@@ -342,6 +335,13 @@
     -fx-border-color: transparent;
 }
 
+.faith-cell#current {
+    -fx-background-image: url('../img/ico/red_cross.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
 .faith-cell {
     -fx-border-color: darkred;
     -fx-background-color: #f1e8ce;
@@ -349,4 +349,11 @@
 
 AnchorPane, GridPane {
     -fx-border-radius: 5;
+}
+
+#main {
+    -fx-background-image: url('../img/playerboard.png');
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
 }

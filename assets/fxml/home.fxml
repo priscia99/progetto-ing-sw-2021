@@ -1,8 +1,7 @@
-<!-- TODO: add class to blur the main grid and toggle display of the zoom anchor (disable unused layers) -->
-
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
@@ -12,11 +11,15 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
+
+<!-- TODO: add class to blur the main grid and toggle display of the zoom anchor (disable unused layers) -->
 
 <AnchorPane maxHeight="1080.0" maxWidth="1920.0" minHeight="360.0" minWidth="640.0" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -40,14 +43,14 @@
                         <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-radius: 5;" GridPane.rowIndex="1">
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-radius: 5; -fx-background-color: whitesmoke; -fx-background-radius: 5;" GridPane.rowIndex="1">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                            <children>
-                              <SplitPane dividerPositions="0.6081242532855434" layoutX="220.0" layoutY="192.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <SplitPane dividerPositions="0.5426008968609866" layoutX="220.0" layoutY="192.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <items>
-                                  <AnchorPane minHeight="0.0" minWidth="360.0" prefHeight="160.0" prefWidth="100.0">
+                                  <AnchorPane minHeight="0.0" minWidth="360.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: whitesmoke; -fx-background-radius: 5;">
                                        <children>
                                           <GridPane layoutX="-293.0" layoutY="-201.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
@@ -129,7 +132,7 @@
                                                                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="17" />
                                                                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="18" />
                                                                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="19" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <Pane id="current" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                </children>
                                                                <padding>
                                                                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -221,6 +224,9 @@
                                                                </GridPane.margin>
                                                             </AnchorPane>
                                                          </children>
+                                                         <padding>
+                                                            <Insets bottom="5.0" />
+                                                         </padding>
                                                       </GridPane>
                                                       <GridPane>
                                                         <columnConstraints>
@@ -372,7 +378,10 @@
                                                                               <Pane id="servant-ico" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                                                                               <Pane id="shield-ico" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
                                                                               <Pane id="stone-ico" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
-                                                                              <TextField id="strongbox-coin" disable="true" GridPane.columnIndex="1" />
+                                                                              <TextField id="strongbox-coin" disable="true" GridPane.columnIndex="1">
+                                                                                 <GridPane.margin>
+                                                                                    <Insets left="5.0" />
+                                                                                 </GridPane.margin></TextField>
                                                                               <TextField id="strongbox-servant" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                               <TextField id="strongbox-shield" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                               <TextField id="strongbox-stone" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -382,6 +391,9 @@
                                                                            </padding>
                                                                         </GridPane>
                                                                      </children>
+                                                                     <GridPane.margin>
+                                                                        <Insets bottom="5.0" left="5.0" />
+                                                                     </GridPane.margin>
                                                                   </AnchorPane>
                                                                </children>
                                                             </GridPane>
@@ -424,30 +436,40 @@
                                     </AnchorPane>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <GridPane id="leader-pane" hgap="10.0" layoutX="-21.0" layoutY="151.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <GridPane layoutX="-61.0" layoutY="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="440.0" minHeight="10.0" prefHeight="440.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label style="-fx-font-weight: bolder;" text="Leader Cards">
+                                                <Label prefHeight="17.0" prefWidth="287.0" style="-fx-font-weight: bolder;" text="Leader Cards">
                                                    <GridPane.margin>
                                                       <Insets left="5.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Pane id="leader-1" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-                                                <Pane id="leader-2" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
-                                                <Pane id="leader-3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Pane id="leader-4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <GridPane id="leader-pane" hgap="10.0" vgap="10.0" GridPane.rowIndex="1">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Pane id="leader-1" prefHeight="200.0" prefWidth="200.0" />
+                                                      <Pane id="leader-2" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                                                      <Pane id="leader-3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                                      <Pane id="leader-4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </GridPane>
                                              </children>
-                                             <padding>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                             </padding>
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
@@ -467,12 +489,12 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-width: 3;">
+                                    <AnchorPane id="test" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: whitesmoke; -fx-background-radius: 5; -fx-border-color: red;">
                                        <children>
                                           <GridPane hgap="5.0" layoutX="114.0" layoutY="-2.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -501,13 +523,20 @@
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" />
                                        </padding>
+                                       <effect>
+                                          <DropShadow>
+                                             <color>
+                                                <Color red="1.0" />
+                                             </color>
+                                          </DropShadow>
+                                       </effect>
                                     </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray;" GridPane.rowIndex="1">
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-background-color: whitesmoke; -fx-background-radius: 5;" GridPane.rowIndex="1">
                                        <children>
                                           <GridPane hgap="5.0" layoutX="-54.0" layoutY="-41.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
                                              </columnConstraints>
                                              <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -536,12 +565,12 @@
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding></AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray;" GridPane.columnIndex="1">
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-background-color: whitesmoke; -fx-background-radius: 5;" GridPane.columnIndex="1">
                                        <children>
                                           <GridPane hgap="5.0" layoutX="106.0" layoutY="-30.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
                                              </columnConstraints>
                                              <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -570,12 +599,12 @@
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" />
                                        </padding></AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-background-color: whitesmoke; -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
                                           <GridPane hgap="5.0" layoutX="80.0" layoutY="-19.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
                                              </columnConstraints>
                                              <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -620,7 +649,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <TabPane layoutX="140.0" layoutY="406.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-radius: 5;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TabPane layoutX="140.0" layoutY="406.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-radius: 5; -fx-background-color: whitesmoke; -fx-background-radius: 5;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
                       <Tab text="Card Market">
                         <content>
@@ -682,7 +711,7 @@
                                           <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </padding>
                                        <children>
                                           <Pane id="mm-1-1" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
@@ -828,4 +857,7 @@
          </children>
       </AnchorPane>
    </children>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </AnchorPane>
