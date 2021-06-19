@@ -213,9 +213,17 @@ public class Player extends Observable<Message<ClientController>> {
         playerBoard.getWarehouse().addToDepot(depotIndex, resourceType);
     }
 
-    public void addAllResourceToDepots(ArrayList<ResourceType> types, ArrayList<Integer> indexes){
+    private void addToLeaderDepot(ResourceType resourceType, int index){
+        playerBoard.addToAdditionalDepot(resourceType, index);
+    }
+
+    public void addAllResourceToDepots(ArrayList<ResourceType> types, ArrayList<ResourcePosition> depots){
         for(int i = 0; i< types.size(); i++){
-            addResourceToDepot(types.get(i), indexes.get(i));
+            switch (depots.get(i)){
+                case FIRST_LEADER_DEPOT: addToLeaderDepot(types.get(i), 0);
+                case SECOND_LEADER_DEPOT: addToLeaderDepot(types.get(i), 1);
+                default: addResourceToDepot(types.get(i), depots.get(i).ordinal());
+            }
         }
         notify(new WarehouseMessage(this.playerBoard.getWarehouse().getDepots(), username));
     }

@@ -13,6 +13,7 @@ public enum ResourceType {
     GENERIC("GENERIC"),
     BLANK("BLANK");
 
+
     private final String literal;
 
     ResourceType(String literal) {

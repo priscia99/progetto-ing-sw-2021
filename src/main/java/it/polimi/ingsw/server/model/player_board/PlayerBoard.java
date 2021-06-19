@@ -2,14 +2,19 @@ package it.polimi.ingsw.server.model.player_board;
 
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
+import it.polimi.ingsw.server.model.card.effect.DepotEffect;
+import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
+import it.polimi.ingsw.server.model.card.effect.EffectType;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.server.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
+import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class that models the player board. It instantiate a faith path, storages and slots for cards. It take count of the
@@ -169,6 +174,27 @@ public class PlayerBoard {
 
     public int countByResourceType(ResourceType resourceType) {
         return this.warehouse.countByResourceType(resourceType) + this.strongbox.countByResourceType(resourceType);
+    }
+
+    public ArrayList<ResourceDepot> getAdditionalDepots(){
+        ArrayList<DepotEffect> effects = this.leaderCardsDeck.getActiveEffects(EffectType.DEPOT);
+        return effects.stream().map(DepotEffect::getDepot).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public ArrayList<ResourceDepot> getAdditionalDepotsCopy(){
+        ArrayList<DepotEffect> effects = this.leaderCardsDeck.getActiveEffects(EffectType.DEPOT);
+        ArrayList<ResourceDepot> depotCopies = new ArrayList<>();
+        for(DepotEffect effect : effects){
+            depotCopies.add(new ResourceDepot(
+                    effect.getDepot().getResourceType(),
+                    effect.getDepot().getQuantity(),
+                    effect.getDepot().getCapacity()));
+        }
+        return depotCopies;
+    }
+
+    public void addToAdditionalDepot(ResourceType type, int index){
+        this.getAdditionalDepots().get(index).incrementResource(type);
     }
 
 }
