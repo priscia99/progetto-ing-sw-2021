@@ -157,7 +157,13 @@ public class ServerController {
         currentPlayer.consumeResources(consumedResources);
         for(ProductionEffect productionToActivate : productionsToActivate){
             productionToActivate.getOutStocks().forEach(
-                    resourcePile -> game.getCurrentPlayer().addResourcesToStrongBox(resourcePile)
+                    stock -> {
+                        if(stock.getResourceType().equals(ResourceType.FAITH)){
+                            game.getCurrentPlayer().addFaithPoints(stock.getQuantity());
+                        } else {
+                            game.getCurrentPlayer().addResourcesToStrongBox(stock);
+                        }
+                    }
             );
         }
         game.getCurrentPlayer().setHasDoneMainAction(true);
