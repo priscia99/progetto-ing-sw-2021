@@ -310,6 +310,24 @@
     -fx-background-repeat: no-repeat;
 }
 
+#mm-r1, #mm-r2, #mm-r3 {
+    -fx-background-image: url('../img/ico/arrow_left.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#mm-c1, #mm-c2, #mm-c3, #mm-c4 {
+    -fx-background-image: url('../img/ico/arrow_up.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
 .faith-cell {
     -fx-border-color: darkred;
     -fx-background-color: #f1e8ce;
