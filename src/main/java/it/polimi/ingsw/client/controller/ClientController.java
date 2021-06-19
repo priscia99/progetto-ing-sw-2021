@@ -229,7 +229,9 @@ public class ClientController extends Observable<Message<ServerController>> {
             } else {
                 ArrayList<DiscountEffect> discounts = game.getPlayerBoardMap().get(game.getCurrentPlayer())
                         .getClientLeaderCards().getActiveEffects(EffectType.DISCOUNT);
-                userInterface.displayBuyDevelopmentCardMenu(id, discounts);
+                ArrayList<DepotEffect> additionalDepots = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                        .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
+                userInterface.displayBuyDevelopmentCardMenu(id, discounts, additionalDepots);
             }
         });
     }

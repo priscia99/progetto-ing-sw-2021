@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.view.ui.UI;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import it.polimi.ingsw.network.auth_data.AuthData;
 import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
+import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.marble.Marble;
@@ -172,12 +173,12 @@ public class GUI implements UI{
     }
 
     @Override
-    public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects) {
+    public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects, ArrayList<DepotEffect> depotEffects) {
 
     }
 
     @Override
-    public void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts) {
+    public void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts, ArrayList<DepotEffect> depotEffects) {
 
     }
 
