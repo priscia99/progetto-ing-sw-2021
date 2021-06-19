@@ -7,5 +7,7 @@ public enum ResourcePosition {
     SECOND_DEPOT,
     THIRD_DEPOT,
     STRONG_BOX,
-    DROPPED
+    DROPPED,
+    FIRST_LEADER_DEPOT,
+    SECOND_LEADER_DEPOT
 }

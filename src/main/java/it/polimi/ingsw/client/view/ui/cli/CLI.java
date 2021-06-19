@@ -13,6 +13,7 @@ import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
+import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.marble.Marble;
@@ -554,7 +555,7 @@ public class CLI implements UI {
         }
     }
 
-    public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects){
+    public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects, ArrayList<DepotEffect> depotEffects){
             ArrayList<ResourcePosition> positions = new ArrayList<>();
             ArrayList<ResourceType> conversions = new ArrayList<>();
             try{
@@ -565,7 +566,7 @@ public class CLI implements UI {
                     } else {
                         displayInfo("Insert position in which you want to add " + marble.getResourceType().toString());
                     }
-                    displayInfo("Select between: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | DROPPED |");
+                    displayPossibleResourcePositions(depotEffects);
                     String positionRaw = in.nextLine();
                     positions.add(parseResourcePosition(positionRaw));
                 }
@@ -575,6 +576,12 @@ public class CLI implements UI {
             }
     }
 
+    private void displayPossibleResourcePositions(ArrayList<DepotEffect> additionalDepots){
+        String message = "Select between: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | DROPPED |";
+        if(additionalDepots.size()==1) message += " FIRST_LEADER_DEPOT";
+        if(additionalDepots.size()==2) message += " FIRST_LEADER_DEPOT | SECOND_LEADER_DEPOT ";
+        displayInfo(message);
+    }
     private ResourceType askForConversions(ArrayList<ChangeEffect> changeEffects) throws Exception {
         switch (changeEffects.size()){
             case 1:

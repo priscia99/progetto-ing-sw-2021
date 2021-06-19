@@ -11,10 +11,7 @@ import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
-import it.polimi.ingsw.server.model.resource.ConsumeTarget;
-import it.polimi.ingsw.server.model.resource.ResourcePosition;
-import it.polimi.ingsw.server.model.resource.ResourceStock;
-import it.polimi.ingsw.server.model.resource.ResourceType;
+import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.CustomRunnable;
 import it.polimi.ingsw.utils.Pair;
@@ -96,6 +93,7 @@ public class ServerController {
         if(currentPlayer.hasDoneMainAction()) throw new Exception("You have already done main action this turn!");
         ArrayList<Marble> validateSelection = game.getMarbleMarket().getSelectedMarbles(marbleSelection);
         Warehouse validateWarehouse = currentPlayer.getPlayerBoard().getWarehouse().getCopy();
+        ArrayList<ResourceDepot> validateLeaderDepots = currentPlayer.getPlayerBoard().getAdditionalDepotsCopy();
         for (Marble marble : validateSelection) {
             ResourceType resourceToAdd = marble.getResourceType();
             if (resourceToAdd.equals(ResourceType.FAITH)) continue;
@@ -106,10 +104,13 @@ public class ServerController {
                 if (selectedPosition == ResourcePosition.STRONG_BOX)
                     throw new Exception("Cannot insert resources in strongbox!");
                 if (resourceToAdd.equals(ResourceType.BLANK)) {
-                    validateWarehouse.addToDepot(selectedPosition.ordinal(), converted.get(convIndex));
+                    resourceToAdd = converted.get(convIndex);
                     convIndex++;
-                } else {
-                    validateWarehouse.addToDepot(selectedPosition.ordinal(), resourceToAdd);
+                }
+                switch(selectedPosition){
+                    case FIRST_LEADER_DEPOT: validateLeaderDepots.get(0).incrementResource(resourceToAdd);
+                    case SECOND_LEADER_DEPOT: validateLeaderDepots.get(1).incrementResource(resourceToAdd);
+                    default: validateWarehouse.addToDepot(selectedPosition.ordinal(), resourceToAdd);
                 }
             }
         }
@@ -117,7 +118,7 @@ public class ServerController {
         convIndex= 0;
         ArrayList<Marble> selectedMarbles = game.getMarbleMarket().sell(marbleSelection);
         ArrayList<ResourceType> typesSelected = new ArrayList<>();
-        ArrayList<Integer> depotsSelected = new ArrayList<>();
+        ArrayList<ResourcePosition> depotsSelected = new ArrayList<>();
         for (Marble selectedMarble : selectedMarbles) {
             ResourceType resourceToAdd = selectedMarble.getResourceType();
             if (resourceToAdd == ResourceType.FAITH) {
@@ -130,13 +131,11 @@ public class ServerController {
                     game.currentPlayerDropsResource();
                 } else {
                     if (resourceToAdd.equals(ResourceType.BLANK)) {
-                        typesSelected.add(converted.get(convIndex));
-                        depotsSelected.add(selectedPosition.ordinal());
+                        resourceToAdd = converted.get(convIndex);
                         convIndex++;
-                    } else {
-                        typesSelected.add(resourceToAdd);
-                        depotsSelected.add(selectedPosition.ordinal());
                     }
+                    typesSelected.add(resourceToAdd);
+                    depotsSelected.add(selectedPosition);
                 }
             }
         }
@@ -157,7 +156,13 @@ public class ServerController {
         currentPlayer.consumeResources(consumedResources);
         for(ProductionEffect productionToActivate : productionsToActivate){
             productionToActivate.getOutStocks().forEach(
-                    resourcePile -> game.getCurrentPlayer().addResourcesToStrongBox(resourcePile)
+                    stock -> {
+                        if(stock.getResourceType().equals(ResourceType.FAITH)){
+                            game.getCurrentPlayer().addFaithPoints(stock.getQuantity());
+                        } else {
+                            game.getCurrentPlayer().addResourcesToStrongBox(stock);
+                        }
+                    }
             );
         }
         game.getCurrentPlayer().setHasDoneMainAction(true);

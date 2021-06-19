@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.controller.*;
 import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
+import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.marble.Marble;
@@ -41,7 +42,7 @@ public interface UI {
     void displayHelpMessage();
     void displayTurnInfo(ArrayList<String> names, String current);
     void displayPossibleActions(boolean myTurn, boolean mainActionDone);
-    void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects);
+    void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects, ArrayList<DepotEffect> depotEffects);
     void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts);
     void displayProduceMenu(ArrayList<ProductionEffect> effects);
 }

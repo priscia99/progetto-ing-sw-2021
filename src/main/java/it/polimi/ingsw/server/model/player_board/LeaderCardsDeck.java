@@ -1,15 +1,18 @@
 package it.polimi.ingsw.server.model.player_board;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.data.LeaderCardsBuilder;
 import it.polimi.ingsw.exceptions.EmptyDeckException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_server.LeaderCardsMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.card.LeaderCard;
+import it.polimi.ingsw.server.model.card.effect.EffectType;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 /**
  * Class that models a list of leader cards.
@@ -113,6 +116,13 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
         else if (!leaderCards.removeIf(card-> card.getId().equals(cardId))) {
             throw new IllegalArgumentException("LeaderCard not present this player's deck");
         }
+    }
+
+    public <T> ArrayList<T> getActiveEffects(EffectType effect){
+        return this.leaderCards.stream().filter(LeaderCard::isActive)
+                .filter(card->card.getEffect().getEffectType().equals(effect))
+                .map(card->(T) card.getEffect())
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
 

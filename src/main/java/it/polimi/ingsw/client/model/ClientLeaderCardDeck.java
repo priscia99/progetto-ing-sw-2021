@@ -31,7 +31,7 @@ public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
         return this.clientLeaderCards.get(index);
     }
 
-    public <T> ArrayList<T> getClientLeaderCards(EffectType effect){
+    public <T> ArrayList<T> getActiveEffects(EffectType effect){
         return this.clientLeaderCards.stream().filter(ClientLeaderCard::isActive)
                 .filter(card->card.getEffect().getEffectType().equals(effect))
                 .map(card->(T) card.getEffect())
