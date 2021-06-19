@@ -595,12 +595,12 @@ public class CLI implements UI {
         throw new Exception("Invalid size of change effects.");
     }
 
-    public void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts){
+    public void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts, ArrayList<DepotEffect> depotEffects){
         try{
             int index = askDevelopmentDeckIndex();
             displayUserDiscounts(discounts);
             Optional<Integer> specificQuantity = Optional.empty();
-            ConsumeTarget resourcesSelected = askResourcesToUse(specificQuantity);
+            ConsumeTarget resourcesSelected = askResourcesToUse(specificQuantity, depotEffects);
             controller.buyDevelopmentCard(id, index, resourcesSelected);
         } catch(Exception e){
             displayError(e.getMessage());
@@ -626,21 +626,26 @@ public class CLI implements UI {
         }
     }
 
-    public void displayProduceMenu(ArrayList<ProductionEffect> leaderEffects){
+    public void displayProduceMenu(ArrayList<ProductionEffect> leaderEffects, ArrayList<DepotEffect> depotEffects){
         try{
             ConsumeTarget consumed = new ConsumeTarget();
             Optional<ProductionEffect> genericProduction;
             ArrayList<ProductionEffect> leaderProductions;
             ArrayList<String> cardIds;
-            genericProduction = askForGenericProduction(consumed);
+            genericProduction = askForGenericProduction(consumed, depotEffects);
             leaderProductions = askForLeaderProduction(leaderEffects);
             cardIds = askForListOfIds();
-            ConsumeTarget toConsume = askResourcesToUse(Optional.empty());
+            ConsumeTarget toConsume = askResourcesToUse(Optional.empty(), depotEffects);
             consumed.putAll(toConsume);
             controller.produceResources(consumed, cardIds, genericProduction, leaderProductions);
         } catch (Exception e){
             displayError(e.getMessage());
         }
+
+    }
+
+    @Override
+    public void startUI() {
 
     }
 
@@ -672,12 +677,12 @@ public class CLI implements UI {
         return productionsSelected;
     }
 
-    private Optional<ProductionEffect> askForGenericProduction(ConsumeTarget consumed) throws Exception {
+    private Optional<ProductionEffect> askForGenericProduction(ConsumeTarget consumed, ArrayList<DepotEffect> depotEffects) throws Exception {
         displayInfo("If you want to use generic production, type the resource type to produce, else 'next':" );
             String selectedRaw = in.nextLine();
             if(!selectedRaw.equals("next")){
                 ResourceType resourceFromGenericProduction = parseResourceType(selectedRaw);
-                ConsumeTarget toConsumeForGeneric = askResourcesToUse(Optional.of(2));
+                ConsumeTarget toConsumeForGeneric = askResourcesToUse(Optional.of(2), depotEffects);
                 consumed.putAll(toConsumeForGeneric);
                 return Optional.of(new ProductionEffect(
                         new ArrayList<>(toConsumeForGeneric.getStocks()),
@@ -702,12 +707,12 @@ public class CLI implements UI {
         }
     }
 
-    private ConsumeTarget askResourcesToUse(Optional<Integer> needed) throws Exception {
+    private ConsumeTarget askResourcesToUse(Optional<Integer> needed, ArrayList<DepotEffect> depotEffects) throws Exception {
         ConsumeTarget resourcesSelected = new ConsumeTarget();
         String confirmString = "add";
         while(!confirmString.equals("ok") && (needed.isEmpty() || (needed.get() == resourcesSelected.countStocks()))){
             displayInfo("Add resource stock: <position> <quantity> <type> ('quit' to choose another action)");
-            displayInfo("Positions are: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | STRONGBOX |");
+            displayPossibleResourcePositions(depotEffects);
             String rawInput = in.nextLine();
             if(rawInput.equals("quit")) throw new Exception("User stopped action.");
             String[] resourceSelectionRaw = rawInput.split(" ");

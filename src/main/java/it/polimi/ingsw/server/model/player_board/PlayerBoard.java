@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.server.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
+import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.util.ArrayList;
@@ -196,5 +197,17 @@ public class PlayerBoard {
     public void addToAdditionalDepot(ResourceType type, int index){
         this.getAdditionalDepots().get(index).incrementResource(type);
     }
+
+    public boolean canConsumeFromLeaderDepot(int index, ResourceStock stock){
+        boolean isCorrectResource = this.getAdditionalDepots().get(index).getResourceType() == stock.getResourceType();
+        boolean areEnoughResources = this.getAdditionalDepots().get(index).getQuantity() >= stock.getQuantity();
+        return isCorrectResource && areEnoughResources;
+    }
+
+    public void consumeFromLeaderDepot(int index, ResourceStock toConsume){
+        ResourceDepot consumed = this.getAdditionalDepots().get(index);
+        for(int i = 0; i<toConsume.getQuantity(); i++) consumed.decrementResource(toConsume.getResourceType());
+    }
+
 
 }

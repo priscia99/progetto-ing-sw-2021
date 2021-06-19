@@ -43,6 +43,7 @@ public interface UI {
     void displayTurnInfo(ArrayList<String> names, String current);
     void displayPossibleActions(boolean myTurn, boolean mainActionDone);
     void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects, ArrayList<DepotEffect> depotEffects);
-    void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts);
-    void displayProduceMenu(ArrayList<ProductionEffect> effects);
+    void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts, ArrayList<DepotEffect> depotEffects);
+    void displayProduceMenu(ArrayList<ProductionEffect> effects, ArrayList<DepotEffect> depotEffects);
+    void startUI();
 }

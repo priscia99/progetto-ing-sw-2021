@@ -406,8 +406,15 @@ public class Player extends Observable<Message<ClientController>> {
                         .map(stock->this.playerBoard.getStrongbox().canConsume(stock))
                         .collect(Collectors.toList()).contains(false);
             } else {
-                    return this.playerBoard.getWarehouse()
+                switch(position){
+                    case FIRST_LEADER_DEPOT: return this.playerBoard
+                            .canConsumeFromLeaderDepot(0, toConsume.getToConsumeFromDepot(position));
+                    case SECOND_LEADER_DEPOT: return this.playerBoard
+                            .canConsumeFromLeaderDepot(1, toConsume.getToConsumeFromDepot(position));
+                    default: return this.playerBoard.getWarehouse()
                             .canConsumeFromDepot(position, toConsume.getToConsumeFromDepot(position));
+                }
+
             }
         }).collect(Collectors.toList()).contains(false);
     }
@@ -420,7 +427,11 @@ public class Player extends Observable<Message<ClientController>> {
                                 .forEach(stock-> this.playerBoard.getStrongbox().consume(stock)
                         );
                     } else {
-                        this.playerBoard.getWarehouse().consume(toConsume.getToConsumeFromDepot(position));
+                        switch (position){
+                            case FIRST_LEADER_DEPOT: this.playerBoard.consumeFromLeaderDepot(0, toConsume.getToConsumeFromDepot(position));
+                            case SECOND_LEADER_DEPOT: this.playerBoard.consumeFromLeaderDepot(1, toConsume.getToConsumeFromDepot(position));
+                            default: this.playerBoard.getWarehouse().consume(toConsume.getToConsumeFromDepot(position));
+                        }
                     }
                 }
         );
@@ -445,4 +456,5 @@ public class Player extends Observable<Message<ClientController>> {
                 .map(card->(DiscountEffect) card.getEffect())
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
 }

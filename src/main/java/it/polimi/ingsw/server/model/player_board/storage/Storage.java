@@ -55,7 +55,8 @@ public abstract class Storage extends Observable<Message<ClientController>> {
     }
 
     public void consume(ResourceStock toConsume){
-        ResourceStock consumed = this.resourceStocks.stream().filter(resourceStock -> resourceStock.getResourceType().equals(toConsume.getResourceType()))
+        ResourceStock consumed = this.resourceStocks.stream()
+                .filter(resourceStock -> resourceStock.getResourceType().equals(toConsume.getResourceType()))
                 .findFirst().get();
         for(int i = 0; i<toConsume.getQuantity(); i++) consumed.decrementResource(toConsume.getResourceType());
     }

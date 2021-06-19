@@ -29,6 +29,7 @@ public class PlayersOrderMessage extends Message<ClientController> implements Se
             ordered.put(username, target.getGame().getPlayerBoardMap().get(username));
         }
         target.getGame().setPlayerBoardMap(ordered);
+        target.startUI();
     }
 
 }
