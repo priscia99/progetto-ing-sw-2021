@@ -8,10 +8,7 @@ import it.polimi.ingsw.network.message.from_client.*;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.card.LeaderCard;
-import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
-import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
-import it.polimi.ingsw.server.model.card.effect.EffectType;
-import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.server.model.card.effect.*;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.resource.*;
@@ -210,17 +207,15 @@ public class ClientController extends Observable<Message<ServerController>> {
         executeIfCurrentPlayer(()->{
             try{
                 ArrayList<ChangeEffect> changeEffects = new ArrayList<>();
+                ArrayList<DepotEffect> depotEffects;
                 ArrayList<Marble> selected = game.getClientMarbleMarket().getSelectedMarbles(selection);
                 if(selected.stream().map(Marble::getResourceType).collect(Collectors.toList()).contains(ResourceType.BLANK)){
-                    ArrayList<ClientLeaderCard> cards = game.getPlayerBoardMap().get(game.getCurrentPlayer()).getClientLeaderCards().getClientLeaderCards();
-                    for(ClientLeaderCard card : cards){
-                        if(card.isActive() && card.getEffect().getEffectType().equals(EffectType.CHANGE)){
-                            changeEffects.add((ChangeEffect) card.getEffect());
-                        }
-                    }
-
+                    changeEffects = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                            .getClientLeaderCards().getActiveEffects(EffectType.CHANGE);
                 }
-                userInterface.displayPickResourceMenu(selection, selected, changeEffects);
+                depotEffects = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                        .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
+                userInterface.displayPickResourceMenu(selection, selected, changeEffects, depotEffects);
             } catch (Exception e){
                 userInterface.displayError("Cannot retrieve marbles from that position!");
             }
@@ -233,9 +228,7 @@ public class ClientController extends Observable<Message<ServerController>> {
                 userInterface.displayError("Cannot buy card with that id!");
             } else {
                 ArrayList<DiscountEffect> discounts = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                        .getClientLeaderCards().getClientLeaderCards(EffectType.DISCOUNT);
-
-
+                        .getClientLeaderCards().getActiveEffects(EffectType.DISCOUNT);
                 userInterface.displayBuyDevelopmentCardMenu(id, discounts);
             }
         });
@@ -244,7 +237,7 @@ public class ClientController extends Observable<Message<ServerController>> {
     public void produceCommandHandler(){
         executeIfCurrentPlayer(()->{
             ArrayList<ProductionEffect> leaderProductions = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                    .getClientLeaderCards().getClientLeaderCards(EffectType.PRODUCTION);
+                    .getClientLeaderCards().getActiveEffects(EffectType.PRODUCTION);
             userInterface.displayProduceMenu(leaderProductions);
         });
     }
