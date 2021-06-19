@@ -18,147 +18,293 @@
     -fx-background-color: green;
 }
 
-#marble-market {
-    -fx-background-image: url('../img/marble-market.png');
-    -fx-background-size: contain;
-    -fx-background-position: center;
-    -fx-background-repeat: no-repeat;
-}
-
 #card-1-1 {
-    -fx-background-image: url('../img/cards/front/development-card-1.png');
+    -fx-background-image: url('../img/cards/back/dev_back_1.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-1-2 {
-    -fx-background-image: url('../img/cards/front/development-card-2.png');
+    -fx-background-image: url('../img/cards/back/dev_back_2.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-1-3 {
-    -fx-background-image: url('../img/cards/front/development-card-3.png');
+    -fx-background-image: url('../img/cards/back/dev_back_3.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-1-4 {
-    -fx-background-image: url('../img/cards/front/development-card-4.png');
+    -fx-background-image: url('../img/cards/back/dev_back_4.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-2-1 {
-    -fx-background-image: url('../img/cards/front/development-card-5.png');
+    -fx-background-image: url('../img/cards/back/dev_back_5.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-2-2 {
-    -fx-background-image: url('../img/cards/front/development-card-6.png');
+    -fx-background-image: url('../img/cards/back/dev_back_6.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-2-3 {
-    -fx-background-image: url('../img/cards/front/development-card-7.png');
+    -fx-background-image: url('../img/cards/back/dev_back_7.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-2-4 {
-    -fx-background-image: url('../img/cards/front/development-card-8.png');
+    -fx-background-image: url('../img/cards/back/dev_back_8.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-3-1 {
-    -fx-background-image: url('../img/cards/front/development-card-9.png');
+    -fx-background-image: url('../img/cards/back/dev_back_9.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-3-2 {
-    -fx-background-image: url('../img/cards/front/development-card-10.png');
+    -fx-background-image: url('../img/cards/back/dev_back_10.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-3-3 {
-    -fx-background-image: url('../img/cards/front/development-card-11.png');
+    -fx-background-image: url('../img/cards/back/dev_back_11.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #card-3-4 {
-    -fx-background-image: url('../img/cards/front/development-card-12.png');
+    -fx-background-image: url('../img/cards/back/dev_back_12.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #dev-slot-1-1 {
-    -fx-background-image: url('../img/cards/front/development-card-32.png');
+    -fx-background-image: url('../img/cards/back/lead_back.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #dev-slot-2-1 {
-    -fx-background-image: url('../img/cards/front/development-card-36.png');
-    -fx-background-size: contain;
-    -fx-background-position: center;
-    -fx-background-repeat: no-repeat;
-}
-
-#dev-slot-2-2 {
-    -fx-background-image: url('../img/cards/front/development-card-35.png');
+    -fx-background-image: url('../img/cards/back/lead_back.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #dev-slot-3-1 {
-    -fx-background-image: url('../img/cards/front/development-card-33.png');
-    -fx-background-size: contain;
-    -fx-background-position: center;
-    -fx-background-repeat: no-repeat;
-}
-
-#dev-slot-3-2 {
-    -fx-background-image: url('../img/cards/front/development-card-37.png');
-    -fx-background-size: contain;
-    -fx-background-position: center;
-    -fx-background-repeat: no-repeat;
-}
-
-#dev-slot-3-3 {
-    -fx-background-image: url('../img/cards/front/development-card-48.png');
+    -fx-background-image: url('../img/cards/back/lead_back.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #leader-1 {
-    -fx-background-image: url('../img/cards/front/leader-card-1.png');
+    -fx-background-image: url('../img/cards/back/lead_back.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 #leader-2 {
-    -fx-background-image: url('../img/cards/front/leader-card-2.png');
+    -fx-background-image: url('../img/cards/back/lead_back.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#leader-3 {
+    -fx-background-image: url('../img/cards/back/lead_back.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+#leader-4 {
+    -fx-background-image: url('../img/cards/back/lead_back.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-1-1 {
+    -fx-background-image: url('../img/ico/red_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-2-1 {
+    -fx-background-image: url('../img/ico/purple_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-3-1 {
+    -fx-background-image: url('../img/ico/yellow_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-1-2 {
+    -fx-background-image: url('../img/ico/gray_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-2-2 {
+    -fx-background-image: url('../img/ico/red_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-3-2 {
+    -fx-background-image: url('../img/ico/yellow_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-1-3 {
+    -fx-background-image: url('../img/ico/blue_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-2-3 {
+    -fx-background-image: url('../img/ico/white_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-3-3 {
+    -fx-background-image: url('../img/ico/white_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-1-4 {
+    -fx-background-image: url('../img/ico/purple_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-2-4 {
+    -fx-background-image: url('../img/ico/purple_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#mm-3-4 {
+    -fx-background-image: url('../img/ico/yellow_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#not-for-sale {
+    -fx-background-image: url('../img/ico/white_marble.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#coin-ico{
+    -fx-background-image: url('../img/ico/coin.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#servant-ico{
+    -fx-background-image: url('../img/ico/servant.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#shield-ico{
+    -fx-background-image: url('../img/ico/shield.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#stone-ico{
+    -fx-background-image: url('../img/ico/stone.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#depot-1 {
+    -fx-background-image: url('../img/ico/stone.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#depot-2-1 {
+    -fx-background-image: url('../img/ico/servant.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#depot-2-2 {
+    -fx-background-image: url('../img/ico/servant.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#depot-3-1 {
+    -fx-background-image: url('../img/ico/shield.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#depot-3-2 {
+    -fx-background-image: url('../img/ico/shield.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#depot-3-3 {
+    -fx-background-image: url('../img/ico/shield.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
@@ -166,6 +312,7 @@
 
 .faith-cell {
     -fx-border-color: darkred;
+    -fx-background-color: #f1e8ce;
 }
 
 AnchorPane, GridPane {

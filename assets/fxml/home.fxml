@@ -43,7 +43,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                            <children>
-                              <SplitPane dividerPositions="0.6684113300492609" layoutX="220.0" layoutY="192.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <SplitPane dividerPositions="0.6081242532855434" layoutX="220.0" layoutY="192.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <items>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
@@ -57,7 +57,7 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <GridPane GridPane.rowIndex="1">
+                                                <GridPane id="faith-pane" GridPane.rowIndex="1">
                                                   <columnConstraints>
                                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                   </columnConstraints>
@@ -152,7 +152,7 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <GridPane GridPane.columnIndex="1">
+                                                      <GridPane id="development-pane" GridPane.columnIndex="1">
                                                         <columnConstraints>
                                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                         </columnConstraints>
@@ -229,7 +229,7 @@
                                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                         </rowConstraints>
                                                          <children>
-                                                            <GridPane>
+                                                            <GridPane id="warehouse-pane">
                                                               <columnConstraints>
                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                               </columnConstraints>
@@ -307,7 +307,7 @@
                                                                   </AnchorPane>
                                                                </children>
                                                             </GridPane>
-                                                            <GridPane GridPane.rowIndex="1">
+                                                            <GridPane id="strongbox-pane" GridPane.rowIndex="1">
                                                               <columnConstraints>
                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                               </columnConstraints>
@@ -394,6 +394,7 @@
                                           <GridPane layoutX="-21.0" layoutY="151.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -408,6 +409,8 @@
                                                 </Label>
                                                 <Pane id="leader-1" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                                                 <Pane id="leader-2" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                                                <Pane id="leader-3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Pane id="leader-4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                              </children>
                                              <padding>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -421,7 +424,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="45.0" prefWidth="694.0">
                            <children>
-                              <GridPane hgap="5.0" layoutX="135.0" layoutY="72.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <GridPane id="stats-pane" hgap="5.0" layoutX="135.0" layoutY="72.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -431,7 +434,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray;">
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-width: 3;">
                                        <children>
                                           <GridPane hgap="5.0" layoutX="114.0" layoutY="-2.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
@@ -579,7 +582,7 @@
                   </GridPane>
                </children>
                <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
+                  <Insets bottom="10.0" />
                </padding>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -706,7 +709,7 @@
                                                             <Button id="mm-r3" layoutX="-8.0" layoutY="19.0" mnemonicParsing="false" text="&lt;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
-                                                      <Pane id="not-for-sale" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                                      <Pane id="not-for-sale" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-width: 3;" GridPane.columnIndex="1" />
                                                       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                          <children>
                                                             <Label layoutX="5.0" layoutY="22.0" text="For sale:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
@@ -731,7 +734,7 @@
                   </TabPane>
                </children>
                <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
                </padding>
             </AnchorPane>
          </children>
