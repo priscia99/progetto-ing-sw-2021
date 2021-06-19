@@ -183,7 +183,7 @@ public class GUI implements UI{
     }
 
     @Override
-    public void displayProduceMenu(ArrayList<ProductionEffect> effects) {
+    public void displayProduceMenu(ArrayList<ProductionEffect> effects, ArrayList<DepotEffect> depotEffects) {
 
     }
 

@@ -240,7 +240,9 @@ public class ClientController extends Observable<Message<ServerController>> {
         executeIfCurrentPlayer(()->{
             ArrayList<ProductionEffect> leaderProductions = game.getPlayerBoardMap().get(game.getCurrentPlayer())
                     .getClientLeaderCards().getActiveEffects(EffectType.PRODUCTION);
-            userInterface.displayProduceMenu(leaderProductions);
+            ArrayList<DepotEffect> additionalDepots = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                    .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
+            userInterface.displayProduceMenu(leaderProductions, additionalDepots);
         });
     }
 }

@@ -626,16 +626,16 @@ public class CLI implements UI {
         }
     }
 
-    public void displayProduceMenu(ArrayList<ProductionEffect> leaderEffects){
+    public void displayProduceMenu(ArrayList<ProductionEffect> leaderEffects, ArrayList<DepotEffect> depotEffects){
         try{
             ConsumeTarget consumed = new ConsumeTarget();
             Optional<ProductionEffect> genericProduction;
             ArrayList<ProductionEffect> leaderProductions;
             ArrayList<String> cardIds;
-            genericProduction = askForGenericProduction(consumed);
+            genericProduction = askForGenericProduction(consumed, depotEffects);
             leaderProductions = askForLeaderProduction(leaderEffects);
             cardIds = askForListOfIds();
-            ConsumeTarget toConsume = askResourcesToUse(Optional.empty());
+            ConsumeTarget toConsume = askResourcesToUse(Optional.empty(), depotEffects);
             consumed.putAll(toConsume);
             controller.produceResources(consumed, cardIds, genericProduction, leaderProductions);
         } catch (Exception e){
@@ -672,12 +672,12 @@ public class CLI implements UI {
         return productionsSelected;
     }
 
-    private Optional<ProductionEffect> askForGenericProduction(ConsumeTarget consumed) throws Exception {
+    private Optional<ProductionEffect> askForGenericProduction(ConsumeTarget consumed, ArrayList<DepotEffect> depotEffects) throws Exception {
         displayInfo("If you want to use generic production, type the resource type to produce, else 'next':" );
             String selectedRaw = in.nextLine();
             if(!selectedRaw.equals("next")){
                 ResourceType resourceFromGenericProduction = parseResourceType(selectedRaw);
-                ConsumeTarget toConsumeForGeneric = askResourcesToUse(Optional.of(2));
+                ConsumeTarget toConsumeForGeneric = askResourcesToUse(Optional.of(2), depotEffects);
                 consumed.putAll(toConsumeForGeneric);
                 return Optional.of(new ProductionEffect(
                         new ArrayList<>(toConsumeForGeneric.getStocks()),
