@@ -644,6 +644,11 @@ public class CLI implements UI {
 
     }
 
+    @Override
+    public void startUI() {
+
+    }
+
     private ArrayList<String> askForListOfIds() throws Exception {
         try{
             displayInfo("Insert IDs of card to use, separated by space: ");

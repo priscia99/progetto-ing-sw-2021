@@ -245,4 +245,8 @@ public class ClientController extends Observable<Message<ServerController>> {
             userInterface.displayProduceMenu(leaderProductions, additionalDepots);
         });
     }
+
+    public void startUI(){
+        userInterface.startUI();
+    }
 }

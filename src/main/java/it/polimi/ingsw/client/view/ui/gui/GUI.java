@@ -16,6 +16,8 @@ import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -24,9 +26,7 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class GUI implements UI{
-    private Stage primaryStage;
-    String[] args = null;
-    AuthData authData;
+    private Stage primaryStage; // GUI Application primary stage
 
     public void loadAuthScreen(Client client){
         Platform.runLater(() -> SceneController.requestAuth(primaryStage, client));
@@ -38,11 +38,6 @@ public class GUI implements UI{
     public GUI(Stage primaryStage){
         this.primaryStage = primaryStage;
     }
-/*
-    public GUI(AuthData authData, Stage primaryStage){
-        this.authData = authData;
-        this.primaryStage = primaryStage;
-    }*/
 
     @Override
     public void setController(ClientController controller) {
@@ -58,21 +53,21 @@ public class GUI implements UI{
             errorMessage = "The requested lobby is not valid.";
         else
             errorMessage = "Generic error.";
-        Platform.runLater(() -> SceneController.displayPopupError(primaryStage, errorMessage));
+        Platform.runLater(() -> ((TextField)primaryStage.getScene().lookup("#login-message")).setText(errorMessage));
     }
 
     @Override
     public void displayLobbyCreated(String lobbyId) {
         primaryStage.getScene().lookup("#join-button").setDisable(true);
         primaryStage.getScene().lookup("#create-button").setDisable(true);
-        Platform.runLater(() -> SceneController.displayPopupMessage(primaryStage, "Lobby " + lobbyId + " created successfully!"));
+        Platform.runLater(() -> ((TextField)primaryStage.getScene().lookup("#login-message")).setText("Created lobby " + lobbyId));
     }
 
     @Override
     public void displayLobbyJoined(String lobbyId) {
         primaryStage.getScene().lookup("#join-button").setDisable(true);
         primaryStage.getScene().lookup("#create-button").setDisable(true);
-        Platform.runLater(() -> SceneController.displayPopupMessage(primaryStage, "Lobby joined successfully!"));
+        Platform.runLater(() -> ((TextField)primaryStage.getScene().lookup("#login-message")).setText("Joined lobby " + lobbyId));
     }
 
     @Override
@@ -185,6 +180,11 @@ public class GUI implements UI{
     @Override
     public void displayProduceMenu(ArrayList<ProductionEffect> effects, ArrayList<DepotEffect> depotEffects) {
 
+    }
+
+    @Override
+    public void startUI() {
+        Platform.runLater(() -> SceneController.showGameScene(primaryStage));
     }
 
 }
