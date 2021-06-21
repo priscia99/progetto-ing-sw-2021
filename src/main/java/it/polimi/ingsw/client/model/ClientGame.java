@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.utils.Pair;
 
 import java.util.*;
@@ -38,9 +39,16 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
         this.currentPlayer = currentPlayer;
         this.clientCardsMarket = new ClientCardsMarket();
         this.clientMarbleMarket = new ClientMarbleMarket();
-        players.forEach(player -> {
-            this.playerBoardMap.put(player, new ClientPlayerBoard(player.equals(myUsername)));
-        });
+        int labelPosition=1;
+        for(String playerName : players){
+
+            boolean isMine = playerName.equals(myUsername);
+            System.out.println("Device: " + this.myUsername + ", Temp: " + playerName + ", Boolean " + isMine);
+            if(isMine)
+                this.playerBoardMap.put(playerName, new ClientPlayerBoard(playerName.equals(myUsername),0 , playerName));
+            else
+                this.playerBoardMap.put(playerName, new ClientPlayerBoard(playerName.equals(myUsername),labelPosition++, playerName));
+        }
     }
 
     public boolean isGameStarted() {
@@ -65,7 +73,12 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
     }
 
     public void setPlayerBoardMap(Map<String, ClientPlayerBoard> playerBoardMap) {
-        this.playerBoardMap = playerBoardMap;
+        this.playerBoardMap = playerBoardMap;   // re-assign playerboards map based on order
+        getPlayerBoardMap().keySet().forEach(key -> {
+            System.out.println("Player: " + getPlayerBoardMap().get(key).getUsername() + ", Order: "
+            + getPlayerBoardMap().get(key).getOrder() + ", Mine: " + getPlayerBoardMap().get(key).isMine());
+            getPlayerBoardMap().get(key).refreshStats();    // refresh player stats for each player
+        });
     }
 
     public String getMyUsername() {

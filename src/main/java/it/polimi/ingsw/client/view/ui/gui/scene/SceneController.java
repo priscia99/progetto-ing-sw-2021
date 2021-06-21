@@ -4,6 +4,7 @@ import it.polimi.ingsw.GUIApp;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.JavaFXClient;
 import it.polimi.ingsw.client.view.ui.gui.GUI;
+import it.polimi.ingsw.client.view.ui.gui.controllers.MainGUIController;
 import it.polimi.ingsw.network.auth_data.AuthData;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -26,11 +27,13 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class SceneController {
     private static Client client;
+    private static MainGUIController mainGUIController;
 
     public static void changeRootPane(){}
     public static void requestAuth(Stage primaryStage, Client c) {
@@ -109,6 +112,7 @@ public class SceneController {
                         loginMessage.setText("Some parameters are not correct!");
                     }
                     else{
+                        client.setMyUsername(nicknameField.getText());
                         client.sendToSocket(AuthData.joinLobby(nicknameField.getText(), lobbyField.getText()));
                     }
                 }
@@ -121,6 +125,7 @@ public class SceneController {
                         loginMessage.setText("Some parameters are not correct!");
                     }
                     else{
+                        client.setMyUsername(nicknameField.getText());
                         client.sendToSocket(AuthData.createLobby(nicknameField.getText(), Integer.parseInt(lobbyDimensionField.getText())));
                     }
                 }
@@ -137,15 +142,21 @@ public class SceneController {
     }
 
     public static void showGameScene(Stage primaryStage){
+
+        FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/home.fxml"));
         Parent root = null;
-        try {
-             root = FXMLLoader.load(Objects.requireNonNull(SceneController.class.getResource("/fxml/home.fxml")));
-        }catch (Exception e){
+        try{
+            root = loader.load();
+        } catch (IOException e) {
             e.printStackTrace();
-            return;
         }
+
+        mainGUIController = loader.getController();
         Scene scene = new Scene(root);
-        primaryStage.setTitle("FXML Welcome");
+        primaryStage.setResizable(true);
+        primaryStage.setMinHeight(720);
+        primaryStage.setMinWidth(1080);
+        primaryStage.setTitle("Masters of Renaissance");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -179,5 +190,9 @@ public class SceneController {
             }
         }
         return true;
+    }
+
+    public static MainGUIController getMainGUIController() {
+        return mainGUIController;
     }
 }

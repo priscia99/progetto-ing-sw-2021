@@ -13,6 +13,7 @@ import it.polimi.ingsw.client.view.ui.gui.GUI;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.service_message.ServiceMessage;
+import it.polimi.ingsw.server.model.player_board.PlayerBoard;
 
 public class Client {
     private final UI userInterface;               // type of chosen UI (CLI, GUI)
@@ -77,6 +78,11 @@ public class Client {
         FaithPathView faithPathView = new FaithPathView(userInterface);
         game.getPlayerBoardMap().keySet().forEach(key -> {
             game.getPlayerBoardMap().get(key).getFaithPath().addObserver(faithPathView);
+        });
+
+        ClientPlayerBoardView clientPlayerBoardView= new ClientPlayerBoardView(userInterface);
+        game.getPlayerBoardMap().keySet().forEach(key -> {
+            game.getPlayerBoardMap().get(key).addObserver(clientPlayerBoardView);
         });
     }
 
@@ -217,5 +223,9 @@ public class Client {
         });
         t.start();
         return t;
+    }
+
+    public void setMyUsername(String myUsername){
+        this.myUsername = myUsername;
     }
 }

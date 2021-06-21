@@ -16,6 +16,7 @@ import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
 import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.marble.Orientation;
@@ -645,7 +646,12 @@ public class CLI implements UI {
     }
 
     @Override
-    public void startUI() {
+    public void startUI(ClientGame game) {
+
+    }
+
+    @Override
+    public void displayUserStats(ClientPlayerBoard playerBoard) {
 
     }
 

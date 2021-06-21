@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.observer.Observable;
 
+import javax.print.MultiDocPrintService;
 import java.util.*;
 
 public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
@@ -12,8 +13,11 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
     private final ClientStrongbox strongbox;
     private final ClientLeaderCardDeck clientLeaderCards;
     private final ClientDevelopmentCardDecks developmentCards;
-
-    public ClientPlayerBoard(boolean isMine) {
+    private int order;
+    private String username;
+    public ClientPlayerBoard(boolean isMine, int order, String username) {
+        this.username = username;
+        this.order = order;
         this.isMine = isMine;
         this.faithPath = new ClientFaithPath();
         this.warehouse = new ClientWarehouse();
@@ -22,6 +26,8 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
         this.developmentCards = new ClientDevelopmentCardDecks();
     }
 
+    public void setOrder(int order) {this.order = order;}
+    public int getOrder(){return order;}
     public ClientPlayerBoard(ClientFaithPath faithPath, ClientWarehouse warehouse, ClientStrongbox strongbox,
                              ClientLeaderCardDeck clientLeaderCards, ClientDevelopmentCardDecks developmentCards,
                              boolean isMine) {
@@ -49,8 +55,9 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
         return clientLeaderCards;
     }
 
-
-
+    public boolean isMine(){return isMine;}
+    public String getUsername(){return username;}
+    public void refreshStats(){notify(this);}
     public ClientDevelopmentCardDecks getDevelopmentCards() {
         return developmentCards;
     }

@@ -1,15 +1,18 @@
 package it.polimi.ingsw.client.view.ui.gui;
 
+import com.sun.tools.javac.Main;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.client.view.ui.UI;
+import it.polimi.ingsw.client.view.ui.gui.controllers.MainGUIController;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import it.polimi.ingsw.network.auth_data.AuthData;
 import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
 import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
@@ -104,7 +107,7 @@ public class GUI implements UI{
 
     @Override
     public void displayLeaderCardDeck(ClientLeaderCardDeck deck) {
-
+        Platform.runLater(() -> SceneController.getMainGUIController().refreshLeaderCards(deck));
     }
 
     @Override
@@ -183,8 +186,19 @@ public class GUI implements UI{
     }
 
     @Override
-    public void startUI() {
+    public void startUI(ClientGame game) {
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
+        Platform.runLater(() -> {
+            SceneController.getMainGUIController().initMenuChoicePicker(new ArrayList<>(game.getPlayerBoardMap().keySet()));
+        });
+    }
+
+    @Override
+    public void displayUserStats(ClientPlayerBoard playerBoard) {
+        System.out.println("AAJAHFAOIJDAIODJA");
+        Platform.runLater(() -> {
+            SceneController.getMainGUIController().refreshStats(playerBoard);
+        });
     }
 
 }

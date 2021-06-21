@@ -25,11 +25,19 @@ public class PlayersOrderMessage extends Message<ClientController> implements Se
 
     public void execute(ClientController target) {
         LinkedHashMap<String, ClientPlayerBoard> ordered = new LinkedHashMap();
+        int playerOrder = 1;
         for(String username : playersOrder){
-            ordered.put(username, target.getGame().getPlayerBoardMap().get(username));
+            ClientPlayerBoard tempBoard = target.getGame().getPlayerBoardMap().get(username);
+            if(tempBoard.isMine()){
+                tempBoard.setOrder(0);
+            }
+            else {
+                tempBoard.setOrder(playerOrder++);
+            }
+            ordered.put(username, tempBoard);
         }
-        target.getGame().setPlayerBoardMap(ordered);
         target.startUI();
+        target.getGame().setPlayerBoardMap(ordered);
     }
 
 }

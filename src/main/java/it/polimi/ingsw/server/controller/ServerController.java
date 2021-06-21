@@ -34,7 +34,7 @@ public class ServerController {
         try{
             action.tryRun();
         } catch (Exception e){
-            CustomLogger.getLogger().severe("[PLAYER: " + game.getCurrentPlayer() + "] " + e.getMessage());
+            // CustomLogger.getLogger().severe("[PLAYER: " + game.getCurrentPlayer() + "] " + e.getMessage());
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
         }
     }
