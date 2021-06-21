@@ -6,7 +6,6 @@ import it.polimi.ingsw.utils.Pair;
 
 import java.util.*;
 
-// TODO consider changing Observable<String> (split observable or concentrate observable)
 public class ClientGame extends Observable<Pair<String, Boolean>> {
 
     private String currentPlayer;
@@ -20,8 +19,8 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
     }
 
     private boolean isMainActionDone;
-    private String myUsername;
-    private ClientCardsMarket clientCardsMarket;
+    private final String myUsername;
+    private final ClientCardsMarket clientCardsMarket;
 
     public ClientCardsMarket getClientCardsMarket() {
         return clientCardsMarket;
@@ -31,7 +30,7 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
         return clientMarbleMarket;
     }
 
-    private ClientMarbleMarket clientMarbleMarket;
+    private final ClientMarbleMarket clientMarbleMarket;
     private Map<String, ClientPlayerBoard> playerBoardMap = new LinkedHashMap<>();
     private boolean gameStarted = false;
     public ClientGame(String myUsername, String currentPlayer, ArrayList<String> players) {
@@ -45,9 +44,9 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
             boolean isMine = playerName.equals(myUsername);
             System.out.println("Device: " + this.myUsername + ", Temp: " + playerName + ", Boolean " + isMine);
             if(isMine)
-                this.playerBoardMap.put(playerName, new ClientPlayerBoard(playerName.equals(myUsername),0 , playerName));
+                this.playerBoardMap.put(playerName, new ClientPlayerBoard(true,0 , playerName));
             else
-                this.playerBoardMap.put(playerName, new ClientPlayerBoard(playerName.equals(myUsername),labelPosition++, playerName));
+                this.playerBoardMap.put(playerName, new ClientPlayerBoard(false,labelPosition++, playerName));
         }
     }
 

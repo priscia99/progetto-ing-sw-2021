@@ -34,17 +34,12 @@ public class ServerController {
         try{
             action.tryRun();
         } catch (Exception e){
-            // CustomLogger.getLogger().severe("[PLAYER: " + game.getCurrentPlayer() + "] " + e.getMessage());
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
         }
     }
 
     public void setupGame(ArrayList<Player> players){
-        game.setPlayers(players);
-        game.setupVictoryObservations();
-        game.setupLeaderCards();
-        game.setupCardsMarket();
-        game.setupMarbleMarket();
+      game.setup(players);
     }
 
     public void giveInitialAssets() {

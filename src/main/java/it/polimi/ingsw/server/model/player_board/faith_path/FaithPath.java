@@ -33,6 +33,13 @@ public class FaithPath extends Observable<Message<ClientController>> {
         return faithPoints;
     }
 
+    public ArrayList<Boolean> getPopeFavours(){
+        return Arrays.stream(this.getCells())
+                .filter(cell -> cell instanceof PopeCell)
+                .map(cell -> ((PopeCell) cell).getFavor().isUsed())
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
     public int getVictoryPoints() {
         int points = 0;
         for(int i=0; i<=faithPoints; i++){

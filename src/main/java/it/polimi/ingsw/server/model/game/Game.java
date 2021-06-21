@@ -23,13 +23,21 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     private LeaderCardsDeck leaderCardsDeck;
     private CardsMarket cardsMarket;
     private MarbleMarket marbleMarket;
-    private boolean isLastRound;
+    protected boolean isLastRound;
 
     public Game() {
         CustomLogger.getLogger().info("Creating Game");
         this.isLastRound = false;
         this.currentPlayerIndex = -1;
         CustomLogger.getLogger().info("Game created");
+    }
+
+    public void setup(ArrayList<Player> players){
+        this.setPlayers(players);
+        this.setupVictoryObservations();
+        this.setupLeaderCards();
+        this.setupCardsMarket();
+        this.setupMarbleMarket();
     }
 
     public Game getBackup(){

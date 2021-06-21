@@ -7,6 +7,7 @@ import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
+import it.polimi.ingsw.server.model.singleplayer.SinglePlayerGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,12 +18,13 @@ public class Lobby extends Observable<Message> {
     private final String lobbyId;
     private final int dimension;    // number of players
     private final Map<String, ClientConnection> clientConnectionMap= new HashMap<>();
-    private final Game game = new Game();
+    private final Game game;
     private int playerReady = 0;
 
     public Lobby(String lobbyId, int dimension) {
         this.lobbyId = lobbyId;
         this.dimension = dimension;
+        this.game = (dimension == 1) ? new SinglePlayerGame() : new Game();
     }
 
     /**

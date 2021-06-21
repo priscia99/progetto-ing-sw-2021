@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.color.Color;
 import it.polimi.ingsw.server.model.game.Player;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class CardsMarket extends Observable<Message<ClientController>> {
@@ -64,7 +65,6 @@ public class CardsMarket extends Observable<Message<ClientController>> {
     public DevelopmentCard getCardById(String id) throws Exception{
         for(int i = 0; i<4; i++){
             for(int j = 0; j<3; j++){
-                System.out.println("ID: " + this.decks[i][j].get(0).getId());
                 if(this.decks[i][j].peek().getId().equals(id)) return this.decks[i][j].peek();
             }
         }
@@ -91,4 +91,34 @@ public class CardsMarket extends Observable<Message<ClientController>> {
             throw new NotFulfilledException("player doesn't fulfill requirements");
         }
     }
+
+
+    public void removeByColor(Color toRemove, int quantity){
+        for(int i = 0; i<4; i++){
+            for(int j = 0; j<3; j++){
+                if(this.decks[i][j].size()>0){
+                    if(this.decks[i][j].peek().getColor().equals(toRemove)){
+                        if(this.decks[i][j].size()>=quantity){
+                            for(int k = 0; k<quantity; k++) this.decks[i][j].pop();
+                            notify(new CardsMarketMessage(this));
+                            return;
+                        } else {
+                            quantity -= this.decks[i][j].size();
+                            for(int k = 0; k<this.decks[i][j].size(); k++) this.decks[i][j].pop();
+                        }
+                    }
+                }
+            }
+        }
+        notify(new CardsMarketMessage(this));
+    }
+
+    public boolean hasEmptyColor(){
+        Stack<DevelopmentCard>[][] stacks = this.getDecks();
+        for(Stack<DevelopmentCard>[] color : stacks){
+            if(Arrays.stream(color).mapToInt(Stack::size).sum() == 0) return true;
+        }
+        return false;
+    }
+
 }

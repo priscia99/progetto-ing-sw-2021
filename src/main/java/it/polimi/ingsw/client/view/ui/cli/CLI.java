@@ -548,7 +548,7 @@ public class CLI implements UI {
         MarbleSelection selection;
         try{
             Orientation orientation = Orientation.valueOf(params.get("o"));
-            int index = Integer.parseInt(params.get("i")+1);
+            int index = Integer.parseInt(params.get("i"))-1;
             selection = new MarbleSelection(orientation, index);
             controller.pickCommandHandler(selection);
         } catch (Exception e){
@@ -562,14 +562,16 @@ public class CLI implements UI {
             try{
                 for(Marble marble : selected){
                     if(marble.getResourceType().equals(ResourceType.FAITH)) continue;
-                    if(marble.getResourceType().equals(ResourceType.BLANK)){
-                        if(!changeEffects.isEmpty()) conversions.add(askForConversions(changeEffects));
-                    } else {
-                        displayInfo("Insert position in which you want to add " + marble.getResourceType().toString());
+                    if(marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty() ){
+                        conversions.add(askForConversions(changeEffects));
                     }
-                    displayPossibleResourcePositions(depotEffects);
-                    String positionRaw = in.nextLine();
-                    positions.add(parseResourcePosition(positionRaw));
+                    if(!marble.getResourceType().equals(ResourceType.BLANK) ||
+                        marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()){
+                        displayInfo("Insert position in which you want to add " + marble.getResourceType().toString());
+                        displayPossibleResourcePositions(depotEffects);
+                        String positionRaw = in.nextLine();
+                        positions.add(parseResourcePosition(positionRaw));
+                    }
                 }
                 controller.pickResources(selection, positions, conversions);
             } catch(Exception e){

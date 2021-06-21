@@ -79,9 +79,18 @@ public class ClientController extends Observable<Message<ServerController>> {
             else
                 System.out.println(player + "'s faith path is changed" );
         }
-        this.getGame().getPlayerBoardMap().get(player).getFaithPath().setPopeFavors(popeFavors);
-        this.getGame().getPlayerBoardMap().get(player).getFaithPath().setFaithPoints(faithPoints);
-        this.getGame().getPlayerBoardMap().get(player).getFaithPath().show(displayToView);
+        ClientFaithPath faithPath = this.getGame().getPlayerBoardMap().get(player).getFaithPath();
+        faithPath.setPopeFavors(popeFavors);
+        faithPath.setFaithPoints(faithPoints);
+        faithPath.show(displayToView);
+    }
+
+    public void refreshFaithPath(ArrayList<Boolean> popeFavors, int blackCrossPosition){
+        userInterface.displayInfo("Lorenzo Il Magnifico's faith points increased!");
+        ClientFaithPath faithPath = this.getGame().getPlayerBoardMap().get(game.getCurrentPlayer()).getFaithPath();
+        faithPath.setPopeFavors(popeFavors);
+        faithPath.setBlackCrossPosition(blackCrossPosition);
+        faithPath.show(true);
     }
 
     public void refreshWarehouse(ArrayList<ResourceDepot> resourceDepots, String player){
@@ -90,6 +99,10 @@ public class ClientController extends Observable<Message<ServerController>> {
 
     public void refreshCardMarket(ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> decks){
         this.getGame().getClientCardsMarket().setDecks(decks);
+    }
+
+    public void refreshBlackCrossPosition(int position){
+
     }
 
     public void startListening(){
@@ -244,6 +257,10 @@ public class ClientController extends Observable<Message<ServerController>> {
                     .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
             userInterface.displayProduceMenu(leaderProductions, additionalDepots);
         });
+    }
+
+    public void setMagnificoAsWinner(){
+        userInterface.displayInfo("Magnifico has won! GAME OVER");
     }
 
     public void startUI(){

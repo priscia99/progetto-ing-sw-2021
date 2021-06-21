@@ -309,12 +309,12 @@ public class Player extends Observable<Message<ClientController>> {
         this.playerBoard.addFaithPoints(count);
         FaithPath faithPath = this.playerBoard.getFaithPath();
 
-        notify(new FaithPathMessage(faithPath.getFaithPoints(),
-                Arrays.stream(faithPath.getCells())
-                        .filter(cell -> cell instanceof PopeCell)
-                        .map(cell -> ((PopeCell) cell).getFavor().isUsed())
-                        .collect(Collectors.toCollection(ArrayList::new)), username));
+        notify(new FaithPathMessage(
+                faithPath.getFaithPoints(),
+                faithPath.getPopeFavours(),
+                username));
     }
+
 
     public int getVictoryPoints(){
         int developmentCardsPoints = Arrays.stream(this.playerBoard.getDevelopmentCardsDecks()).mapToInt(deck-> deck.getDeck().stream().mapToInt(DevelopmentCard::getVictoryPoints).sum()).sum();

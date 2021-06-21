@@ -15,7 +15,7 @@ public class RepresentationBuilder {
     private static final String DEVELOPMENT_CARD_DECK_FORMAT = "Development cards:\nSlot #1\n%s\nSlot #2\n%s\nSlot #3\n%s";
     private static final String CARD_MARKET_FORMAT = "> GREEN:\nLv1) %s\nLv2) %s\nLv3) %s\n> YELLOW:\nLv1) %s\nLv2) %s\nLv3) %s\n> PURPLE:\nLv1) %s\nLv2) %s\nLv3) %s\n> BLUE:\nLv1) %s\nLv2) %s\nLv3) %s";
     private static final String MARBLE_MARKET_FORMAT = "  ||     1     |     2     |     3     |     4     |\n==||===========|===========|===========|===========|\n1 || %1$9s | %2$9s | %3$9s | %4$9S |\n2 || %5$9s | %6$9s | %7$9s | %8$9S |\n3 || %9$9s | %10$9s | %11$9s | %12$9S |\n\nNOT FOR SALE > %13$s";
-    private static final String FAITH_PATH_FORMAT =  "Faith Points: %d\n[%c][%c][%c][%c]<[%c][%c][%c]{%c}>[%c][%c][%c]<[%c][%c][%c][%c]{%c}>[%c][%c]<[%c][%c][%c][%c][%c]{%c}>\nPope favors: [%c][%c][%c]";
+    private static final String FAITH_PATH_FORMAT =  "Faith Points: %s\n[%s][%s][%s][%s]<[%s][%s][%s]{%s}>[%s][%s][%s]<[%s][%s][%s][%s]{%s}>[%s][%s]<[%s][%s][%s][%s][%s]{%s}>\nPope favors: [%s][%s][%s]";
     private static final String WAREHOUSE_FORMAT = "Warehouse: \n[%1$9s]\n[%2$9s][%3$9s]\n[%4$9s][%5$9s][%6$9s]\n";
     private static final String STRONGBOX_FORMAT = "Strongbox: \n| COIN      | SERVANT   | SHIELD    | STONE     |\n| %1$9d | %2$9d | %3$9d | %4$9d |";
 
@@ -95,51 +95,43 @@ public class RepresentationBuilder {
     }
 
     public static String render(ClientCardsMarket market) {
-        return String.format(CARD_MARKET_FORMAT,
-                RepresentationBuilder.render(market.getDecks().get(0).get(0).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(0).get(1).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(0).get(2).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(1).get(0).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(1).get(1).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(1).get(2).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(2).get(0).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(2).get(1).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(2).get(2).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(3).get(0).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(3).get(1).get(0)),
-                RepresentationBuilder.render(market.getDecks().get(3).get(2).get(0)));
+        return String.format(CARD_MARKET_FORMAT, (Object[]) getCardMarketContents(market));
+    }
+
+    private static String[] getCardMarketContents(ClientCardsMarket market){
+        String[] content = new String[12];
+        int index = 0;
+        for(int i = 0; i<4; i++){
+            for(int j = 0; j < 3 ; j ++){
+                int deckSize = market.getDecks().get(i).get(j).size();
+                if(deckSize>0){
+                    content[index] = RepresentationBuilder.render(market.getDecks().get(i).get(j).get(deckSize-1));
+                } else {
+                    content[index] = "<< EMPTY >>";
+                }
+                index++;
+            }
+        }
+        return content;
     }
 
     public static String render(ClientFaithPath faithPath) {
-        return String.format(FAITH_PATH_FORMAT,
-                faithPath.getFaithPoints(),
-                faithPath.getFaithPoints() >= 1 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 2 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 3 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 4 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 5 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 6 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 7 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 8 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 9 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 10 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 11 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 12 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 13 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 14 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 15 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 16 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 17 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 18 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 19 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 20 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 21 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 22 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 23 ? 'X' : ' ',
-                faithPath.getFaithPoints() >= 24 ? 'X' : ' ',
-                faithPath.getPopeFavor(0) ? '+' : ' ',
-                faithPath.getPopeFavor(1) ? '+' : ' ',
-                faithPath.getPopeFavor(2) ? '+' : ' ');
+        return String.format(FAITH_PATH_FORMAT, (Object[]) getFaithPathContents(faithPath));
+    }
+
+    private static String[] getFaithPathContents(ClientFaithPath faithPath){
+        String[] content = new String[28];
+        content[0] = faithPath.getFaithPoints() + "";
+        for(int i = 1; i<25; i++){
+            content[i] = faithPath.getFaithPoints() >= i ? "X" : " ";
+            if(faithPath.getBlackCrossPosition() == i){
+                content[i] += " [MAGNIFICO IS HERE]";
+            }
+        }
+        content[25] = faithPath.getPopeFavor(0) ? "+" : " ";
+        content[26] = faithPath.getPopeFavor(0) ? "+" : " ";
+        content[27] = faithPath.getPopeFavor(0) ? "+" : " ";
+        return content;
     }
 
     public static String render(ClientWarehouse warehouse) {

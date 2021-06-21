@@ -10,6 +10,7 @@ public class ClientFaithPath extends Observable<ClientFaithPath> {
 
     private int faithPoints;
     private ArrayList<Boolean> popeFavors;
+    private Optional<Integer> blackCrossPosition;
 
     public ClientFaithPath() {
         this.faithPoints = 0;
@@ -17,6 +18,7 @@ public class ClientFaithPath extends Observable<ClientFaithPath> {
         this.popeFavors.add(false);
         this.popeFavors.add(false);
         this.popeFavors.add(false);
+        this.blackCrossPosition = Optional.empty();
     }
 
     public ClientFaithPath(int faithPoints, ArrayList<Boolean> popeFavors) {
@@ -34,6 +36,14 @@ public class ClientFaithPath extends Observable<ClientFaithPath> {
 
     public int getFaithPoints() {
         return faithPoints;
+    }
+
+    public void setBlackCrossPosition(int position){
+        this.blackCrossPosition = Optional.of(position);
+    }
+
+    public int getBlackCrossPosition(){
+        return blackCrossPosition.orElse(0);
     }
 
     public ArrayList<Boolean> getPopeFavors() {
