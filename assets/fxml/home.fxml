@@ -271,11 +271,8 @@
                                                                            <children>
                                                                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                                                  <children>
-<<<<<<< Updated upstream
+
                                                                                     <MenuButton fx:id="swapDepotsMenu" mnemonicParsing="false" text="Swap depots" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-=======
-                                                                                    <MenuButton fx:id="swapMenu" mnemonicParsing="false" text="Swap depots" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
->>>>>>> Stashed changes
                                                                                       <items>
                                                                                       </items>
                                                                                     </MenuButton>
@@ -303,11 +300,8 @@
                                                                                           <Label text="1:" />
                                                                                           <Label text="2:" GridPane.rowIndex="1" />
                                                                                           <Label text="3:" GridPane.rowIndex="2" />
-<<<<<<< Updated upstream
+
                                                                                           <GridPane fx:id ="firstDepot" id="depot-1" GridPane.columnIndex="1">
-=======
-                                                                                          <GridPane GridPane.columnIndex="1">
->>>>>>> Stashed changes
                                                                                             <columnConstraints>
                                                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -317,11 +311,8 @@
                                                                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                                                             </rowConstraints>
                                                                                              <children>
-<<<<<<< Updated upstream
-                                                                                                <Pane id="depot-1-1" prefHeight="200.0" prefWidth="200.0" />
-=======
-                                                                                                <Pane id="depot-1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
->>>>>>> Stashed changes
+
+                                                                                                <Pane id="depot-1-1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"  />
                                                                                              </children>
                                                                                           </GridPane>
                                                                                           <GridPane fx:id="secondDepot" id="depot-2" GridPane.columnIndex="1" GridPane.rowIndex="1">

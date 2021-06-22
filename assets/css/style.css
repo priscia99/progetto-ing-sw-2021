@@ -351,7 +351,7 @@ AnchorPane, GridPane {
 }
 
 #main {
-    -fx-background-image: url('../img/playerboard.png');
+    -fx-background-image: url('../img/playerboard_bg.png');
     -fx-background-size: stretch;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
