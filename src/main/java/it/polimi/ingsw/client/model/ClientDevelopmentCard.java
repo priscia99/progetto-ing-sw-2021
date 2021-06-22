@@ -32,7 +32,6 @@ public class ClientDevelopmentCard extends ClientCard implements ClientAsset {
 
     @Override
     public String getAssetLink() {
-        // TODO: complete me
-        return null;
+        return this.getId().substring(1, this.getId().length());
     }
 }

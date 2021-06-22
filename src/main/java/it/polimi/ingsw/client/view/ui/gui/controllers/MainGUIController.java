@@ -11,6 +11,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import org.w3c.dom.Text;
 
 import java.awt.event.ItemListener;
@@ -21,19 +22,28 @@ public class MainGUIController {
     // FXML Elements
     @FXML
     private GridPane statsPane;                             // statistics pane
-    private ObservableList<Node> statsList;                 // players statistics panes
     @FXML
-    private MenuButton playersChoicePicker;                 // player choice picker in playerboard
+    private MenuButton playersChoicePicker;                 // player choice selector
     @FXML
     private GridPane firstDepot, secondDepot, thirdDepot;   // warehouse panes
     @FXML
+    private MenuButton swapDepotsMenu;                      // swap depots selector
+    @FXML
     private GridPane strongboxPane;                         // strongbox pane
+    @FXML
+    TextField strongboxCoin, strongboxServant, strongboxShield, strongboxStone; // strongbox elements
     @FXML
     private GridPane developmentCardsPane;                  // development cards pane
     @FXML
     private GridPane leaderCardsPane;                       // leader cards pane
     @FXML
     private GridPane faithPathPane;                         // faith path pane
+    @FXML
+    private AnchorPane firstDevSlot, secondDevSlot, thirdDevSlot;   // user dev cards slot
+    @FXML
+    private GridPane marbleMarketPane;                      // marble market pane
+    @FXML
+    private Pane notForSaleMarble;                          // not for sale marble in marble market
 
     // Secondary controllers
     StatsController statsController;
@@ -41,8 +51,10 @@ public class MainGUIController {
     PlayerBoardController playerBoardController;
     MarbleMarketController marbleMarketController;
     DevelopmentCardMarketController developmentCardMarketController;
+    DevelopmentCardsController developmentCardsController;
     FaithPathController faithPathController;
     WarehouseController warehouseController;
+    StrongBoxController strongBoxController;
 
     public MainGUIController(){}    // default constructor needed by FXMLLoader class
 
@@ -52,7 +64,10 @@ public class MainGUIController {
         statsController = new StatsController(statsPane);
         leaderCardsController = new LeaderCardsController(leaderCardsPane);
         faithPathController = new FaithPathController(faithPathPane);
-        warehouseController = new WarehouseController(firstDepot, secondDepot, thirdDepot);
+        warehouseController = new WarehouseController(firstDepot, secondDepot, thirdDepot, swapDepotsMenu);
+        strongBoxController = new StrongBoxController(strongboxPane, strongboxCoin, strongboxServant, strongboxShield, strongboxStone);
+        developmentCardsController = new DevelopmentCardsController(firstDevSlot, secondDevSlot, thirdDevSlot);
+        marbleMarketController = new MarbleMarketController(marbleMarketPane, notForSaleMarble);
     }
 
     public void work(){
@@ -71,23 +86,16 @@ public class MainGUIController {
     public StatsController getStatsController() {
         return statsController;
     }
-
     public LeaderCardsController getLeaderCardsController() {
         return leaderCardsController;
     }
-
     public PlayerBoardController getPlayerBoardController() {
         return playerBoardController;
     }
-
     public MarbleMarketController getMarbleMarketController() {
         return marbleMarketController;
     }
-
-    public DevelopmentCardMarketController getDevelopmentCardMarketController() {
-        return developmentCardMarketController;
-    }
-
+    public DevelopmentCardMarketController getDevelopmentCardMarketController() { return developmentCardMarketController; }
     public FaithPathController getFaithPathController(){
         return faithPathController;
     }
