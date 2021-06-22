@@ -133,6 +133,9 @@
                                                                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="18" />
                                                                   <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="19" />
                                                                   <Pane id="current" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <Pane id="favor-3" prefHeight="51.0" prefWidth="66.0" GridPane.columnIndex="16" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+                                                                  <Pane id="favor-2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="10" GridPane.columnSpan="2" GridPane.rowSpan="2" />
+                                                                  <Pane id="favor-1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
                                                                </children>
                                                                <padding>
                                                                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -201,6 +204,7 @@
                                                                               <Pane id="dev-slot-2-1" layoutX="-4.0" layoutY="56.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
                                                                               <Pane id="dev-slot-2-2" layoutX="6.0" layoutY="66.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
                                                                               <Pane id="dev-slot-2-3" layoutX="6.0" layoutY="66.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                              <Button id="production-button" mnemonicParsing="false" text="Produce" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                                                            </children>
                                                                            <padding>
                                                                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -267,7 +271,11 @@
                                                                            <children>
                                                                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                                                  <children>
+<<<<<<< Updated upstream
                                                                                     <MenuButton fx:id="swapDepotsMenu" mnemonicParsing="false" text="Swap depots" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+=======
+                                                                                    <MenuButton fx:id="swapMenu" mnemonicParsing="false" text="Swap depots" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+>>>>>>> Stashed changes
                                                                                       <items>
                                                                                       </items>
                                                                                     </MenuButton>
@@ -295,28 +303,42 @@
                                                                                           <Label text="1:" />
                                                                                           <Label text="2:" GridPane.rowIndex="1" />
                                                                                           <Label text="3:" GridPane.rowIndex="2" />
+<<<<<<< Updated upstream
                                                                                           <GridPane fx:id ="firstDepot" id="depot-1" GridPane.columnIndex="1">
+=======
+                                                                                          <GridPane GridPane.columnIndex="1">
+>>>>>>> Stashed changes
                                                                                             <columnConstraints>
+                                                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                                                             </columnConstraints>
                                                                                             <rowConstraints>
                                                                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                                                             </rowConstraints>
                                                                                              <children>
+<<<<<<< Updated upstream
                                                                                                 <Pane id="depot-1-1" prefHeight="200.0" prefWidth="200.0" />
+=======
+                                                                                                <Pane id="depot-1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+>>>>>>> Stashed changes
                                                                                              </children>
                                                                                           </GridPane>
                                                                                           <GridPane fx:id="secondDepot" id="depot-2" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                                                             <columnConstraints>
+                                                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                                                             </columnConstraints>
                                                                                             <rowConstraints>
                                                                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                                                             </rowConstraints>
                                                                                              <children>
-                                                                                                <Pane id="depot-2-1" prefHeight="200.0" prefWidth="200.0" />
-                                                                                                <Pane id="depot-2-2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                                                                                <Pane id="depot-2-1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                                                                                                <Pane id="depot-2-2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.columnSpan="2" />
                                                                                              </children>
                                                                                           </GridPane>
                                                                                           <GridPane fx:id = "thirdDepot" id="depot-3" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -378,7 +400,7 @@
                                                                               <Pane id="stone-ico" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
                                                                               <TextField fx:id="strongboxCoin" id="strongbox-coin" disable="true" GridPane.columnIndex="1">
                                                                                  <GridPane.margin>
-                                                                                    <Insets left="5.0" />
+                                                                                    <Insets />
                                                                                  </GridPane.margin></TextField>
                                                                               <TextField fx:id="strongboxServant" id="strongbox-servant" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                               <TextField fx:id="strongboxShield" id="strongbox-shield" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -475,7 +497,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="45.0" prefWidth="694.0">
                            <children>
-                              <GridPane fx:id="statsPane" hgap="5.0" layoutX="135.0" layoutY="72.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" >
+                              <GridPane fx:id="statsPane" hgap="5.0" layoutX="135.0" layoutY="72.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -487,7 +509,7 @@
                                  <children>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: whitesmoke; -fx-background-radius: 5; -fx-border-color: red;">
                                        <children>
-                                          <GridPane fx:id="playerStatsPane" hgap="5.0" layoutX="114.0" layoutY="-2.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <GridPane fx:id="playerStatsPane" hgap="5.0" layoutX="12.0" layoutY="2.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="220.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
@@ -667,9 +689,9 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                        <children>
-                                          <Pane id="card-1-1" prefHeight="200.0" prefWidth="200.0" />
-                                          <Pane id="card-2-1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-                                          <Pane id="card-3-1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                                          <Pane id="card-1-1" fx:id="marketCard00" prefHeight="200.0" prefWidth="200.0" />
+                                          <Pane id="card-2-1" fx:id="marketCard01" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                          <Pane id="card-3-1" fx:id="marketCard02" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
                                           <Pane id="card-1-2" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                                           <Pane id="card-2-2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Pane id="card-3-2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />

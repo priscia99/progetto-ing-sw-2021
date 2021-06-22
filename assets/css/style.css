@@ -135,7 +135,6 @@
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
-
 #leader-3 {
     -fx-background-image: url('../img/cards/back/lead_back.png');
     -fx-background-size: contain;
@@ -356,4 +355,8 @@ AnchorPane, GridPane {
     -fx-background-size: stretch;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
+}
+
+#production-button:hover {
+	-fx-background-color: red;
 }
