@@ -48,7 +48,6 @@ public class MainGUIController {
     // Secondary controllers
     StatsController statsController;
     LeaderCardsController leaderCardsController;
-    PlayerBoardController playerBoardController;
     MarbleMarketController marbleMarketController;
     DevelopmentCardMarketController developmentCardMarketController;
     DevelopmentCardsController developmentCardsController;
@@ -60,6 +59,7 @@ public class MainGUIController {
 
     @FXML
     public void initialize(){
+        // TODO implement development card market controller
         // controllers init
         statsController = new StatsController(statsPane);
         leaderCardsController = new LeaderCardsController(leaderCardsPane);
@@ -86,17 +86,32 @@ public class MainGUIController {
     public StatsController getStatsController() {
         return statsController;
     }
+
     public LeaderCardsController getLeaderCardsController() {
         return leaderCardsController;
     }
-    public PlayerBoardController getPlayerBoardController() {
-        return playerBoardController;
-    }
+
     public MarbleMarketController getMarbleMarketController() {
         return marbleMarketController;
     }
-    public DevelopmentCardMarketController getDevelopmentCardMarketController() { return developmentCardMarketController; }
-    public FaithPathController getFaithPathController(){
+
+    public DevelopmentCardMarketController getDevelopmentCardMarketController() {
+        return developmentCardMarketController;
+    }
+
+    public DevelopmentCardsController getDevelopmentCardsController() {
+        return developmentCardsController;
+    }
+
+    public FaithPathController getFaithPathController() {
         return faithPathController;
+    }
+
+    public WarehouseController getWarehouseController() {
+        return warehouseController;
+    }
+
+    public StrongBoxController getStrongBoxController() {
+        return strongBoxController;
     }
 }
