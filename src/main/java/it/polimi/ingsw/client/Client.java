@@ -37,6 +37,7 @@ public class Client {
 
         ClientGame game = new ClientGame(myUsername, players.get(0), players);
         this.controller = new ClientController(game, userInterface);
+        userInterface.setController(controller);
 
         // adding encoder to observers list
         controller.addObserver(clientMessageEncoder);

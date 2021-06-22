@@ -42,22 +42,31 @@ public class ClientController extends Observable<Message<ServerController>> {
         return game;
     }
 
-    public void chooseInitialResources(int toChoose, String username){
+    public void viewChooseInitialResources(int toChoose, String username){
         if(username.equals(game.getMyUsername())) {
-            notify(new ChosenInitialResourcesMessage(userInterface.chooseInitialResources(toChoose), game.getMyUsername()));
+            userInterface.displayChooseInitialResourcesMenu(toChoose);
         }
     }
 
-    public void chooseInitialLeaders(String username){
-        if(username.equals(game.getMyUsername())){
-            notify(new ChosenInitialLeadersMessage(
-                    userInterface.chooseInitialLeaders(
-                            game.getPlayerBoardMap().get(game.getMyUsername()).getClientLeaderCards().getClientLeaderCards()
-                                    .stream()
-                                    .map(ClientCard::getId)
-                                    .collect(Collectors.toCollection(ArrayList::new))),
-                    game.getMyUsername()));
+    public void viewChooseInitialLeaders(String username){
+        if(username.equals(game.getMyUsername())) {
+            userInterface.displayInitialLeadersMenu(
+                    game.getPlayerBoardMap()
+                            .get(username)
+                            .getClientLeaderCards()
+                            .getClientLeaderCards()
+                    .stream()
+                    .map(ClientCard::getId)
+                    .collect(Collectors.toCollection(ArrayList::new)));
         }
+    }
+
+    public void chooseInitialResources(HashMap<ResourcePosition, ResourceType> resources){
+            notify(new ChosenInitialResourcesMessage(resources, game.getMyUsername()));
+    }
+
+    public void chooseInitialLeaders(ArrayList<String> selected){
+            notify(new ChosenInitialLeadersMessage(selected, game.getMyUsername()));
     }
 
     public void refreshLeaderCards(ArrayList<ClientLeaderCard> cards, String player) {
@@ -101,13 +110,8 @@ public class ClientController extends Observable<Message<ServerController>> {
         this.getGame().getClientCardsMarket().setDecks(decks);
     }
 
-    public void refreshBlackCrossPosition(int position){
-
-    }
-
     public void startListening(){
         this.getGame().setGameStarted(true);
-        userInterface.setController(this);
         userInterface.startListening();
     }
 
@@ -119,25 +123,15 @@ public class ClientController extends Observable<Message<ServerController>> {
         game.getPlayerBoardMap().get(player).getDevelopmentCards().show();
     }
 
-    public void viewDevelopmentCards(){
-        game.getPlayerBoardMap().get(game.getCurrentPlayer()).getDevelopmentCards().show();
-    }
 
     public void viewWarehouse(String player){
         game.getPlayerBoardMap().get(player).getWarehouse().show();
-    }
-
-    public void viewWarehouse(){
-        game.getPlayerBoardMap().get(game.getCurrentPlayer()).getWarehouse().show();
     }
 
     public void viewStrongbox(String player){
         game.getPlayerBoardMap().get(player).getStrongbox().show();
     }
 
-    public void viewStrongbox(){
-        game.getPlayerBoardMap().get(game.getCurrentPlayer()).getStrongbox().show();
-    }
 
     public void viewFaithPath(String player){
         game.getPlayerBoardMap().get(player).getFaithPath().show();

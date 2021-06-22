@@ -91,14 +91,15 @@ public class GUI implements UI{
     }
 
     @Override
-    public HashMap<ResourcePosition, ResourceType> chooseInitialResources(int toChoose) {
-        return null;
+    public void displayChooseInitialResourcesMenu(int toChoose) {
+
     }
 
     @Override
-    public ArrayList<String> chooseInitialLeaders(ArrayList<String> cardsIDs) {
-        return null;
+    public void displayInitialLeadersMenu(ArrayList<String> cardsIDs) {
+
     }
+
 
     @Override
     public void displayWarehouse(ClientWarehouse warehouse) {
