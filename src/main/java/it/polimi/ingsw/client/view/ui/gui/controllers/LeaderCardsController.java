@@ -1,0 +1,42 @@
+package it.polimi.ingsw.client.view.ui.gui.controllers;
+
+import it.polimi.ingsw.client.model.ClientLeaderCard;
+import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+
+import java.awt.*;
+import java.io.File;
+import java.util.Objects;
+
+public class LeaderCardsController {
+    private static final String LEADER_CARD_FRONT_PATH = "/img/cards/front/leader-card-";
+    private static final String LEADER_CARD_BACK_PATH = "/img/cards/back/lead_back.png";
+    GridPane leaderCardsPane;
+    ObservableList<Node> leaderCardsList;
+
+    public LeaderCardsController(GridPane leaderCardsPane) {
+        this.leaderCardsPane = leaderCardsPane;
+        leaderCardsList = leaderCardsPane.getChildren();
+    }
+
+    /**
+     * Refreshes leader cards pane view in main GUI given the player's deck
+     * @param leaderCardsDeck player's leader cards deck
+     */
+    public void refreshLeaderCards(ClientLeaderCardDeck leaderCardsDeck){
+        for(int i=0; i<leaderCardsDeck.getClientLeaderCards().size(); i++) {
+            ClientLeaderCard tempCard = leaderCardsDeck.getClientLeaderCards().get(i);
+            Image cardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(LEADER_CARD_FRONT_PATH + tempCard.getAssetLink() + ".png")));
+            Pane cardPane = (Pane)(leaderCardsList.get(i));
+            BackgroundImage bgImg = new BackgroundImage(cardImage,
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT,
+                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
+            cardPane.setBackground(new Background(bgImg));
+        }
+    }
+
+}

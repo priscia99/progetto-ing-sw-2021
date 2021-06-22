@@ -105,9 +105,13 @@ public class GUI implements UI{
 
     }
 
+    /**
+     * Refreshes Leader cards deck view in GUI
+     * @param deck Player leader cards
+     */
     @Override
     public void displayLeaderCardDeck(ClientLeaderCardDeck deck) {
-        Platform.runLater(() -> SceneController.getMainGUIController().refreshLeaderCards(deck));
+        Platform.runLater(() -> SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(deck));
     }
 
     @Override
@@ -142,7 +146,7 @@ public class GUI implements UI{
 
     @Override
     public void displayFaithPath(ClientFaithPath path) {
-
+        Platform.runLater(() -> {SceneController.getMainGUIController().getFaithPathController().refreshFaithPath(path);});
     }
 
     @Override
@@ -197,7 +201,7 @@ public class GUI implements UI{
     public void displayUserStats(ClientPlayerBoard playerBoard) {
         System.out.println("AAJAHFAOIJDAIODJA");
         Platform.runLater(() -> {
-            SceneController.getMainGUIController().refreshStats(playerBoard);
+            SceneController.getMainGUIController().getStatsController().refreshStats(playerBoard);
         });
     }
 

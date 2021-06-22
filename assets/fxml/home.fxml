@@ -62,7 +62,7 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <GridPane id="faith-pane" GridPane.rowIndex="1">
+                                                <GridPane fx:id = "faithPathPane" id="faith-pane" GridPane.rowIndex="1">
                                                   <columnConstraints>
                                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                   </columnConstraints>
@@ -157,7 +157,7 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <GridPane id="development-pane" GridPane.columnIndex="1">
+                                                      <GridPane fx:id="developmentCardsPane" id="development-pane" GridPane.columnIndex="1">
                                                         <columnConstraints>
                                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                         </columnConstraints>
@@ -297,7 +297,7 @@
                                                                                           <Label text="1:" />
                                                                                           <Label text="2:" GridPane.rowIndex="1" />
                                                                                           <Label text="3:" GridPane.rowIndex="2" />
-                                                                                          <GridPane id="depot-1" GridPane.columnIndex="1">
+                                                                                          <GridPane fx:id ="firstDepot" id="depot-1" GridPane.columnIndex="1">
                                                                                             <columnConstraints>
                                                                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                                                             </columnConstraints>
@@ -308,7 +308,7 @@
                                                                                                 <Pane id="depot-1" prefHeight="200.0" prefWidth="200.0" />
                                                                                              </children>
                                                                                           </GridPane>
-                                                                                          <GridPane id="depot-2" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                                          <GridPane fx:id="secondDepot" id="depot-2" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                                                             <columnConstraints>
                                                                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -321,7 +321,7 @@
                                                                                                 <Pane id="depot-2-2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
                                                                                              </children>
                                                                                           </GridPane>
-                                                                                          <GridPane id="depot-3" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                                                          <GridPane fx:id = "thirdDepot" id="depot-3" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                                                             <columnConstraints>
                                                                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -346,7 +346,7 @@
                                                                   </AnchorPane>
                                                                </children>
                                                             </GridPane>
-                                                            <GridPane id="strongbox-pane" GridPane.rowIndex="1">
+                                                            <GridPane fx:id="strongboxPane" id="strongbox-pane" GridPane.rowIndex="1">
                                                               <columnConstraints>
                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                               </columnConstraints>
@@ -448,7 +448,7 @@
                                                       <Insets left="5.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <GridPane id="leader-pane" hgap="10.0" vgap="10.0" GridPane.rowIndex="1">
+                                                <GridPane fx:id="leaderCardsPane" id="leader-pane" hgap="10.0" vgap="10.0" GridPane.rowIndex="1">
                                                   <columnConstraints>
                                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

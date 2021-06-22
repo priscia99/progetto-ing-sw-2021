@@ -17,59 +17,48 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class MainGUIController {
+
+    // FXML Elements
     @FXML
-    private GridPane statsPane;
-    private ObservableList<Node> statsList;
+    private GridPane statsPane;                             // statistics pane
+    private ObservableList<Node> statsList;                 // players statistics panes
     @FXML
-    private AnchorPane statsAnchorPane;
+    private MenuButton playersChoicePicker;                 // player choice picker in playerboard
     @FXML
-    private GridPane playerStatsPane;
+    private GridPane firstDepot, secondDepot, thirdDepot;   // warehouse panes
     @FXML
-    private MenuButton playersChoicePicker;
-    public MainGUIController(){}
+    private GridPane strongboxPane;                         // strongbox pane
+    @FXML
+    private GridPane developmentCardsPane;                  // development cards pane
+    @FXML
+    private GridPane leaderCardsPane;                       // leader cards pane
+    @FXML
+    private GridPane faithPathPane;                         // faith path pane
+
+    // Secondary controllers
+    StatsController statsController;
+    LeaderCardsController leaderCardsController;
+    PlayerBoardController playerBoardController;
+    MarbleMarketController marbleMarketController;
+    DevelopmentCardMarketController developmentCardMarketController;
+    FaithPathController faithPathController;
+    WarehouseController warehouseController;
+
+    public MainGUIController(){}    // default constructor needed by FXMLLoader class
 
     @FXML
     public void initialize(){
-        statsList = statsPane.getChildren();
-        System.out.println("Initializing MainGUIController process");
+        // controllers init
+        statsController = new StatsController(statsPane);
+        leaderCardsController = new LeaderCardsController(leaderCardsPane);
+        faithPathController = new FaithPathController(faithPathPane);
+        warehouseController = new WarehouseController(firstDepot, secondDepot, thirdDepot);
     }
 
     public void work(){
         System.out.println(statsPane);
     }
 
-    /**
-     * Refreshes statistics view for the user identified by the given playerboard
-     * @param playerBoard the playerboard of the player whose statistics need to be updated
-     */
-    public void refreshStats(ClientPlayerBoard playerBoard){
-        // FIXME victory points?
-        AnchorPane playerPane = (AnchorPane)statsList.get(playerBoard.getOrder());
-        Label playerUsername = null;
-        TextField playerVp = null, playerFp = null, playerDc = null;
-        if(playerBoard.isMine()){
-            // Get proper player name label
-            playerUsername = ((Label)((GridPane)playerPane.getChildren().get(0)).getChildren().get(0).lookup("#local-username"));
-            // Get proper player victory points
-            playerVp = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(4).lookup("#local-vp"));
-            // Get proper player faith points
-            playerFp = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(5).lookup("#local-fp"));
-            // Get proper player development cards number
-            playerDc = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(6).lookup("#local-dc"));
-
-        }
-        else{
-            int playerOrder = playerBoard.getOrder()+1;
-            playerUsername = ((Label)((GridPane)playerPane.getChildren().get(0)).getChildren().get(0).lookup("#username-" + playerOrder));
-            playerVp = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(4).lookup("#vp-" + playerOrder));
-            playerFp = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(5).lookup("#fp-" + playerOrder));
-            playerDc = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(6).lookup("#dc-" + playerOrder));
-        }
-        playerUsername.setText(playerBoard.getUsername());
-        playerVp.setText(String.valueOf(playerBoard.getFaithPath().getFaithPoints()));
-        playerFp.setText(String.valueOf(playerBoard.getFaithPath().getFaithPoints()));
-        playerDc.setText(String.valueOf(playerBoard.getDevelopmentCards().getCardsNumber()));
-    }
 
     /**
      * Initialize the playerboard choice picker
@@ -79,7 +68,27 @@ public class MainGUIController {
         players.stream().forEach(playerName -> playersChoicePicker.getItems().add(new MenuItem(playerName)));
     }
 
-    public void refreshLeaderCards(ClientLeaderCardDeck deck){
+    public StatsController getStatsController() {
+        return statsController;
+    }
 
+    public LeaderCardsController getLeaderCardsController() {
+        return leaderCardsController;
+    }
+
+    public PlayerBoardController getPlayerBoardController() {
+        return playerBoardController;
+    }
+
+    public MarbleMarketController getMarbleMarketController() {
+        return marbleMarketController;
+    }
+
+    public DevelopmentCardMarketController getDevelopmentCardMarketController() {
+        return developmentCardMarketController;
+    }
+
+    public FaithPathController getFaithPathController(){
+        return faithPathController;
     }
 }

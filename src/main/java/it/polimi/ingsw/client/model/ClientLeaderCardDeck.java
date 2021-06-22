@@ -83,4 +83,5 @@ public class ClientLeaderCardDeck extends Observable<ClientLeaderCardDeck> {
     public void show(){
         notify(this);
     }
+
 }

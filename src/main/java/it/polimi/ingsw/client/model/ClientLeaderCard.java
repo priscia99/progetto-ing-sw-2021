@@ -27,7 +27,6 @@ public class ClientLeaderCard extends ClientCard implements ClientAsset {
 
     @Override
     public String getAssetLink() {
-        // FIXME: remove me (new getAssetLink in Representation)
-        return null;
+        return this.getId().substring(1, this.getId().length());
     }
 }
