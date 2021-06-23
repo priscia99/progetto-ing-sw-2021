@@ -12,6 +12,7 @@ import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.client.view.ui.*;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
+import it.polimi.ingsw.network.message.from_client.ChosenInitialLeadersMessage;
 import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
 import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
@@ -204,7 +205,7 @@ public class CLI implements UI {
         }
     }
 
-    public HashMap<ResourcePosition, ResourceType> chooseInitialResources(int toChoose){
+    public void displayChooseInitialResourcesMenu(int toChoose){
         HashMap<ResourcePosition, ResourceType> resources = new HashMap<>();
         synchronized (outSemaphore) {
             int chosenResources = 0;
@@ -250,10 +251,10 @@ public class CLI implements UI {
                 chosenResources++;
             }
         }
-        return resources;
+        controller.chooseInitialResources(resources);
     }
 
-    public ArrayList<String> chooseInitialLeaders(ArrayList<String> cardsIDs){
+    public void displayInitialLeadersMenu(ArrayList<String> cardsIDs){
         ArrayList<String> chosenLeaderCards = new ArrayList<>();
         synchronized (outSemaphore) {
             int cardsChosen = 0;
@@ -278,7 +279,7 @@ public class CLI implements UI {
                 cardsChosen++;
             }
         }
-        return chosenLeaderCards;
+        controller.chooseInitialLeaders(chosenLeaderCards);
     }
 
     @Override

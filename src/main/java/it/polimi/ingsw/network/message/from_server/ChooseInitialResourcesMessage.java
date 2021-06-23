@@ -22,6 +22,6 @@ public class ChooseInitialResourcesMessage extends Message<ClientController> imp
 
     @Override
     public void execute(ClientController target) {
-        target.chooseInitialResources(toChoose, super.getPlayerUsername());
+        target.viewChooseInitialResources(toChoose, super.getPlayerUsername());
     }
 }

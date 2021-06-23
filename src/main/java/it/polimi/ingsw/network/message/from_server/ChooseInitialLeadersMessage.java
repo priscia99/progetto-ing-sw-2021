@@ -23,6 +23,6 @@ public class ChooseInitialLeadersMessage extends Message<ClientController> imple
     @Override
     public void execute(ClientController target) {
         target.refreshLeaderCards(leaderCards, super.getPlayerUsername());
-        target.chooseInitialLeaders(super.getPlayerUsername());
+        target.viewChooseInitialLeaders(super.getPlayerUsername());
     }
 }

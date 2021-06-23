@@ -26,8 +26,8 @@ public interface UI {
     void displayGameStarted();
     void displayNewTurn(String player, Boolean myTurn);
     void displayLeaderCard(ClientLeaderCard clientLeaderCard);
-    HashMap<ResourcePosition, ResourceType> chooseInitialResources(int toChoose);
-    ArrayList<String> chooseInitialLeaders(ArrayList<String> cardsIDs);
+    void displayChooseInitialResourcesMenu(int toChoose);
+    void displayInitialLeadersMenu(ArrayList<String> cardsIDs);
     void displayWarehouse(ClientWarehouse warehouse);
     void displayLeaderCardDeck(ClientLeaderCardDeck deck);
     void startListening();
