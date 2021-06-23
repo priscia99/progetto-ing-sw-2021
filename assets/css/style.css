@@ -360,3 +360,51 @@ AnchorPane, GridPane {
 #production-button:hover {
 	-fx-background-color: red;
 }
+
+
+.glow-button {
+    -fx-border-color: transparent;
+    -fx-background-color: lightgray;
+}
+.glow-button:pressed {
+    -fx-background-color: lightgray;
+}
+.glow-button:hover {
+    -fx-border-color: red;
+    -fx-background-radius: 5;
+}
+
+.choose-leader {
+    -fx-background-image: url('../img/cards/back/lead_back.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#development-zoom {
+    -fx-background-image: url('../img/cards/back/lead_back.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#leader-zoom {
+    -fx-background-image: url('../img/cards/back/lead_back.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.production {
+    -fx-background-image: url('../img/cards/back/lead_back.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#generic-production {
+    -fx-background-image: url('../img/generic.png');
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
