@@ -14,9 +14,13 @@ import java.util.HashMap;
 
 public class ClientApp
 {
-    public static void main(String[] args) throws Exception {
-        String selectionUI = args[0];
-        switch(selectionUI){
+    private static String ip;
+    private static int port;
+
+    public static void main(String selection, String ip, int port) throws Exception {
+        ClientApp.ip = ip;
+        ClientApp.port = port;
+        switch(selection){
             case "cli" -> startCLIClient();
             case "gui" -> startGUIClient();
             default -> throw new Exception("Invalid UI type!");
@@ -25,7 +29,7 @@ public class ClientApp
     }
 
     private static void startCLIClient(){
-        Client client = new Client("127.0.0.1", 5000, new CLI());
+        Client client = new Client(ClientApp.ip, ClientApp.port, new CLI());
         try{
             client.run();
         }catch (IOException e){
