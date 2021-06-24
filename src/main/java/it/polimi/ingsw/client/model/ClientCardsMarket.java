@@ -51,7 +51,7 @@ public class ClientCardsMarket extends Observable<ClientCardsMarket> {
 
     public ClientDevelopmentCard getCardById(String id){
         for(int i = 0; i<4; i++){
-            for(int j = 0; j<4; j++){
+            for(int j = 0; j<3; j++){
                 if(!this.decks.get(i).get(j).isEmpty()){
                     if(this.decks.get(i).get(j).get(0).getId().equals(id)) return this.decks.get(i).get(j).get(0);
                 }
