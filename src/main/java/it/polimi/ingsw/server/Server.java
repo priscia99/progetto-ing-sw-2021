@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class Server {
 
-    private static final int PORT = 12345;
+    private static final int PORT = 5000;
     private final ServerSocket serverSocket;
     private final Map<String, Lobby> lobbyMap = new HashMap<>();
 

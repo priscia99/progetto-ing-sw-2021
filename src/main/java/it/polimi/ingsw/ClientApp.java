@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class ClientApp
 {
     public static void main(String[] args){
-        Client client = new Client("127.0.0.1", 12345, new CLI());
+        Client client = new Client("52.87.233.62", 5000, new CLI());
         try{
             client.run();
         }catch (IOException e){
