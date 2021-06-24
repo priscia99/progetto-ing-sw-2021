@@ -137,7 +137,7 @@ public class GUI implements UI{
 
     @Override
     public void displayInfo(String info) {
-
+        Platform.runLater(() -> SceneController.displayPopupMessage(primaryStage, info));
     }
 
     @Override
@@ -211,7 +211,6 @@ public class GUI implements UI{
 
     @Override
     public void displayUserStats(ClientPlayerBoard playerBoard) {
-        System.out.println("AAJAHFAOIJDAIODJA");
         Platform.runLater(() -> {
             SceneController.getMainGUIController().getStatsController().refreshStats(playerBoard);
         });
