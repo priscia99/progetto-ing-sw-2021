@@ -132,7 +132,7 @@ public class GUI implements UI{
 
     @Override
     public void displayError(String error) {
-
+        Platform.runLater(() -> SceneController.displayPopupError(primaryStage, error));
     }
 
     @Override
