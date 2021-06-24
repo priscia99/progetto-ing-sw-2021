@@ -17,7 +17,7 @@ public class CardsMarketTest {
     public void setUp(){
         cardsMarket = CardsMarket.getStartingMarket();
     }
-
+/*
     @Test
     @DisplayName("Test sell")
     public void testSell(){
@@ -35,4 +35,5 @@ public class CardsMarketTest {
         DevelopmentCard showedCard = cardsMarket.getDecks()[0][0].peek();
         Assertions.assertTrue(showedCard != toSell);
     }
+    */
 }

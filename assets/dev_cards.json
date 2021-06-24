@@ -1,5 +1,6 @@
 [
 	{
+		"id": 1,
 		"victory_points" : 1,
 		"color" : "GREEN",
 		"level" : 1,
@@ -23,6 +24,7 @@
 		]
 	},
 	{
+		"id": 2,
 		"victory_points" : 1,
 		"color" : "PURPLE",
 		"level" : 1,
@@ -46,6 +48,7 @@
 		]
 	},
 	{
+		"id": 3,
 		"victory_points" : 1,
 		"color" : "BLUE",
 		"level" : 1,
@@ -69,6 +72,7 @@
 		]
 	},
 	{
+		"id": 4,
 		"victory_points" : 1,
 		"color" : "YELLOW",
 		"level" : 1,
@@ -92,6 +96,7 @@
 		]
 	},
 	{
+		"id": 5,
 		"victory_points" : 2,
 		"color" : "GREEN",
 		"level" : 1,
@@ -123,6 +128,7 @@
 		]
 	},
 	{
+		"id": 6,
 		"victory_points" : 2,
 		"color" : "PURPLE",
 		"level" : 1,
@@ -154,6 +160,7 @@
 		]
 	},
 	{
+		"id": 7,
 		"victory_points" : 2,
 		"color" : "BLUE",
 		"level" : 1,
@@ -185,6 +192,7 @@
 		]
 	},
 	{
+		"id": 8,
 		"victory_points" : 2,
 		"color" : "YELLOW",
 		"level" : 1,
@@ -216,6 +224,7 @@
 		]
 	},
 	{
+		"id": 9,
 		"victory_points" : 3,
 		"color" : "GREEN",
 		"level" : 1,
@@ -247,6 +256,7 @@
 		]
 	},
 	{
+		"id": 10,
 		"victory_points" : 3,
 		"color" : "PURPLE",
 		"level" : 1,
@@ -278,6 +288,7 @@
 		]
 	},
 	{
+		"id": 11,
 		"victory_points" : 3,
 		"color" : "BLUE",
 		"level" : 1,
@@ -309,6 +320,7 @@
 		]
 	},
 	{
+		"id": 12,
 		"victory_points" : 3,
 		"color" : "YELLOW",
 		"level" : 1,
@@ -340,6 +352,7 @@
 		]
 	},
 	{
+		"id": 13,
 		"victory_points" : 4,
 		"color" : "GREEN",
 		"level" : 1,
@@ -375,6 +388,7 @@
 		]
 	},
 	{
+		"id": 14,
 		"victory_points" : 4,
 		"color" : "PURPLE",
 		"level" : 1,
@@ -410,6 +424,7 @@
 		]
 	},
 	{
+		"id": 15,
 		"victory_points" : 4,
 		"color" : "BLUE",
 		"level" : 1,
@@ -445,6 +460,7 @@
 		]
 	},
 	{
+		"id": 16,
 		"victory_points" : 4,
 		"color" : "YELLOW",
 		"level" : 1,
@@ -480,6 +496,7 @@
 		]
 	},
 	{
+		"id": 17,
 		"victory_points" : 5,
 		"color" : "GREEN",
 		"level" : 2,
@@ -503,6 +520,7 @@
 		]
 	},
 	{
+		"id": 18,
 		"victory_points" : 5,
 		"color" : "PURPLE",
 		"level" : 2,
@@ -526,6 +544,7 @@
 		]
 	},
 	{
+		"id": 19,
 		"victory_points" : 5,
 		"color" : "BLUE",
 		"level" : 2,
@@ -549,6 +568,7 @@
 		]
 	},
 	{
+		"id": 20,
 		"victory_points" : 5,
 		"color" : "YELLOW",
 		"level" : 2,
@@ -572,6 +592,7 @@
 		]
 	},
 	{
+		"id": 21,
 		"victory_points" : 6,
 		"color" : "GREEN",
 		"level" : 2,
@@ -603,6 +624,7 @@
 		]
 	},
 	{
+		"id": 22,
 		"victory_points" : 6,
 		"color" : "PURPLE",
 		"level" : 2,
@@ -634,6 +656,7 @@
 		]
 	},
 	{
+		"id": 23,
 		"victory_points" : 6,
 		"color" : "BLUE",
 		"level" : 2,
@@ -665,6 +688,7 @@
 		]
 	},
 	{
+		"id": 24,
 		"victory_points" : 6,
 		"color" : "YELLOW",
 		"level" : 2,
@@ -696,6 +720,7 @@
 		]
 	},
 	{
+		"id": 25,
 		"victory_points" : 7,
 		"color" : "GREEN",
 		"level" : 2,
@@ -723,6 +748,7 @@
 		]
 	},
 	{
+		"id": 26,
 		"victory_points" : 7,
 		"color" : "PURPLE",
 		"level" : 2,
@@ -750,6 +776,7 @@
 		]
 	},
 	{
+		"id": 27,
 		"victory_points" : 7,
 		"color" : "BLUE",
 		"level" : 2,
@@ -777,6 +804,7 @@
 		]
 	},
 	{
+		"id": 28,
 		"victory_points" : 7,
 		"color" : "YELLOW",
 		"level" : 2,
@@ -804,6 +832,7 @@
 		]
 	},
 	{
+		"id": 29,
 		"victory_points" : 8,
 		"color" : "GREEN",
 		"level" : 2,
@@ -835,6 +864,7 @@
 		]
 	},
 	{
+		"id": 30,
 		"victory_points" : 8,
 		"color" : "PURPLE",
 		"level" : 2,
@@ -866,6 +896,7 @@
 		]
 	},
 	{
+		"id": 31,
 		"victory_points" : 8,
 		"color" : "BLUE",
 		"level" : 2,
@@ -897,6 +928,7 @@
 		]
 	},
 	{
+		"id": 32,
 		"victory_points" : 8,
 		"color" : "YELLOW",
 		"level" : 2,
@@ -928,6 +960,7 @@
 		]
 	},
 	{
+		"id": 33,
 		"victory_points" : 9,
 		"color" : "GREEN",
 		"level" : 3,
@@ -955,6 +988,7 @@
 		]
 	},
 	{
+		"id": 34,
 		"victory_points" : 9,
 		"color" : "PURPLE",
 		"level" : 3,
@@ -982,6 +1016,7 @@
 		]
 	},
 	{
+		"id": 35,
 		"victory_points" : 9,
 		"color" : "BLUE",
 		"level" : 3,
@@ -1009,6 +1044,7 @@
 		]
 	},
 	{
+		"id": 36,
 		"victory_points" : 9,
 		"color" : "YELLOW",
 		"level" : 3,
@@ -1036,6 +1072,7 @@
 		]
 	},
 	{
+		"id": 37,
 		"victory_points" : 10,
 		"color" : "GREEN",
 		"level" : 3,
@@ -1075,6 +1112,7 @@
 		]
 	},
 	{
+		"id": 38,
 		"victory_points" : 10,
 		"color" : "PURPLE",
 		"level" : 3,
@@ -1114,6 +1152,7 @@
 		]
 	},
 	{
+		"id": 39,
 		"victory_points" : 10,
 		"color" : "BLUE",
 		"level" : 3,
@@ -1153,6 +1192,7 @@
 		]
 	},
 	{
+		"id": 40,
 		"victory_points" : 10,
 		"color" : "YELLOW",
 		"level" : 3,
@@ -1192,6 +1232,7 @@
 		]
 	},
 	{
+		"id": 41,
 		"victory_points" : 11,
 		"color" : "GREEN",
 		"level" : 3,
@@ -1219,6 +1260,7 @@
 		]
 	},
 	{
+		"id": 42,
 		"victory_points" : 11,
 		"color" : "PURPLE",
 		"level" : 3,
@@ -1246,6 +1288,7 @@
 		]
 	},
 	{
+		"id": 43,
 		"victory_points" : 11,
 		"color" : "BLUE",
 		"level" : 3,
@@ -1273,6 +1316,7 @@
 		]
 	},
 	{
+		"id": 44,
 		"victory_points" : 11,
 		"color" : "YELLOW",
 		"level" : 3,
@@ -1300,6 +1344,7 @@
 		]
 	},
 	{
+		"id": 45,
 		"victory_points" : 12,
 		"color" : "GREEN",
 		"level" : 3,
@@ -1331,6 +1376,7 @@
 		]
 	},
 	{
+		"id": 46,
 		"victory_points" : 12,
 		"color" : "PURPLE",
 		"level" : 3,
@@ -1362,6 +1408,7 @@
 		]
 	},
 	{
+		"id": 47,
 		"victory_points" : 12,
 		"color" : "BLUE",
 		"level" : 3,
@@ -1393,6 +1440,7 @@
 		]
 	},
 	{
+		"id": 48,
 		"victory_points" : 12,
 		"color" : "YELLOW",
 		"level" : 3,
