@@ -12,7 +12,7 @@ public class JavaFXClient extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = null;
-        Client client = new Client("52.87.233.62", 5000, new GUI(primaryStage));
+        Client client = new Client("127.0.0.1", 5000, new GUI(primaryStage));
         new Thread(() -> {
         try{
                 client.run();

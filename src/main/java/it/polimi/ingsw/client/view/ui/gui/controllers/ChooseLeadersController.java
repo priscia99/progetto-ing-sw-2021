@@ -45,7 +45,6 @@ public class ChooseLeadersController {
     }
 
     public void refreshAvailableCards(){
-        // FIXME ricevo uno 0 come primo id della carta leader!
         for(int i=0; i<4; i++){
             Pane cardPane = (Pane) cardsPanes.get(i);
             String filePath = LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png";

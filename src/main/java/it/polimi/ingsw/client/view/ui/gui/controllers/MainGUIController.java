@@ -59,11 +59,10 @@ public class MainGUIController {
     private TabPane tabPane;
     @FXML
     private Label chooseResourcesLabel;                     // choose n resources label
-
-    // plus-minus buttons in choose resources screen
     @FXML
-    private Button stonePlusButton, stoneMinusButton, shieldPlusButton, shieldMinusButton, servantPlusButton, servantMinusButton, coinPlusButton, coinMinusButton;
-
+    private Pane chooseCoinIcon, chooseServantIcon, chooseShieldIcon, chooseStoneIcon;   // icons for choose leaders
+    @FXML
+    private Button firstDepotButton, secondDepotButton, thirdDepotButton, confirmResourcesButton;   // choose depot buttons
 
     // Secondary controllers
     StatsController statsController;
@@ -101,19 +100,24 @@ public class MainGUIController {
         marbleMarketController = new MarbleMarketController(marbleMarketPane, notForSaleMarble, tabPane);
         developmentCardMarketController = new DevelopmentCardMarketController(developmentCardsMarketPane);
         chooseLeadersController = new ChooseLeadersController(chooseLeadersPane, confirmLeadersButton);
-        chooseResourcesController = new ChooseResourcesController(chooseResourcesPane, chooseResourcesLabel, this.createButtonsMap());
+        chooseResourcesController = new ChooseResourcesController(chooseResourcesPane, chooseResourcesLabel, this.getChooseResourcesIcons(), this.getChooseResourcesButtons());
     }
 
-    public Map<String, Button> createButtonsMap(){
+    public Map<String, Pane> getChooseResourcesIcons(){
+        Map<String, Pane> iconsMap = new HashMap<>();
+        iconsMap.put("coin-icon", chooseCoinIcon);
+        iconsMap.put("shield-icon", chooseShieldIcon);
+        iconsMap.put("stone-icon", chooseStoneIcon);
+        iconsMap.put("servant-icon", chooseServantIcon);
+        return iconsMap;
+    }
+
+    public Map<String, Button> getChooseResourcesButtons(){
         Map<String, Button> buttonsMap = new HashMap<>();
-        buttonsMap.put("coin-plus", coinPlusButton);
-        buttonsMap.put("coin-minus", coinMinusButton);
-        buttonsMap.put("shield-plus", shieldPlusButton);
-        buttonsMap.put("shield-minus", shieldMinusButton);
-        buttonsMap.put("servant-plus", servantPlusButton);
-        buttonsMap.put("servant-minus", servantMinusButton);
-        buttonsMap.put("stone-plus", stonePlusButton);
-        buttonsMap.put("stone-minus", stoneMinusButton);
+        buttonsMap.put("firstdepot-button", firstDepotButton);
+        buttonsMap.put("seconddepot-button", secondDepotButton);
+        buttonsMap.put("thirddepot-button", thirdDepotButton);
+        buttonsMap.put("confirmresources-button", confirmResourcesButton);
         return buttonsMap;
     }
 

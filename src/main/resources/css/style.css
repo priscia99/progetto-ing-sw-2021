@@ -239,35 +239,35 @@
     -fx-background-repeat: no-repeat;
 }
 
-#coin-ico{
+#coin-icon{
     -fx-background-image: url('../img/ico/coin.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
-#servant-ico{
+#servant-icon{
     -fx-background-image: url('../img/ico/servant.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
-#shield-ico{
+#shield-icon{
     -fx-background-image: url('../img/ico/shield.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
-#stone-ico{
+#stone-icon{
     -fx-background-image: url('../img/ico/stone.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
-#depot-1 {
+#depot-1-1 {
     -fx-background-image: url('../img/ico/servant.png');
     -fx-background-size: contain;
     -fx-background-position: center center;

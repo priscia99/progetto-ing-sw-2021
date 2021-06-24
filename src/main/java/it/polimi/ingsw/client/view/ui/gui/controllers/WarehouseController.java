@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.model.ClientWarehouse;
+import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -41,6 +42,7 @@ public class WarehouseController {
      */
     public void refreshWarehouse(ClientWarehouse warehouse){
         if(warehouse.isInitialized()){
+            System.out.println(new RepresentationBuilder().render(warehouse));
             // iterate through depots
             for(int i=0; i<3; i++){
                 ResourceDepot tempDepot = warehouse.getResourceDepot(i);
@@ -64,16 +66,11 @@ public class WarehouseController {
                                 iconPath = STONE_PATH;
                                 break;
                         }
-                        Image resourceIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream(iconPath)));
-                        BackgroundImage bgImg = new BackgroundImage(resourceIcon,
-                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                                BackgroundPosition.DEFAULT,
-                                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
-                        resourcePane.setBackground(new Background(bgImg));
+                        resourcePane.setStyle("-fx-background-image: url(" + iconPath + ");");
                     }
                     else {
                         // if the position is free set an empty background (no image)
-                        resourcePane.setBackground(Background.EMPTY);
+                        resourcePane.setStyle("-fx-background-image: none;");
                     }
                 }
             }
@@ -83,7 +80,7 @@ public class WarehouseController {
             System.out.println("Free position");
             for(ObservableList<Node> nodeList : warehouseElements){
                 for(Node node : nodeList){
-                    ((Pane)node).setBackground(Background.EMPTY);
+                    ((Pane)node).setStyle("-fx-background-image: none;");
                 }
             }
         }
