@@ -27,6 +27,8 @@ public class LeaderCardsController {
      * @param leaderCardsDeck player's leader cards deck
      */
     public void refreshLeaderCards(ClientLeaderCardDeck leaderCardsDeck){
+        // if deck's size is greater than 2 -> user still has to choose initial leader cards
+        if(leaderCardsDeck.getClientLeaderCards().size() > 2){return;}
         for(int i=0; i<leaderCardsDeck.getClientLeaderCards().size(); i++) {
             ClientLeaderCard tempCard = leaderCardsDeck.getClientLeaderCards().get(i);
             Image cardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(LEADER_CARD_FRONT_PATH + tempCard.getAssetLink() + ".png")));

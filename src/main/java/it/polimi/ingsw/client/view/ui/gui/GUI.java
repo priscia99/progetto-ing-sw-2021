@@ -29,7 +29,8 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class GUI implements UI{
-    private Stage primaryStage; // GUI Application primary stage
+    private ClientController controller;    // reference to client controller
+    private Stage primaryStage;             // GUI Application primary stage
 
     public void loadAuthScreen(Client client){
         Platform.runLater(() -> SceneController.requestAuth(primaryStage, client));
@@ -44,7 +45,7 @@ public class GUI implements UI{
 
     @Override
     public void setController(ClientController controller) {
-
+        this.controller = controller;
     }
 
     @Override
@@ -92,18 +93,24 @@ public class GUI implements UI{
 
     @Override
     public void displayChooseInitialResourcesMenu(int toChoose) {
-
+        Platform.runLater(() -> {
+            SceneController.getMainGUIController().getChooseResourcesController().setClientController(controller);
+            SceneController.getMainGUIController().getChooseResourcesController().activeScreen(toChoose);
+        });
     }
 
     @Override
     public void displayInitialLeadersMenu(ArrayList<String> cardsIDs) {
-
+        Platform.runLater(() -> {
+            SceneController.getMainGUIController().getChooseLeadersController().setCurrentController(controller);
+            SceneController.getMainGUIController().getChooseLeadersController().activeScreen(cardsIDs);
+        });
     }
 
 
     @Override
     public void displayWarehouse(ClientWarehouse warehouse) {
-
+        Platform.runLater(() -> SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(warehouse));
     }
 
     /**
@@ -117,7 +124,6 @@ public class GUI implements UI{
 
     @Override
     public void startListening() {
-
     }
 
     @Override
@@ -132,12 +138,12 @@ public class GUI implements UI{
 
     @Override
     public void displayMarbleMarket(ClientMarbleMarket market) {
-
+        Platform.runLater(() -> SceneController.getMainGUIController().getMarbleMarketController().setMarbleMarket(market));
     }
 
     @Override
     public void displayCardMarket(ClientCardsMarket market) {
-
+        Platform.runLater(() -> SceneController.getMainGUIController().getDevelopmentCardMarketController().setCardsMarket(market));
     }
 
     @Override
@@ -194,6 +200,7 @@ public class GUI implements UI{
     public void startUI(ClientGame game) {
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
+            SceneController.getMainGUIController().initGUI();
             SceneController.getMainGUIController().initMenuChoicePicker(new ArrayList<>(game.getPlayerBoardMap().keySet()));
         });
     }

@@ -22,9 +22,17 @@ public class StrongBoxController {
      * @param strongbox Player's strongbox
      */
     public void refreshStrongbox(ClientStrongbox strongbox){
-        strongboxCoin.setText(String.valueOf(strongbox.gerResourceStock(0).getQuantity()));
-        strongboxServant.setText(String.valueOf(strongbox.gerResourceStock(1).getQuantity()));
-        strongboxShield.setText(String.valueOf(strongbox.gerResourceStock(2).getQuantity()));
-        strongboxStone.setText(String.valueOf(strongbox.gerResourceStock(3).getQuantity()));
+        if(strongbox.isInitialized()) {
+            strongboxCoin.setText(String.valueOf(strongbox.gerResourceStock(0).getQuantity()));
+            strongboxServant.setText(String.valueOf(strongbox.gerResourceStock(1).getQuantity()));
+            strongboxShield.setText(String.valueOf(strongbox.gerResourceStock(2).getQuantity()));
+            strongboxStone.setText(String.valueOf(strongbox.gerResourceStock(3).getQuantity()));
+        }
+        else{
+            strongboxCoin.setText("0");
+            strongboxServant.setText("0");
+            strongboxShield.setText("0");
+            strongboxStone.setText("0");
+        }
     }
 }

@@ -2,6 +2,9 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.model.ClientMarbleMarket;
 import it.polimi.ingsw.server.model.marble.Marble;
+import it.polimi.ingsw.server.model.market.MarbleMarket;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
@@ -18,17 +21,20 @@ public class MarbleMarketController {
 
     private GridPane marbleMarketPane;
     private Pane notForSaleMarble;
+    private TabPane tabPane;
+    private ClientMarbleMarket marbleMarket;
 
-    public MarbleMarketController(GridPane marbleMarketPane, Pane notForSaleMarble) {
+    public MarbleMarketController(GridPane marbleMarketPane, Pane notForSaleMarble, TabPane tabPane) {
         this.marbleMarketPane = marbleMarketPane;
         this.notForSaleMarble = notForSaleMarble;
+        this.tabPane = tabPane;
     }
 
     /**
      * Refreshes marble market pane based on current market representation
-     * @param marbleMarket Game marble market
+     *
      */
-    public void refreshMarbleMarket(ClientMarbleMarket marbleMarket){
+    public void refreshMarbleMarket(){
         String marbleImageLink = null;
         Image marbleImage = null;
         BackgroundImage bgImg = null;
@@ -48,18 +54,21 @@ public class MarbleMarketController {
         // iterate through market rows
         for(int i=0; i<marketPositions.length; i++){
             // iterate through marble cols
-            for(int j=0; j<marketPositions[i].length; i++){
+            for(int j=0; j<marketPositions[i].length; j++){
                 Marble tempMarble = marketPositions[i][j];  // getting temp marble
-                Pane tempPane = (Pane) marbleMarketPane.lookup("#mm-" + String.valueOf(i+1) + String.valueOf(j+1));
+                Pane tempPane = (Pane) marbleMarketPane.lookup("#mm-" + String.valueOf(i+1) + "-" + String.valueOf(j+1));
                 marbleImageLink = this.getAssetLink(tempMarble);
+                System.out.println(marbleImageLink);
                 marbleImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(marbleImageLink)));
                 bgImg = new BackgroundImage(marbleImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.DEFAULT,
                         new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
                 tempPane.setBackground(new Background(bgImg));  // setting marble image backround
+
             }
         }
+        tabPane.requestLayout();
     }
 
     /**
@@ -84,5 +93,10 @@ public class MarbleMarketController {
                             break;
         }
         return path;
+    }
+
+    public void setMarbleMarket(ClientMarbleMarket market){
+        this.marbleMarket = market;
+        this.refreshMarbleMarket();
     }
 }

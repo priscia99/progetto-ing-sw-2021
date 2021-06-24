@@ -25,7 +25,8 @@ public class FaithPathController {
      */
     public void refreshFaithPath(ClientFaithPath faithPath){
         Pane activeCell = (Pane) cellsPaneList.get(faithPath.getFaithPoints());
-        Image crossImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(CROSS_PATH + ".png")));
+        // activeCell.setId("current");
+        Image crossImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(CROSS_PATH)));
         BackgroundImage bgImg = new BackgroundImage(crossImage,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,

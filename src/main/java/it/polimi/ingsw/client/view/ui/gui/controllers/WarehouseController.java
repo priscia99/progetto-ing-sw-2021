@@ -78,6 +78,15 @@ public class WarehouseController {
                 }
             }
         }
+        else{
+            // warehouse is not initialized yet
+            System.out.println("Free position");
+            for(ObservableList<Node> nodeList : warehouseElements){
+                for(Node node : nodeList){
+                    ((Pane)node).setBackground(Background.EMPTY);
+                }
+            }
+        }
     }
 
     /**
