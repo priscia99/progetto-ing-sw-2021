@@ -38,15 +38,11 @@ public class DevelopmentCardsController {
                 tempPane = (Pane) cardsSlots.get(i).get(j);
                 if(j<decks.getDeck(i).size()){
                     // current slot position is occupied by a card (set front background image)
-                    Image cardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(DEV_CARDS_FRONT_PATH + decks.getDeck(i).get(j).getAssetLink() + ".png")));
-                    BackgroundImage bgImg = new BackgroundImage(cardImage,
-                            BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                            BackgroundPosition.DEFAULT,
-                            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
-                    tempPane.setBackground(new Background(bgImg));
+                    String cardImagePath = DEV_CARDS_FRONT_PATH + decks.getDeck(i).get(j).getAssetLink() + ".png";
+                    tempPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
                 }else{
                     // current slot position is free (set empty background image)
-                    tempPane.setBackground(Background.EMPTY);
+                    tempPane.setStyle("-fx-background-image: none;");
                 }
             }
         }

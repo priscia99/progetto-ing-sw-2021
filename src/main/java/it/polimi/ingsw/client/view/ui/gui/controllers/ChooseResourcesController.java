@@ -24,7 +24,7 @@ public class ChooseResourcesController {
             chooseResourcesLabel.setText("CHOOSE " + toChoose + " RESOURCE");
         else
             chooseResourcesLabel.setText("CHOOSE " + toChoose + " RESOURCES");
-        chooseResourcesPane.setVisible(true);
+        //chooseResourcesPane.setVisible(true);
     }
 
     public void setClientController(ClientController clientController){

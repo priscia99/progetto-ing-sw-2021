@@ -1145,15 +1145,9 @@
                </rowConstraints>
                <children>
                   <Pane fx:id="chooseLeaderCard1" id = "1" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.rowIndex="1">
-                     <effect>
-                        <Glow level="0.6" />
-                     </effect>
                   </Pane>
                   <Pane fx:id="chooseLeaderCard2" id = "2" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Pane fx:id="chooseLeaderCard3" id = "3" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <effect>
-                        <Glow level="0.6" />
-                     </effect>
                   </Pane>
                   <Pane fx:id="chooseLeaderCard4" id = "4" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">

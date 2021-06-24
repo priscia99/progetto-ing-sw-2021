@@ -83,7 +83,11 @@ public class GUI implements UI{
 
     @Override
     public void displayNewTurn(String player, Boolean myTurn) {
-
+        if(myTurn){
+            Platform.runLater(() -> {
+                SceneController.displayPopupMessage(primaryStage, player + ", it's your turn!");
+            });
+        }
     }
 
     @Override
@@ -148,7 +152,7 @@ public class GUI implements UI{
 
     @Override
     public void displayStrongBox(ClientStrongbox strongbox) {
-
+        Platform.runLater(() -> SceneController.getMainGUIController().getStrongBoxController().refreshStrongbox(strongbox));
     }
 
     @Override
@@ -158,7 +162,7 @@ public class GUI implements UI{
 
     @Override
     public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck) {
-
+        Platform.runLater(() -> {SceneController.getMainGUIController().getDevelopmentCardsController().refreshDevelopmentCards(deck);});
     }
 
     @Override

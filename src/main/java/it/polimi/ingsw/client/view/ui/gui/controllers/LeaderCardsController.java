@@ -31,13 +31,9 @@ public class LeaderCardsController {
         if(leaderCardsDeck.getClientLeaderCards().size() > 2){return;}
         for(int i=0; i<leaderCardsDeck.getClientLeaderCards().size(); i++) {
             ClientLeaderCard tempCard = leaderCardsDeck.getClientLeaderCards().get(i);
-            Image cardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(LEADER_CARD_FRONT_PATH + tempCard.getAssetLink() + ".png")));
+            String cardImagePath = LEADER_CARD_FRONT_PATH + tempCard.getAssetLink() + ".png";
             Pane cardPane = (Pane)(leaderCardsList.get(i));
-            BackgroundImage bgImg = new BackgroundImage(cardImage,
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT,
-                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
-            cardPane.setBackground(new Background(bgImg));
+            cardPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
         }
     }
 

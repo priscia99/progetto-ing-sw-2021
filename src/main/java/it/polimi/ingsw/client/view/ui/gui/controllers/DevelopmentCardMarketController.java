@@ -23,7 +23,7 @@ public class DevelopmentCardMarketController {
     }
 
     public void refreshCardsMarket(){
-        String cardImageLink = null;
+        String cardImagePath = null;
         Image cardImage = null;
         BackgroundImage bgImg = null;
 
@@ -36,19 +36,14 @@ public class DevelopmentCardMarketController {
                 if(deckSize>0){
                     // there is a development card available for this cell -> display image
                     ClientDevelopmentCard tempCard = cardsMarket.getDecks().get(i).get(j).get(deckSize-1);
-                    cardImageLink = DEV_CARDS_FRONT_PATH + tempCard.getAssetLink() + ".png";
+                    cardImagePath = DEV_CARDS_FRONT_PATH + tempCard.getAssetLink() + ".png";
                 } else {
                     // the current cell is empty -> display back card based on proper level and color of the cell
                     int cardPathNumber = 1 + j*4 + i;
-                    cardImageLink = DEV_CARDS_BACK_PATH + cardPathNumber + ".png";
-                    System.out.println(cardImageLink);
+                    cardImagePath = DEV_CARDS_BACK_PATH + cardPathNumber + ".png";
+                    System.out.println(cardImagePath);
                 }
-                cardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(cardImageLink)));
-                bgImg = new BackgroundImage(cardImage,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                        BackgroundPosition.CENTER,
-                        new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
-                tempCardPane.setBackground(new Background(bgImg));  // setting dev card image backround
+                tempCardPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
                 index++;
             }
         }

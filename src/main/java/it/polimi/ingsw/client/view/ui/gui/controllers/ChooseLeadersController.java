@@ -7,6 +7,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -51,22 +52,19 @@ public class ChooseLeadersController {
         // FIXME ricevo uno 0 come primo id della carta leader!
         for(int i=0; i<4; i++){
             Pane cardPane = (Pane) cardsPanes.get(i);
+            String filePath = LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png";
             System.out.println("Leader path: " + LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png");
-            Image cardImage = new Image(Objects.requireNonNull(SceneController.class.getResourceAsStream(
-                    LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png")));
-            System.out.println(LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png");
-            BackgroundImage bgImg = new BackgroundImage(cardImage,
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.CENTER,
-                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
-            cardPane.setBackground(new Background(bgImg));  // setting marble image backround
+            cardPane.setStyle("-fx-background-image: url(" + filePath + ");");
             cardPane.addEventHandler(MouseEvent.MOUSE_CLICKED, onLeaderCardClicked);
         }
+        chooseLeadersPane.requestLayout();
     }
 
     EventHandler<MouseEvent> onConfirmLeadersBtnClicked = event -> {
-        currentController.chooseInitialLeaders(selectedIDs);
-        chooseLeadersPane.setVisible(false);
+        if(selectedIDs.size() == 2) {
+            currentController.chooseInitialLeaders(selectedIDs);
+            chooseLeadersPane.setVisible(false);
+        }
     };
 
     EventHandler<MouseEvent> onLeaderCardClicked = event -> {
@@ -74,9 +72,11 @@ public class ChooseLeadersController {
         int cardIndex = Integer.parseInt(clickedPane.getId()) - 1;
         if(selectedIDs.contains(cardIDs.get(cardIndex))){
             selectedIDs.remove(cardIDs.get(cardIndex));
+            clickedPane.setEffect(null);
         }
-        else{
+        else if(selectedIDs.size()<2){
             selectedIDs.add(cardIDs.get(cardIndex));
+            clickedPane.setEffect(new Glow(0.6));
         }
     };
 }

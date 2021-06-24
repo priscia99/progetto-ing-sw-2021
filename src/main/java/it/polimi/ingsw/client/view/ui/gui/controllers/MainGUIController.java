@@ -87,8 +87,7 @@ public class MainGUIController {
                 new ChangeListener<Tab>() {
                     @Override
                     public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab t1) {
-                        marbleMarketController.refreshMarbleMarket();
-                        developmentCardMarketController.refreshCardsMarket();
+                        tabPane.requestLayout();
                     }
                 }
         );

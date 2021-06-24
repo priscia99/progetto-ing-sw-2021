@@ -35,13 +35,13 @@ public class MarbleMarketController {
      *
      */
     public void refreshMarbleMarket(){
-        String marbleImageLink = null;
+        String marbleImagePath = null;
         Image marbleImage = null;
         BackgroundImage bgImg = null;
 
         // refreshing not for sale marble
-        marbleImageLink = this.getAssetLink(marbleMarket.getNotForSale());
-        marbleImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(marbleImageLink)));
+        marbleImagePath = this.getAssetLink(marbleMarket.getNotForSale());
+        marbleImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(marbleImagePath)));
         bgImg = new BackgroundImage(marbleImage,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
@@ -57,14 +57,9 @@ public class MarbleMarketController {
             for(int j=0; j<marketPositions[i].length; j++){
                 Marble tempMarble = marketPositions[i][j];  // getting temp marble
                 Pane tempPane = (Pane) marbleMarketPane.lookup("#mm-" + String.valueOf(i+1) + "-" + String.valueOf(j+1));
-                marbleImageLink = this.getAssetLink(tempMarble);
-                System.out.println(marbleImageLink);
-                marbleImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(marbleImageLink)));
-                bgImg = new BackgroundImage(marbleImage,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                        BackgroundPosition.DEFAULT,
-                        new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
-                tempPane.setBackground(new Background(bgImg));  // setting marble image backround
+                marbleImagePath = this.getAssetLink(tempMarble);
+                System.out.println(marbleImagePath);
+                tempPane.setStyle("-fx-background-image: url(" + marbleImagePath + ");");
 
             }
         }
