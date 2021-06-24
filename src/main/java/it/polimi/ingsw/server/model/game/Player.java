@@ -267,6 +267,13 @@ public class Player extends Observable<Message<ClientController>> {
         return result;
     }
 
+    public void checkPopeFavour(int position){
+        boolean activated = this.getPlayerBoard().getFaithPath().checkPopeFavor(position);
+        if(activated){
+            notify(new FaithPathMessage(this.getPlayerBoard().getFaithPath(), username));
+        }
+    }
+
     public ArrayList<Color> colorByLevel(int level) {
         if (level < 0 || level > 3) {
             throw new IllegalArgumentException("level must be in [0;3]");
@@ -305,14 +312,11 @@ public class Player extends Observable<Message<ClientController>> {
      *
      * @param count
      */
-    public void addFaithPoints(int count){
+    public int addFaithPoints(int count){
         this.playerBoard.addFaithPoints(count);
         FaithPath faithPath = this.playerBoard.getFaithPath();
-
-        notify(new FaithPathMessage(
-                faithPath.getFaithPoints(),
-                faithPath.getPopeFavours(),
-                username));
+        notify(new FaithPathMessage(faithPath, username));
+        return this.playerBoard.getFaithPath().getFaithPoints();
     }
 
 

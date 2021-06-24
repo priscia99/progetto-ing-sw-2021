@@ -205,9 +205,16 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         }
     }
 
+    public void addFaithPointsToPlayer(Player target, int points){
+        int position = target.addFaithPoints(points);
+        for(Player player : players){
+            player.checkPopeFavour(position);
+        }
+    }
+
     public void currentPlayerDropsResource(){
         players.stream().filter(player-> player != getCurrentPlayer())
-                .forEach(player -> player.addFaithPoints(1));
+                .forEach(player -> addFaithPointsToPlayer(player, 1));
     }
 
     public void setupVictoryObservations(){

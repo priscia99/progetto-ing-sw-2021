@@ -78,7 +78,7 @@ public class ServerController {
         Optional<LeaderCard> toDrop = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().stream().filter(c->c.getId().equals(cardId)).findFirst();
         if(toDrop.isEmpty()) throw new Exception("Leader not found!");
         game.getCurrentPlayer().dropLeaderCardById(cardId);
-        game.getCurrentPlayer().addFaithPoints(1);
+        game.addFaithPointsToPlayer(game.getCurrentPlayer(), 1);
     }
 
     public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) throws Exception {
@@ -117,7 +117,7 @@ public class ServerController {
         for (Marble selectedMarble : selectedMarbles) {
             ResourceType resourceToAdd = selectedMarble.getResourceType();
             if (resourceToAdd == ResourceType.FAITH) {
-                game.getCurrentPlayer().addFaithPoints(1);
+                game.addFaithPointsToPlayer(game.getCurrentPlayer(), 1);
             } else {
                 if (resourceToAdd.equals(ResourceType.BLANK) && converted.isEmpty()) continue;
                 ResourcePosition selectedPosition = positions.get(posIndex);
@@ -153,7 +153,7 @@ public class ServerController {
             productionToActivate.getOutStocks().forEach(
                     stock -> {
                         if(stock.getResourceType().equals(ResourceType.FAITH)){
-                            game.getCurrentPlayer().addFaithPoints(stock.getQuantity());
+                            game.addFaithPointsToPlayer(currentPlayer, stock.getQuantity());
                         } else {
                             game.getCurrentPlayer().addResourcesToStrongBox(stock);
                         }

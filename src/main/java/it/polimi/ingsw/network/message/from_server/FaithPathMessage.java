@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.message.from_server;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,10 +14,11 @@ public class FaithPathMessage extends Message<ClientController> implements Seria
     private final int faithPoints;
     private final ArrayList<Boolean> popeFavors;
 
-    public FaithPathMessage(int faithPoints, ArrayList<Boolean> popeFavors, String username) {
+    public FaithPathMessage(FaithPath faithPath, String username) {
+
         super.setPlayerUsername(username);
-        this.faithPoints = faithPoints;
-        this.popeFavors = popeFavors;
+        this.faithPoints = faithPath.getFaithPoints();
+        this.popeFavors = faithPath.getPopeFavours();
     }
 
     public void execute(ClientController target) {
