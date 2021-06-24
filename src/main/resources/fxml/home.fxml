@@ -11,7 +11,6 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -662,7 +661,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane fx:id="developmentCardsMarketPane" id="card-market-pane" hgap="5.0" layoutX="10.0" layoutY="309.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <GridPane id="card-market-pane" fx:id="developmentCardsMarketPane" hgap="5.0" layoutX="10.0" layoutY="309.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -696,7 +695,7 @@
                               </AnchorPane>
                         </content>
                       </Tab>
-                        <Tab text="Marble Market" fx:id="marbleMarketTab">
+                        <Tab fx:id="marbleMarketTab" text="Marble Market">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
@@ -932,7 +931,7 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <AnchorPane id="choose-resources-menu" fx:id="chooseResourcesPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="poppup-pane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane id="choose-resources-menu" fx:id="chooseResourcesPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="poppup-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane opacity="0.7" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -967,143 +966,6 @@
                               <Pane id="servant-ico" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
                               <Pane id="shield-ico" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
                               <Pane id="stone-ico" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
-                              <GridPane hgap="5.0" vgap="10.0" GridPane.rowIndex="1">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                       <children>
-                                          <Button fx:id="coinPlusButton" id="coin-plus" layoutX="7.0" layoutY="16.0" mnemonicParsing="false" styleClass="glow-button" text="+" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <children>
-                                          <Button fx:id="coinMinusButton" id="coin-minus" layoutX="7.0" layoutY="16.0" mnemonicParsing="false" styleClass="glow-button" text="-" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowSpan="2">
-                                       <children>
-                                          <Label layoutX="19.0" layoutY="48.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <font>
-                                                <Font size="64.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
-                                 </padding>
-                              </GridPane>
-                              <GridPane hgap="5.0" vgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                       <children>
-                                          <Button fx:id="servantPlusButton" id="servant-plus" layoutX="7.0" layoutY="16.0" mnemonicParsing="false" styleClass="glow-button" text="+" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <children>
-                                           
-                                          <Button fx:id="servantMinusButton" id="servant-minus" layoutX="7.0" layoutY="16.0" mnemonicParsing="false" styleClass="glow-button" text="-" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowSpan="2">
-                                       <children>
-                                          <Label layoutX="19.0" layoutY="48.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <font>
-                                                <Font size="64.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
-                                 </padding>
-                              </GridPane>
-                              <GridPane hgap="5.0" vgap="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                       <children>
-                                          <Button fx:id="shieldPlusButton" id="shield-plus" layoutX="7.0" layoutY="16.0" mnemonicParsing="false" styleClass="glow-button" text="+" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <children>
-                                          <Button fx:id="shieldMinusButton" id="shield-minus" layoutX="7.0" layoutY="16.0" mnemonicParsing="false" styleClass="glow-button" text="-" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowSpan="2">
-                                       <children>
-                                          <Label layoutX="19.0" layoutY="48.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <font>
-                                                <Font size="64.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
-                                 </padding>
-                              </GridPane>
-                              <GridPane hgap="5.0" vgap="10.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                       <children>
-                                          <Button fx:id="stonePlusButton" id="stone-plus" layoutX="7.0" layoutY="16.0" mnemonicParsing="false" styleClass="glow-button" text="+" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <children>
-                                          <Button fx:id="stoneMinusButton" id="stone-minus" layoutX="7.0" layoutY="16.0" mnemonicParsing="false" styleClass="glow-button" text="-" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowSpan="2">
-                                       <children>
-                                          <Label layoutX="19.0" layoutY="48.0" text="0" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <font>
-                                                <Font size="64.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
-                                 </padding>
-                              </GridPane>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                                  <children>
                                     <Button fx:id="confirmResourcesButton" layoutX="104.0" layoutY="44.0" mnemonicParsing="false" styleClass="glow-button" text="Confirm" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
@@ -1112,6 +974,21 @@
                                     <Insets bottom="40.0" left="50.0" right="50.0" top="40.0" />
                                  </padding>
                               </AnchorPane>
+                              <GridPane GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" text="SECOND DEPOT" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                    <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" text="THIRD DEPOT" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                    <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" text="FIRST DEPOT" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                 </children>
+                              </GridPane>
                            </children>
                         </GridPane>
                      </children>
@@ -1144,12 +1021,12 @@
                   <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Pane fx:id="chooseLeaderCard1" id = "1" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.rowIndex="1">
+                  <Pane id="1" fx:id="chooseLeaderCard1" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.rowIndex="1">
                   </Pane>
-                  <Pane fx:id="chooseLeaderCard2" id = "2" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Pane fx:id="chooseLeaderCard3" id = "3" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Pane id="2" fx:id="chooseLeaderCard2" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Pane id="3" fx:id="chooseLeaderCard3" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.columnIndex="2" GridPane.rowIndex="1">
                   </Pane>
-                  <Pane fx:id="chooseLeaderCard4" id = "4" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Pane id="4" fx:id="chooseLeaderCard4" prefHeight="200.0" prefWidth="200.0" styleClass="choose-leader" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                      <children>
                         <Button fx:id="confirmLeadersButton" layoutX="-109.0" layoutY="38.0" mnemonicParsing="false" prefHeight="137.0" prefWidth="463.0" styleClass="glow-button" text="Confirm" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
