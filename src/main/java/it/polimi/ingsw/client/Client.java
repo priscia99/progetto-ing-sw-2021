@@ -14,6 +14,7 @@ import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.service_message.ServiceMessage;
 import it.polimi.ingsw.server.model.player_board.PlayerBoard;
+import it.polimi.ingsw.utils.CustomLogger;
 
 public class Client {
     private final UI userInterface;               // type of chosen UI (CLI, GUI)
@@ -106,13 +107,11 @@ public class Client {
                 try {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
-                        // System.out.println("Ho ricevuto un: " + inputObject.getClass());
                         if(inputObject instanceof String){
                             //FIXME switch from String to ServiceMessage in auth
-                            manageAuth((String) inputObject);   // re-directing to authentication manager;
+                            manageAuth((String) inputObject);
                         }
                         else if(inputObject instanceof ServiceMessage){
-                            // System.out.println("Got service message from server");
                             ServiceMessage serviceMessage = (ServiceMessage) inputObject;
                             serviceMessage.execute(this);
                         }
@@ -127,36 +126,14 @@ public class Client {
                 }
                 catch (Exception e){
                     e.printStackTrace();
-                    System.err.println("There was an error. Application will be closed.");
-                    setActive(false);
+                    CustomLogger.getLogger().info("There was an error. Application will be closed.");
+                    System.exit(0);
                 }
         });
         t.start();
         return t;
     }
 
-    /**
-     * Write asynchronously a message in the socket.
-     * @param stdin input stream from which read
-     * @param socketOut output stream in which write
-     * @return writing thread
-     * @throws Exception if a generic exception happens shut down the server
-     */
-    public Thread asyncWriteToSocket(final Scanner stdin, final PrintWriter socketOut){
-        Thread t = new Thread(() -> {
-                try {
-                    while (isActive()) {
-                        String inputLine = stdin.nextLine();
-                        socketOut.println(inputLine);
-                        socketOut.flush();
-                    }
-                } catch(Exception e){
-                    setActive(false);
-                }
-        });
-        t.start();
-        return t;
-    }
 
     /**
      * Thread-like run function.
@@ -164,18 +141,17 @@ public class Client {
      * @throws NoSuchElementException
      */
     public void run() throws IOException {
+        CustomLogger.getLogger().info("Connecting to game server...");
         Socket socket = new Socket(ip, port);
-        System.out.println("Connection established");
+        CustomLogger.getLogger().info("Successfully connected!");
         socketIn = new ObjectInputStream(socket.getInputStream());
         socketOut = new ObjectOutputStream(socket.getOutputStream());
         Scanner stdin = new Scanner(System.in);
-
         try{
             Thread asyncRead = asyncReadFromSocket();
             asyncRead.join();
-            //t1.join();
         } catch(InterruptedException | NoSuchElementException e){
-            System.out.println("Connection closed from the client side");
+            CustomLogger.getLogger().info("Connection closed from the client side");
         } finally {
             stdin.close();
             socketIn.close();
@@ -184,7 +160,7 @@ public class Client {
         }
     }
 
-    public Thread manageAuth(final String authInfo){
+    public void manageAuth(final String authInfo){
         Thread t = new Thread(() -> {
             String[] command = authInfo.split("#");
             switch (command[0]){
@@ -210,12 +186,10 @@ public class Client {
             }
         });
         t.start();
-        return t;
     }
 
-    public Thread sendToSocket(Object objToSend){
+    public void sendToSocket(Object objToSend){
         Thread t = new Thread(() -> {
-            // System.out.println("Sto inviando un: " + objToSend.getClass());
             try {
                 socketOut.writeObject(objToSend);
             } catch (IOException e) {
@@ -223,7 +197,6 @@ public class Client {
             }
         });
         t.start();
-        return t;
     }
 
     public void setMyUsername(String myUsername){

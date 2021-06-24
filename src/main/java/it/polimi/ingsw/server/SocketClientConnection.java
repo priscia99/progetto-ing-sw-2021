@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.service_message.ServiceMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.utils.CustomLogger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -43,16 +44,16 @@ public class SocketClientConnection extends Observable<Message<ServerController>
         try {
             socket.close();
         } catch (IOException e) {
-            System.err.println("Error when closing socket!");
+            CustomLogger.getLogger().info("Error when closing socket!");
         }
         alive = false;
     }
 
     private void close() {
-        this.closeConnection();
-        System.out.println("deregistering client...");
+        CustomLogger.getLogger().info("deregistering client...");
         server.deregisterConnection(this);
-        System.out.println("Done!");
+        CustomLogger.getLogger().info("Done!");
+        this.closeConnection();
     }
 
     /**
@@ -79,9 +80,6 @@ public class SocketClientConnection extends Observable<Message<ServerController>
 
     @Override
     public void run() {
-
-        String username = null;    // username of the player (client)
-        String lobbyId = null;
         try {
             out = new ObjectOutputStream(socket.getOutputStream());
             this.asyncSend("auth_request");
@@ -101,7 +99,7 @@ public class SocketClientConnection extends Observable<Message<ServerController>
                         // try to create a new lobby
                         this.asyncSend("auth_created#" + lobby.getLobbyId());
                     } else {
-                        System.out.println("User attenting to join lobby");
+                        System.out.println("User attempting to join lobby");
                         lobby = server.lobby(authData.getLobby(), authData.getUsername(), this);
                         this.asyncSend("auth_joined#" + lobby.getLobbyId());
                     }
@@ -123,7 +121,7 @@ public class SocketClientConnection extends Observable<Message<ServerController>
                     message.execute(lobby);
                 }
                 else if(inputObject instanceof Message){
-                    System.out.println("Ho ricevuto un: " + inputObject.getClass());
+                    CustomLogger.getLogger().info("Ho ricevuto un: " + inputObject.getClass());
                     notify((Message<ServerController>) inputObject);
                 }
             }
