@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.model.ClientFaithPath;
-import it.polimi.ingsw.client.view.FaithPathView;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.Image;

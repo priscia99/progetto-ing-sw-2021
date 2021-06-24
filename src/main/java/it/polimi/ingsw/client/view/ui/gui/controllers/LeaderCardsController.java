@@ -4,12 +4,7 @@ import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-
-import java.awt.*;
-import java.io.File;
-import java.util.Objects;
 
 public class LeaderCardsController {
     private static final String LEADER_CARD_FRONT_PATH = "/img/cards/front/leader-card-";

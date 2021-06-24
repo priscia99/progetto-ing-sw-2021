@@ -2,8 +2,6 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.model.ClientMarbleMarket;
 import it.polimi.ingsw.server.model.marble.Marble;
-import it.polimi.ingsw.server.model.market.MarbleMarket;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;

@@ -12,6 +12,8 @@ import it.polimi.ingsw.server.model.card.effect.*;
 import it.polimi.ingsw.server.model.card.requirement.*;
 
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
@@ -21,12 +23,14 @@ public class DevCardMarketBuilder {
     private static final int NUM_COLORS = 4;
     private static final int NUM_LEVELS = 3;
     private static Stack<DevelopmentCard>[][] marketDecks;
-    private static final String file_path = "assets/dev_cards.json";
+    private static final String file_path = "dev_cards.json";
 
     private static void initBuilder(){
         try {
             marketDecks = new Stack[NUM_LEVELS][NUM_COLORS];
-            JsonReader reader = new JsonReader(new FileReader(file_path));
+            InputStream stream = LeaderCardsBuilder.class.getClassLoader().getResourceAsStream(file_path);
+            InputStreamReader streamReader = new InputStreamReader(stream);
+            JsonReader reader = new JsonReader(streamReader);
             JsonParser parser = new JsonParser();
             JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
 

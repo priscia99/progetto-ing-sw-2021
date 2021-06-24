@@ -10,6 +10,8 @@ import it.polimi.ingsw.utils.CustomLogger;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -17,7 +19,7 @@ import java.util.Random;
 public class MarbleMarketBuilder {
     private static final int NUM_ROWS = 3;
     private static final int NUM_COLS = 4;
-    private static final String file_path = "assets/marble_market.json";
+    private static final String file_path = "marble_market.json";
     private static ArrayList<Marble> parsedMarbles;
     private Marble[][] market;
     private Marble notForSale;
@@ -29,7 +31,9 @@ public class MarbleMarketBuilder {
     // Parse marbles from json input file
     private static void parseMarbles(){
         try {
-            JsonReader reader = new JsonReader(new FileReader(file_path));
+            InputStream stream = LeaderCardsBuilder.class.getClassLoader().getResourceAsStream(file_path);
+            InputStreamReader streamReader = new InputStreamReader(stream);
+            JsonReader reader = new JsonReader(streamReader);
             JsonParser parser = new JsonParser();
             JsonArray marbleArray = parser.parse(reader).getAsJsonArray();
             parsedMarbles = new ArrayList<>();
@@ -41,9 +45,6 @@ public class MarbleMarketBuilder {
                     parsedMarbles.add(new Marble(ResourceType.valueOf(marblePile.get("type").getAsString())));
                 }
             }
-
-        }catch(FileNotFoundException e){
-            CustomLogger.getLogger().severe(String.format(("Parser error: %s file not found"), file_path));
         }catch(Exception e){
             CustomLogger.getLogger().severe("General parsing error");
             e.printStackTrace();

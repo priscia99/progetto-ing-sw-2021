@@ -7,17 +7,21 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.server.model.player_board.faith_path.*;
 
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Objects;
 
 public class FaithPathBuilder {
     private static final int PATH_DIM = 25;
-    private static final String file_path = "assets/faith_path.json";
+    private static final String file_path = "faith_path.json";
     private static Cell[] path = null;
 
     private static void initBuild(){
         try {
             path = new Cell[PATH_DIM];
-            JsonReader reader = new JsonReader(new FileReader(file_path));
+            InputStream stream = LeaderCardsBuilder.class.getClassLoader().getResourceAsStream(file_path);
+            InputStreamReader streamReader = new InputStreamReader(stream);
+            JsonReader reader = new JsonReader(streamReader);
             JsonParser parser = new JsonParser();
             JsonArray cellsArray = parser.parse(reader).getAsJsonArray();
 

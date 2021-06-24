@@ -3,11 +3,9 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 import it.polimi.ingsw.client.model.ClientDevelopmentCardDecks;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class DevelopmentCardsController {
 

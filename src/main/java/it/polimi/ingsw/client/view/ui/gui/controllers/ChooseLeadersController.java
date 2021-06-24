@@ -1,19 +1,15 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
-import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Glow;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ChooseLeadersController {
 

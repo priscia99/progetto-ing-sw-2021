@@ -19,19 +19,22 @@ import it.polimi.ingsw.utils.CustomLogger;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class LeaderCardsBuilder{
     static private ArrayList<LeaderCard> leaderCardList;
-    static final private String leaderCardsPath = "assets/leader_cards.json";
+    static final private String leaderCardsPath = "leader_cards.json";
 
     static private void initBuilder() throws IllegalArgumentException{
         try {
             leaderCardList = new ArrayList<>();
             CustomLogger.getLogger().info(String.format(("Starting leader cards parsing from file %s"), leaderCardsPath));
-            Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader(leaderCardsPath));
+            InputStream stream = LeaderCardsBuilder.class.getClassLoader().getResourceAsStream(leaderCardsPath);
+            InputStreamReader streamReader = new InputStreamReader(stream);
+            JsonReader reader = new JsonReader(streamReader);
             JsonParser parser = new JsonParser();
             JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
 
@@ -128,8 +131,6 @@ public class LeaderCardsBuilder{
                 ));
 
             }
-        }catch (FileNotFoundException e){
-            CustomLogger.getLogger().severe(String.format(("Parser error: %s file not found"), leaderCardsPath));
         }catch (Exception e){
             CustomLogger.getLogger().severe("General parsing error");
             CustomLogger.getLogger().severe(e.getMessage());
