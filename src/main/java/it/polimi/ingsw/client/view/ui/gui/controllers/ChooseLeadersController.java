@@ -48,8 +48,10 @@ public class ChooseLeadersController {
     }
 
     public void refreshAvailableCards(){
+        // FIXME ricevo uno 0 come primo id della carta leader!
         for(int i=0; i<4; i++){
             Pane cardPane = (Pane) cardsPanes.get(i);
+            System.out.println("Leader path: " + LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png");
             Image cardImage = new Image(Objects.requireNonNull(SceneController.class.getResourceAsStream(
                     LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png")));
             System.out.println(LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png");

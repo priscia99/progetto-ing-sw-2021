@@ -83,14 +83,12 @@ public class MainGUIController {
     public void initialize(){
         // TODO implement development card market controller
         // controllers init
-
         tabPane.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Tab>() {
                     @Override
                     public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab t1) {
                         marbleMarketController.refreshMarbleMarket();
                         developmentCardMarketController.refreshCardsMarket();
-                        tabPane.requestLayout();
                     }
                 }
         );
