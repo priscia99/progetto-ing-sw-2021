@@ -53,6 +53,11 @@ public class CardsMarket extends Observable<Message<ClientController>> {
         this.decks = decks;
     }
 
+    public CardsMarket getCopy(){
+        CardsMarket copy = new CardsMarket(this.decks);
+        return copy;
+    }
+
     public Stack<DevelopmentCard>[][] getDecks() {
         return decks;
     }

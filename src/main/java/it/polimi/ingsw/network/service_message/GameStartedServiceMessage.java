@@ -13,6 +13,7 @@ public class GameStartedServiceMessage extends ServiceMessage<Client> implements
     public GameStartedServiceMessage(ArrayList<String> players){
         this.players = players;
     }
+
     public void execute(Client client){
         client.setupMVC(players);
         client.sendToSocket(new ClientReadyServiceMessage());

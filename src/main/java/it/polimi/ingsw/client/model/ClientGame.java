@@ -1,14 +1,24 @@
 package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
+import it.polimi.ingsw.server.model.market.MarbleMarket;
 import it.polimi.ingsw.utils.Pair;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ClientGame extends Observable<Pair<String, Boolean>> {
 
     private String currentPlayer;
+    private boolean isMainActionDone;
+    private  String myUsername;
+    private  ClientCardsMarket clientCardsMarket;
+    private  ClientMarbleMarket clientMarbleMarket;
+    private boolean gameStarted = false;
+    private Map<String, ClientPlayerBoard> playerBoardMap = new LinkedHashMap<>();
+
 
     public boolean isMainActionDone() {
         return isMainActionDone;
@@ -18,9 +28,6 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
         isMainActionDone = mainActionDone;
     }
 
-    private boolean isMainActionDone;
-    private final String myUsername;
-    private final ClientCardsMarket clientCardsMarket;
 
     public ClientCardsMarket getClientCardsMarket() {
         return clientCardsMarket;
@@ -30,9 +37,6 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
         return clientMarbleMarket;
     }
 
-    private final ClientMarbleMarket clientMarbleMarket;
-    private Map<String, ClientPlayerBoard> playerBoardMap = new LinkedHashMap<>();
-    private boolean gameStarted = false;
     public ClientGame(String myUsername, String currentPlayer, ArrayList<String> players) {
         this.myUsername = myUsername;
         this.currentPlayer = currentPlayer;
@@ -49,6 +53,26 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
                 this.playerBoardMap.put(playerName, new ClientPlayerBoard(false,labelPosition++, playerName));
         }
     }
+
+    public static ClientGame fromGame(Game game){
+        ClientGame clientGame = new ClientGame("",
+                game.getCurrentPlayer().getNickname(),
+                new ArrayList<>(game.getPlayers().stream().map(Player::getNickname).collect(Collectors.toList())));
+        clientGame.setMainActionDone(game.getCurrentPlayer().hasDoneMainAction());
+        clientGame.setGameStarted(true);
+        clientGame.setClientCardsMarket(new ClientCardsMarket(game.getCardMarket()));
+        clientGame.setClientMarbleMarket(new ClientMarbleMarket(
+                game.getMarbleMarket().getOnSale(),
+                game.getMarbleMarket().getNotForSale()));
+        return clientGame;
+    }
+
+    private void setCardsMarket(){
+
+    }
+
+    private void setClientCardsMarket(ClientCardsMarket market){this.clientCardsMarket = market;}
+    private void setClientMarbleMarket(ClientMarbleMarket market){this.clientMarbleMarket = market;}
 
     public boolean isGameStarted() {
         return gameStarted;
@@ -82,8 +106,5 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
         return myUsername;
     }
 
-    public void displayError(String string){
-        notify(new Pair<>(string, false));
-    }
 
 }

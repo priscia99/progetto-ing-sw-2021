@@ -30,6 +30,19 @@ public class MarbleMarket extends Observable<Message<ClientController>> {
         this.notForSale = notForSale;
     }
 
+    public MarbleMarket getCopy(){
+        int rows = onSale.length;
+        int columns = onSale[0].length;
+        Marble[][] onSaleCopy = new Marble[rows][columns];
+        for(int i = 0; i<rows; i++){
+            for(int j = 0; j <columns; j++){
+                onSaleCopy[i][j] = new Marble(onSale[i][j].getResourceType());
+            }
+        }
+        Marble notForSaleCopy = new Marble(notForSale.getResourceType());
+        return new MarbleMarket(onSaleCopy, notForSaleCopy);
+    }
+
     public Marble[][] getOnSale() {
         return onSale;
     }

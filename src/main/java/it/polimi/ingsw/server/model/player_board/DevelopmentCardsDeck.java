@@ -58,6 +58,11 @@ public class DevelopmentCardsDeck extends Observable<Message<ClientController>> 
         return getCardNumber() == 3;
     }
 
+    public DevelopmentCardsDeck getCopy(){
+        DevelopmentCardsDeck copy = new DevelopmentCardsDeck(this.deck);
+        return copy;
+    }
+
     /**
      *
      * @return the number of cards in the deck.

@@ -58,6 +58,12 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
         return this.leaderCards.remove(this.leaderCards.size()-1);
     }
 
+    public LeaderCardsDeck getCopy(){
+        LeaderCardsDeck copy = new LeaderCardsDeck();
+        copy.addLeaders(this.leaderCards);
+        return copy;
+    }
+
     /**
      *
      * @return the list of leader cards in the deck.
@@ -72,27 +78,10 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
      */
     public void addLeader(LeaderCard leaderCard) {
         leaderCards.add(leaderCard);
-
-//        notify(new LeaderCardsMessage(leaderCards));
     }
 
     public void addLeaders(ArrayList<LeaderCard> leaderCards) {
         this.leaderCards.addAll(leaderCards);
-
-        // notify(new LeaderCardsMessage(leaderCards));
-    }
-
-    public void playLeaderCard(int index) {
-        leaderCards.get(index).play();
-
-//        notify(new LeaderCardsMessage(leaderCards));
-    }
-
-    /**
-     * Clear the list of leader cards of the deck.
-     */
-    public void clear(){
-        leaderCards.clear();
     }
 
     /**

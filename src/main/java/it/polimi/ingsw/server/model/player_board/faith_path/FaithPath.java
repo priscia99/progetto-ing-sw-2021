@@ -25,6 +25,13 @@ public class FaithPath extends Observable<Message<ClientController>> {
         return new FaithPath(FaithPathBuilder.getPath());
     }
 
+
+    public FaithPath getCopy(){
+        FaithPath copy = new FaithPath(this.cells);
+        copy.setFaithPoints(this.faithPoints);
+        return copy;
+    }
+
     public Cell[] getCells() {
         return cells;
     }
@@ -32,6 +39,8 @@ public class FaithPath extends Observable<Message<ClientController>> {
     public int getFaithPoints() {
         return faithPoints;
     }
+
+    public void setFaithPoints(int points){ this.faithPoints = points;}
 
     public ArrayList<Boolean> getAcquiredPopeFavours(){
         return Arrays.stream(this.getCells())

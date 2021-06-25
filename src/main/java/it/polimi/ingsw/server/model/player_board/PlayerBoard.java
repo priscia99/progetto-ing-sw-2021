@@ -24,12 +24,12 @@ import java.util.stream.Collectors;
  */
 public class PlayerBoard {
 
-    private final FaithPath faithPath;
-    private final ProductionEffect basicProduction;
-    private final DevelopmentCardsDeck[] developmentCardsDecks;
-    private final LeaderCardsDeck leaderCardsDeck;
-    private final Warehouse warehouse;
-    private final Strongbox strongbox;
+    private  FaithPath faithPath;
+    private  ProductionEffect basicProduction;
+    private  DevelopmentCardsDeck[] developmentCardsDecks;
+    private  LeaderCardsDeck leaderCardsDeck;
+    private  Warehouse warehouse;
+    private  Strongbox strongbox;
 
     /**
      * Create an empty PlayerBoard object.
@@ -51,9 +51,15 @@ public class PlayerBoard {
         return developmentCardsDeck;
     }
 
-    public PlayerBoard getCopy(){
+    public PlayerBoard getCopy() throws GameException {
         PlayerBoard copy = new PlayerBoard();
-        
+        copy.setFaithPath(this.getFaithPath().getCopy());
+        DevelopmentCardsDeck[] decksCopy = new DevelopmentCardsDeck[3];
+        for(int i = 0; i < decksCopy.length ; i++) decksCopy[i] = this.developmentCardsDecks[i].getCopy();
+        copy.setDevelopmentCardsDecks(decksCopy);
+        copy.setLeaderCardsDeck(this.getLeaderCardsDeck().getCopy());
+        copy.setWarehouse(this.getWarehouse().getCopy());
+        copy.setStrongbox(this.getStrongbox().getCopy());
         return copy;
     }
 
@@ -65,6 +71,7 @@ public class PlayerBoard {
         return faithPath;
     }
 
+    private void setFaithPath(FaithPath faithPath){this.faithPath = faithPath;}
     /**
      *
      * @return the basic production effect of the player board (2 generic resources, for 1 generic resource)
@@ -81,6 +88,17 @@ public class PlayerBoard {
         return developmentCardsDecks;
     }
 
+    private void setDevelopmentCardsDecks(DevelopmentCardsDeck[] decks){
+        this.developmentCardsDecks = decks;
+    }
+
+    private void setLeaderCardsDeck(LeaderCardsDeck deck){
+        this.leaderCardsDeck = deck;
+    }
+
+    private void setWarehouse(Warehouse warehouse){this.warehouse = warehouse;}
+
+    private void setStrongbox(Strongbox strongbox){this.strongbox = strongbox;}
     /**
      *
      * @return return the decks of leader cards.

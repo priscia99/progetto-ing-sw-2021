@@ -14,6 +14,7 @@ import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.utils.Pair;
+import javafx.beans.property.IntegerPropertyBase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class ClientController extends Observable<Message<ServerController>> {
 
-    private final ClientGame game;
+    private ClientGame game;
     UI userInterface;
 
     public ClientController(ClientGame game, UI userInterface) {
@@ -41,6 +42,14 @@ public class ClientController extends Observable<Message<ServerController>> {
 
     public ClientGame getGame() {
         return game;
+    }
+
+    public void setGame(ClientGame game){
+        this.game = game;
+    }
+
+    public void applyGameBackup(ClientGame backup){
+        this.game = backup;
     }
 
     public void viewChooseInitialResources(int toChoose, String username){

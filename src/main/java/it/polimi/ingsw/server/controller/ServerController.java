@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.server.model.BackupManager;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
@@ -11,6 +12,7 @@ import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.*;
+import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.CustomRunnable;
 
 import java.util.ArrayList;
@@ -19,12 +21,24 @@ import java.util.Optional;
 public class ServerController {
 
     private final Game game;
+    private BackupManager backupManager;
 
     public ServerController(Game game){
         this.game = game;
     }
 
+    public void setBackupManager(BackupManager manager){
+        this.backupManager = manager;
+    }
+
+
     public void tryAction(CustomRunnable action){
+        try{
+            backupManager.load(game.getBackup());
+        } catch (Exception e){
+            CustomLogger.getLogger().info("Error while creating game backup!");
+            e.printStackTrace();
+        }
         try{
             action.tryRun();
         } catch (GameException e){
@@ -32,6 +46,7 @@ public class ServerController {
         } catch (Exception e){
             e.printStackTrace();
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
+            backupManager.applyBackup();
         }
     }
 

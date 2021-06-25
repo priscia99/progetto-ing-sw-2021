@@ -66,7 +66,7 @@ public class Player extends Observable<Message<ClientController>> {
         this.username = username;
     }
 
-    public Player getCopy(){
+    public Player getCopy() throws GameException {
         Player copy = new Player();
         copy.setId(this.id);
         copy.setUsername(this.username);

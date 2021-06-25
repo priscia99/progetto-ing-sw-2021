@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.service_message.GameStartedServiceMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.server.model.BackupManager;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.singleplayer.SinglePlayerGame;
@@ -18,13 +19,17 @@ public class Lobby extends Observable<Message> {
     private final String lobbyId;
     private final int dimension;    // number of players
     private final Map<String, ClientConnection> clientConnectionMap= new HashMap<>();
-    private final Game game;
+    private Game game;
+    private final BackupManager backupManager;
     private int playerReady = 0;
+    ServerMessageDecoder serverMessageDecoder;
+    ServerMessageEncoder serverMessageEncoder;
 
     public Lobby(String lobbyId, int dimension) {
         this.lobbyId = lobbyId;
         this.dimension = dimension;
         this.game = (dimension == 1) ? new SinglePlayerGame() : new Game();
+        this.backupManager = new BackupManager(this);
     }
 
     /**
@@ -77,14 +82,34 @@ public class Lobby extends Observable<Message> {
         return clientConnectionMap.size() == 0;
     }
 
+    public void setGame(Game game){
+        this.game = game;
+        setupObservers();
+    }
+
+    public void setupObservers(){
+        game.addObserver(serverMessageEncoder);
+        game.getMarbleMarket().addObserver(serverMessageEncoder);
+        game.getCardMarket().addObserver(serverMessageEncoder);
+        game.getPlayers().forEach((player)->{
+            Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(serverMessageEncoder));
+            player.getPlayerBoard().getFaithPath().addObserver(serverMessageEncoder);
+            player.getPlayerBoard().getLeaderCardsDeck().addObserver(serverMessageEncoder);
+            player.getPlayerBoard().getStrongbox().addObserver(serverMessageEncoder);
+            player.getPlayerBoard().getWarehouse().addObserver(serverMessageEncoder);
+            player.addObserver(serverMessageEncoder);
+        });
+    }
+
     public synchronized void setupMVC() {
         playerReady++;
         System.out.println("LOBBY: Un giocatore e' pronto! (" + playerReady + " su " + dimension + ")");
         if (playerReady == dimension) {
             System.out.println("LOBBY: Tutti i giocatori sono pronti!");
             ServerController gameController = new ServerController(game);
-            ServerMessageDecoder serverMessageDecoder = new ServerMessageDecoder(gameController);
-            ServerMessageEncoder serverMessageEncoder = new ServerMessageEncoder(this);
+            gameController.setBackupManager(backupManager);
+            serverMessageDecoder = new ServerMessageDecoder(gameController);
+            serverMessageEncoder = new ServerMessageEncoder(this);
             clientConnectionMap.values()
                     .forEach(connection -> {
                         SocketClientConnection socketClientConnection = (SocketClientConnection) connection;
@@ -96,19 +121,9 @@ public class Lobby extends Observable<Message> {
                         players.add(new Player(username));
                     });
             gameController.tryAction(()->gameController.setupGame(players));
-            game.addObserver(serverMessageEncoder);
-            game.getMarbleMarket().addObserver(serverMessageEncoder);
-            game.getCardMarket().addObserver(serverMessageEncoder);
-            game.getPlayers().forEach((player)->{
-                Arrays.asList(player.getPlayerBoard().getDevelopmentCardsDecks()).forEach(deck->deck.addObserver(serverMessageEncoder));
-                player.getPlayerBoard().getFaithPath().addObserver(serverMessageEncoder);
-                player.getPlayerBoard().getLeaderCardsDeck().addObserver(serverMessageEncoder);
-                player.getPlayerBoard().getStrongbox().addObserver(serverMessageEncoder);
-                player.getPlayerBoard().getWarehouse().addObserver(serverMessageEncoder);
-                player.addObserver(serverMessageEncoder);
-            });
+            setupObservers();
             System.out.println("Giving initial assets...");
-            gameController.tryAction(()->gameController.giveInitialAssets());
+            gameController.tryAction(gameController::giveInitialAssets);
         }
     }
 

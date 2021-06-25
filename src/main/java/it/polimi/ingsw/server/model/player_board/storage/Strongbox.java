@@ -30,6 +30,16 @@ public class Strongbox extends Storage {
         }
     }
 
+    public Strongbox getCopy() throws GameException {
+        Strongbox copy = new Strongbox();
+        for(ResourceStock stock : resourceStocks){
+            for(int i = 0; i<stock.getQuantity(); i++){
+                copy.addResource(stock.getResourceType());
+            }
+        }
+        return copy;
+    }
+
     /**
      * It removes from the strongbox a single unit of resource of the type given in input
      * @param resourceType the type of the resource to be removed

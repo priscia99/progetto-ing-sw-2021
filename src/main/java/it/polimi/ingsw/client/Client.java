@@ -13,6 +13,7 @@ import it.polimi.ingsw.client.view.ui.gui.GUI;
 import it.polimi.ingsw.network.auth_data.*;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.service_message.ServiceMessage;
+import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.player_board.PlayerBoard;
 import it.polimi.ingsw.utils.CustomLogger;
 
@@ -34,15 +35,13 @@ public class Client {
         clientMessageEncoder = new ClientMessageEncoder(this);
     }
 
-    public void setupMVC(ArrayList<String> players){
+    public void applyGameBackup(ClientGame backup){
+        controller.setGame(backup);
+        setupGameObservers();
+    }
 
-        ClientGame game = new ClientGame(myUsername, players.get(0), players);
-        this.controller = new ClientController(game, userInterface);
-        userInterface.setController(controller);
-
-        // adding encoder to observers list
-        controller.addObserver(clientMessageEncoder);
-
+    private void setupGameObservers(){
+        ClientGame game = controller.getGame();
         GameView gameView = new GameView(userInterface);
         game.addObserver(gameView);
 
@@ -86,6 +85,17 @@ public class Client {
         game.getPlayerBoardMap().keySet().forEach(key -> {
             game.getPlayerBoardMap().get(key).addObserver(clientPlayerBoardView);
         });
+    }
+
+    public void setupMVC(ArrayList<String> players){
+
+        ClientGame game = new ClientGame(myUsername, players.get(0), players);
+        this.controller = new ClientController(game, userInterface);
+        userInterface.setController(controller);
+
+        // adding encoder to observers list
+        controller.addObserver(clientMessageEncoder);
+        setupGameObservers();
     }
 
     public synchronized boolean isActive(){

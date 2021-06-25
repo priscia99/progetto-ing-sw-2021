@@ -39,15 +39,17 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         this.setupMarbleMarket();
     }
 
-    public Game getBackup(){
+    public Game getBackup() throws GameException {
         Game backup = new Game();
         ArrayList<Player> playersBackup = new ArrayList<>();
-        players.forEach(player->playersBackup.add(player.getCopy()));
+        for(Player player : players){
+            playersBackup.add(player.getCopy());
+        }
         backup.setPlayers(playersBackup);
         backup.setCurrentPlayerIndex(currentPlayerIndex);
-        //backup.setLeaderCards(leaderCardsDeck);
-        //backup.setCardsMarket(cardsMarket);
-        //backup.setMarbleMarket(marbleMarket);
+        backup.setLeaderCards(leaderCardsDeck.getCopy());
+        backup.setCardsMarket(cardsMarket.getCopy());
+        backup.setMarbleMarket(marbleMarket.getCopy());
         backup.setIsLastRound(isLastRound);
         return backup;
     }
@@ -77,15 +79,6 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         this.isLastRound = flag;
     }
 
-    public void applyBackup(Game backup){
-        this.setCardsMarket(backup.getCardMarket());
-        this.setMarbleMarket(backup.getMarbleMarket());
-        this.setLeaderCards(backup.getLeaderCardsDeck());
-        this.setPlayers(backup.getPlayers());
-        this.setCurrentPlayerIndex(backup.getCurrentPlayerIndex());
-        this.setIsLastRound(backup.getIsLastRound());
-    }
-
     public CardsMarket getCardMarket() {
         return cardsMarket;
     }
@@ -98,9 +91,6 @@ public class Game extends Observable<Message<ClientController>> implements Obser
 
     public LeaderCardsDeck getLeaderCardsDeck(){return leaderCardsDeck;}
 
-    public int getCurrentPlayerIndex(){return currentPlayerIndex;}
-
-    public boolean getIsLastRound(){return isLastRound;}
 
 
     public void nextTurn() throws GameException {
