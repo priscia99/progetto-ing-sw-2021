@@ -19,11 +19,11 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
         this.username = username;
         this.order = order;
         this.isMine = isMine;
-        this.faithPath = new ClientFaithPath();
-        this.warehouse = new ClientWarehouse();
-        this.strongbox = new ClientStrongbox();
-        this.clientLeaderCards = new ClientLeaderCardDeck(isMine);
-        this.developmentCards = new ClientDevelopmentCardDecks();
+        this.faithPath = new ClientFaithPath(username);
+        this.warehouse = new ClientWarehouse(username);
+        this.strongbox = new ClientStrongbox(username);
+        this.clientLeaderCards = new ClientLeaderCardDeck(isMine, username);
+        this.developmentCards = new ClientDevelopmentCardDecks(username);
     }
 
     public void setOrder(int order) {this.order = order;}

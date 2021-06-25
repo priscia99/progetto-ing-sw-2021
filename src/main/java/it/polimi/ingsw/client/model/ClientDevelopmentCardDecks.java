@@ -8,15 +8,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class ClientDevelopmentCardDecks extends Observable<ClientDevelopmentCardDecks> {
+public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmentCardDecks, String>> {
 
     private final ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards;
+    private String owner;
 
-    public ClientDevelopmentCardDecks(ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards) {
+    public ClientDevelopmentCardDecks(ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards, String username) {
         this.developmentCards = developmentCards;
     }
 
-    public ClientDevelopmentCardDecks() {
+    public ClientDevelopmentCardDecks(String username) {
         this.developmentCards = new ArrayList<>();
     }
 
@@ -40,33 +41,24 @@ public class ClientDevelopmentCardDecks extends Observable<ClientDevelopmentCard
     public void addCard(ClientDevelopmentCard card, int index) {
         this.developmentCards.get(index).add(card);
 
-        notify(this);
+        notify(new Pair<>(this, owner));
     }
 
     public void addCards(ArrayList<ClientDevelopmentCard> cards, int index) {
         this.developmentCards.get(index).addAll(cards);
 
-        notify(this);
+        notify(new Pair<>(this, owner));
     }
 
     public void removeCard(Pair<Integer, Integer> coordinates) {
         ClientDevelopmentCard cardToRemove = this.developmentCards.get(coordinates.getFirst()).get(coordinates.getSecond());
         this.developmentCards.get(coordinates.getFirst()).remove(cardToRemove);
 
-        notify(this);
-    }
-
-    public void removeCards(Pair<Integer, Integer>... coordinates) {
-        for (Pair<Integer, Integer> pair :
-                coordinates) {
-            ClientDevelopmentCard cardToRemove = this.developmentCards.get(pair.getFirst()).get(pair.getSecond());
-            this.developmentCards.get(pair.getFirst()).remove(cardToRemove);
-        }
-        notify(this);
+        notify(new Pair<>(this, owner));
     }
 
     public void show(){
-        notify(this);
+        notify(new Pair<>(this, owner));
     }
     public int getCardsNumber(){return developmentCards.size();}
     public boolean isInitialized(){

@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class GUI implements UI{
     private ClientController controller;    // reference to client controller
     private Stage primaryStage;             // GUI Application primary stage
+    private String selectedPlayerBoard = null;
 
     public void loadAuthScreen(Client client){
         Platform.runLater(() -> SceneController.requestAuth(primaryStage, client));
@@ -75,24 +76,12 @@ public class GUI implements UI{
     }
 
     @Override
-    public void displayGameStarted() {
-        primaryStage.getScene().lookup("#join-button").setDisable(true);
-        primaryStage.getScene().lookup("#create-button").setDisable(true);
-        Platform.runLater(() -> SceneController.displayPopupMessage(primaryStage, "Game has started!"));
-    }
-
-    @Override
     public void displayNewTurn(String player, Boolean myTurn) {
         if(myTurn){
             Platform.runLater(() -> {
                 SceneController.displayPopupMessage(primaryStage, player + ", it's your turn!");
             });
         }
-    }
-
-    @Override
-    public void displayLeaderCard(ClientLeaderCard clientLeaderCard) {
-
     }
 
     @Override
@@ -113,7 +102,7 @@ public class GUI implements UI{
 
 
     @Override
-    public void displayWarehouse(ClientWarehouse warehouse) {
+    public void displayWarehouse(ClientWarehouse warehouse, String username) {
         Platform.runLater(() -> SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(warehouse));
     }
 
@@ -122,7 +111,7 @@ public class GUI implements UI{
      * @param deck Player leader cards
      */
     @Override
-    public void displayLeaderCardDeck(ClientLeaderCardDeck deck) {
+    public void displayLeaderCardDeck(ClientLeaderCardDeck deck, String username) {
         Platform.runLater(() -> SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(deck));
     }
 
@@ -151,17 +140,17 @@ public class GUI implements UI{
     }
 
     @Override
-    public void displayStrongBox(ClientStrongbox strongbox) {
+    public void displayStrongBox(ClientStrongbox strongbox, String username) {
         Platform.runLater(() -> SceneController.getMainGUIController().getStrongBoxController().refreshStrongbox(strongbox));
     }
 
     @Override
-    public void displayFaithPath(ClientFaithPath path) {
+    public void displayFaithPath(ClientFaithPath path, String username) {
         Platform.runLater(() -> {SceneController.getMainGUIController().getFaithPathController().refreshFaithPath(path);});
     }
 
     @Override
-    public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck) {
+    public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck, String username) {
         Platform.runLater(() -> {SceneController.getMainGUIController().getDevelopmentCardsController().refreshDevelopmentCards(deck);});
     }
 
@@ -202,6 +191,7 @@ public class GUI implements UI{
 
     @Override
     public void startUI(ClientGame game) {
+        this.selectedPlayerBoard = game.getCurrentPlayer();
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
             SceneController.getMainGUIController().initGUI();
@@ -219,6 +209,7 @@ public class GUI implements UI{
     }
 
     public void setPlayerBoardUsername(String username, boolean isMine){
+        this.selectedPlayerBoard = username;
         Platform.runLater(() -> SceneController.getMainGUIController().getPlayerBoardController().setUsername(username, isMine));
     }
 
