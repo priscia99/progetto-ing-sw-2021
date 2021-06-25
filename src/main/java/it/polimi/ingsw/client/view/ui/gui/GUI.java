@@ -116,7 +116,7 @@ public class GUI implements UI{
     @Override
     public void displayLeaderCardDeck(ClientLeaderCardDeck deck, String username) {
         if (isToRefresh(username)) {
-            Platform.runLater(() -> SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(deck));
+            Platform.runLater(() -> SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(deck, isMine(username)));
         }
     }
 
@@ -156,6 +156,7 @@ public class GUI implements UI{
         if (isToRefresh(username)) {
             Platform.runLater(() -> {
                 SceneController.getMainGUIController().getFaithPathController().refreshFaithPath(path);
+                SceneController.getMainGUIController().getStatsController().refreshFaithPoints(path.getFaithPoints(), username);
             });
         }
     }
@@ -165,6 +166,7 @@ public class GUI implements UI{
         if (isToRefresh(username)) {
             Platform.runLater(() -> {
                 SceneController.getMainGUIController().getDevelopmentCardsController().refreshDevelopmentCards(deck, isMine(username));
+                SceneController.getMainGUIController().getStatsController().refreshDevelopmentCardNumbers(deck.getCardsNumber(), username);
             });
         }
     }
@@ -211,6 +213,7 @@ public class GUI implements UI{
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
             SceneController.getMainGUIController().initGUI();
+            SceneController.getMainGUIController().getStrongBoxController().initStrongboxScreen();
             SceneController.getMainGUIController().getPlayerBoardController().setClientController(controller);
             SceneController.getMainGUIController().getPlayerBoardController().initClientSelector(new ArrayList<>(game.getPlayerBoardMap().keySet()));
             SceneController.getMainGUIController().getPlayerBoardController().setUsername(game.getMyUsername(), true);
@@ -220,7 +223,7 @@ public class GUI implements UI{
     @Override
     public void displayUserStats(ClientPlayerBoard playerBoard) {
         Platform.runLater(() -> {
-            SceneController.getMainGUIController().getStatsController().refreshStats(playerBoard);
+            SceneController.getMainGUIController().getStatsController().initStats(playerBoard);
         });
     }
 

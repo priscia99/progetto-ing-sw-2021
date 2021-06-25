@@ -21,14 +21,17 @@ public class LeaderCardsController {
      * Refreshes leader cards pane view in main GUI given the player's deck
      * @param leaderCardsDeck player's leader cards deck
      */
-    public void refreshLeaderCards(ClientLeaderCardDeck leaderCardsDeck){
+    public void refreshLeaderCards(ClientLeaderCardDeck leaderCardsDeck, boolean isMine){
         // if deck's size is greater than 2 -> user still has to choose initial leader cards
         if(leaderCardsDeck.getClientLeaderCards().size() > 2){return;}
         for(int i=0; i<leaderCardsDeck.getClientLeaderCards().size(); i++) {
             ClientLeaderCard tempCard = leaderCardsDeck.getClientLeaderCards().get(i);
             String cardImagePath = LEADER_CARD_FRONT_PATH + tempCard.getAssetLink() + ".png";
             Pane cardPane = (Pane)(leaderCardsList.get(i));
-            cardPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
+            if(isMine || tempCard.isActive())
+                cardPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
+            else
+                cardPane.setStyle("-fx-background-image: url(" + LEADER_CARD_BACK_PATH + ");");
         }
     }
 

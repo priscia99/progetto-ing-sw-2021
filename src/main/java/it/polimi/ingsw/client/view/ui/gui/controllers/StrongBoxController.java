@@ -35,4 +35,11 @@ public class StrongBoxController {
             strongboxStone.setText("0");
         }
     }
+
+    public void initStrongboxScreen(){
+        strongboxCoin.setText("0");
+        strongboxServant.setText("0");
+        strongboxShield.setText("0");
+        strongboxStone.setText("0");
+    }
 }

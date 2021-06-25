@@ -18,6 +18,7 @@ public class DevelopmentCardsController {
     private Button produceButton;
 
     public DevelopmentCardsController(AnchorPane firstDevSlot, AnchorPane secondDevSlot, AnchorPane thirdDevSlot, Button produceButton) {
+        this.produceButton = produceButton;
         cardsSlots = new ArrayList<>();
         this.firstDevSlot = firstDevSlot;
         this.secondDevSlot = secondDevSlot;
@@ -33,17 +34,19 @@ public class DevelopmentCardsController {
      */
     public void refreshDevelopmentCards(ClientDevelopmentCardDecks decks, boolean isMine){
         produceButton.setDisable(!isMine);
-        Pane tempPane;  // temporary card pane
-        for(int i=0; i<3; i++){
-            for(int j=0; j<3; j++){
-                tempPane = (Pane) cardsSlots.get(i).get(j);
-                if(j<decks.getDeck(i).size()){
-                    // current slot position is occupied by a card (set front background image)
-                    String cardImagePath = DEV_CARDS_FRONT_PATH + decks.getDeck(i).get(j).getAssetLink() + ".png";
-                    tempPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
-                }else{
-                    // current slot position is free (set empty background image)
-                    tempPane.setStyle("-fx-background-image: none;");
+        if(!decks.isInitialized()) {
+            Pane tempPane;  // temporary card pane
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    tempPane = (Pane) cardsSlots.get(i).get(j);
+                    if (j < decks.getDeck(i).size()) {
+                        // current slot position is occupied by a card (set front background image)
+                        String cardImagePath = DEV_CARDS_FRONT_PATH + decks.getDeck(i).get(j).getAssetLink() + ".png";
+                        tempPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
+                    } else {
+                        // current slot position is free (set empty background image)
+                        tempPane.setStyle("-fx-background-image: none;");
+                    }
                 }
             }
         }
