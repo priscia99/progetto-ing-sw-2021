@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceType;
+import it.polimi.ingsw.utils.Pair;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public class WarehouseController extends GenericGUIController {
@@ -43,10 +45,12 @@ public class WarehouseController extends GenericGUIController {
     private Marble marbleToInsert;
     private ArrayList<ResourcePosition> positions = null;
     private ArrayList<ResourceType> conversions = null;
-    int insertPositionIndex;
+    private int insertPositionIndex;
     private ArrayList<Marble> selected;
     private ArrayList<ChangeEffect> changeEffects;
     private ArrayList<DepotEffect> depotEffects;
+    private ArrayList<Pair<Integer, Integer>> occupiedCells;
+    private MarbleSelection marbleSelection;
 
     public WarehouseController(ClientController clientController, GridPane firstDepot, GridPane secondDepot, GridPane thirdDepot, MenuButton swapDepotsMenu) {
         super(clientController);
@@ -78,100 +82,95 @@ public class WarehouseController extends GenericGUIController {
     }
 
     private final EventHandler<ActionEvent> swap1and2 = event -> {
-        super.getClientController().swapDepots(1,2);
+        super.getClientController().swapDepots(1, 2);
     };
 
     private final EventHandler<ActionEvent> swap1and3 = event -> {
-        super.getClientController().swapDepots(1,3);
+        super.getClientController().swapDepots(1, 3);
     };
 
     private final EventHandler<ActionEvent> swap2and3 = event -> {
-        super.getClientController().swapDepots(2,3);
+        super.getClientController().swapDepots(2, 3);
     };
 
     /**
      * Refreshes warehouse pane with given warehouse
+     *
      * @param warehouse Player's warehouse to show
      */
-    public void refreshWarehouse(ClientWarehouse warehouse, boolean isMine){
+    public void refreshWarehouse(ClientWarehouse warehouse, boolean isMine) {
         this.activeWarehouse = warehouse;
         this.setSwapMenuEnable(isMine);
-        if(activeWarehouse.isInitialized()){
+        if (activeWarehouse.isInitialized()) {
             // iterate through depots
-            for(int i=0; i<3; i++){
+            for (int i = 0; i < 3; i++) {
                 ResourceDepot tempDepot = activeWarehouse.getResourceDepot(i);
                 // iterate through positions in depots
-                for(int j=0; j<tempDepot.getCapacity(); j++){
+                for (int j = 0; j < tempDepot.getCapacity(); j++) {
                     Pane resourcePane = (Pane) warehouseElements.get(i).get(j);
-                    if(j<tempDepot.getQuantity()) {
+                    if (j < tempDepot.getQuantity()) {
                         // if the position is an actual stored resource set a backround image
                         String iconPath = getPathByResourceType(activeWarehouse.getResourceDepot(i).getResourceType());
                         resourcePane.setStyle("-fx-background-image: url(" + iconPath + ");");
-                    }
-                    else {
+                    } else {
                         // if the position is free set an empty background (no image)
                         resourcePane.setStyle("-fx-background-image: none;");
                     }
                 }
             }
-        }
-        else{
+        } else {
             // warehouse is not initialized yet
-            for(ObservableList<Node> nodeList : warehouseElements){
-                for(Node node : nodeList){
-                    ((Pane)node).setStyle("-fx-background-image: none;");
+            for (ObservableList<Node> nodeList : warehouseElements) {
+                for (Node node : nodeList) {
+                    ((Pane) node).setStyle("-fx-background-image: none;");
                 }
             }
         }
     }
 
-    public void setSwapMenuEnable(boolean isEnable){
+    public void setSwapMenuEnable(boolean isEnable) {
         swapDepotsMenu.setDisable(!isEnable);
     }
 
-    public void insertResourcesToDepot(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects, ArrayList<DepotEffect> depotEffects){
-       positions = new ArrayList<>();
-       conversions = new ArrayList<>();
-       this.selected = selected;
-       this.changeEffects = changeEffects;
-       this.depotEffects = depotEffects;
-       insertPositionIndex = 0;
-       parseNextPosition(insertPositionIndex);
-        try{
-            for(Marble marble : selected){
-                if(marble.getResourceType().equals(ResourceType.FAITH)) continue;
-                if(marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty() ){
-                    // TODO ask for discounts in GUI
-                    // conversions.add(askForConversions(changeEffects));
-                }
-                if(!marble.getResourceType().equals(ResourceType.BLANK) ||
-                        marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Insert position in which you want to add " + marble.getResourceType().toString());
-                    alert.show();
-                    // TODO manage leader card depots
-                    askForDestinationDepot(marble);
-                    // displayPossibleResourcePositions(depotEffects);
-                }
-            }
-            // controller.pickResources(selection, positions, conversions);
-        } catch(Exception e){
-            // boh
-        }
+    public void insertResourcesToDepot(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects, ArrayList<DepotEffect> depotEffects) {
+        this.marbleSelection = selection;
+        this.occupiedCells = new ArrayList<>();
+        this.positions = new ArrayList<>();
+        this.conversions = new ArrayList<>();
+        this.selected = selected;
+        this.changeEffects = changeEffects;
+        this.depotEffects = depotEffects;
+        insertPositionIndex = 0;
+        parseNextPosition();
     }
 
-    private void parseNextPosition(int index){
-        if(index >= selected.size()){
-            // mandarlo al controller
+    private void parseNextPosition() {
+        if (insertPositionIndex >= selected.size()) {
+            removeAllSelectionHandlers();
+            getClientController().pickResources(marbleSelection, positions, conversions);
             return;
         }
-        Marble marble = selected.get(index);
-        if(marble.getResourceType().equals(ResourceType.FAITH)) return;
-        if(marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty() ){
+        Marble marble = selected.get(insertPositionIndex);
+        this.marbleToInsert = marble;
+        if (marble.getResourceType().equals(ResourceType.FAITH)) {
+            insertPositionIndex++;
+            parseNextPosition();
+            return;
+        }
+        if (marble.getResourceType().equals(ResourceType.BLANK) && changeEffects.isEmpty()) {
+            insertPositionIndex++;
+            parseNextPosition();
+            return;
+        }
+        if (marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()) {
             // TODO ask for discounts in GUI
             // conversions.add(askForConversions(changeEffects));
+            insertPositionIndex++;
+            parseNextPosition();
+            return;
         }
-        if(!marble.getResourceType().equals(ResourceType.BLANK) ||
-                marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()){
+        if (!marble.getResourceType().equals(ResourceType.BLANK) ||
+                marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Insert position in which you want to add " + marble.getResourceType().toString());
             alert.show();
             // TODO manage leader card depots
@@ -180,36 +179,42 @@ public class WarehouseController extends GenericGUIController {
         }
     }
 
-    public void askForDestinationDepot(Marble marble){
+    public void askForDestinationDepot(Marble marble) {
         this.marbleToInsert = marble;
         this.setSwapMenuEnable(false);
-        if(activeWarehouse.isInitialized()){
+        if (activeWarehouse.isInitialized()) {
             // iterate through depots
-            for(int i=0; i<3; i++){
+            for (int i = 0; i < 3; i++) {
                 ResourceDepot tempDepot = activeWarehouse.getResourceDepot(i);
                 // iterate through positions in depots
-                for(int j=0; j<tempDepot.getCapacity(); j++){
+                for (int j = 0; j < tempDepot.getCapacity(); j++) {
                     Pane resourcePane = (Pane) warehouseElements.get(i).get(j);
-                    if(j<tempDepot.getQuantity()) {
+                    if (j < tempDepot.getQuantity()) {
                         // if the position is an actual stored resource set a backround image
                         String iconPath = getPathByResourceType(activeWarehouse.getResourceDepot(i).getResourceType());
                         resourcePane.setStyle("-fx-background-image: url(" + iconPath + ");");
-                    }
-                    else {
+                    } else {
                         // if the position is free set an empty background (no image)
-                        resourcePane.setStyle("-fx-background-image: url('/img/ico/zero.png');");
-                        resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onMarbleDestinationChosen);
+                        int triggeredPaneRowIndex = Integer.parseInt(resourcePane.getId().split("-")[1]);
+                        int triggeredPaneColumnIndex = Integer.parseInt(resourcePane.getId().split("-")[2]);
+                        if (!occupiedCells.contains(new Pair<Integer, Integer>(triggeredPaneRowIndex, triggeredPaneColumnIndex))) {
+                            resourcePane.setStyle("-fx-background-image: url('/img/ico/zero.png');");
+                            resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onMarbleDestinationChosen);
+                        }
                     }
                 }
             }
-        }
-        else{
+        } else {
             // warehouse is not initialized yet
-            for(ObservableList<Node> nodeList : warehouseElements){
-                for(Node node : nodeList){
-                    Pane resourcePane = ((Pane)node);
-                    resourcePane.setStyle("-fx-background-image: url('/img/ico/zero.png');");
-                    resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onMarbleDestinationChosen);
+            for (ObservableList<Node> nodeList : warehouseElements) {
+                for (Node node : nodeList) {
+                    Pane resourcePane = ((Pane) node);
+                    int triggeredPaneRowIndex = Integer.parseInt(resourcePane.getId().split("-")[1]);
+                    int triggeredPaneColumnIndex = Integer.parseInt(resourcePane.getId().split("-")[2]);
+                    if (!occupiedCells.contains(new Pair<Integer, Integer>(triggeredPaneRowIndex, triggeredPaneColumnIndex))) {
+                        resourcePane.setStyle("-fx-background-image: url('/img/ico/zero.png');");
+                        resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onMarbleDestinationChosen);
+                    }
                 }
             }
         }
@@ -220,9 +225,35 @@ public class WarehouseController extends GenericGUIController {
         String iconPath = this.getPathByResourceType(marbleToInsert.getResourceType());
         triggeredPane.setStyle("-fx-background-image: url(" + iconPath + ");");
         triggeredPane.setEffect(new Glow(0.6));
-        // positions.add(parseResourcePosition(positionRaw));
-        parseNextPosition(++insertPositionIndex);
+        int triggeredPaneRowIndex = Integer.parseInt(triggeredPane.getId().split("-")[1]);
+        int triggeredPaneColumnIndex = Integer.parseInt(triggeredPane.getId().split("-")[2]);
+
+        this.occupiedCells.add(new Pair<>(triggeredPaneRowIndex, triggeredPaneColumnIndex));
+        switch (triggeredPaneRowIndex) {
+            case 1 -> positions.add(ResourcePosition.FIRST_DEPOT);
+            case 2 -> positions.add(ResourcePosition.SECOND_DEPOT);
+            case 3 -> positions.add(ResourcePosition.THIRD_DEPOT);
+        }
+        removeMarbleDestinationChosenHandler(triggeredPane);
+        insertPositionIndex++;
+        parseNextPosition();
     };
+
+    public void removeMarbleDestinationChosenHandler(Pane pane) {
+        pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onMarbleDestinationChosen);
+    }
+
+    public void removeAllSelectionHandlers() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j <i+1; j++) {
+                Pane resourcePane = (Pane) warehouseElements.get(i).get(j);
+                resourcePane.setStyle("-fx-background-image: url('/img/ico/zero.png');");
+                resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onMarbleDestinationChosen);
+                resourcePane.setEffect(null);
+            }
+        }
+    }
+
 
     public String getPathByResourceType(ResourceType type){
         String iconPath = null;

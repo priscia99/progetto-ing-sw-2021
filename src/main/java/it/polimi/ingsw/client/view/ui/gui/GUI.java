@@ -223,6 +223,7 @@ public class GUI implements UI{
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
             SceneController.getMainGUIController().initGUI(controller);
+            SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(game.getPlayerBoardMap().get(game.getMyUsername()).getWarehouse(), true);
             SceneController.getMainGUIController().getStrongBoxController().initStrongboxScreen();
             SceneController.getMainGUIController().getPlayerBoardController().initClientSelector(new ArrayList<>(game.getPlayerBoardMap().keySet()));
             SceneController.getMainGUIController().getPlayerBoardController().setUsername(game.getMyUsername(), true);
