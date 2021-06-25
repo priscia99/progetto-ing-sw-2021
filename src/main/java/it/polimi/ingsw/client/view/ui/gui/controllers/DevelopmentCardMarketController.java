@@ -29,7 +29,6 @@ public class DevelopmentCardMarketController {
         for(int i = 0; i<4; i++){
             for(int j = 0; j < 3 ; j ++){
                 int deckSize = cardsMarket.getDecks().get(i).get(j).size();
-                System.out.println("#card-" + String.valueOf(j+1) + "-" + String.valueOf(i+1));
                 Pane tempCardPane = (Pane) developmentCardsMarketPane.lookup("#card-" + String.valueOf(j+1) + "-" + String.valueOf(i+1));
                 if(deckSize>0){
                     // there is a development card available for this cell -> display image
@@ -39,7 +38,6 @@ public class DevelopmentCardMarketController {
                     // the current cell is empty -> display back card based on proper level and color of the cell
                     int cardPathNumber = 1 + j*4 + i;
                     cardImagePath = DEV_CARDS_BACK_PATH + cardPathNumber + ".png";
-                    System.out.println(cardImagePath);
                 }
                 tempCardPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
                 index++;
@@ -52,22 +50,4 @@ public class DevelopmentCardMarketController {
         this.refreshCardsMarket();
     }
 
-    /*
-    private static String[] getCardMarketContents(ClientCardsMarket market){
-        String[] content = new String[12];
-        int index = 0;
-        for(int i = 0; i<4; i++){
-            for(int j = 0; j < 3 ; j ++){
-                int deckSize = market.getDecks().get(i).get(j).size();
-                if(deckSize>0){
-                    content[index] = RepresentationBuilder.render(market.getDecks().get(i).get(j).get(deckSize-1));
-                } else {
-                    content[index] = "<< EMPTY >>";
-                }
-                index++;
-            }
-        }
-        return content;
-    }
-     */
 }

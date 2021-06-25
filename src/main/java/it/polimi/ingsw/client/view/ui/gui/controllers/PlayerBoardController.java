@@ -29,11 +29,9 @@ public class PlayerBoardController {
         for(MenuItem item : playerSelector.getItems()){
             item.setOnAction(onPlayerSelected);
         }
-        // playerSelector.getItems().forEach(item -> item.addEventHandler(MouseEvent.MOUSE_CLICKED, onPlayerSelected));
     }
 
     EventHandler<ActionEvent> onPlayerSelected = event -> {
-        System.out.println("clicked!");
         clientController.displayPlayerboardByUsername(((MenuItem)event.getSource()).getText());
     };
 

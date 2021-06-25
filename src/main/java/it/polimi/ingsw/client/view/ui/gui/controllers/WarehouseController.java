@@ -44,7 +44,6 @@ public class WarehouseController {
     public void refreshWarehouse(ClientWarehouse warehouse, boolean isMine){
         swapDepotsMenu.setDisable(!isMine);
         if(warehouse.isInitialized()){
-            System.out.println(new RepresentationBuilder().render(warehouse));
             // iterate through depots
             for(int i=0; i<3; i++){
                 ResourceDepot tempDepot = warehouse.getResourceDepot(i);
@@ -79,7 +78,6 @@ public class WarehouseController {
         }
         else{
             // warehouse is not initialized yet
-            System.out.println("Free position");
             for(ObservableList<Node> nodeList : warehouseElements){
                 for(Node node : nodeList){
                     ((Pane)node).setStyle("-fx-background-image: none;");

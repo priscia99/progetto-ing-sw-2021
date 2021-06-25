@@ -74,8 +74,6 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
     public void setPlayerBoardMap(Map<String, ClientPlayerBoard> playerBoardMap) {
         this.playerBoardMap = playerBoardMap;   // re-assign playerboards map based on order
         getPlayerBoardMap().keySet().forEach(key -> {
-            System.out.println("Player: " + getPlayerBoardMap().get(key).getUsername() + ", Order: "
-            + getPlayerBoardMap().get(key).getOrder() + ", Mine: " + getPlayerBoardMap().get(key).isMine());
             getPlayerBoardMap().get(key).refreshStats();    // refresh player stats for each player
         });
     }

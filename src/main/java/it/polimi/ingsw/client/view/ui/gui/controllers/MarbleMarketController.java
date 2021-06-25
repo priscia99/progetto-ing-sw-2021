@@ -56,7 +56,6 @@ public class MarbleMarketController {
                 Marble tempMarble = marketPositions[i][j];  // getting temp marble
                 Pane tempPane = (Pane) marbleMarketPane.lookup("#mm-" + String.valueOf(i+1) + "-" + String.valueOf(j+1));
                 marbleImagePath = this.getAssetLink(tempMarble);
-                System.out.println(marbleImagePath);
                 tempPane.setStyle("-fx-background-image: url(" + marbleImagePath + ");");
 
             }

@@ -30,7 +30,7 @@ public class DevelopmentCardsController {
      */
     public void refreshDevelopmentCards(ClientDevelopmentCardDecks decks, boolean isMine){
         produceButton.setDisable(!isMine);
-        if(!decks.isInitialized()) {
+        if(decks.isInitialized()) {
             Pane tempPane;  // temporary card pane
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {

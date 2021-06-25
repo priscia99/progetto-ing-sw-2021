@@ -47,7 +47,6 @@ public class ChooseLeadersController {
         for(int i=0; i<4; i++){
             Pane cardPane = (Pane) cardsPanes.get(i);
             String filePath = LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png";
-            System.out.println("Leader path: " + LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png");
             cardPane.setStyle("-fx-background-image: url(" + filePath + ");");
             cardPane.addEventHandler(MouseEvent.MOUSE_CLICKED, onLeaderCardClicked);
         }
