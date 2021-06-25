@@ -189,7 +189,7 @@ public class ClientController extends Observable<Message<ServerController>> {
     }
 
     public void swapDepots(int first, int second){
-        executeIfCurrentPlayer(()->notify(new SwapDepotsMessage(first, second)));
+        executeIfCurrentPlayer(()->notify(new SwapDepotsMessage(first-1, second-1)));
     }
 
     public void buyDevelopmentCard(String cardId, int deckIndex,  ConsumeTarget toConsume){

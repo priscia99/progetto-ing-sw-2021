@@ -121,12 +121,10 @@ public class MainGUIController {
         return buttonsMap;
     }
 
-    public void initGUI(){
-        // TODO fix init GUI
-        /*
-        strongBoxController.refreshStrongbox(new ClientStrongbox());
-        warehouseController.refreshWarehouse(new ClientWarehouse());
-        */
+    public void disableAllActions() {
+        // TODO complete with other actions to disable
+        warehouseController.setSwapMenuEnable(false);
+        developmentCardsController.setProduceButtonEnable(false);
     }
 
     public StatsController getStatsController() {
@@ -172,4 +170,6 @@ public class MainGUIController {
     public PlayerBoardController getPlayerBoardController() {
         return playerBoardController;
     }
+
+
 }

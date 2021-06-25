@@ -47,4 +47,8 @@ public class DevelopmentCardsController {
             }
         }
     }
+
+    public void setProduceButtonEnable(boolean isEnable) {
+        produceButton.setDisable(!isEnable);
+    }
 }

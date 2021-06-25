@@ -80,7 +80,13 @@ public class GUI implements UI{
     public void displayNewTurn(String player, Boolean myTurn) {
         if(myTurn){
             Platform.runLater(() -> {
+                // TODO enable all actions
+                // SceneController.getMainGUIController().enableAllActions();
                 SceneController.displayPopupMessage(primaryStage, player + ", it's your turn!");
+            });
+        }else{
+            Platform.runLater(() -> {
+                SceneController.getMainGUIController().disableAllActions();
             });
         }
     }
@@ -212,7 +218,6 @@ public class GUI implements UI{
         this.myUsername = game.getMyUsername();
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
-            SceneController.getMainGUIController().initGUI();
             SceneController.getMainGUIController().getStrongBoxController().initStrongboxScreen();
             SceneController.getMainGUIController().getPlayerBoardController().setClientController(controller);
             SceneController.getMainGUIController().getWarehouseController().setClientController(controller);

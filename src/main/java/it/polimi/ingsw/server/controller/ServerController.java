@@ -30,6 +30,7 @@ public class ServerController {
         } catch (GameException e){
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
         } catch (Exception e){
+            e.printStackTrace();
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
         }
     }

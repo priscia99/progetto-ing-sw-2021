@@ -42,4 +42,5 @@ public class StrongBoxController {
         strongboxShield.setText("0");
         strongboxStone.setText("0");
     }
+
 }

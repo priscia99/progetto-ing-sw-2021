@@ -76,7 +76,7 @@ public class StatsController {
             paneId = "#fp-" + otherPlayersOrder.get(playerUsername) + 1;
             playerPane = (AnchorPane)statsList.get(otherPlayersOrder.get(playerUsername));
         }
-        ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(5).lookup(paneId)).setText(String.valueOf(faithPoints));
+       // ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(5).lookup(paneId)).setText(String.valueOf(faithPoints));
     }
 
     public void refreshVictoryPoints(int victoryPoints, String playerUsername){
@@ -89,7 +89,7 @@ public class StatsController {
             paneId = "#vp-" + otherPlayersOrder.get(playerUsername) + 1;
             playerPane = (AnchorPane)statsList.get(otherPlayersOrder.get(playerUsername));
         }
-        ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(4).lookup(paneId)).setText(String.valueOf(victoryPoints));
+        //((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(4).lookup(paneId)).setText(String.valueOf(victoryPoints));
     }
 
     public void refreshDevelopmentCardNumbers(int cardNumbers, String playerUsername){
@@ -102,6 +102,6 @@ public class StatsController {
             paneId = "#dc-" +   otherPlayersOrder.get(playerUsername)+ 1;
             playerPane = (AnchorPane)statsList.get(otherPlayersOrder.get(playerUsername));
         }
-        ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(6).lookup(paneId)).setText(String.valueOf(cardNumbers));
+        //((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(6).lookup(paneId)).setText(String.valueOf(cardNumbers));
     }
 }

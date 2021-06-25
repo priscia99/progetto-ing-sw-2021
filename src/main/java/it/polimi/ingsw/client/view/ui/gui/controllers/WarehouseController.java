@@ -24,11 +24,11 @@ public class WarehouseController {
     private static final String STONE_PATH = "/img/ico/stone.png";
     private ClientController clientController;
 
-    GridPane firstDepot;
-    GridPane secondDepot;
-    GridPane thirdDepot;
-    MenuButton swapDepotsMenu;
-    ArrayList<ObservableList<Node>> warehouseElements;
+    private GridPane firstDepot;
+    private GridPane secondDepot;
+    private GridPane thirdDepot;
+    private MenuButton swapDepotsMenu;
+    private ArrayList<ObservableList<Node>> warehouseElements;
 
     public WarehouseController(GridPane firstDepot, GridPane secondDepot, GridPane thirdDepot, MenuButton swapDepotsMenu) {
         this.swapDepotsMenu = swapDepotsMenu;
@@ -79,7 +79,7 @@ public class WarehouseController {
      * @param warehouse Player's warehouse to show
      */
     public void refreshWarehouse(ClientWarehouse warehouse, boolean isMine){
-        swapDepotsMenu.setDisable(!isMine);
+        this.setSwapMenuEnable(isMine);
         if(warehouse.isInitialized()){
             // iterate through depots
             for(int i=0; i<3; i++){
@@ -123,15 +123,8 @@ public class WarehouseController {
         }
     }
 
-    /**
-     * Show swap depots options based on current warehouse resources
-     * @param warehouse Player's warehouse
-     */
-    public void refreshSwapDepotsOptions(ClientWarehouse warehouse){
-        // FIXME handle possible options
-        swapDepotsMenu.getItems().add(new MenuItem("Swap depots 1 and 2"));
-        swapDepotsMenu.getItems().add(new MenuItem("Swap depots 1 and 3"));
-        swapDepotsMenu.getItems().add(new MenuItem("Swap depots 2 and 3"));
+    public void setSwapMenuEnable(boolean isEnable){
+        swapDepotsMenu.setDisable(!isEnable);
     }
 
 }
