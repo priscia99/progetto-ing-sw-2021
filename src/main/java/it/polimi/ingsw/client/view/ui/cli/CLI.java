@@ -283,7 +283,7 @@ public class CLI implements UI {
     }
 
     @Override
-    public void displayLeaderCardDeck(ClientLeaderCardDeck clientLeaderCardDeck) {
+    public void displayLeaderCardDeck(ClientLeaderCardDeck clientLeaderCardDeck, String username) {
         synchronized (outSemaphore) {
             System.out.println(RepresentationBuilder.render(clientLeaderCardDeck));
         }
@@ -292,7 +292,7 @@ public class CLI implements UI {
 
 
     @Override
-    public void displayWarehouse(ClientWarehouse warehouse) {
+    public void displayWarehouse(ClientWarehouse warehouse, String username) {
         synchronized (outSemaphore){
             System.out.println(RepresentationBuilder.render(warehouse));
         }
@@ -318,14 +318,12 @@ public class CLI implements UI {
         }
     }
 
-    @Override
     public void displayError(String error){
         synchronized (outSemaphore){
             System.out.println(ANSI_BG_RED + error + ANSI_RESET);
         }
     }
 
-    @Override
     public void displayInfo(String info){
         synchronized (outSemaphore){
             System.out.println(ANSI_BLUE + info + ANSI_RESET);
@@ -340,21 +338,21 @@ public class CLI implements UI {
     }
 
     @Override
-    public void displayStrongBox(ClientStrongbox strongbox) {
+    public void displayStrongBox(ClientStrongbox strongbox, String username) {
         synchronized (outSemaphore){
             System.out.println(RepresentationBuilder.render(strongbox));
         }
     }
 
     @Override
-    public void displayFaithPath(ClientFaithPath path) {
+    public void displayFaithPath(ClientFaithPath path, String username) {
         synchronized (outSemaphore){
             System.out.println(RepresentationBuilder.render(path));
         }
     }
 
     @Override
-    public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck){
+    public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck, String username){
         synchronized (outSemaphore){
             System.out.println(RepresentationBuilder.render(deck));
         }

@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class ClientController extends Observable<Message<ServerController>> {
 
     private final ClientGame game;
-    private String selectedPlayerBoard = null;
     UI userInterface;
 
     public ClientController(ClientGame game, UI userInterface) {
@@ -260,11 +259,11 @@ public class ClientController extends Observable<Message<ServerController>> {
         if(userInterface instanceof GUI) {
             ((GUI)userInterface).setPlayerBoardUsername(username, username.equals(getGame().getMyUsername()));
         }
-        userInterface.displayFaithPath(selectedPlayerboard.getFaithPath());
-        userInterface.displayWarehouse(selectedPlayerboard.getWarehouse());
-        userInterface.displayLeaderCardDeck(selectedPlayerboard.getClientLeaderCards());
-        userInterface.displayStrongBox(selectedPlayerboard.getStrongbox());
-        userInterface.displayDevelopmentCardDecks(selectedPlayerboard.getDevelopmentCards());
+        userInterface.displayFaithPath(selectedPlayerboard.getFaithPath(), username);
+        userInterface.displayWarehouse(selectedPlayerboard.getWarehouse(), username);
+        userInterface.displayLeaderCardDeck(selectedPlayerboard.getClientLeaderCards(), username);
+        userInterface.displayStrongBox(selectedPlayerboard.getStrongbox(), username);
+        userInterface.displayDevelopmentCardDecks(selectedPlayerboard.getDevelopmentCards(), username);
     }
     public void setMagnificoAsWinner(){
         userInterface.displayInfo("Magnifico has won! GAME OVER");

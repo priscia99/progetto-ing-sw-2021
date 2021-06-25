@@ -120,8 +120,11 @@ public class MainGUIController {
     }
 
     public void initGUI(){
+        // TODO fix init GUI
+        /*
         strongBoxController.refreshStrongbox(new ClientStrongbox());
         warehouseController.refreshWarehouse(new ClientWarehouse());
+        */
     }
 
     public StatsController getStatsController() {

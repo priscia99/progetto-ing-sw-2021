@@ -6,22 +6,22 @@ import java.util.stream.Collectors;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.server.model.player_board.storage.*;
+import it.polimi.ingsw.utils.Pair;
 
-public class ClientWarehouse extends Observable<ClientWarehouse> {
+public class ClientWarehouse extends Observable<Pair<ClientWarehouse, String>> {
 
     private ArrayList<ResourceDepot> resourceDepots;
+    private String owner;
 
-    public ClientWarehouse() {
+    public ClientWarehouse(String owner) {
         this.resourceDepots = new ArrayList<>();
-//        this.resourceDepots = warehouse.getResourceStocks()
-//                .stream().map(resourceStock -> (ResourceDepot) resourceStock)
-//                .collect(Collectors.toCollection(ArrayList::new));
+        this.owner = owner;
     }
 
     public void setResourceDepots(ArrayList<ResourceDepot> resourceDepots) {
         this.resourceDepots = resourceDepots;
 
-        notify(this);
+        notify(new Pair<>(this, owner));
     }
 
     public ClientWarehouse(ArrayList<ResourceDepot> resourcePiles) {
@@ -33,7 +33,7 @@ public class ClientWarehouse extends Observable<ClientWarehouse> {
     }
 
     public void show(){
-        notify(this);
+        notify(new Pair<>(this, owner));
     }
 
     public boolean isInitialized(){
