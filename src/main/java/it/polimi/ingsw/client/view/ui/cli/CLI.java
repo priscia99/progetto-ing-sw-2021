@@ -191,20 +191,6 @@ public class CLI implements UI {
             }
     }
 
-    @Override
-    public void displayGameStarted(){
-        synchronized (outSemaphore) {
-            System.out.println("Game has started!");
-        }
-    }
-
-    @Override
-    public void displayLeaderCard(ClientLeaderCard clientLeaderCard) {
-        synchronized (outSemaphore) {
-            String outputFormat = "%s Lv%d - Victory Points: %d - [";
-        }
-    }
-
     public void displayChooseInitialResourcesMenu(int toChoose) {
         ConsumeTarget resources = new ConsumeTarget();
         synchronized (outSemaphore) {
