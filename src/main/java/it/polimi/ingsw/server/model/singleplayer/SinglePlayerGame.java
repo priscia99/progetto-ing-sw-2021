@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.singleplayer;
 
 import it.polimi.ingsw.network.message.from_server.BlackCrossMessage;
+import it.polimi.ingsw.network.message.from_server.FaithPathMessage;
 import it.polimi.ingsw.network.message.from_server.LorenzoWinsMessage;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.game.Game;
@@ -56,7 +57,10 @@ public class SinglePlayerGame extends Game {
     }
 
     public void advanceBlackCross(int quantity){
-        this.blackCrossPosition += quantity;
+        for(int i = 0; i<quantity; i++){
+            this.blackCrossPosition++;
+            this.getCurrentPlayer().checkPopeFavour(blackCrossPosition);
+        }
         notify(new BlackCrossMessage(this.blackCrossPosition, getCurrentPlayer().getPlayerBoard().getFaithPath().getPopeFavours()));
     }
 

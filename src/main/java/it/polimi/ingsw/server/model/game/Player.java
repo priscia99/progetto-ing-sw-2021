@@ -307,13 +307,8 @@ public class Player extends Observable<Message<ClientController>> {
     }
 
 
-
-    /**
-     *
-     * @param count
-     */
-    public int addFaithPoints(int count){
-        this.playerBoard.addFaithPoints(count);
+    public int addFaithPoint(){
+        this.playerBoard.addFaithPoints(1);
         FaithPath faithPath = this.playerBoard.getFaithPath();
         notify(new FaithPathMessage(faithPath, username));
         return this.playerBoard.getFaithPath().getFaithPoints();

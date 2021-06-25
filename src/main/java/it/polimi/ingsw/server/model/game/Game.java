@@ -196,19 +196,21 @@ public class Game extends Observable<Message<ClientController>> implements Obser
             players.get(1).setInitialResourceToChoose(1);
             if(players.size()>2){
                 players.get(2).setInitialResourceToChoose(1);
-                players.get(2).addFaithPoints(1);
+                players.get(2).addFaithPoint();
                 if(players.size()>3){
                     players.get(3).setInitialResourceToChoose(2);
-                    players.get(3).addFaithPoints(1);
+                    players.get(3).addFaithPoint();
                 }
             }
         }
     }
 
     public void addFaithPointsToPlayer(Player target, int points){
-        int position = target.addFaithPoints(points);
-        for(Player player : players){
-            player.checkPopeFavour(position);
+        for(int i = 0; i<points; i++){
+            int position = target.addFaithPoint();
+            for(Player player : players){
+                player.checkPopeFavour(position);
+            }
         }
     }
 
