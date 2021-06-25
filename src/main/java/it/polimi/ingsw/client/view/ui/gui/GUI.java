@@ -32,6 +32,7 @@ public class GUI implements UI{
     private ClientController controller;    // reference to client controller
     private Stage primaryStage;             // GUI Application primary stage
     private String selectedPlayerBoard = null;
+    private String myUsername = null;
 
     public void loadAuthScreen(Client client){
         Platform.runLater(() -> SceneController.requestAuth(primaryStage, client));
@@ -104,7 +105,7 @@ public class GUI implements UI{
     @Override
     public void displayWarehouse(ClientWarehouse warehouse, String username) {
         if(isToRefresh(username)) {
-            Platform.runLater(() -> SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(warehouse));
+            Platform.runLater(() -> SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(warehouse, isMine(username)));
         }
     }
 
@@ -163,7 +164,7 @@ public class GUI implements UI{
     public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck, String username) {
         if (isToRefresh(username)) {
             Platform.runLater(() -> {
-                SceneController.getMainGUIController().getDevelopmentCardsController().refreshDevelopmentCards(deck);
+                SceneController.getMainGUIController().getDevelopmentCardsController().refreshDevelopmentCards(deck, isMine(username));
             });
         }
     }
@@ -206,6 +207,7 @@ public class GUI implements UI{
     @Override
     public void startUI(ClientGame game) {
         this.selectedPlayerBoard = game.getMyUsername();
+        this.myUsername = game.getMyUsername();
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
             SceneController.getMainGUIController().initGUI();
@@ -231,4 +233,7 @@ public class GUI implements UI{
         return username.equals(selectedPlayerBoard);
     }
 
+    private boolean isMine(String username){
+        return username.equals(myUsername);
+    }
 }

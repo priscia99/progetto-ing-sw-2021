@@ -328,6 +328,15 @@
     -fx-border-color: transparent;
 }
 
+#fc-0{
+    -fx-background-image: url('../img/ico/red_cross.png');
+    -fx-border-color: darkred;
+    -fx-background-color: #a8a2a2;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
 .faith-cell#current {
     -fx-background-image: url('../img/ico/red_cross.png');
     -fx-background-size: contain;

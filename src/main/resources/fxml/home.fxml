@@ -108,31 +108,31 @@
                                                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                               </rowConstraints>
                                                                <children>
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="3" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="4" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="5" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="6" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="7" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="8" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="8" GridPane.rowIndex="1" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="8" GridPane.rowIndex="2" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="9" GridPane.rowIndex="2" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="10" GridPane.rowIndex="2" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="11" GridPane.rowIndex="2" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="12" GridPane.rowIndex="2" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="13" GridPane.rowIndex="2" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="13" GridPane.rowIndex="1" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="13" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="14" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="15" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="16" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="17" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="18" />
-                                                                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="19" />
-                                                                  <Pane id="current" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <Pane id="fc-1" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                                  <Pane id="fc-2" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                                                  <Pane id="fc-3" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                                                  <Pane id="fc-4" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="3" />
+                                                                  <Pane id="fc-5" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="4" />
+                                                                  <Pane id="fc-6" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="5" />
+                                                                  <Pane id="fc-7" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="6" />
+                                                                  <Pane id="fc-8" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="7" />
+                                                                  <Pane id="fc-9" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="8" />
+                                                                  <Pane id="fc-10" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+                                                                  <Pane id="fc-11" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="8" GridPane.rowIndex="2" />
+                                                                  <Pane id="fc-12" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="9" GridPane.rowIndex="2" />
+                                                                  <Pane id="fc-13" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="10" GridPane.rowIndex="2" />
+                                                                  <Pane id="fc-14" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="11" GridPane.rowIndex="2" />
+                                                                  <Pane id="fc-15" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="12" GridPane.rowIndex="2" />
+                                                                  <Pane id="fc-16" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="13" GridPane.rowIndex="2" />
+                                                                  <Pane id="fc-17" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="13" GridPane.rowIndex="1" />
+                                                                  <Pane id="fc-18" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="13" />
+                                                                  <Pane id="fc-19" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="14" />
+                                                                  <Pane id="fc-20" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="15" />
+                                                                  <Pane id="fc-21" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="16" />
+                                                                  <Pane id="fc-22" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="17" />
+                                                                  <Pane id="fc-23" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="18" />
+                                                                  <Pane id="fc-24" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="19" />
+                                                                  <Pane id="fc-0" prefHeight="200.0" prefWidth="200.0" styleClass="faith-cell" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                   <Pane id="favor-3" fx:id="popeFavor3" prefHeight="51.0" prefWidth="66.0" GridPane.columnIndex="16" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
                                                                   <Pane id="favor-2" fx:id="popeFavor2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="10" GridPane.columnSpan="2" GridPane.rowSpan="2" />
                                                                   <Pane id="favor-1" fx:id="popeFavor1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />

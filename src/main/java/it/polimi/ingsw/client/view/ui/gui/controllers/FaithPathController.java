@@ -9,6 +9,7 @@ import javafx.scene.layout.*;
 import java.util.Objects;
 
 public class FaithPathController {
+    private static int CELLS_NUMBER = 24;                           // number of faith path cells
     private static final String CROSS_PATH = "/img/croce.png";      // cross image path
     GridPane faithPathPane;                                         // faith path generic pane
     ObservableList<Node> cellsPaneList;                             // list of position panes
@@ -16,6 +17,7 @@ public class FaithPathController {
     public FaithPathController(GridPane faithPathPane) {
         this.faithPathPane = faithPathPane;
         this.cellsPaneList = faithPathPane.getChildren();
+        cellsPaneList.remove(0);    // remove title label from children list
     }
 
     /**
@@ -23,13 +25,17 @@ public class FaithPathController {
      * @param faithPath Player's faith path
      */
     public void refreshFaithPath(ClientFaithPath faithPath){
-        Pane activeCell = (Pane) cellsPaneList.get(faithPath.getFaithPoints());
-        // activeCell.setId("current");
-        Image crossImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(CROSS_PATH)));
-        BackgroundImage bgImg = new BackgroundImage(crossImage,
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
-        activeCell.setBackground(new Background(bgImg));
+        for(int i=0; i<CELLS_NUMBER; i++){
+            Pane tempCell = (Pane) faithPathPane.lookup("#fc-" + String.valueOf(i));
+            if (i==faithPath.getFaithPoints()){
+                tempCell.setStyle("-fx-background-image: url(" + CROSS_PATH + ");" +
+                        "-fx-background-size: contain;" +
+                        "-fx-background-position: center;" +
+                        "-fx-background-repeat: no-repeat;");
+            }else{
+                tempCell.setStyle("-fx-background-image: null;");
+            }
+        }
+
     }
 }

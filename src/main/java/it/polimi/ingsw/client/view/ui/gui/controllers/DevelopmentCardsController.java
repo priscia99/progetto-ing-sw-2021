@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 import it.polimi.ingsw.client.model.ClientDevelopmentCardDecks;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -14,8 +15,9 @@ public class DevelopmentCardsController {
 
     private AnchorPane firstDevSlot, secondDevSlot, thirdDevSlot;
     private ArrayList<ObservableList<Node>> cardsSlots;
+    private Button produceButton;
 
-    public DevelopmentCardsController(AnchorPane firstDevSlot, AnchorPane secondDevSlot, AnchorPane thirdDevSlot) {
+    public DevelopmentCardsController(AnchorPane firstDevSlot, AnchorPane secondDevSlot, AnchorPane thirdDevSlot, Button produceButton) {
         cardsSlots = new ArrayList<>();
         this.firstDevSlot = firstDevSlot;
         this.secondDevSlot = secondDevSlot;
@@ -29,7 +31,8 @@ public class DevelopmentCardsController {
      * Refreshes development cards pane based on player's decks
      * @param decks Player's development card decks
      */
-    public void refreshDevelopmentCards(ClientDevelopmentCardDecks decks){
+    public void refreshDevelopmentCards(ClientDevelopmentCardDecks decks, boolean isMine){
+        produceButton.setDisable(!isMine);
         Pane tempPane;  // temporary card pane
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){

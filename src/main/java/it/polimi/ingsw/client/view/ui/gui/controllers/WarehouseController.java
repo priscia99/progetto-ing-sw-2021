@@ -27,6 +27,7 @@ public class WarehouseController {
     ArrayList<ObservableList<Node>> warehouseElements;
 
     public WarehouseController(GridPane firstDepot, GridPane secondDepot, GridPane thirdDepot, MenuButton swapDepotsMenu) {
+        this.swapDepotsMenu = swapDepotsMenu;
         warehouseElements = new ArrayList<>();
         this.firstDepot = firstDepot;
         this.secondDepot = secondDepot;
@@ -40,7 +41,8 @@ public class WarehouseController {
      * Refreshes warehouse pane with given warehouse
      * @param warehouse Player's warehouse to show
      */
-    public void refreshWarehouse(ClientWarehouse warehouse){
+    public void refreshWarehouse(ClientWarehouse warehouse, boolean isMine){
+        swapDepotsMenu.setDisable(!isMine);
         if(warehouse.isInitialized()){
             System.out.println(new RepresentationBuilder().render(warehouse));
             // iterate through depots

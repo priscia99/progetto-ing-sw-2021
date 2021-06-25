@@ -138,9 +138,11 @@ public class PlayerTest {
     @Test
     @DisplayName("Test meets win conditions for faith path")
     public void testMeetConditionFaithPath(){
-        player.addFaithPoints(24);
+        for(int i=0; i<24; i++) {
+            player.addFaithPoint();
+        }
         Assertions.assertFalse(player.finishedFaithPath());
-        player.addFaithPoints(1);
+        player.addFaithPoint();
         Assertions.assertTrue(player.finishedFaithPath());
     }
 

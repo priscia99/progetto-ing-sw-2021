@@ -59,6 +59,8 @@ public class MainGUIController {
     private Button firstDepotButton, secondDepotButton, thirdDepotButton, confirmResourcesButton;   // choose depot buttons
     @FXML
     private Label playerBoardLabel; // playerboard label
+    @FXML
+    private Button produceButton;   // produce button
 
     // Secondary controllers
     StatsController statsController;
@@ -93,7 +95,7 @@ public class MainGUIController {
         faithPathController = new FaithPathController(faithPathPane);
         warehouseController = new WarehouseController(firstDepot, secondDepot, thirdDepot, swapDepotsMenu);
         strongBoxController = new StrongBoxController(strongboxPane, strongboxCoin, strongboxServant, strongboxShield, strongboxStone);
-        developmentCardsController = new DevelopmentCardsController(firstDevSlot, secondDevSlot, thirdDevSlot);
+        developmentCardsController = new DevelopmentCardsController(firstDevSlot, secondDevSlot, thirdDevSlot, produceButton);
         marbleMarketController = new MarbleMarketController(marbleMarketPane, notForSaleMarble, tabPane);
         developmentCardMarketController = new DevelopmentCardMarketController(developmentCardsMarketPane);
         chooseLeadersController = new ChooseLeadersController(chooseLeadersPane, confirmLeadersButton);
