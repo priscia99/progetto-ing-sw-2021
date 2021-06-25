@@ -17,7 +17,7 @@ public class PopeCell extends Cell {
 
     @Override
     public int getVictoryPoints() {
-        return favor.isUsed() ? favor.getPoints() : 0;
+        return favor.isAcquired() ? favor.getPoints() : 0;
     }
 
     @Override

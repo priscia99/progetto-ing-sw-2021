@@ -61,7 +61,7 @@ public class SinglePlayerGame extends Game {
             this.blackCrossPosition++;
             this.getCurrentPlayer().checkPopeFavour(blackCrossPosition);
         }
-        notify(new BlackCrossMessage(this.blackCrossPosition, getCurrentPlayer().getPlayerBoard().getFaithPath().getPopeFavours()));
+        notify(new BlackCrossMessage(this.blackCrossPosition, getCurrentPlayer().getPlayerBoard().getFaithPath().getAcquiredPopeFavours()));
     }
 
     public void shuffleTokens(){

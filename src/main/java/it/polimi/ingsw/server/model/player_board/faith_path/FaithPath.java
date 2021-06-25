@@ -33,10 +33,10 @@ public class FaithPath extends Observable<Message<ClientController>> {
         return faithPoints;
     }
 
-    public ArrayList<Boolean> getPopeFavours(){
+    public ArrayList<Boolean> getAcquiredPopeFavours(){
         return Arrays.stream(this.getCells())
                 .filter(cell -> cell instanceof PopeCell)
-                .map(cell -> ((PopeCell) cell).getFavor().isUsed())
+                .map(cell -> ((PopeCell) cell).getFavor().isAcquired())
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -59,12 +59,12 @@ public class FaithPath extends Observable<Message<ClientController>> {
             return false;
 
         PopeFavor favor = ((PopeCell) cells[index]).getFavor();
-        if(!favor.isUsed()){
-            // Favor was not triggered before
+        if(!favor.isTriggered()){
             if (this.faithPoints >= favor.getFirstCellIndex()){
-                favor.setUsed(true);
+                favor.setAcquired(true);
                 return true;
             }
+            favor.setTriggered(true);
         }
         return false;
     }

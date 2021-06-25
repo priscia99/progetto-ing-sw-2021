@@ -18,7 +18,7 @@ public class FaithPathMessage extends Message<ClientController> implements Seria
 
         super.setPlayerUsername(username);
         this.faithPoints = faithPath.getFaithPoints();
-        this.popeFavors = faithPath.getPopeFavours();
+        this.popeFavors = faithPath.getAcquiredPopeFavours();
     }
 
     public void execute(ClientController target) {

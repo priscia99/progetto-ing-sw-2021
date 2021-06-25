@@ -69,7 +69,7 @@ public class FaithPathTest
         faithPath.checkPopeFavor(8);
         Assertions.assertTrue((faithPath.getCells()[8] instanceof PopeCell),"This Cell should be a PopeCell instance");
         PopeFavor favor = ((PopeCell) faithPath.getCells()[8]).getFavor();
-        Assertions.assertTrue(favor.isUsed(), "Favor should be used");
+        Assertions.assertTrue(favor.isTriggered(), "Favor should be used");
     }
 
 }

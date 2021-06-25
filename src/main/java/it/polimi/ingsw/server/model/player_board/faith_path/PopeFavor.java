@@ -4,17 +4,23 @@ public class PopeFavor {
 
     private final int first_cell_index;
     private final int points;
-    private boolean used;
+    private boolean acquired;
+    private boolean triggered;
 
     public PopeFavor(int first_cell_index, int points) {
         this.first_cell_index = first_cell_index;
         this.points = points;
-        this.used = false;
+        this.triggered = false;
+        this.acquired = false;
     }
 
-    public boolean isUsed(){ return used; }
+    public boolean isTriggered(){ return triggered; }
 
-    public void setUsed(boolean used){ this.used = used; }
+    public boolean isAcquired(){return acquired;}
+
+    public void setAcquired(boolean acquired){this.acquired = acquired;}
+
+    public void setTriggered(boolean triggered){ this.triggered = triggered; }
 
     public int getFirstCellIndex() {
         return first_cell_index;
