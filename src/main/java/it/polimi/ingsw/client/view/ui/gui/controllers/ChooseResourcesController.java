@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.server.model.resource.ConsumeTarget;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
+import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -21,7 +23,7 @@ public class ChooseResourcesController {
     AnchorPane chooseResourcesPane;
     Label chooseResourcesLabel;
 
-    HashMap<ResourcePosition, ResourceType> chosenResources;
+    ConsumeTarget chosenResources;
     ResourceType tempChosenType = null;
     int resourcesToChoose = 0;
 
@@ -37,7 +39,7 @@ public class ChooseResourcesController {
     public void activeScreen(int toChoose){
         // Init parameters
         this.resourcesToChoose = toChoose;
-        chosenResources = new HashMap<>();
+        chosenResources = new ConsumeTarget();
 
         // Setting proper title test based on number of resources to choose
         if(toChoose == 1)
@@ -83,7 +85,12 @@ public class ChooseResourcesController {
                 case "seconddepot-button" -> resourcePosition = ResourcePosition.SECOND_DEPOT;
                 case "thirddepot-button" -> resourcePosition = ResourcePosition.THIRD_DEPOT;
             }
-            chosenResources.put(resourcePosition, tempChosenType);
+            try {
+                assert resourcePosition != null;
+                chosenResources.put(resourcePosition, new ResourceStock(tempChosenType, 1));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
         this.nextChoice();
     };

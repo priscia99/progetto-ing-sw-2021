@@ -63,7 +63,7 @@ public class ClientController extends Observable<Message<ServerController>> {
         }
     }
 
-    public void chooseInitialResources(HashMap<ResourcePosition, ResourceType> resources){
+    public void chooseInitialResources(ConsumeTarget resources){
             notify(new ChosenInitialResourcesMessage(resources, game.getMyUsername()));
     }
 

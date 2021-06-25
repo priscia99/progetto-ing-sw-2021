@@ -205,49 +205,49 @@ public class CLI implements UI {
         }
     }
 
-    public void displayChooseInitialResourcesMenu(int toChoose){
-        HashMap<ResourcePosition, ResourceType> resources = new HashMap<>();
+    public void displayChooseInitialResourcesMenu(int toChoose) {
+        ConsumeTarget resources = new ConsumeTarget();
         synchronized (outSemaphore) {
             int chosenResources = 0;
             boolean validSelection = true;
-            String tempResource, tempDepot;
             ResourcePosition resourcePosition = null;
             ResourceType resourceType = null;
 
             System.out.println("You have to choose " + toChoose + " resource/s!");
             while (chosenResources < toChoose) {
+                validSelection = true;
                 do {
-                    validSelection = true;
-                    System.out.print("Choose resources #" + (chosenResources + 1) +
-                            " [STONE | SERVANT | SHIELD | COIN]: \n\t> ");
-                    tempResource = in.nextLine();
-                    switch (tempResource) {
-                        case "STONE" -> resourceType = ResourceType.STONE;
-                        case "SERVANT" -> resourceType = ResourceType.SERVANT;
-                        case "SHIELD" -> resourceType = ResourceType.SHIELD;
-                        case "COIN" -> resourceType = ResourceType.COIN;
-                        default -> {
-                            validSelection = false;
-                            System.out.println("Please choose a valid resource type!");
+                    try{
+                        displayInfo("Select between: | COIN | SERVANT | SHIELD | STONE |");
+                        resourceType = parseResourceType(in.nextLine());
+                        if(resourceType.equals(ResourceType.GENERIC) ||
+                                resourceType.equals(ResourceType.BLANK) ||
+                                resourceType.equals(ResourceType.FAITH)){
+                            throw new Exception("Cannot select this resource!");
                         }
+                    } catch (Exception e){
+                        validSelection = false;
+                        displayError(e.getMessage());
                     }
                 } while (!validSelection);
-
                 do {
-                    validSelection = true;
-                    System.out.print("Choose in which depot you want to put this resource [FIRST | SECOND | THIRD]: \n\t> ");
-                    tempDepot = in.nextLine();
-                    switch (tempDepot) {
-                        case "FIRST" -> resourcePosition = ResourcePosition.FIRST_DEPOT;
-                        case "SECOND" -> resourcePosition = ResourcePosition.SECOND_DEPOT;
-                        case "THIRD" -> resourcePosition = ResourcePosition.THIRD_DEPOT;
-                        default -> {
-                            validSelection = false;
-                            System.out.println("Please choose a valid resource position!");
+                    try{
+                        displayInfo("Choose in which depot you want to put this resouce | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT |");
+                        resourcePosition = parseResourcePosition(in.nextLine());
+                        if(resourcePosition.equals(ResourcePosition.DROPPED) ||
+                            resourcePosition.equals(ResourcePosition.STRONG_BOX)){
+                            throw new Exception("Cannot insert resource in that position!");
                         }
+                    } catch (Exception e){
+                        validSelection = false;
+                        displayError(e.getMessage());
                     }
                 } while (!validSelection);
-                resources.put(resourcePosition, resourceType);
+                try {
+                    resources.put(resourcePosition, new ResourceStock(resourceType, 1));
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 chosenResources++;
             }
         }
@@ -318,12 +318,14 @@ public class CLI implements UI {
         }
     }
 
+    @Override
     public void displayError(String error){
         synchronized (outSemaphore){
             System.out.println(ANSI_BG_RED + error + ANSI_RESET);
         }
     }
 
+    @Override
     public void displayInfo(String info){
         synchronized (outSemaphore){
             System.out.println(ANSI_BLUE + info + ANSI_RESET);

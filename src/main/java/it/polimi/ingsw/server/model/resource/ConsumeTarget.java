@@ -2,9 +2,10 @@ package it.polimi.ingsw.server.model.resource;
 
 import it.polimi.ingsw.network.message.from_server.PlayersOrderMessage;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ConsumeTarget {
+public class ConsumeTarget implements Serializable {
 
     private final HashMap<ResourcePosition, ArrayList<ResourceStock>> toConsume = new HashMap<>();
 

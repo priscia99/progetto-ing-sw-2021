@@ -70,7 +70,7 @@ public class ServerController {
         game.tryStart();
     }
 
-    public void chooseInitialResources(HashMap<ResourcePosition, ResourceType> resourcesToAdd, String username) {
+    public void chooseInitialResources(ConsumeTarget resourcesToAdd, String username) throws Exception {
         game.getPlayerByUsername(username).pickedInitialResources(resourcesToAdd);
         game.tryStart();
     }

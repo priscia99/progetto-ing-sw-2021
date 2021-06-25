@@ -187,10 +187,10 @@ public class Player extends Observable<Message<ClientController>> {
         notify(new LeadersReadyMessage(true));
     }
 
-    public void pickedInitialResources(HashMap<ResourcePosition, ResourceType> toAdd){
-        if(toAdd.values().size() != initialResourceToChoose) throw new InvalidActionException();
-        for (ResourcePosition depotIndex : toAdd.keySet()) {
-            getPlayerBoard().addToDepot(depotIndex.ordinal(), toAdd.get(depotIndex));
+    public void pickedInitialResources(ConsumeTarget toAdd) throws Exception {
+        if(toAdd.countResources() != initialResourceToChoose) throw new InvalidActionException();
+        for (ResourcePosition depotIndex : toAdd.getPositions()) {
+            getPlayerBoard().addToDepot(depotIndex.ordinal(), toAdd.getToConsumeFromPosition(depotIndex).get(0).getResourceType());
         }
         initialResourcesReady = true;
         Warehouse warehouse = getPlayerBoard().getWarehouse();
