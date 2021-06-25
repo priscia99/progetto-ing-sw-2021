@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientStrongbox;
 import it.polimi.ingsw.client.model.ClientWarehouse;
 import javafx.beans.value.ChangeListener;
@@ -61,6 +62,14 @@ public class MainGUIController {
     private Label playerBoardLabel; // playerboard label
     @FXML
     private Button produceButton;   // produce button
+    @FXML
+    private AnchorPane leaderZoomPane;  // leader zoom pane
+    @FXML
+    private Pane leaderCardZoomImage;   // leader card zoom image
+    @FXML
+    private GridPane leaderCardZoomGrid;    // leader card zoom grid
+    @FXML
+    private Button marketBtnC1, marketBtnC2, marketBtnC3, marketBtnC4, marketBtnR1, marketBtnR2, marketBtnR3;   // marble market buttons
 
     // Secondary controllers
     StatsController statsController;
@@ -74,6 +83,9 @@ public class MainGUIController {
     ChooseLeadersController chooseLeadersController;
     ChooseResourcesController chooseResourcesController;
     PlayerBoardController playerBoardController;
+
+    // Client controller
+    ClientController clientController;
 
     public MainGUIController(){}    // default constructor needed by FXMLLoader class
 
@@ -90,17 +102,33 @@ public class MainGUIController {
                 }
         );
 
-        statsController = new StatsController(statsPane);
-        leaderCardsController = new LeaderCardsController(leaderCardsPane);
-        faithPathController = new FaithPathController(faithPathPane);
-        warehouseController = new WarehouseController(firstDepot, secondDepot, thirdDepot, swapDepotsMenu);
-        strongBoxController = new StrongBoxController(strongboxPane, strongboxCoin, strongboxServant, strongboxShield, strongboxStone);
-        developmentCardsController = new DevelopmentCardsController(firstDevSlot, secondDevSlot, thirdDevSlot, produceButton);
-        marbleMarketController = new MarbleMarketController(marbleMarketPane, notForSaleMarble, tabPane);
-        developmentCardMarketController = new DevelopmentCardMarketController(developmentCardsMarketPane);
-        chooseLeadersController = new ChooseLeadersController(chooseLeadersPane, confirmLeadersButton);
-        chooseResourcesController = new ChooseResourcesController(chooseResourcesPane, chooseResourcesLabel, this.getChooseResourcesIcons(), this.getChooseResourcesButtons());
-        playerBoardController = new PlayerBoardController(playerSelector, playerBoardLabel);
+    }
+
+    public void initGUI(ClientController controller) {
+        this.clientController = controller;
+        statsController = new StatsController(clientController, statsPane);
+        leaderCardsController = new LeaderCardsController(clientController, leaderCardsPane, leaderZoomPane, leaderCardZoomGrid, leaderCardZoomImage);
+        faithPathController = new FaithPathController(clientController, faithPathPane);
+        warehouseController = new WarehouseController(clientController, firstDepot, secondDepot, thirdDepot, swapDepotsMenu);
+        strongBoxController = new StrongBoxController(clientController, strongboxPane, strongboxCoin, strongboxServant, strongboxShield, strongboxStone);
+        developmentCardsController = new DevelopmentCardsController(clientController, firstDevSlot, secondDevSlot, thirdDevSlot, produceButton);
+        marbleMarketController = new MarbleMarketController(clientController, marbleMarketPane, notForSaleMarble, tabPane, getMarbleMarketButtons());
+        developmentCardMarketController = new DevelopmentCardMarketController(clientController, developmentCardsMarketPane);
+        chooseLeadersController = new ChooseLeadersController(clientController, chooseLeadersPane, confirmLeadersButton);
+        chooseResourcesController = new ChooseResourcesController(clientController, chooseResourcesPane, chooseResourcesLabel, this.getChooseResourcesIcons(), this.getChooseResourcesButtons());
+        playerBoardController = new PlayerBoardController(clientController, playerSelector, playerBoardLabel);
+    }
+
+    public Map<String, Button> getMarbleMarketButtons(){
+        Map<String, Button> buttonsMap = new HashMap<>();
+        buttonsMap.put("btn-c-1", marketBtnC1);
+        buttonsMap.put("btn-c-2", marketBtnC2);
+        buttonsMap.put("btn-c-3", marketBtnC3);
+        buttonsMap.put("btn-c-4", marketBtnC4);
+        buttonsMap.put("btn-r-1", marketBtnR1);
+        buttonsMap.put("btn-r-2", marketBtnR2);
+        buttonsMap.put("btn-r-3", marketBtnR3);
+        return buttonsMap;
     }
 
     public Map<String, Pane> getChooseResourcesIcons(){
@@ -125,6 +153,14 @@ public class MainGUIController {
         // TODO complete with other actions to disable
         warehouseController.setSwapMenuEnable(false);
         developmentCardsController.setProduceButtonEnable(false);
+        leaderCardsController.disableLeaderCardsHandlers();
+        leaderCardsController.setCanUserDoAction(false);
+    }
+
+    public void enableAllActions(){
+        marbleMarketController.enableHandlers();
+        leaderCardsController.setCanUserDoAction(true);
+        leaderCardsController.enableLeaderCardsHandlers();
     }
 
     public StatsController getStatsController() {
@@ -170,6 +206,4 @@ public class MainGUIController {
     public PlayerBoardController getPlayerBoardController() {
         return playerBoardController;
     }
-
-
 }

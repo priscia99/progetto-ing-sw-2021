@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientPlayerBoard;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StatsController {
+public class StatsController extends GenericGUIController {
 
     GridPane statsPane;
     private final ObservableList<Node> statsList;
@@ -23,7 +24,8 @@ public class StatsController {
      * Create a stats controller for GUI
      * @param statsPane Grid pane in which player stats are located
      */
-    public StatsController(GridPane statsPane){
+    public StatsController(ClientController clientController, GridPane statsPane){
+        super(clientController);
         otherPlayersOrder = new HashMap<>();
         statsList = statsPane.getChildren();
     }

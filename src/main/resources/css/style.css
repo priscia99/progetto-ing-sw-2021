@@ -310,7 +310,7 @@
     -fx-background-repeat: no-repeat;
 }
 
-#mm-r1, #mm-r2, #mm-r3 {
+#mm-r-1, #mm-r-2, #mm-r-3 {
     -fx-background-image: url('../img/ico/arrow_left.png');
     -fx-background-size: contain;
     -fx-background-position: center;
@@ -319,7 +319,7 @@
     -fx-border-color: transparent;
 }
 
-#mm-c1, #mm-c2, #mm-c3, #mm-c4 {
+#mm-c-1, #mm-c-2, #mm-c-3, #mm-c-4 {
     -fx-background-image: url('../img/ico/arrow_up.png');
     -fx-background-size: contain;
     -fx-background-position: center;

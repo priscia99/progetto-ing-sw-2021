@@ -1,14 +1,23 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientMarbleMarket;
 import it.polimi.ingsw.server.model.marble.Marble;
+import it.polimi.ingsw.server.model.marble.MarbleSelection;
+import it.polimi.ingsw.server.model.marble.Orientation;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import java.util.Map;
 import java.util.Objects;
 
-public class MarbleMarketController {
+public class MarbleMarketController extends GenericGUIController{
 
     private static final String BLUE_MARBLE_PATH = "/img/ico/blue_marble.png";          // shield
     private static final String GRAY_MARBLE_PATH = "/img/ico/gray_marble.png";          // stone
@@ -21,11 +30,16 @@ public class MarbleMarketController {
     private Pane notForSaleMarble;
     private TabPane tabPane;
     private ClientMarbleMarket marbleMarket;
+    private Map<String, Button> marbleMarketButtons;
+    private boolean canUserDoAction;
 
-    public MarbleMarketController(GridPane marbleMarketPane, Pane notForSaleMarble, TabPane tabPane) {
+    public MarbleMarketController(ClientController clientController, GridPane marbleMarketPane, Pane notForSaleMarble, TabPane tabPane, Map<String, Button> marbleMarketButtons) {
+        super(clientController);
         this.marbleMarketPane = marbleMarketPane;
         this.notForSaleMarble = notForSaleMarble;
         this.tabPane = tabPane;
+        this.marbleMarketButtons = marbleMarketButtons;
+        this.canUserDoAction = false;
     }
 
     /**
@@ -62,6 +76,30 @@ public class MarbleMarketController {
         }
         tabPane.requestLayout();
     }
+
+    public void enableHandlers(){
+        for (String btnID : marbleMarketButtons.keySet()){
+            Button tempBtn = marbleMarketButtons.get(btnID);
+            tempBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, onPressedMarketChoice);
+        }
+    }
+
+    private final EventHandler<MouseEvent> onPressedMarketChoice = event -> {
+        Orientation choiceOrientation;
+        int choiceIndex;
+        Button pressedBtn = (Button) event.getSource();
+        String parsedChoice[] = pressedBtn.getId().split("-");
+
+        if(parsedChoice[1].equals("r")){
+            choiceOrientation = Orientation.HORIZONTAL;
+        }else{
+            choiceOrientation = Orientation.VERTICAL;
+        }
+        choiceIndex = Integer.parseInt(parsedChoice[2]);
+
+        // returning to client controller handling the marble market selection
+        super.getClientController().pickCommandHandler(new MarbleSelection(choiceOrientation, choiceIndex-1));
+    };
 
     /**
      * Retrieve the proper asset link based on marble type

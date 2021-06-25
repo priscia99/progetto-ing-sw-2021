@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientDevelopmentCardDecks;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -8,7 +9,7 @@ import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 
-public class DevelopmentCardsController {
+public class DevelopmentCardsController extends GenericGUIController {
 
     private static final String DEV_CARDS_FRONT_PATH = "/img/cards/front/development-card-";
     private static final String DEV_CARDS_BACK_PATH = "/img/cards/back/development-card-";
@@ -16,7 +17,8 @@ public class DevelopmentCardsController {
     private final ArrayList<ObservableList<Node>> cardsSlots;
     private final Button produceButton;
 
-    public DevelopmentCardsController(AnchorPane firstDevSlot, AnchorPane secondDevSlot, AnchorPane thirdDevSlot, Button produceButton) {
+    public DevelopmentCardsController(ClientController clientController, AnchorPane firstDevSlot, AnchorPane secondDevSlot, AnchorPane thirdDevSlot, Button produceButton) {
+        super(clientController);
         this.produceButton = produceButton;
         cardsSlots = new ArrayList<>();
         cardsSlots.add(firstDevSlot.getChildren());

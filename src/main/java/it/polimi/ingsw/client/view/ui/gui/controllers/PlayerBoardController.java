@@ -10,12 +10,12 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 
-public class PlayerBoardController {
-    private ClientController clientController;
+public class PlayerBoardController extends GenericGUIController{
     private MenuButton playerSelector;
     private Label playerBoardLabel;
 
-    public PlayerBoardController(MenuButton playerSelector, Label playerBoardLabel) {
+    public PlayerBoardController(ClientController clientController, MenuButton playerSelector, Label playerBoardLabel) {
+        super(clientController);
         this.playerSelector = playerSelector;
         this.playerBoardLabel = playerBoardLabel;
     }
@@ -32,12 +32,8 @@ public class PlayerBoardController {
     }
 
     EventHandler<ActionEvent> onPlayerSelected = event -> {
-        clientController.displayPlayerboardByUsername(((MenuItem)event.getSource()).getText());
+        super.getClientController().displayPlayerboardByUsername(((MenuItem)event.getSource()).getText());
     };
-
-    public void setClientController(ClientController clientController) {
-        this.clientController = clientController;
-    }
 
     public void setUsername(String username, boolean isMine){
         if(isMine){

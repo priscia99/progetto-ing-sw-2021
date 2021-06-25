@@ -17,6 +17,7 @@ import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceType;
+import it.polimi.ingsw.utils.CustomLogger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -82,6 +83,7 @@ public class GUI implements UI{
             Platform.runLater(() -> {
                 // TODO enable all actions
                 // SceneController.getMainGUIController().enableAllActions();
+                SceneController.getMainGUIController().enableAllActions();
                 SceneController.displayPopupMessage(primaryStage, player + ", it's your turn!");
             });
         }else{
@@ -94,7 +96,6 @@ public class GUI implements UI{
     @Override
     public void displayChooseInitialResourcesMenu(int toChoose) {
         Platform.runLater(() -> {
-            SceneController.getMainGUIController().getChooseResourcesController().setClientController(controller);
             SceneController.getMainGUIController().getChooseResourcesController().activeScreen(toChoose);
         });
     }
@@ -102,7 +103,6 @@ public class GUI implements UI{
     @Override
     public void displayInitialLeadersMenu(ArrayList<String> cardsIDs) {
         Platform.runLater(() -> {
-            SceneController.getMainGUIController().getChooseLeadersController().setCurrentController(controller);
             SceneController.getMainGUIController().getChooseLeadersController().activeScreen(cardsIDs);
         });
     }
@@ -122,7 +122,10 @@ public class GUI implements UI{
     @Override
     public void displayLeaderCardDeck(ClientLeaderCardDeck deck, String username) {
         if (isToRefresh(username)) {
-            Platform.runLater(() -> SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(deck, isMine(username)));
+            Platform.runLater(() -> {
+                SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(deck, isMine(username));
+            }
+            );
         }
     }
 
@@ -132,6 +135,7 @@ public class GUI implements UI{
 
     @Override
     public void displayError(String error) {
+        CustomLogger.getLogger().severe(error);
         Platform.runLater(() -> SceneController.displayPopupError(primaryStage, error));
     }
 
@@ -199,7 +203,7 @@ public class GUI implements UI{
 
     @Override
     public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects, ArrayList<DepotEffect> depotEffects) {
-
+        SceneController.getMainGUIController().getWarehouseController().insertResourcesToDepot(selection, selected, changeEffects, depotEffects);
     }
 
     @Override
@@ -218,9 +222,8 @@ public class GUI implements UI{
         this.myUsername = game.getMyUsername();
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
+            SceneController.getMainGUIController().initGUI(controller);
             SceneController.getMainGUIController().getStrongBoxController().initStrongboxScreen();
-            SceneController.getMainGUIController().getPlayerBoardController().setClientController(controller);
-            SceneController.getMainGUIController().getWarehouseController().setClientController(controller);
             SceneController.getMainGUIController().getPlayerBoardController().initClientSelector(new ArrayList<>(game.getPlayerBoardMap().keySet()));
             SceneController.getMainGUIController().getPlayerBoardController().setUsername(game.getMyUsername(), true);
         });

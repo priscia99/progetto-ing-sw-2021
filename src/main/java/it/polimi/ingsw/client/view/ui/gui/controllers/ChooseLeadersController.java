@@ -11,7 +11,7 @@ import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 
-public class ChooseLeadersController {
+public class ChooseLeadersController extends GenericGUIController{
 
     private static final String LEADER_CARD_FRONT_PATH = "/img/cards/front/leader-card-";
     private static final String LEADER_CARD_BACK_PATH = "/img/cards/back/lead_back.png";
@@ -20,11 +20,11 @@ public class ChooseLeadersController {
     private final ObservableList<Node> cardsPanes;
     private final Button confirmLeadersButton;
 
-    ClientController currentController;
     ArrayList<String> selectedIDs = null;
     ArrayList<String> cardIDs = null;
 
-    public ChooseLeadersController(AnchorPane chooseLeadersPane, Button confirmLeadersButton) {
+    public ChooseLeadersController(ClientController clientController, AnchorPane chooseLeadersPane, Button confirmLeadersButton) {
+        super(clientController);
         this.chooseLeadersPane = chooseLeadersPane;
         GridPane chooseLeadersGrid = (GridPane) chooseLeadersPane.getChildren().get(1);
         this.cardsPanes = chooseLeadersGrid.getChildren();
@@ -39,10 +39,6 @@ public class ChooseLeadersController {
         confirmLeadersButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onConfirmLeadersBtnClicked);
     }
 
-    public void setCurrentController(ClientController controller){
-        this.currentController = controller;
-    }
-
     public void refreshAvailableCards(){
         for(int i=0; i<4; i++){
             Pane cardPane = (Pane) cardsPanes.get(i);
@@ -55,7 +51,7 @@ public class ChooseLeadersController {
 
     private EventHandler<MouseEvent> onConfirmLeadersBtnClicked = event -> {
         if(selectedIDs.size() == 2) {
-            currentController.chooseInitialLeaders(selectedIDs);
+            super.getClientController().chooseInitialLeaders(selectedIDs);
             chooseLeadersPane.setVisible(false);
         }
     };

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientCardsMarket;
 import it.polimi.ingsw.client.model.ClientDevelopmentCard;
 import javafx.collections.ObservableList;
@@ -7,7 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
-public class DevelopmentCardMarketController {
+public class DevelopmentCardMarketController extends GenericGUIController{
 
     private static final String DEV_CARDS_FRONT_PATH = "/img/cards/front/development-card-";
     private static final String DEV_CARDS_BACK_PATH = "/img/cards/back/dev_back_";
@@ -16,7 +17,8 @@ public class DevelopmentCardMarketController {
     private ObservableList<Node> marketCards;
     private ClientCardsMarket cardsMarket;
 
-    public DevelopmentCardMarketController(GridPane developmentCardsMarketPane) {
+    public DevelopmentCardMarketController(ClientController clientController, GridPane developmentCardsMarketPane) {
+        super(clientController);
         this.developmentCardsMarketPane = developmentCardsMarketPane;
     }
 

@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.Map;
 
-public class ChooseResourcesController {
+public class ChooseResourcesController extends GenericGUIController{
 
     Map<String, Pane> chooseResourcesIcons;
     Map<String, Button> chooseResourcesButtons;
@@ -26,9 +26,8 @@ public class ChooseResourcesController {
     ResourceType tempChosenType = null;
     int resourcesToChoose = 0;
 
-    ClientController clientController;
-
-    public ChooseResourcesController(AnchorPane chooseResourcesPane, Label chooseResourcesLabel, Map<String, Pane> chooseResourcesIcons, Map<String, Button> chooseResourcesButtons)  {
+    public ChooseResourcesController(ClientController clientController, AnchorPane chooseResourcesPane, Label chooseResourcesLabel, Map<String, Pane> chooseResourcesIcons, Map<String, Button> chooseResourcesButtons)  {
+        super(clientController);
         this.chooseResourcesPane = chooseResourcesPane;
         this.chooseResourcesLabel = chooseResourcesLabel;
         this.chooseResourcesIcons = chooseResourcesIcons;
@@ -98,7 +97,7 @@ public class ChooseResourcesController {
         resourcesToChoose--;
         if(resourcesToChoose == 0){
             chooseResourcesPane.setVisible(false);
-            clientController.chooseInitialResources(chosenResources);
+            super.getClientController().chooseInitialResources(chosenResources);
         }else{
             this.resetEffects();
             this.removeIconsHandlers();
@@ -149,7 +148,4 @@ public class ChooseResourcesController {
         chooseResourcesIcons.get("servant-icon").removeEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
     }
 
-    public void setClientController(ClientController clientController){
-        this.clientController = clientController;
-    }
 }

@@ -1,15 +1,17 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientStrongbox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class StrongBoxController {
+public class StrongBoxController extends GenericGUIController {
 
     private GridPane strongboxPane;
     private TextField strongboxCoin, strongboxServant, strongboxShield, strongboxStone;
 
-    public StrongBoxController(GridPane strongboxPane, TextField strongboxCoin, TextField strongboxServant, TextField strongboxShield, TextField strongboxStone) {
+    public StrongBoxController(ClientController clientController, GridPane strongboxPane, TextField strongboxCoin, TextField strongboxServant, TextField strongboxShield, TextField strongboxStone) {
+        super(clientController);
         this.strongboxPane = strongboxPane;
         this.strongboxCoin = strongboxCoin;
         this.strongboxServant = strongboxServant;

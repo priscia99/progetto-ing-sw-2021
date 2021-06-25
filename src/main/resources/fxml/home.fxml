@@ -734,38 +734,38 @@
                                                 <Pane id="mm-3-4" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
                                                     <children>
-                                                        <Button id="mm-c1" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" text="&lt;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <Button fx:id="marketBtnC1" id="mm-c-1" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" text="&lt;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                                     <children>
-                                                        <Button id="mm-c2" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" text="&lt;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <Button fx:id="marketBtnC2" id="mm-c-2" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" text="&lt;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                                                     <children>
-                                                        <Button id="mm-c3" layoutX="20.0" layoutY="19.0" mnemonicParsing="false" text="&lt;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <Button fx:id="marketBtnC3" id="mm-c-3" layoutX="20.0" layoutY="19.0" mnemonicParsing="false" text="&lt;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
                                                     <children>
-                                                        <Button id="mm-c4" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" text="&lt;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <Button fx:id="marketBtnC4" id="mm-c-4" layoutX="19.0" layoutY="19.0" mnemonicParsing="false" text="&lt;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                                 <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                                                     <children>
-                                                        <Button id="mm-r1" layoutY="34.0" mnemonicParsing="false" style="-fx-border-color: transparent; -fx-background-color: transparent;" text="&lt;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <Button fx:id="marketBtnR1" id="mm-r-1" layoutY="34.0" mnemonicParsing="false" style="-fx-border-color: transparent; -fx-background-color: transparent;" text="&lt;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
                                                     <children>
-                                                        <Button id="mm-r2" layoutX="-2.0" layoutY="24.0" mnemonicParsing="false" text="&lt;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <Button fx:id="marketBtnR2" id="mm-r-2" layoutX="-2.0" layoutY="24.0" mnemonicParsing="false" text="&lt;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                                                     <children>
-                                                        <Button id="mm-r3" layoutX="-8.0" layoutY="19.0" mnemonicParsing="false" text="&lt;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <Button fx:id="marketBtnR3" id="mm-r-3" layoutX="-8.0" layoutY="19.0" mnemonicParsing="false" text="&lt;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                                 <Pane id="not-for-sale" fx:id="notForSaleMarble" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-width: 3;" GridPane.columnIndex="1" />
@@ -890,7 +890,7 @@
                            <children>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                  <children>
-                                    <GridPane layoutX="-1.0" layoutY="113.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <GridPane fx:id="leaderCardZoomGrid" layoutX="-1.0" layoutY="113.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                        </columnConstraints>
@@ -919,7 +919,7 @@
                                     </GridPane>
                                  </children>
                               </AnchorPane>
-                              <Pane id="leader-zoom" prefHeight="200.0" prefWidth="200.0" />
+                              <Pane fx:id="leaderCardZoomImage" id="leader-zoom" prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </GridPane>
                      </children>
