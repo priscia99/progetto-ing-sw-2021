@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller.action;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.message.from_client.DropLeaderCardMessage;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.card.LeaderCard;
@@ -15,7 +16,7 @@ public class DropLeaderCardMessageTest {
     private ServerController controller;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws GameException {
         game = MockProvider.getMockGame();
         controller = new ServerController(game);
     }

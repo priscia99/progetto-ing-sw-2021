@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.message.from_client;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.server.controller.ServerController;
 
@@ -14,7 +15,7 @@ public class PlayLeaderCardMessage extends Message<ServerController> implements 
         this.cardId = id;
     }
 
-    public void execute(ServerController target) throws Exception {
+    public void execute(ServerController target) throws GameException {
        target.playLeaderCard(cardId);
     }
 }

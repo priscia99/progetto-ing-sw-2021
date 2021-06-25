@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller.action;
 
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.message.from_client.BuyDevelopmentCardMessage;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.card.requirement.Requirement;
@@ -26,14 +27,14 @@ public class BuyDevelopmentCardMessageTest {
     private Game game;
     private ServerController controller;
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws GameException {
         game = MockProvider.getMockGame();
         controller = new ServerController(game);
     }
 
     @Test
     @DisplayName("Test player buy successfully a development card")
-    public void testPlayerBuyDevelopmentCardSuccess(){
+    public void testPlayerBuyDevelopmentCardSuccess() throws GameException {
         // Check if player has no development cards inside his personal decks
         assertEquals(0, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
         // Make the player rich giving him some resources
@@ -77,7 +78,7 @@ public class BuyDevelopmentCardMessageTest {
 
     @Test
     @DisplayName("Test player tries to buy a valid card without giving resources")
-    public void testPlayerBuyDevelopmentCardWithoutResources(){
+    public void testPlayerBuyDevelopmentCardWithoutResources() throws GameException {
         // Make the player rich giving him some resources
         TestHelper.makeHimRich(game.getCurrentPlayer());
         // Randomly try to buy a development card from whose available in the market
@@ -116,7 +117,7 @@ public class BuyDevelopmentCardMessageTest {
 
     @Test
     @DisplayName("Test add a development card with a wrong level")
-    public void testPlayerAddDevelopmentCardWrongLevel(){
+    public void testPlayerAddDevelopmentCardWrongLevel() throws GameException {
         // Check if player has no development cards inside his personal decks
         assertEquals(0, game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsNumber(), 0);
         // Make the player rich giving him some resources
@@ -142,7 +143,7 @@ public class BuyDevelopmentCardMessageTest {
 
     @Test
     @DisplayName("Test add successfully a development card with an higher level")
-    public void testPlayerAddDevelopmentCardHigherLevel(){
+    public void testPlayerAddDevelopmentCardHigherLevel() throws GameException {
         // FIRST PLAYER
         Player testPlayer = game.getCurrentPlayer();
         // Check if player has no development cards inside his personal decks
@@ -169,7 +170,11 @@ public class BuyDevelopmentCardMessageTest {
         assertEquals(cardToBuy.getId(), game.getCurrentPlayer().getPlayerBoard().getDevelopmentCardsDecks()[0].getTopCard().getId());
         // Iterating through turns until it's testPlayer's turn again
         do {
-            game.nextTurn();
+            try {
+                game.nextTurn();
+            } catch (GameException e) {
+                e.printStackTrace();
+            }
         }while(!testPlayer.getNickname().equals(game.getCurrentPlayer().getNickname()));
         cardToBuy = game.getCardMarket().getCard(0,1);  // Same color, higher level
         // Make the player rich giving him some resources again
@@ -193,7 +198,7 @@ public class BuyDevelopmentCardMessageTest {
 
     @Test
     @DisplayName("Test player tries to buy another card in the same turn")
-    public void testPlayerBuyAnotherCardInSameTurn(){
+    public void testPlayerBuyAnotherCardInSameTurn() throws GameException {
         // FIRST TRY TO BUY A DEVELOPMENT CARD -> SUCCESS
         Player testPlayer = game.getCurrentPlayer();
         // Check if player has no development cards inside his personal decks

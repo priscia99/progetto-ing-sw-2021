@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.game;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.color.Color;
@@ -21,7 +22,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("Test picked leader cards")
-    public void testPickedLeaderCards(){
+    public void testPickedLeaderCards() throws GameException {
         player.getPlayerBoard().addToLeaderCardsDeck(MockProvider.getArrayListLeaderCardsMock());
         ArrayList<String> pickedCards = new ArrayList<>();
         LeaderCard cardToCheck = MockProvider.getLeaderCardMock();
@@ -43,7 +44,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("Ensure that the counter of player's resources work correctly")
-    public void testCountByResources() {
+    public void testCountByResources() throws GameException {
         // setup player
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
@@ -60,7 +61,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("Ensure that the counter of player's cards' colors work correctly")
-    public void testCountByColor() {
+    public void testCountByColor() throws GameException {
         // setup player
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
@@ -77,7 +78,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("Ensure that the counter of player's resources' levels work correctly")
-    public void testCountByLevel() {
+    public void testCountByLevel() throws GameException {
         // setup player
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
@@ -94,7 +95,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("Ensure getter of player's cards' by color work correctly")
-    public void testColorByLevel() {
+    public void testColorByLevel() throws GameException {
         // setup player
         player.getPlayerBoard().addToDepot(1, ResourceType.COIN);
         player.getPlayerBoard().addDevelopmentCard(
@@ -148,7 +149,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("Test meets win conditions for development cards")
-    public void testMeetConditionDevelopmentCards(){
+    public void testMeetConditionDevelopmentCards() throws GameException {
         ArrayList<DevelopmentCard> cards = MockProvider.getArrayDevelopmentCardsMock();
         for(int i = 0; i<6; i++) {
             player.getPlayerBoard().addDevelopmentCard(cards.get(i), i%3 );
@@ -160,7 +161,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("Test add to strongbox")
-    public void testAddToStrongBox(){
+    public void testAddToStrongBox() throws GameException {
         player.addResourcesToStrongBox(new ResourceStock(ResourceType.COIN, 1));
         Assertions.assertEquals(1, player.getPlayerBoard().getStrongbox().countByResourceType(ResourceType.COIN));
         player.addResourcesToStrongBox(new ResourceStock(ResourceType.SERVANT, 1));
@@ -174,7 +175,7 @@ public class PlayerTest {
 
     @Test
     @DisplayName("Test add to warehouse")
-    public void testAddToWarehouse(){
+    public void testAddToWarehouse() throws GameException {
         player.addResourceToDepot(ResourceType.COIN, 1);
         Assertions.assertEquals(1, player.getPlayerBoard().getWarehouse().countByResourceType(ResourceType.COIN));
         player.addResourceToDepot(ResourceType.COIN, 1);

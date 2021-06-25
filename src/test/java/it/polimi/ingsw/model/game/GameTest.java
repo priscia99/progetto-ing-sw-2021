@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.game;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
@@ -16,7 +17,7 @@ public class GameTest {
     private Game game;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws GameException {
         game = new Game();
         game.setPlayers(MockProvider.getMockPlayers());
         game.setupVictoryObservations();
@@ -37,14 +38,19 @@ public class GameTest {
     @Test
     @DisplayName("Test next turn switch current player correctly")
     public void testNextTurn(){
-        game.setFirstPlayer();
-        ArrayList<Player> players = game.getPlayers();
-        game.nextTurn();
-        Assertions.assertTrue(players.get(0).equals(game.getCurrentPlayer()));
-        game.nextTurn();
-        Assertions.assertTrue(players.get(1).equals(game.getCurrentPlayer()));
-        game.nextTurn();
-        Assertions.assertTrue(players.get(0).equals(game.getCurrentPlayer()));
+        try{
+            game.setFirstPlayer();
+            ArrayList<Player> players = game.getPlayers();
+            game.nextTurn();
+            Assertions.assertEquals(game.getCurrentPlayer(), players.get(0));
+            game.nextTurn();
+            Assertions.assertEquals(game.getCurrentPlayer(), players.get(1));
+            game.nextTurn();
+            Assertions.assertEquals(game.getCurrentPlayer(), players.get(0));
+        } catch (GameException e){
+            e.printStackTrace();
+        }
+
     }
 
     @Test
@@ -70,7 +76,7 @@ public class GameTest {
 
     @Test
     @DisplayName("Test check players choose initial cards")
-    public void testAllPlayersHaveStartingLeaderCard(){
+    public void testAllPlayersHaveStartingLeaderCard() throws GameException {
         game.getPlayers().get(0).pickedLeaderCards(new ArrayList<>(MockProvider.getArrayListLeaderCardsMock().stream().map(LeaderCard::getId).collect(Collectors.toList())));
         game.getPlayers().get(1).pickedLeaderCards(new ArrayList<>(MockProvider.getArrayListLeaderCardsMock().stream().map(LeaderCard::getId).collect(Collectors.toList())));
         Assertions.assertTrue(game.allPlayersHaveStartingLeaderCards());

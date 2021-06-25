@@ -95,7 +95,7 @@ public class Lobby extends Observable<Message> {
                     .forEach(username -> {
                         players.add(new Player(username));
                     });
-            gameController.setupGame(players);
+            gameController.tryAction(()->gameController.setupGame(players));
             game.addObserver(serverMessageEncoder);
             game.getMarbleMarket().addObserver(serverMessageEncoder);
             game.getCardMarket().addObserver(serverMessageEncoder);
@@ -108,7 +108,7 @@ public class Lobby extends Observable<Message> {
                 player.addObserver(serverMessageEncoder);
             });
             System.out.println("Giving initial assets...");
-            gameController.giveInitialAssets();
+            gameController.tryAction(()->gameController.giveInitialAssets());
         }
     }
 

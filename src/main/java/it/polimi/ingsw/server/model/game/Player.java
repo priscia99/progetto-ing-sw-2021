@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.game;
 
 import it.polimi.ingsw.client.controller.ClientController;
-import it.polimi.ingsw.exceptions.InvalidActionException;
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_server.ChooseInitialResourcesMessage;
 import it.polimi.ingsw.observer.Observable;
@@ -11,10 +11,8 @@ import it.polimi.ingsw.server.model.card.color.Color;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.EffectType;
 import it.polimi.ingsw.server.model.player_board.DevelopmentCardsDeck;
-import it.polimi.ingsw.server.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.server.model.player_board.PlayerBoard;
 import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
-import it.polimi.ingsw.server.model.player_board.faith_path.PopeCell;
 import it.polimi.ingsw.server.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.*;
@@ -171,15 +169,15 @@ public class Player extends Observable<Message<ClientController>> {
                 .mapToInt(DevelopmentCardsDeck::getCardNumber).sum();
     }
 
-    public void pickedLeaderCards(ArrayList<String> cardIDs){
+    public void pickedLeaderCards(ArrayList<String> cardIDs) throws GameException {
 
         ArrayList<LeaderCard> cards = this.playerBoard.getLeaderCardsDeck().getLeaderCards()
                 .stream()
                 .filter(c -> !cardIDs.contains(c.getId()))
                 .collect(Collectors.toCollection(ArrayList::new));
-
-        cards.forEach(leaderCard -> this.playerBoard.getLeaderCardsDeck().removeLeaderCardById(leaderCard.getId()));
-
+        for(LeaderCard card : cards){
+            this.playerBoard.getLeaderCardsDeck().removeLeaderCardById(card.getId());
+        }
         initialLeadersReady = true;
 
         // TODO merge in LeadersReadyMessage ore delete it
@@ -187,8 +185,8 @@ public class Player extends Observable<Message<ClientController>> {
         notify(new LeadersReadyMessage(true));
     }
 
-    public void pickedInitialResources(ConsumeTarget toAdd) throws Exception {
-        if(toAdd.countResources() != initialResourceToChoose) throw new InvalidActionException();
+    public void pickedInitialResources(ConsumeTarget toAdd) throws GameException {
+        if(toAdd.countResources() != initialResourceToChoose) throw new GameException("Invalid resource choice");
         for (ResourcePosition depotIndex : toAdd.getPositions()) {
             getPlayerBoard().addToDepot(depotIndex.ordinal(), toAdd.getToConsumeFromPosition(depotIndex).get(0).getResourceType());
         }
@@ -209,15 +207,15 @@ public class Player extends Observable<Message<ClientController>> {
         return playerBoard.isThereAnyLeaderCard();
     }
 
-    public void addResourceToDepot(ResourceType resourceType, int depotIndex){
+    public void addResourceToDepot(ResourceType resourceType, int depotIndex) throws GameException {
         playerBoard.getWarehouse().addToDepot(depotIndex, resourceType);
     }
 
-    private void addToLeaderDepot(ResourceType resourceType, int index){
+    private void addToLeaderDepot(ResourceType resourceType, int index) throws GameException {
         playerBoard.addToAdditionalDepot(resourceType, index);
     }
 
-    public void addAllResourceToDepots(ArrayList<ResourceType> types, ArrayList<ResourcePosition> depots){
+    public void addAllResourceToDepots(ArrayList<ResourceType> types, ArrayList<ResourcePosition> depots) throws GameException {
         for(int i = 0; i< types.size(); i++){
             switch (depots.get(i)){
                 case FIRST_LEADER_DEPOT: addToLeaderDepot(types.get(i), 0);
@@ -228,7 +226,7 @@ public class Player extends Observable<Message<ClientController>> {
         notify(new WarehouseMessage(this.playerBoard.getWarehouse().getDepots(), username));
     }
 
-    public void addResourcesToStrongBox(ResourceStock resources){
+    public void addResourcesToStrongBox(ResourceStock resources) throws GameException {
         // FIXME remove loops and add all resources at once
         for(int i = 0; i < resources.getQuantity(); i++)
             playerBoard.getStrongbox().addResource(resources.getResourceType());
@@ -295,7 +293,7 @@ public class Player extends Observable<Message<ClientController>> {
         return colors;
     }
 
-    public void dropLeaderCardById(String id) {
+    public void dropLeaderCardById(String id) throws GameException {
         this.playerBoard.getLeaderCardsDeck().removeLeaderCardById(id);
         notify(new LeaderCardsMessage(this.playerBoard.getLeaderCardsDeck().getLeaderCards(), username));
     }
@@ -362,37 +360,7 @@ public class Player extends Observable<Message<ClientController>> {
                 ));
     }
 
-    /**
-     *
-     * @param index
-     * @param resourceType
-     */
-    public void removeFromDepot(int index, ResourceType resourceType) {
-        Warehouse warehouse = playerBoard.getWarehouse();
 
-        warehouse.removeFromDepot(index, resourceType);
-        notify(new WarehouseMessage(
-                warehouse.getResourceStocks()
-                        .stream().map(resourceStock -> (ResourceDepot) resourceStock)
-                        .collect(Collectors.toCollection(ArrayList::new)),
-                username
-        ));
-    }
-
-    /**
-     *
-     * @param resourceStocks
-     */
-    public void addToStrongbox(ArrayList<ResourceStock> resourceStocks) {
-        Strongbox strongbox = playerBoard.getStrongbox();
-
-        resourceStocks.forEach(resourceStock -> {
-            for (int i = 0; i < resourceStock.getQuantity(); i++) {
-                strongbox.addResource(resourceStock.getResourceType());
-            }
-        });
-        notify(new StrongboxMessage(strongbox.getResourceStocks(), username));
-    }
 
     public boolean canAddDevelopmentCard(DevelopmentCard card, int index){
         return this.playerBoard.getDevelopmentCardsDecks()[index].canAddCard(card);
@@ -418,22 +386,20 @@ public class Player extends Observable<Message<ClientController>> {
         }).collect(Collectors.toList()).contains(false);
     }
 
-    public void consumeResources(ConsumeTarget toConsume){
-        toConsume.getPositions().forEach(
-                position -> {
-                    if(position == ResourcePosition.STRONG_BOX){
-                        toConsume.getToConsumeFromStrongBox()
-                                .forEach(stock-> this.playerBoard.getStrongbox().consume(stock)
-                        );
-                    } else {
-                        switch (position){
-                            case FIRST_LEADER_DEPOT: this.playerBoard.consumeFromLeaderDepot(0, toConsume.getToConsumeFromDepot(position));
-                            case SECOND_LEADER_DEPOT: this.playerBoard.consumeFromLeaderDepot(1, toConsume.getToConsumeFromDepot(position));
-                            default: this.playerBoard.getWarehouse().consume(toConsume.getToConsumeFromDepot(position));
-                        }
-                    }
+    public void consumeResources(ConsumeTarget toConsume) throws GameException {
+        for(ResourcePosition position : toConsume.getPositions()){
+            if(position == ResourcePosition.STRONG_BOX){
+                for(ResourceStock stock : toConsume.getToConsumeFromStrongBox()){
+                    this.playerBoard.getStrongbox().consume(stock);
                 }
-        );
+            } else {
+                switch (position){
+                    case FIRST_LEADER_DEPOT: this.playerBoard.consumeFromLeaderDepot(0, toConsume.getToConsumeFromDepot(position));
+                    case SECOND_LEADER_DEPOT: this.playerBoard.consumeFromLeaderDepot(1, toConsume.getToConsumeFromDepot(position));
+                    default: this.playerBoard.getWarehouse().consume(toConsume.getToConsumeFromDepot(position));
+                }
+            }
+        }
         notify(new StrongboxMessage(this.playerBoard.getStrongbox().getResourceStocks(), username));
         notify(new WarehouseMessage(
                 this.playerBoard.getWarehouse().getResourceStocks()
@@ -443,7 +409,7 @@ public class Player extends Observable<Message<ClientController>> {
         ));
     }
 
-    public void addDevelopmentCard(DevelopmentCard card, int deckIndex){
+    public void addDevelopmentCard(DevelopmentCard card, int deckIndex) throws GameException {
         this.playerBoard.addDevelopmentCard(card, deckIndex);
         notify(new DevelopmentCardsMessage(card, deckIndex, username));
     }

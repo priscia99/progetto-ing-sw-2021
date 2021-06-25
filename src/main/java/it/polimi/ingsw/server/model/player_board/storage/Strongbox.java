@@ -1,8 +1,11 @@
 package it.polimi.ingsw.server.model.player_board.storage;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.message.from_server.StrongboxMessage;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
+
+import java.util.stream.Collectors;
 
 public class Strongbox extends Storage {
 
@@ -19,20 +22,24 @@ public class Strongbox extends Storage {
      * @param resourceType the type of the resource to be added
      */
     // FIXME implement resource quantity increment
-    public void addResource(ResourceType resourceType){
-        this.resourceStocks.stream()
-                .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
-                .forEach(resourceStock -> resourceStock.incrementResource(resourceType));
+    public void addResource(ResourceType resourceType) throws GameException {
+        for(ResourceStock resourceStock : this.resourceStocks.stream()
+                .filter(resourceStock -> resourceStock.getResourceType()
+                        .equals(resourceType)).collect(Collectors.toList())){
+            resourceStock.incrementResource(resourceType);
+        }
     }
 
     /**
      * It removes from the strongbox a single unit of resource of the type given in input
      * @param resourceType the type of the resource to be removed
      */
-    public void removeResource(ResourceType resourceType) {
-        this.resourceStocks.stream()
-                .filter(resourceStock -> resourceStock.getResourceType().equals(resourceType))
-                .forEach(resourceStock -> resourceStock.decrementResource(resourceType));
+    public void removeResource(ResourceType resourceType) throws GameException {
+        for(ResourceStock resourceStock : this.resourceStocks.stream()
+                .filter(resourceStock -> resourceStock.getResourceType()
+                        .equals(resourceType)).collect(Collectors.toList())){
+            resourceStock.decrementResource(resourceType);
+        }
     }
 
     /**

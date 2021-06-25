@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.card.requirement;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.resource.ConsumeTarget;
@@ -62,19 +63,17 @@ public class ResourceRequirement extends Requirement implements Serializable {
         return String.format(RESOURCE_REQUIREMENT_FORMAT, resourceString);
     }
 
-    static public ResourceRequirement merge(ArrayList<ResourceStock> requirements){
+    static public ResourceRequirement merge(ArrayList<ResourceStock> requirements) throws GameException {
         ArrayList<ResourceStock> stocks = new ArrayList<>();
-
-        requirements.forEach(stock->{
-
-                Optional<ResourceStock> resourceTypeStock = stocks.stream()
-                        .filter(s->s.getResourceType().equals(stock.getResourceType())).findFirst();
-                if(resourceTypeStock.isPresent()){
-                    resourceTypeStock.get().incrementResource(stock.getResourceType(), stock.getQuantity());
-                } else {
-                    stocks.add(stock);
-                }
-        });
+        for(ResourceStock stock : requirements){
+            Optional<ResourceStock> resourceTypeStock = stocks.stream()
+                    .filter(s->s.getResourceType().equals(stock.getResourceType())).findFirst();
+            if(resourceTypeStock.isPresent()){
+                resourceTypeStock.get().incrementResource(stock.getResourceType(), stock.getQuantity());
+            } else {
+                stocks.add(stock);
+            }
+        }
         return new ResourceRequirement(stocks);
     }
 
@@ -82,7 +81,7 @@ public class ResourceRequirement extends Requirement implements Serializable {
      * Apply discounts when trying to buy from the market
      * @param discounts list of discount effects
      */
-    public void applyDiscounts(ArrayList<DiscountEffect> discounts){
+    public void applyDiscounts(ArrayList<DiscountEffect> discounts) throws GameException {
         for(DiscountEffect discount : discounts){
             for(ResourceStock stock : resourceStocks){
                 if(discount.getResourceType().equals(stock.getResourceType())){

@@ -1,8 +1,6 @@
 package it.polimi.ingsw.server.model.player_board.storage;
 
-import it.polimi.ingsw.exceptions.IllegalResourceException;
-import it.polimi.ingsw.network.message.from_server.FaithPathMessage;
-import it.polimi.ingsw.network.message.from_server.WarehouseMessage;
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
@@ -36,7 +34,7 @@ public class Warehouse extends Storage {
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
     }
 
-    public Warehouse getCopy() throws Exception{
+    public Warehouse getCopy() throws GameException {
         Warehouse toReturn = new Warehouse();
         for(int i = 0; i<3; i++){
             int quantityToAdd = this.resourceStocks.get(i).getQuantity();
@@ -82,7 +80,7 @@ public class Warehouse extends Storage {
      * @param index index of the depot
      * @param resourceType type of the resource to insert
      */
-    public void addToDepot(int index, ResourceType resourceType) throws IllegalResourceException {
+    public void addToDepot(int index, ResourceType resourceType) throws GameException {
         this.checkValidIndex(index);
         if (this.getResourceStock(index).isEmpty()) {
             if (this.contains(resourceType)) {
@@ -100,7 +98,7 @@ public class Warehouse extends Storage {
      * @param index index of the depot
      * @param resourceType type of the resource to delete
      */
-    public void removeFromDepot(int index, ResourceType resourceType) {
+    public void removeFromDepot(int index, ResourceType resourceType) throws GameException {
         this.checkValidIndex(index);
         this.getResourceStock(index).decrementResource(resourceType);
         if (this.getResourceStock(index).isEmpty()) {

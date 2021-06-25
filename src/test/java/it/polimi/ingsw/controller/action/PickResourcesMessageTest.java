@@ -1,16 +1,14 @@
 package it.polimi.ingsw.controller.action;
 
-import it.polimi.ingsw.exceptions.IllegalResourceException;
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.message.from_client.PickResourcesMessage;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.game.Game;
-import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.marble.Orientation;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.testUtils.MockProvider;
-import it.polimi.ingsw.testUtils.TestHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +22,7 @@ public class PickResourcesMessageTest {
     private ServerController controller;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws GameException {
         game = MockProvider.getMockGame();
         controller = new ServerController(game);
     }
@@ -88,7 +86,7 @@ public class PickResourcesMessageTest {
         positions.add(ResourcePosition.SECOND_DEPOT);
         // Creating a proper message
         PickResourcesMessage message = new PickResourcesMessage(marbleSelection, positions, new ArrayList<>());
-        Exception exception = assertThrows(IllegalResourceException.class, () -> {
+        Exception exception = assertThrows(GameException.class, () -> {
                 message.execute(controller);
          });
         System.out.println("Got: " + exception.getMessage());

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.requirements;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.color.Color;
 import it.polimi.ingsw.server.model.card.color.ColorPile;
@@ -27,7 +28,7 @@ public class RequirementTest {
 
     @Test
     @DisplayName("Test single resource requirement fulfil")
-    public void testSingleResourceRequirement(){
+    public void testSingleResourceRequirement() throws GameException {
         ArrayList<ResourceStock> stockToFulfil = new ArrayList<>();
         stockToFulfil.add(new ResourceStock(ResourceType.COIN, 1));
         ResourceRequirement requirement = new ResourceRequirement(stockToFulfil);
@@ -38,7 +39,7 @@ public class RequirementTest {
 
     @Test
     @DisplayName("Test multiple resource requirement fulfil")
-    public void testMultipleResourceRequirement(){
+    public void testMultipleResourceRequirement() throws GameException {
         ArrayList<ResourceStock> stockToFulfil = new ArrayList<>();
         stockToFulfil.add(new ResourceStock(ResourceType.COIN, 1));
         stockToFulfil.add(new ResourceStock(ResourceType.SERVANT, 1));
@@ -54,7 +55,7 @@ public class RequirementTest {
 
     @Test
     @DisplayName("Test level requirement")
-    public void testLevelRequirement(){
+    public void testLevelRequirement() throws GameException {
         LevelRequirement requirement = new LevelRequirement(Color.YELLOW);
         Assertions.assertFalse(requirement.isFulfilled(player));
         player.getPlayerBoard().addDevelopmentCard(new DevelopmentCard(1, 1, null, Color.BLUE, null, "1"), 0);
@@ -68,7 +69,7 @@ public class RequirementTest {
 
     @Test
     @DisplayName("Test single color requirement")
-    public void testColorRequirement(){
+    public void testColorRequirement() throws GameException {
         ArrayList<ColorPile> toFulfil = new ArrayList<>();
         toFulfil.add(new ColorPile(Color.BLUE, 2));
         ColorRequirement requirement = new ColorRequirement(toFulfil);
@@ -83,7 +84,7 @@ public class RequirementTest {
 
     @Test
     @DisplayName("Test multiple colors requirement")
-    public void testMultipleColorRequirement(){
+    public void testMultipleColorRequirement() throws GameException {
         ArrayList<ColorPile> toFulfil = new ArrayList<>();
         toFulfil.add(new ColorPile(Color.BLUE, 2));
         toFulfil.add(new ColorPile(Color.YELLOW, 1));

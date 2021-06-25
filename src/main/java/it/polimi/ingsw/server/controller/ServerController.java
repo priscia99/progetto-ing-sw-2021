@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.exceptions.InvalidActionException;
-import it.polimi.ingsw.network.message.from_server.ExceptionMessage;
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
@@ -12,15 +11,10 @@ import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.*;
-import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.CustomRunnable;
-import it.polimi.ingsw.utils.Pair;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Optional;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public class ServerController {
 
@@ -33,16 +27,18 @@ public class ServerController {
     public void tryAction(CustomRunnable action){
         try{
             action.tryRun();
+        } catch (GameException e){
+            game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
         } catch (Exception e){
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
         }
     }
 
-    public void setupGame(ArrayList<Player> players){
+    public void setupGame(ArrayList<Player> players) throws GameException {
       game.setup(players);
     }
 
-    public void giveInitialAssets() {
+    public void giveInitialAssets() throws GameException {
         game.setFirstPlayer();
         System.out.println("Giving leader cards to players...");
         game.giveLeaderCardsToPlayers();
@@ -50,27 +46,27 @@ public class ServerController {
         game.giveInitialResources();
     }
 
-    public void buyDevelopmentCard(String cardId, int deckIndex, ConsumeTarget toConsume) throws Exception {
+    public void buyDevelopmentCard(String cardId, int deckIndex, ConsumeTarget toConsume) throws GameException {
         Player currentPlayer = game.getCurrentPlayer();
-        if(currentPlayer.hasDoneMainAction()) throw new Exception("You have already done main action this turn!");
+        if(currentPlayer.hasDoneMainAction()) throw new GameException("You have already done main action this turn!");
         DevelopmentCard toBuy = game.getCardMarket().getCardById(cardId);
         ResourceRequirement requirement = (ResourceRequirement) toBuy.getRequirement();
         requirement.applyDiscounts(game.getCurrentPlayer().getDiscounts());
-        if(!requirement.isFulfilled(toConsume)) throw new Exception("Wrong resources to buy card!");
-        if(!currentPlayer.canConsume(toConsume)) throw new Exception("You do not own resources selected!");
-        if(!currentPlayer.canAddDevelopmentCard(toBuy, deckIndex)) throw new Exception("You can't add development card to selected deck!");
+        if(!requirement.isFulfilled(toConsume)) throw new GameException("Wrong resources to buy card!");
+        if(!currentPlayer.canConsume(toConsume)) throw new GameException("You do not own resources selected!");
+        if(!currentPlayer.canAddDevelopmentCard(toBuy, deckIndex)) throw new GameException("You can't add development card to selected deck!");
         DevelopmentCard cardBought = game.getCardMarket().sell(cardId, currentPlayer);
         currentPlayer.addDevelopmentCard(cardBought, deckIndex);
         currentPlayer.consumeResources(toConsume);
         currentPlayer.setHasDoneMainAction(true);
     }
 
-    public void chooseInitialLeaders(ArrayList<String> leadersChosen, String playerUsername) {
+    public void chooseInitialLeaders(ArrayList<String> leadersChosen, String playerUsername) throws GameException {
         game.getPlayerByUsername(playerUsername).pickedLeaderCards(leadersChosen);
         game.tryStart();
     }
 
-    public void chooseInitialResources(ConsumeTarget resourcesToAdd, String username) throws Exception {
+    public void chooseInitialResources(ConsumeTarget resourcesToAdd, String username) throws GameException {
         game.getPlayerByUsername(username).pickedInitialResources(resourcesToAdd);
         game.tryStart();
     }
@@ -81,11 +77,11 @@ public class ServerController {
         game.addFaithPointsToPlayer(game.getCurrentPlayer(), 1);
     }
 
-    public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) throws Exception {
+    public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) throws GameException {
         Player currentPlayer = game.getCurrentPlayer();
         int posIndex = 0;
         int convIndex = 0;
-        if(currentPlayer.hasDoneMainAction()) throw new Exception("You have already done main action this turn!");
+        if(currentPlayer.hasDoneMainAction()) throw new GameException("You have already done main action this turn!");
         ArrayList<Marble> validateSelection = game.getMarbleMarket().getSelectedMarbles(marbleSelection);
         Warehouse validateWarehouse = currentPlayer.getPlayerBoard().getWarehouse().getCopy();
         ArrayList<ResourceDepot> validateLeaderDepots = currentPlayer.getPlayerBoard().getAdditionalDepotsCopy();
@@ -97,7 +93,7 @@ public class ServerController {
             posIndex++;
             if (selectedPosition != ResourcePosition.DROPPED) {
                 if (selectedPosition == ResourcePosition.STRONG_BOX)
-                    throw new Exception("Cannot insert resources in strongbox!");
+                    throw new GameException("Cannot insert resources in strongbox!");
                 if (resourceToAdd.equals(ResourceType.BLANK)) {
                     resourceToAdd = converted.get(convIndex);
                     convIndex++;
@@ -138,35 +134,33 @@ public class ServerController {
         currentPlayer.setHasDoneMainAction(true);
     }
 
-    public void startProduction(ConsumeTarget consumedResources, ArrayList<ProductionEffect> productionsToActivate) throws Exception {
+    public void startProduction(ConsumeTarget consumedResources, ArrayList<ProductionEffect> productionsToActivate) throws GameException {
         Player currentPlayer = game.getCurrentPlayer();
-        if(currentPlayer.hasDoneMainAction()) throw new Exception("You have already done main action this turn!");
+        if(currentPlayer.hasDoneMainAction()) throw new GameException("You have already done main action this turn!");
         ArrayList<ResourceStock> inStocks = new ArrayList<>();
         for (ProductionEffect productionEffect : productionsToActivate) {
             inStocks.addAll(productionEffect.getInStocks());
         }
         ResourceRequirement globalProductionsRequirement = ResourceRequirement.merge(inStocks);
-        if(!currentPlayer.canConsume(consumedResources)) throw new Exception("You can't consume resources defined, check them and try again!");
-        if(!globalProductionsRequirement.isFulfilled(consumedResources)) throw new Exception("Selected resources does not correspond to those requested by productions!");
+        if(!currentPlayer.canConsume(consumedResources)) throw new GameException("You can't consume resources defined, check them and try again!");
+        if(!globalProductionsRequirement.isFulfilled(consumedResources)) throw new GameException("Selected resources does not correspond to those requested by productions!");
         currentPlayer.consumeResources(consumedResources);
         for(ProductionEffect productionToActivate : productionsToActivate){
-            productionToActivate.getOutStocks().forEach(
-                    stock -> {
-                        if(stock.getResourceType().equals(ResourceType.FAITH)){
-                            game.addFaithPointsToPlayer(currentPlayer, stock.getQuantity());
-                        } else {
-                            game.getCurrentPlayer().addResourcesToStrongBox(stock);
-                        }
-                    }
-            );
+            for(ResourceStock stock : productionToActivate.getOutStocks()){
+                if(stock.getResourceType().equals(ResourceType.FAITH)){
+                    game.addFaithPointsToPlayer(currentPlayer, stock.getQuantity());
+                } else {
+                    game.getCurrentPlayer().addResourcesToStrongBox(stock);
+                }
+            }
         }
         game.getCurrentPlayer().setHasDoneMainAction(true);
     }
 
-    public void playLeaderCard(String cardId) throws Exception {
+    public void playLeaderCard(String cardId) throws GameException {
         Optional<LeaderCard> toActivate = game.getCurrentPlayer().getPlayerBoard().getLeaderCardsDeck().getLeaderCards().stream().filter(c->c.getId().equals(cardId)).findFirst();
-        if(toActivate.isEmpty()) throw new Exception("Leader not found!");
-        if(!toActivate.get().getRequirement().isFulfilled(game.getCurrentPlayer())) throw new Exception("Leader requirements are not fulfilled!");
+        if(toActivate.isEmpty()) throw new GameException("Leader not found!");
+        if(!toActivate.get().getRequirement().isFulfilled(game.getCurrentPlayer())) throw new GameException("Leader requirements are not fulfilled!");
         game.getCurrentPlayer().playLeaderCardById(cardId);
     }
 
@@ -174,7 +168,7 @@ public class ServerController {
         game.getCurrentPlayer().swapDepots(first, second);
     }
 
-    public void nextTurn(){
+    public void nextTurn() throws GameException {
         game.nextTurn();
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.resource;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.message.from_server.PlayersOrderMessage;
 
 import java.io.Serializable;
@@ -32,8 +33,8 @@ public class ConsumeTarget implements Serializable {
         return toReturn;
     }
 
-    public ArrayList<ResourceStock> getToConsumeFromPosition(ResourcePosition position) throws Exception {
-        if(position.equals(ResourcePosition.DROPPED)) throw new Exception("Invalid position for selecting consumable resources.");
+    public ArrayList<ResourceStock> getToConsumeFromPosition(ResourcePosition position) throws GameException {
+        if(position.equals(ResourcePosition.DROPPED)) throw new GameException("Invalid position for selecting consumable resources.");
         return this.toConsume.get(position);
     }
 
