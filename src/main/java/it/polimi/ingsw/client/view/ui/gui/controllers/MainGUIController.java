@@ -1,21 +1,15 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
-import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
-import it.polimi.ingsw.client.model.ClientPlayerBoard;
 import it.polimi.ingsw.client.model.ClientStrongbox;
 import it.polimi.ingsw.client.model.ClientWarehouse;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import org.w3c.dom.Text;
 
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +20,7 @@ public class MainGUIController {
     @FXML
     private GridPane statsPane;                             // statistics pane
     @FXML
-    private MenuButton playersChoicePicker;                 // player choice selector
+    private MenuButton playerSelector;                 // player choice selector
     @FXML
     private GridPane firstDepot, secondDepot, thirdDepot;   // warehouse panes
     @FXML
@@ -34,7 +28,7 @@ public class MainGUIController {
     @FXML
     private GridPane strongboxPane;                         // strongbox pane
     @FXML
-    TextField strongboxCoin, strongboxServant, strongboxShield, strongboxStone; // strongbox elements
+    private TextField strongboxCoin, strongboxServant, strongboxShield, strongboxStone; // strongbox elements
     @FXML
     private GridPane developmentCardsMarketPane;          // development cards market pane
     @FXML
@@ -63,6 +57,8 @@ public class MainGUIController {
     private Pane chooseCoinIcon, chooseServantIcon, chooseShieldIcon, chooseStoneIcon;   // icons for choose leaders
     @FXML
     private Button firstDepotButton, secondDepotButton, thirdDepotButton, confirmResourcesButton;   // choose depot buttons
+    @FXML
+    private Label playerBoardLabel; // playerboard label
 
     // Secondary controllers
     StatsController statsController;
@@ -75,6 +71,7 @@ public class MainGUIController {
     StrongBoxController strongBoxController;
     ChooseLeadersController chooseLeadersController;
     ChooseResourcesController chooseResourcesController;
+    PlayerBoardController playerBoardController;
 
     public MainGUIController(){}    // default constructor needed by FXMLLoader class
 
@@ -101,6 +98,7 @@ public class MainGUIController {
         developmentCardMarketController = new DevelopmentCardMarketController(developmentCardsMarketPane);
         chooseLeadersController = new ChooseLeadersController(chooseLeadersPane, confirmLeadersButton);
         chooseResourcesController = new ChooseResourcesController(chooseResourcesPane, chooseResourcesLabel, this.getChooseResourcesIcons(), this.getChooseResourcesButtons());
+        playerBoardController = new PlayerBoardController(playerSelector, playerBoardLabel);
     }
 
     public Map<String, Pane> getChooseResourcesIcons(){
@@ -124,13 +122,6 @@ public class MainGUIController {
     public void initGUI(){
         strongBoxController.refreshStrongbox(new ClientStrongbox());
         warehouseController.refreshWarehouse(new ClientWarehouse());
-    }
-    /**
-     * Initialize the playerboard choice picker
-     * @param players
-     */
-    public void initMenuChoicePicker(ArrayList<String> players){
-        players.stream().forEach(playerName -> playersChoicePicker.getItems().add(new MenuItem(playerName)));
     }
 
     public StatsController getStatsController() {
@@ -171,5 +162,9 @@ public class MainGUIController {
 
     public ChooseResourcesController getChooseResourcesController() {
         return chooseResourcesController;
+    }
+
+    public PlayerBoardController getPlayerBoardController() {
+        return playerBoardController;
     }
 }

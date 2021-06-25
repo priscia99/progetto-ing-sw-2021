@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.controller;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.client.view.ui.UI;
+import it.polimi.ingsw.client.view.ui.gui.GUI;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_client.*;
 import it.polimi.ingsw.observer.Observable;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class ClientController extends Observable<Message<ServerController>> {
 
     private final ClientGame game;
+    private String selectedPlayerBoard = null;
     UI userInterface;
 
     public ClientController(ClientGame game, UI userInterface) {
@@ -253,6 +255,17 @@ public class ClientController extends Observable<Message<ServerController>> {
         });
     }
 
+    public void displayPlayerboardByUsername(String username){
+        ClientPlayerBoard selectedPlayerboard = getGame().getPlayerBoardMap().get(username);
+        if(userInterface instanceof GUI) {
+            ((GUI)userInterface).setPlayerBoardUsername(username, username.equals(getGame().getMyUsername()));
+        }
+        userInterface.displayFaithPath(selectedPlayerboard.getFaithPath());
+        userInterface.displayWarehouse(selectedPlayerboard.getWarehouse());
+        userInterface.displayLeaderCardDeck(selectedPlayerboard.getClientLeaderCards());
+        userInterface.displayStrongBox(selectedPlayerboard.getStrongbox());
+        userInterface.displayDevelopmentCardDecks(selectedPlayerboard.getDevelopmentCards());
+    }
     public void setMagnificoAsWinner(){
         userInterface.displayInfo("Magnifico has won! GAME OVER");
     }

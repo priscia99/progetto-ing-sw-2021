@@ -55,14 +55,14 @@ public class ChooseLeadersController {
         chooseLeadersPane.requestLayout();
     }
 
-    EventHandler<MouseEvent> onConfirmLeadersBtnClicked = event -> {
+    private EventHandler<MouseEvent> onConfirmLeadersBtnClicked = event -> {
         if(selectedIDs.size() == 2) {
             currentController.chooseInitialLeaders(selectedIDs);
             chooseLeadersPane.setVisible(false);
         }
     };
 
-    EventHandler<MouseEvent> onLeaderCardClicked = event -> {
+    private EventHandler<MouseEvent> onLeaderCardClicked = event -> {
         Pane clickedPane = (Pane) event.getSource();
         int cardIndex = Integer.parseInt(clickedPane.getId()) - 1;
         if(selectedIDs.contains(cardIDs.get(cardIndex))){

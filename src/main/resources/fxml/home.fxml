@@ -421,14 +421,14 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <Label style="-fx-font-weight: bolder;" text="Playerboard">
+                                                      <Label fx:id="playerBoardLabel" style="-fx-font-weight: bolder;" text="Playerboard">
                                                          <padding>
                                                             <Insets left="5.0" />
                                                          </padding>
                                                       </Label>
                                                       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1">
                                                         <buttons>
-                                                            <MenuButton fx:id="playersChoicePicker" mnemonicParsing="false" styleClass="glow-button" text="Players">
+                                                            <MenuButton fx:id="playerSelector" mnemonicParsing="false" styleClass="glow-button" text="Players">
                                                               <items>
                                                               </items>
                                                             </MenuButton>

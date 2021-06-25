@@ -205,7 +205,9 @@ public class GUI implements UI{
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
             SceneController.getMainGUIController().initGUI();
-            SceneController.getMainGUIController().initMenuChoicePicker(new ArrayList<>(game.getPlayerBoardMap().keySet()));
+            SceneController.getMainGUIController().getPlayerBoardController().setClientController(controller);
+            SceneController.getMainGUIController().getPlayerBoardController().initClientSelector(new ArrayList<>(game.getPlayerBoardMap().keySet()));
+            SceneController.getMainGUIController().getPlayerBoardController().setUsername(game.getMyUsername(), true);
         });
     }
 
@@ -214,6 +216,10 @@ public class GUI implements UI{
         Platform.runLater(() -> {
             SceneController.getMainGUIController().getStatsController().refreshStats(playerBoard);
         });
+    }
+
+    public void setPlayerBoardUsername(String username, boolean isMine){
+        Platform.runLater(() -> SceneController.getMainGUIController().getPlayerBoardController().setUsername(username, isMine));
     }
 
 }

@@ -127,7 +127,7 @@ public class LeaderCardsBuilder{
                         tempObject.get("victory_points").getAsInt(),
                         effect,
                         requirement,
-                        "L" + Integer.toString(cardIterator+1)
+                        "L" + tempObject.get("id").getAsString()
                 ));
 
             }

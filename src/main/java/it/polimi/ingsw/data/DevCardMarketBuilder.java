@@ -80,7 +80,7 @@ public class DevCardMarketBuilder {
                         new ProductionEffect(inputPile, outputPile),
                         cardColor,
                         new ResourceRequirement(requiredPiles),
-                        "D" + Integer.toString(cardIterator+1)
+                        "D" + card.get("id").getAsString()
                 ));
             }
         }catch (Exception e){
