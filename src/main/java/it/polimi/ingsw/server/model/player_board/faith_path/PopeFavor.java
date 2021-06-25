@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model.player_board.faith_path;
 
-public class PopeFavor {
+import java.io.Serializable;
+
+public class PopeFavor implements Serializable {
 
     private final int first_cell_index;
     private final int points;

@@ -4,7 +4,7 @@ import it.polimi.ingsw.exceptions.GameException;
 
 import java.io.Serializable;
 
-public class ResourceDepot extends ResourceStock {
+public class ResourceDepot extends ResourceStock implements Serializable{
 
     private int capacity;
 

@@ -3,7 +3,10 @@ package it.polimi.ingsw.client.model;
 import it.polimi.ingsw.server.model.card.*;
 import it.polimi.ingsw.server.model.card.requirement.*;
 import it.polimi.ingsw.server.model.card.effect.*;
-public class ClientLeaderCard extends ClientCard implements ClientAsset {
+
+import java.io.Serializable;
+
+public class ClientLeaderCard extends ClientCard implements ClientAsset, Serializable {
 
     private boolean active;
 

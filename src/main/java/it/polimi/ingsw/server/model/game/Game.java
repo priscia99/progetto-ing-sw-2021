@@ -12,17 +12,19 @@ import it.polimi.ingsw.server.model.market.MarbleMarket;
 import it.polimi.ingsw.server.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.utils.CustomLogger;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Game extends Observable<Message<ClientController>> implements Observer<Message<ClientController>>, Cloneable {
+public class Game extends Observable<Message<ClientController>> implements Observer<Message<ClientController>> {
 
     private ArrayList<Player> players;
-    private int currentPlayerIndex;
-    private LeaderCardsDeck leaderCardsDeck;
-    private CardsMarket cardsMarket;
-    private MarbleMarket marbleMarket;
+    protected int currentPlayerIndex;
+    protected LeaderCardsDeck leaderCardsDeck;
+    protected CardsMarket cardsMarket;
+    protected MarbleMarket marbleMarket;
     protected boolean isLastRound;
+    private boolean started = false;
 
     public Game() {
         CustomLogger.getLogger().info("Creating Game");
@@ -58,24 +60,24 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         this.players  = players;
     }
 
-    private void setCurrentPlayerIndex(int index){
+    protected void setCurrentPlayerIndex(int index){
         this.currentPlayerIndex = index;
         notify(new CurrentPlayerMessage(getCurrentPlayer().getNickname()));
     }
 
-    private void setLeaderCards(LeaderCardsDeck cards){
+    protected void setLeaderCards(LeaderCardsDeck cards){
         this.leaderCardsDeck = cards;
     }
 
-    private void setMarbleMarket(MarbleMarket market){
+    protected void setMarbleMarket(MarbleMarket market){
         this.marbleMarket = market;
     }
 
-    private void setCardsMarket(CardsMarket market){
+    protected void setCardsMarket(CardsMarket market){
         this.cardsMarket = market;
     }
 
-    private void setIsLastRound(boolean flag){
+    protected void setIsLastRound(boolean flag){
         this.isLastRound = flag;
     }
 
@@ -157,12 +159,15 @@ public class Game extends Observable<Message<ClientController>> implements Obser
             notify(new CardsMarketMessage(getCardMarket()));
             notify(new MarbleMarketMessage(getMarbleMarket()));
             nextTurn();
+            started = true;
         }
     }
 
     private boolean isReady(){
         return allPlayersHasChosenInitialResources() && allPlayersHaveStartingLeaderCards();
     }
+
+    public boolean isStarted(){return started;}
 
     public boolean allPlayersHaveStartingLeaderCards(){
         return !players.stream()

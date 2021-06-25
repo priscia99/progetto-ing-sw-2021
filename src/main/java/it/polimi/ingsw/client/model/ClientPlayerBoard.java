@@ -3,11 +3,12 @@ package it.polimi.ingsw.client.model;
 import it.polimi.ingsw.observer.Observable;
 
 import javax.print.MultiDocPrintService;
+import java.io.Serializable;
 import java.util.*;
 
-public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
+public class ClientPlayerBoard extends Observable<ClientPlayerBoard> implements Serializable {
 
-    private final boolean isMine;
+    private boolean isMine;
     private final ClientFaithPath faithPath;
     private final ClientWarehouse warehouse;
     private final ClientStrongbox strongbox;
@@ -55,6 +56,7 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> {
         return clientLeaderCards;
     }
 
+    public void setMine(boolean flag){this.isMine = flag;}
     public boolean isMine(){return isMine;}
     public String getUsername(){return username;}
     public void refreshStats(){notify(this);}

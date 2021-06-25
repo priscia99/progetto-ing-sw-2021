@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.model;
 
+import java.io.Serializable;
 import java.util.*;
 
 import it.polimi.ingsw.observer.Observable;
@@ -7,7 +8,7 @@ import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.server.model.player_board.storage.*;
 import it.polimi.ingsw.utils.Pair;
 
-public class ClientStrongbox extends Observable<Pair<ClientStrongbox, String>> {
+public class ClientStrongbox extends Observable<Pair<ClientStrongbox, String>> implements Serializable {
 
     private ArrayList<ResourceStock> resourceStocks;
     private String owner;

@@ -5,7 +5,9 @@ import it.polimi.ingsw.server.model.card.*;
 import it.polimi.ingsw.server.model.card.requirement.*;
 import it.polimi.ingsw.server.model.card.effect.*;
 
-public class ClientDevelopmentCard extends ClientCard implements ClientAsset {
+import java.io.Serializable;
+
+public class ClientDevelopmentCard extends ClientCard implements ClientAsset, Serializable {
 
     private final Color color;
     private final int level;

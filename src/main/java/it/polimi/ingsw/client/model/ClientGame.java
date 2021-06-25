@@ -1,15 +1,19 @@
 package it.polimi.ingsw.client.model;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.market.MarbleMarket;
+import it.polimi.ingsw.server.model.player_board.PlayerBoard;
+import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.utils.Pair;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ClientGame extends Observable<Pair<String, Boolean>> {
+public class ClientGame extends Observable<Pair<String, Boolean>> implements Serializable {
 
     private String currentPlayer;
     private boolean isMainActionDone;
@@ -28,6 +32,15 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
         isMainActionDone = mainActionDone;
     }
 
+    public void setMyUsername(String name){this.myUsername = name;}
+
+    public void setMyProperty(String username){
+        this.myUsername = username;
+        ClientPlayerBoard myPlayerBoard = this.playerBoardMap.get(username);
+        myPlayerBoard.getClientLeaderCards().setMine(true);
+        myPlayerBoard.setMine(true);
+
+    }
 
     public ClientCardsMarket getClientCardsMarket() {
         return clientCardsMarket;
@@ -44,18 +57,25 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
         this.clientMarbleMarket = new ClientMarbleMarket();
         int labelPosition=1;
         for(String playerName : players){
-
             boolean isMine = playerName.equals(myUsername);
-            System.out.println("Device: " + this.myUsername + ", Temp: " + playerName + ", Boolean " + isMine);
             if(isMine)
                 this.playerBoardMap.put(playerName, new ClientPlayerBoard(true,0 , playerName));
             else
                 this.playerBoardMap.put(playerName, new ClientPlayerBoard(false,labelPosition++, playerName));
         }
     }
+    public ClientGame(String currentPlayer, ArrayList<String> players) {
+        this.currentPlayer = currentPlayer;
+        this.clientCardsMarket = new ClientCardsMarket();
+        this.clientMarbleMarket = new ClientMarbleMarket();
+        int labelPosition=1;
+        for(String playerName : players){
+            this.playerBoardMap.put(playerName, new ClientPlayerBoard(false,labelPosition++, playerName));
+        }
+    }
 
-    public static ClientGame fromGame(Game game){
-        ClientGame clientGame = new ClientGame("",
+    public static  ClientGame fromGame(Game game) throws GameException {
+        ClientGame clientGame = new ClientGame(
                 game.getCurrentPlayer().getNickname(),
                 new ArrayList<>(game.getPlayers().stream().map(Player::getNickname).collect(Collectors.toList())));
         clientGame.setMainActionDone(game.getCurrentPlayer().hasDoneMainAction());
@@ -64,12 +84,24 @@ public class ClientGame extends Observable<Pair<String, Boolean>> {
         clientGame.setClientMarbleMarket(new ClientMarbleMarket(
                 game.getMarbleMarket().getOnSale(),
                 game.getMarbleMarket().getNotForSale()));
+
+        for(String username : clientGame.getPlayerBoardMap().keySet()){
+            Player player = game.getPlayerByUsername(username);
+            FaithPath path = player.getPlayerBoard().getFaithPath();
+            ClientFaithPath faithPath = new ClientFaithPath(path.getFaithPoints(), path.getAcquiredPopeFavours(), username);
+            ClientWarehouse warehouse = new ClientWarehouse(player.getPlayerBoard().getWarehouse().getDepots());
+            ClientStrongbox strongbox = new ClientStrongbox(player.getPlayerBoard().getStrongbox().getResourceStocks(), username);
+            ClientLeaderCardDeck leaders = new ClientLeaderCardDeck(
+                   false, username, player.getPlayerBoard().getLeaderCardsDeck().getLeaderCards());
+
+            ClientDevelopmentCardDecks developmentCards = new ClientDevelopmentCardDecks(player.getPlayerBoard().getDevelopmentCardsDecks(), username);
+            clientGame.getPlayerBoardMap().put(username,
+                    new ClientPlayerBoard(faithPath, warehouse, strongbox, leaders, developmentCards, false));
+
+        }
         return clientGame;
     }
 
-    private void setCardsMarket(){
-
-    }
 
     private void setClientCardsMarket(ClientCardsMarket market){this.clientCardsMarket = market;}
     private void setClientMarbleMarket(ClientMarbleMarket market){this.clientMarbleMarket = market;}

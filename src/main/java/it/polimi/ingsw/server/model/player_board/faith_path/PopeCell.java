@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model.player_board.faith_path;
 
-public class PopeCell extends Cell {
+import java.io.Serializable;
+
+public class PopeCell extends Cell implements Serializable {
 
     private PopeFavor favor;
     private int points;

@@ -1,20 +1,33 @@
 package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
+import it.polimi.ingsw.server.model.player_board.DevelopmentCardsDeck;
 import it.polimi.ingsw.utils.Pair;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmentCardDecks, String>> {
+public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmentCardDecks, String>> implements Serializable {
 
     private final ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards;
     private String owner;
 
-    public ClientDevelopmentCardDecks(ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards, String username) {
-        this.developmentCards = developmentCards;
+    public ClientDevelopmentCardDecks(DevelopmentCardsDeck[] developmentCards, String username) {
+        ArrayList<ArrayList<ClientDevelopmentCard>> clientCards = new ArrayList<>();
+        for (DevelopmentCardsDeck list : developmentCards) {
+            ArrayList<ClientDevelopmentCard> listToAdd = new ArrayList<>();
+            for (DevelopmentCard card : list.getDeck()) {
+                listToAdd.add(new ClientDevelopmentCard(card));
+            }
+            clientCards.add(listToAdd);
+        }
+        this.developmentCards = clientCards;
+        this.owner = username;
     }
 
     public ClientDevelopmentCardDecks(String username) {

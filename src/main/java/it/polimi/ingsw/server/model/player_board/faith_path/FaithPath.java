@@ -7,11 +7,12 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_server.FaithPathMessage;
 import it.polimi.ingsw.observer.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class FaithPath extends Observable<Message<ClientController>> {
+public class FaithPath extends Observable<Message<ClientController>>implements Serializable {
 
     private final Cell[] cells;
     private int faithPoints;

@@ -33,11 +33,13 @@ public class ServerController {
 
 
     public void tryAction(CustomRunnable action){
-        try{
-            backupManager.load(game.getBackup());
-        } catch (Exception e){
-            CustomLogger.getLogger().info("Error while creating game backup!");
-            e.printStackTrace();
+        if(game.isStarted()){
+            try{
+                backupManager.load(game.getBackup());
+            } catch (Exception e){
+                CustomLogger.getLogger().info("Error while creating game backup!");
+                e.printStackTrace();
+            }
         }
         try{
             action.tryRun();
@@ -46,7 +48,11 @@ public class ServerController {
         } catch (Exception e){
             e.printStackTrace();
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
-            backupManager.applyBackup();
+            try {
+                backupManager.applyBackup();
+            } catch (GameException gameException) {
+                gameException.printStackTrace();
+            }
         }
     }
 

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model.player_board.faith_path;
 
-public class EmptyCell extends Cell {
+import java.io.Serializable;
+
+public class EmptyCell extends Cell implements Serializable {
 
     public EmptyCell() {
         super();

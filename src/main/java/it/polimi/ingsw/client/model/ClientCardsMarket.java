@@ -3,10 +3,12 @@ package it.polimi.ingsw.client.model;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.card.*;
 import it.polimi.ingsw.server.model.market.*;
+
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ClientCardsMarket extends Observable<ClientCardsMarket> {
+public class ClientCardsMarket extends Observable<ClientCardsMarket> implements Serializable {
     private ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> decks = new ArrayList<>();
 
     public ClientCardsMarket() {}

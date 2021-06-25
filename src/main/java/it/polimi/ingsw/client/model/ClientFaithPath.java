@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.model;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -7,11 +8,11 @@ import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.player_board.faith_path.*;
 import it.polimi.ingsw.utils.Pair;
 
-public class ClientFaithPath extends Observable<Pair<ClientFaithPath, String>> {
+public class ClientFaithPath extends Observable<Pair<ClientFaithPath, String>> implements Serializable {
 
     private int faithPoints;
     private ArrayList<Boolean> popeFavors;
-    private Optional<Integer> blackCrossPosition;
+    private Integer blackCrossPosition;
     private String owner;
 
     public ClientFaithPath(String owner) {
@@ -20,7 +21,7 @@ public class ClientFaithPath extends Observable<Pair<ClientFaithPath, String>> {
         this.popeFavors.add(false);
         this.popeFavors.add(false);
         this.popeFavors.add(false);
-        this.blackCrossPosition = Optional.empty();
+        this.blackCrossPosition = null;
         this.owner = owner;
     }
 
@@ -29,6 +30,7 @@ public class ClientFaithPath extends Observable<Pair<ClientFaithPath, String>> {
         this.owner = owner;
         this.popeFavors = popeFavors;
     }
+
 
     public void setFaithPoints(int faithPoints) {
         this.faithPoints = faithPoints;
@@ -43,11 +45,11 @@ public class ClientFaithPath extends Observable<Pair<ClientFaithPath, String>> {
     }
 
     public void setBlackCrossPosition(int position){
-        this.blackCrossPosition = Optional.of(position);
+        this.blackCrossPosition = position;
     }
 
     public int getBlackCrossPosition(){
-        return blackCrossPosition.orElse(0);
+        return (blackCrossPosition==null) ? 0 : blackCrossPosition;
     }
 
     public ArrayList<Boolean> getPopeFavors() {

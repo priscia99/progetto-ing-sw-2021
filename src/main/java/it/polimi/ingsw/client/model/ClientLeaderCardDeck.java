@@ -1,19 +1,21 @@
 package it.polimi.ingsw.client.model;
 
 import it.polimi.ingsw.observer.Observable;
+import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.Effect;
 import it.polimi.ingsw.server.model.card.effect.EffectType;
 import it.polimi.ingsw.utils.Pair;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class ClientLeaderCardDeck extends Observable<Pair<ClientLeaderCardDeck, String>> {
+public class ClientLeaderCardDeck extends Observable<Pair<ClientLeaderCardDeck, String>> implements Serializable {
 
     private final String owner;
     private ArrayList<ClientLeaderCard> clientLeaderCards;
-    private final boolean mine;
+    private boolean mine;
 
     public ClientLeaderCardDeck(ArrayList<ClientLeaderCard> clientLeaderCards, boolean mine, String owner) {
         this.clientLeaderCards = clientLeaderCards;
@@ -23,6 +25,12 @@ public class ClientLeaderCardDeck extends Observable<Pair<ClientLeaderCardDeck, 
 
     public ClientLeaderCardDeck(boolean mine, String owner) {
         this.clientLeaderCards = new ArrayList<>();
+        this.mine = mine;
+        this.owner = owner;
+    }
+
+    public ClientLeaderCardDeck(boolean mine, String owner, ArrayList<LeaderCard> leaderCards){
+        this.clientLeaderCards = leaderCards.stream().map(ClientLeaderCard::new).collect(Collectors.toCollection(ArrayList::new));
         this.mine = mine;
         this.owner = owner;
     }
@@ -56,6 +64,8 @@ public class ClientLeaderCardDeck extends Observable<Pair<ClientLeaderCardDeck, 
     public boolean isMine() {
         return mine;
     }
+
+    public void setMine(boolean flag){this.mine = flag;}
 
     public void setClientLeaderCards(ArrayList<ClientLeaderCard> clientLeaderCards, boolean displayToView) {
         this.clientLeaderCards = clientLeaderCards;

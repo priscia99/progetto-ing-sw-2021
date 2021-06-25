@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model.player_board.faith_path;
 
-public class PointsCell extends Cell {
+import java.io.Serializable;
+
+public class PointsCell extends Cell implements Serializable {
 
     private final int points;
 

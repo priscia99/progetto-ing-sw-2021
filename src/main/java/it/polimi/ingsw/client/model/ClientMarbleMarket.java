@@ -4,11 +4,12 @@ import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.marble.*;
 import it.polimi.ingsw.server.model.market.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class ClientMarbleMarket extends Observable<ClientMarbleMarket> {
+public class ClientMarbleMarket extends Observable<ClientMarbleMarket> implements Serializable {
 
     private Marble[][] onSale;
     private Marble notForSale;

@@ -21,7 +21,7 @@ public class Client {
     private final UI userInterface;               // type of chosen UI (CLI, GUI)
     private ClientController controller;
     private final ClientMessageEncoder clientMessageEncoder;
-    private String myUsername;
+    public String myUsername;
     private final String ip;                // server IP
     private final int port;                 // server port
     private boolean active = true;          // check connection status
@@ -37,6 +37,7 @@ public class Client {
 
     public void applyGameBackup(ClientGame backup){
         controller.setGame(backup);
+        controller.getGame().setMyUsername(myUsername);
         setupGameObservers();
     }
 
@@ -212,4 +213,7 @@ public class Client {
     public void setMyUsername(String myUsername){
         this.myUsername = myUsername;
     }
+
+
+    public String getMyUsername(){return myUsername;}
 }

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class ResourceRequirement extends Requirement implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private final List<ResourceStock> resourceStocks;
+    private List<ResourceStock> resourceStocks;
     private static final String RESOURCE_REQUIREMENT_FORMAT = "[%s]";
 
     /**
@@ -32,6 +32,8 @@ public class ResourceRequirement extends Requirement implements Serializable {
         this.resourceStocks = resourceStocks;
     }
 
+
+    public ResourceRequirement(){}
     /**
      *
      * @return return the list of resource piles.

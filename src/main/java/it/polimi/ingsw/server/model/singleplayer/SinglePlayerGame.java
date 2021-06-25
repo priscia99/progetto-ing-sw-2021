@@ -15,10 +15,10 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class SinglePlayerGame extends Game {
-    ArrayList<ActionToken> actions;
-    int currentActionIndex;
-    boolean isFirstTurn;
-    int blackCrossPosition = 0;
+    private ArrayList<ActionToken> actions;
+    private int currentActionIndex;
+    private boolean isFirstTurn;
+    private int blackCrossPosition = 0;
 
     @Override
     public void setup(ArrayList<Player> players) throws GameException {
@@ -27,9 +27,46 @@ public class SinglePlayerGame extends Game {
         this.isFirstTurn = true;
     }
 
+
+    public void setBlackCrossPosition(int position){
+        this.blackCrossPosition = position;
+    }
+
+    public void setFirstTurn(boolean flag){
+        this.isFirstTurn = flag;
+    }
+
+    public void setCurrentActionIndex(int index){
+        this.currentPlayerIndex = index;
+    }
+
+    public void setActionTokens(ArrayList<ActionToken> actions){
+        this.actions = actions;
+    }
+
     private void setupActionTokens(){
         this.actions = ActionToken.getStartingTokens();
         this.shuffleTokens();
+    }
+
+    @Override
+    public SinglePlayerGame getBackup() throws GameException {
+        SinglePlayerGame backup = new SinglePlayerGame();
+        ArrayList<Player> playersBackup = new ArrayList<>();
+        for(Player player : getPlayers()){
+            playersBackup.add(player.getCopy());
+        }
+        backup.setBlackCrossPosition(this.blackCrossPosition);
+        backup.setPlayers(playersBackup);
+        backup.setActionTokens(this.actions);
+        backup.setFirstTurn(this.isFirstTurn);
+        backup.setCurrentActionIndex(this.currentActionIndex);
+        backup.setCurrentPlayerIndex(this.currentPlayerIndex);
+        backup.setLeaderCards(leaderCardsDeck.getCopy());
+        backup.setCardsMarket(cardsMarket.getCopy());
+        backup.setMarbleMarket(marbleMarket.getCopy());
+        backup.setIsLastRound(isLastRound);
+        return backup;
     }
 
     @Override

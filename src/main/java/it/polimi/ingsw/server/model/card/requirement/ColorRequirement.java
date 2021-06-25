@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ColorRequirement extends Requirement implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private final ArrayList<ColorPile> colorPiles;
+    private ArrayList<ColorPile> colorPiles;
     private static final String COLOR_REQUIREMENT_FORMAT = "[%s]";
 
     /**
@@ -23,6 +23,8 @@ public class ColorRequirement extends Requirement implements Serializable {
         this.colorPiles = colorPiles;
     }
 
+
+    public ColorRequirement(){}
     /**
      *
      * @return the required color piles.
