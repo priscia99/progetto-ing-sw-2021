@@ -13,19 +13,15 @@ public class DevelopmentCardsController {
     private static final String DEV_CARDS_FRONT_PATH = "/img/cards/front/development-card-";
     private static final String DEV_CARDS_BACK_PATH = "/img/cards/back/development-card-";
 
-    private AnchorPane firstDevSlot, secondDevSlot, thirdDevSlot;
-    private ArrayList<ObservableList<Node>> cardsSlots;
-    private Button produceButton;
+    private final ArrayList<ObservableList<Node>> cardsSlots;
+    private final Button produceButton;
 
     public DevelopmentCardsController(AnchorPane firstDevSlot, AnchorPane secondDevSlot, AnchorPane thirdDevSlot, Button produceButton) {
         this.produceButton = produceButton;
         cardsSlots = new ArrayList<>();
-        this.firstDevSlot = firstDevSlot;
-        this.secondDevSlot = secondDevSlot;
-        this.thirdDevSlot = thirdDevSlot;
-        cardsSlots.add(this.firstDevSlot.getChildren());
-        cardsSlots.add(this.secondDevSlot.getChildren());
-        cardsSlots.add(this.thirdDevSlot.getChildren());
+        cardsSlots.add(firstDevSlot.getChildren());
+        cardsSlots.add(secondDevSlot.getChildren());
+        cardsSlots.add(thirdDevSlot.getChildren());
     }
 
     /**

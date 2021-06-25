@@ -7,14 +7,12 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
-import java.util.Objects;
-
 public class DevelopmentCardMarketController {
 
     private static final String DEV_CARDS_FRONT_PATH = "/img/cards/front/development-card-";
     private static final String DEV_CARDS_BACK_PATH = "/img/cards/back/dev_back_";
 
-    private GridPane developmentCardsMarketPane;
+    private final GridPane developmentCardsMarketPane;
     private ObservableList<Node> marketCards;
     private ClientCardsMarket cardsMarket;
 

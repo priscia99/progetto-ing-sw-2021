@@ -17,9 +17,8 @@ public class ChooseLeadersController {
     private static final String LEADER_CARD_BACK_PATH = "/img/cards/back/lead_back.png";
 
     private AnchorPane chooseLeadersPane;
-    private GridPane chooseLeadersGrid;
-    private ObservableList<Node> cardsPanes;
-    private Button confirmLeadersButton;
+    private final ObservableList<Node> cardsPanes;
+    private final Button confirmLeadersButton;
 
     ClientController currentController;
     ArrayList<String> selectedIDs = null;
@@ -27,7 +26,7 @@ public class ChooseLeadersController {
 
     public ChooseLeadersController(AnchorPane chooseLeadersPane, Button confirmLeadersButton) {
         this.chooseLeadersPane = chooseLeadersPane;
-        this.chooseLeadersGrid = (GridPane)chooseLeadersPane.getChildren().get(1);
+        GridPane chooseLeadersGrid = (GridPane) chooseLeadersPane.getChildren().get(1);
         this.cardsPanes = chooseLeadersGrid.getChildren();
         this.confirmLeadersButton = confirmLeadersButton;
     }
