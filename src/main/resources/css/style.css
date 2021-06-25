@@ -268,42 +268,36 @@
 }
 
 #depot-1-1 {
-    -fx-background-image: url('../img/ico/servant.png');
     -fx-background-size: contain;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
 
 #depot-2-1 {
-    -fx-background-image: url('../img/ico/coin.png');
     -fx-background-size: contain;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
 
 #depot-2-2 {
-    -fx-background-image: url('../img/ico/coin.png');
     -fx-background-size: contain;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
 
 #depot-3-1 {
-    -fx-background-image: url('../img/ico/shield.png');
     -fx-background-size: contain;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
 
 #depot-3-2 {
-    -fx-background-image: url('../img/ico/shield.png');
     -fx-background-size: contain;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
 
 #depot-3-3 {
-    -fx-background-image: url('../img/ico/shield.png');
     -fx-background-size: contain;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;

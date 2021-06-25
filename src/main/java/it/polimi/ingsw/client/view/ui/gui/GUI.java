@@ -103,7 +103,9 @@ public class GUI implements UI{
 
     @Override
     public void displayWarehouse(ClientWarehouse warehouse, String username) {
-        Platform.runLater(() -> SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(warehouse));
+        if(isToRefresh(username)) {
+            Platform.runLater(() -> SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(warehouse));
+        }
     }
 
     /**
@@ -112,7 +114,9 @@ public class GUI implements UI{
      */
     @Override
     public void displayLeaderCardDeck(ClientLeaderCardDeck deck, String username) {
-        Platform.runLater(() -> SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(deck));
+        if (isToRefresh(username)) {
+            Platform.runLater(() -> SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(deck));
+        }
     }
 
     @Override
@@ -141,17 +145,27 @@ public class GUI implements UI{
 
     @Override
     public void displayStrongBox(ClientStrongbox strongbox, String username) {
-        Platform.runLater(() -> SceneController.getMainGUIController().getStrongBoxController().refreshStrongbox(strongbox));
+        if (isToRefresh(username)) {
+            Platform.runLater(() -> SceneController.getMainGUIController().getStrongBoxController().refreshStrongbox(strongbox));
+        }
     }
 
     @Override
     public void displayFaithPath(ClientFaithPath path, String username) {
-        Platform.runLater(() -> {SceneController.getMainGUIController().getFaithPathController().refreshFaithPath(path);});
+        if (isToRefresh(username)) {
+            Platform.runLater(() -> {
+                SceneController.getMainGUIController().getFaithPathController().refreshFaithPath(path);
+            });
+        }
     }
 
     @Override
     public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck, String username) {
-        Platform.runLater(() -> {SceneController.getMainGUIController().getDevelopmentCardsController().refreshDevelopmentCards(deck);});
+        if (isToRefresh(username)) {
+            Platform.runLater(() -> {
+                SceneController.getMainGUIController().getDevelopmentCardsController().refreshDevelopmentCards(deck);
+            });
+        }
     }
 
     @Override
@@ -191,7 +205,7 @@ public class GUI implements UI{
 
     @Override
     public void startUI(ClientGame game) {
-        this.selectedPlayerBoard = game.getCurrentPlayer();
+        this.selectedPlayerBoard = game.getMyUsername();
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
             SceneController.getMainGUIController().initGUI();
@@ -211,6 +225,10 @@ public class GUI implements UI{
     public void setPlayerBoardUsername(String username, boolean isMine){
         this.selectedPlayerBoard = username;
         Platform.runLater(() -> SceneController.getMainGUIController().getPlayerBoardController().setUsername(username, isMine));
+    }
+
+    private boolean isToRefresh(String username){
+        return username.equals(selectedPlayerBoard);
     }
 
 }
