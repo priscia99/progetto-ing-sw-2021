@@ -215,6 +215,7 @@ public class GUI implements UI{
             SceneController.getMainGUIController().initGUI();
             SceneController.getMainGUIController().getStrongBoxController().initStrongboxScreen();
             SceneController.getMainGUIController().getPlayerBoardController().setClientController(controller);
+            SceneController.getMainGUIController().getWarehouseController().setClientController(controller);
             SceneController.getMainGUIController().getPlayerBoardController().initClientSelector(new ArrayList<>(game.getPlayerBoardMap().keySet()));
             SceneController.getMainGUIController().getPlayerBoardController().setUsername(game.getMyUsername(), true);
         });

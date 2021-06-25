@@ -1,9 +1,12 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientWarehouse;
 import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -19,6 +22,7 @@ public class WarehouseController {
     private static final String SERVANT_PATH = "/img/ico/servant.png";
     private static final String SHIELD_PATH = "/img/ico/shield.png";
     private static final String STONE_PATH = "/img/ico/stone.png";
+    private ClientController clientController;
 
     GridPane firstDepot;
     GridPane secondDepot;
@@ -35,6 +39,39 @@ public class WarehouseController {
         warehouseElements.add(firstDepot.getChildren());
         warehouseElements.add(secondDepot.getChildren());
         warehouseElements.add(thirdDepot.getChildren());
+        this.initSwapSelector();
+    }
+
+    private void initSwapSelector() {
+        MenuItem tempItem;
+
+        tempItem = new MenuItem("Swap 1 and 2");
+        tempItem.setOnAction(swap1and2);
+        swapDepotsMenu.getItems().add(tempItem);
+
+        tempItem = new MenuItem("Swap 1 and 3");
+        tempItem.setOnAction(swap1and3);
+        swapDepotsMenu.getItems().add(tempItem);
+
+        tempItem = new MenuItem("Swap 2 and 3");
+        tempItem.setOnAction(swap2and3);
+        swapDepotsMenu.getItems().add(tempItem);
+    }
+
+    private final EventHandler<ActionEvent> swap1and2 = event -> {
+        clientController.swapDepots(1,2);
+    };
+
+    private final EventHandler<ActionEvent> swap1and3 = event -> {
+        clientController.swapDepots(1,3);
+    };
+
+    private final EventHandler<ActionEvent> swap2and3 = event -> {
+        clientController.swapDepots(2,3);
+    };
+
+    public void setClientController(ClientController clientController) {
+        this.clientController = clientController;
     }
 
     /**

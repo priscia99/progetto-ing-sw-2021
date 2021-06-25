@@ -29,9 +29,9 @@ public class Warehouse extends Storage {
         this.checkValidIndex(index1);
         this.checkValidIndex(index2);
 
-        Collections.swap(this.resourceStocks, index1, index2);
-        ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index2+1);
-        ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
+        Collections.swap(this.resourceStocks, index1-1, index2-1);
+        ((ResourceDepot) this.getResourceStock(index2-1)).setCapacity(index2);
+        ((ResourceDepot) this.getResourceStock(index1-1)).setCapacity(index1);
     }
 
     public Warehouse getCopy() throws GameException {
@@ -129,10 +129,11 @@ public class Warehouse extends Storage {
 
     /**
      * Check if the given index is valid
+     *
      * @param index index to check
      */
     private void checkValidIndex(int index) {
-        if(index < 0 || index > 2) {
+        if(index < 1 || index > 3) {
             throw new IllegalArgumentException("Indexes must be in [0;2]");
         }
     }
