@@ -5,7 +5,7 @@ import it.polimi.ingsw.client.Client;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameStartedServiceMessage implements ServiceMessage<Client>, Serializable {
+public class GameStartedServiceMessage extends ServiceMessage<Client> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private ArrayList<String> players;

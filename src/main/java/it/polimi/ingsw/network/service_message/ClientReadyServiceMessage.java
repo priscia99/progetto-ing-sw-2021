@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.Lobby;
 
 import java.io.Serializable;
 
-public class ClientReadyServiceMessage implements ServiceMessage<Lobby>, Serializable {
+public class ClientReadyServiceMessage extends ServiceMessage<Lobby> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Override
