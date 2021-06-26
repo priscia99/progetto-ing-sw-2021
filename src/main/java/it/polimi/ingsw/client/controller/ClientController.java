@@ -281,4 +281,7 @@ public class ClientController extends Observable<Message<ServerController>> {
     public void startUI(){
         userInterface.startUI(getGame());
     }
+
+
+
 }

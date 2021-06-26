@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientMarbleMarket;
+import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.marble.Orientation;
@@ -85,6 +86,7 @@ public class MarbleMarketController extends GenericGUIController{
     }
 
     private final EventHandler<MouseEvent> onPressedMarketChoice = event -> {
+        SceneController.startMainAction();
         Orientation choiceOrientation;
         int choiceIndex;
         Button pressedBtn = (Button) event.getSource();

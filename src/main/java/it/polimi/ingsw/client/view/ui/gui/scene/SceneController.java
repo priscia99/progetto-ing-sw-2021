@@ -187,4 +187,11 @@ public class SceneController {
         return mainGUIController;
     }
 
+    public static void startMainAction(){
+        mainGUIController.enableMainActionState(client.getMyUsername());
+    }
+
+    public static void endMainAction(){
+        mainGUIController.disableMainActionState();
+    }
 }

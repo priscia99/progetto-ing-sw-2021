@@ -222,4 +222,13 @@ public class MainGUIController {
     public PlayerBoardController getPlayerBoardController() {
         return playerBoardController;
     }
+
+    public void enableMainActionState(String toShow){
+        clientController.displayPlayerboardByUsername(toShow);
+        playerBoardController.disableChangePlayer();
+    }
+
+    public void disableMainActionState(){
+        playerBoardController.enableChangePlayer();
+    }
 }

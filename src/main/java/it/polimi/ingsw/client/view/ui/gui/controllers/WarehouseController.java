@@ -153,6 +153,7 @@ public class WarehouseController extends GenericGUIController {
             removeAllSelectionHandlers();
             refreshWarehouse(activeWarehouse, true);
             getClientController().pickResources(marbleSelection, positions, conversions);
+            SceneController.endMainAction();
             return;
         }
         Marble marble = selected.get(insertPositionIndex);

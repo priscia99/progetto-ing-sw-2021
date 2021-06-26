@@ -42,4 +42,12 @@ public class PlayerBoardController extends GenericGUIController{
             playerBoardLabel.setText(username + "'s PlayerBoard");
         }
     }
+
+    public void disableChangePlayer(){
+        this.playerSelector.setDisable(true);
+    }
+
+    public void enableChangePlayer(){
+        this.playerSelector.setDisable(false);
+    }
 }
