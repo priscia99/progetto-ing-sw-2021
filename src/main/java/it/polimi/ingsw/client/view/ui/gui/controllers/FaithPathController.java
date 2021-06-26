@@ -12,6 +12,8 @@ import java.util.Objects;
 public class FaithPathController extends GenericGUIController {
     private static int CELLS_NUMBER = 24;                           // number of faith path cells
     private static final String CROSS_PATH = "/img/croce.png";      // cross image path
+    private static final String LORENZO_PATH = "/img/lorenzo.png";
+    private static final String CROSSES_PATH = "/img/crosses.png";
     GridPane faithPathPane;                                         // faith path generic pane
     ObservableList<Node> cellsPaneList;                             // list of position panes
 
@@ -28,13 +30,23 @@ public class FaithPathController extends GenericGUIController {
      */
     public void refreshFaithPath(ClientFaithPath faithPath){
         for(int i=0; i<CELLS_NUMBER; i++){
-            Pane tempCell = (Pane) faithPathPane.lookup("#fc-" + String.valueOf(i));
+            Pane tempCell = (Pane) faithPathPane.lookup("#fc-" + i);
+            String imageUrl = null;
+            if(i==faithPath.getBlackCrossPosition() && i != 0){
+                imageUrl = LORENZO_PATH;
+            }
             if (i==faithPath.getFaithPoints()){
-                tempCell.setStyle("-fx-background-image: url(" + CROSS_PATH + ");" +
+                imageUrl = CROSS_PATH;
+            }
+            if(i==faithPath.getFaithPoints() && i == faithPath.getBlackCrossPosition()  && i != 0){
+                imageUrl = CROSSES_PATH;
+            }
+            if(imageUrl!=null){
+                tempCell.setStyle("-fx-background-image: url(" + imageUrl + ");" +
                         "-fx-background-size: contain;" +
                         "-fx-background-position: center;" +
                         "-fx-background-repeat: no-repeat;");
-            }else{
+            } else {
                 tempCell.setStyle("-fx-background-image: null;");
             }
         }
