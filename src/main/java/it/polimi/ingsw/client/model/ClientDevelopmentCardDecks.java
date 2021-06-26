@@ -31,7 +31,11 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
     }
 
     public ClientDevelopmentCardDecks(String username) {
+        this.owner = username;
         this.developmentCards = new ArrayList<>();
+        this.developmentCards.add(new ArrayList<>());
+        this.developmentCards.add(new ArrayList<>());
+        this.developmentCards.add(new ArrayList<>());
     }
 
     public ArrayList<ArrayList<ClientDevelopmentCard>> getDevelopmentCards() {

@@ -59,7 +59,6 @@ public class StrongBoxController extends GenericGUIController {
     public void setResourcesAsPickable(boolean isPickable){
         if(isPickable) {
             strongboxPane.setStyle("-fx-border-color: darkred;");
-            strongboxCoin.setText("1");
             this.enableHandlers();
         }else{
             strongboxPane.setStyle("-fx-border: none;");

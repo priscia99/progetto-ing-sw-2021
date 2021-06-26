@@ -296,6 +296,7 @@ public class WarehouseController extends GenericGUIController {
                 if(j < activeWarehouse.getResourceDepot(i).getQuantity() && isPickable) {
                     resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
                 }else{
+                    resourcePane.setEffect(null);
                     resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
                 }
             }

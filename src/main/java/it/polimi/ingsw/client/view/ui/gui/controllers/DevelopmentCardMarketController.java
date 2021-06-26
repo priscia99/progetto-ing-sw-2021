@@ -72,10 +72,14 @@ public class DevelopmentCardMarketController extends GenericGUIController{
     public void showCardZoom(ClientDevelopmentCard clientDevCard){
         this.selectedCard = clientDevCard;
         String cardAssetPath = clientDevCard.getAssetLink();
-        Button buyDevCardButton = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(1)).getChildren().get(0);
-        Button closeZoomButton = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(2)).getChildren().get(0);
+        Button buyDevCardButton1 = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(1)).getChildren().get(0);
+        Button buyDevCardButton2 = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(2)).getChildren().get(0);
+        Button buyDevCardButton3 = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(3)).getChildren().get(0);
+        Button closeZoomButton = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(4)).getChildren().get(0);
 
-        buyDevCardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onBuyCardButtonPressed);
+        buyDevCardButton1.addEventHandler(MouseEvent.MOUSE_CLICKED, onBuyCard1ButtonPressed);
+        buyDevCardButton2.addEventHandler(MouseEvent.MOUSE_CLICKED, onBuyCard2ButtonPressed);
+        buyDevCardButton3.addEventHandler(MouseEvent.MOUSE_CLICKED, onBuyCard3ButtonPressed);
         closeZoomButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onCloseZoomButtonPressed);
 
         String cardImagePath = DEV_CARDS_FRONT_PATH + cardAssetPath + ".png";
@@ -88,9 +92,17 @@ public class DevelopmentCardMarketController extends GenericGUIController{
         devCardZoomPane.setVisible(false);
     };
 
-    private final EventHandler<MouseEvent> onBuyCardButtonPressed = event -> {
+    private final EventHandler<MouseEvent> onBuyCard1ButtonPressed = event -> {
         devCardZoomPane.setVisible(false);
         SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 0);
+    };
+    private final EventHandler<MouseEvent> onBuyCard2ButtonPressed = event -> {
+        devCardZoomPane.setVisible(false);
+        SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 1);
+    };
+    private final EventHandler<MouseEvent> onBuyCard3ButtonPressed = event -> {
+        devCardZoomPane.setVisible(false);
+        SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 2);
     };
 
     public void setCardsMarket(ClientCardsMarket market){

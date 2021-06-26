@@ -26,6 +26,6 @@ public class DevelopmentCardsMessage extends Message<ClientController> implement
     public void execute(ClientController target) {
          String currentPlayer = target.getGame().getCurrentPlayer();
          target.getGame().getPlayerBoardMap().get(currentPlayer)
-                .getDevelopmentCards().getDeck(index).add(developmentCard);
+                .getDevelopmentCards().addCard(developmentCard, index);
     }
 }
