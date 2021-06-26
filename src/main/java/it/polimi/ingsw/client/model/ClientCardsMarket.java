@@ -55,7 +55,8 @@ public class ClientCardsMarket extends Observable<ClientCardsMarket> implements 
         for(int i = 0; i<4; i++){
             for(int j = 0; j<3; j++){
                 if(!this.decks.get(i).get(j).isEmpty()){
-                    if(this.decks.get(i).get(j).get(0).getId().equals(id)) return this.decks.get(i).get(j).get(0);
+                    int index = this.decks.get(i).get(j).size() - 1;
+                    if(this.decks.get(i).get(j).get(index).getId().equals(id)) return this.decks.get(i).get(j).get(index);
                 }
             }
         }
