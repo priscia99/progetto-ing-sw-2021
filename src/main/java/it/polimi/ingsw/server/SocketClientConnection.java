@@ -40,7 +40,6 @@ public class SocketClientConnection extends Observable<Message<ServerController>
      */
     @Override
     public void closeConnection() {
-        this.send("Connection closed!");
         try {
             socket.close();
         } catch (IOException e) {
@@ -50,8 +49,8 @@ public class SocketClientConnection extends Observable<Message<ServerController>
     }
 
     private void close() {
-        CustomLogger.getLogger().info("deregistering client...");
-        server.deregisterConnection(this);
+        CustomLogger.getLogger().info("Clearing connection.");
+        server.unregisterConnection(this);
         CustomLogger.getLogger().info("Done!");
         this.closeConnection();
     }
@@ -62,19 +61,17 @@ public class SocketClientConnection extends Observable<Message<ServerController>
      */
     @Override
     public void asyncSend(Object message) {
-        new Thread((Runnable) () -> {
-            send(message);
-        }).start();
+        new Thread(() -> send(message)).start();
     }
 
     private synchronized void send(Object message){
         try {
-            System.out.println("Sent message to " + this);
+            CustomLogger.getLogger().info("Sent message to " + this);
             out.reset();
             out.writeObject(message);
             out.flush();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            CustomLogger.getLogger().severe(e.getMessage());
         }
     }
 
@@ -126,7 +123,7 @@ public class SocketClientConnection extends Observable<Message<ServerController>
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            CustomLogger.getLogger().info(this + " lost connection with client." );
         } finally { // when the connection die close it
             close();
         }

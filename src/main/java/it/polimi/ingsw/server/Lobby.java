@@ -10,11 +10,9 @@ import it.polimi.ingsw.server.model.BackupManager;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.singleplayer.SinglePlayerGame;
+import it.polimi.ingsw.utils.CustomLogger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Lobby extends Observable<Message> {
     private final String lobbyId;
@@ -47,15 +45,6 @@ public class Lobby extends Observable<Message> {
         if(this.isFull()) init();
     }
 
-    /**
-     * Remove a player from the lobby.
-     * @param username username of the player
-     */
-    public void removeClientConnection(String username) {
-        if (!this.isEmpty()) {
-            clientConnectionMap.remove(username);
-        }
-    }
 
     /**
      * Remove a player from the lobby.
@@ -63,10 +52,7 @@ public class Lobby extends Observable<Message> {
      */
     public void removeClientConnection(ClientConnection clientConnection) {
         if (!this.isEmpty()) {
-            clientConnectionMap.keySet()
-                    .stream()
-                    .filter(key -> clientConnectionMap.get(key).equals(clientConnection))
-                    .forEach(this::removeClientConnection);
+            clientConnectionMap.entrySet().removeIf(entry -> entry.getValue().equals(clientConnection));
         }
     }
 

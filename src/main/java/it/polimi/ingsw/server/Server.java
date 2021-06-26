@@ -68,19 +68,13 @@ public class Server {
     /**
      * Remove client's connection from the server lobby in the server. If the lobby become empty, it will remove the
      * lobby from the server.
-     * @param clientConnection client connection to remove
+     * @param toRemove client connection to remove
      */
-    public synchronized void deregisterConnection(ClientConnection clientConnection) {
-        lobbyMap.keySet()
-                .stream()
-                .filter(key -> lobbyMap.get(key).contains(clientConnection))
-                .forEach(key -> {
-                    Lobby lobby = lobbyMap.get(key);
-                    lobby.removeClientConnection(clientConnection);
-                    if (lobby.isEmpty()) {
-                        lobbyMap.remove(key);
-                    }
-                });
+    public synchronized void unregisterConnection(ClientConnection toRemove) {
+        lobbyMap.entrySet().forEach(entry-> {
+            if(entry.getValue().contains(toRemove)) entry.getValue().removeClientConnection(toRemove);
+        });
+        lobbyMap.entrySet().removeIf(entry -> entry.getValue().isEmpty());
     }
 
     /**
