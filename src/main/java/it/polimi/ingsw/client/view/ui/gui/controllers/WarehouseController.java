@@ -147,6 +147,7 @@ public class WarehouseController extends GenericGUIController {
     private void parseNextPosition() {
         if (insertPositionIndex >= selected.size()) {
             removeAllSelectionHandlers();
+            refreshWarehouse(activeWarehouse, true);
             getClientController().pickResources(marbleSelection, positions, conversions);
             return;
         }

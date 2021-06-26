@@ -428,6 +428,8 @@
                                                       </Label>
                                                       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1">
                                                         <buttons>
+                                                            <Button fx:id="confirmChoiceButton" id="confirm-choice" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" text="Confirm choice" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button fx:id="endTurnButton" id="end-turn" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" text="End turn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                             <MenuButton fx:id="playerSelector" mnemonicParsing="false" styleClass="glow-button" text="Players">
                                                               <items>
                                                               </items>
