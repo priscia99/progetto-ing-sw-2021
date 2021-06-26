@@ -90,9 +90,9 @@ public class Lobby extends Observable<Message> {
 
     public synchronized void setupMVC() {
         playerReady++;
-        System.out.println("LOBBY: Un giocatore e' pronto! (" + playerReady + " su " + dimension + ")");
+        CustomLogger.getLogger().info("["+lobbyId+"]"+" Un giocatore e' pronto! (" + playerReady + " su " + dimension + ")");
         if (playerReady == dimension) {
-            System.out.println("LOBBY: Tutti i giocatori sono pronti!");
+            CustomLogger.getLogger().info("["+lobbyId+"]"+ " Tutti i giocatori sono pronti!");
             ServerController gameController = new ServerController(game);
             gameController.setBackupManager(backupManager);
             serverMessageDecoder = new ServerMessageDecoder(gameController);
@@ -109,7 +109,7 @@ public class Lobby extends Observable<Message> {
                     });
             gameController.tryAction(()->gameController.setupGame(players));
             setupObservers();
-            System.out.println("Giving initial assets...");
+            CustomLogger.getLogger().info("Giving initial assets...");
             gameController.tryAction(gameController::giveInitialAssets);
         }
     }
@@ -134,7 +134,7 @@ public class Lobby extends Observable<Message> {
     }
 
     public void sendUnicast(Object message, String player) {
-        System.out.println("Sto inviando un messaggio a " + player);
+        CustomLogger.getLogger().info("[" + lobbyId +"]" + " Sto inviando un messaggio a " + player);
         clientConnectionMap.get(player).asyncSend(message);
     }
 

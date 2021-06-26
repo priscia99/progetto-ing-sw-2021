@@ -4,6 +4,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.observer.Observer;
+import it.polimi.ingsw.utils.CustomLogger;
 
 public class ServerMessageEncoder implements Observer<Message<ClientController>> {
     private Lobby lobby;
@@ -27,8 +28,7 @@ public class ServerMessageEncoder implements Observer<Message<ClientController>>
      */
     @Override
     public void update(Message<ClientController> message) {
-        System.out.println("Sto mandando un: ");
-        System.out.println("\t\t" + message.getClass());
+        CustomLogger.getLogger().info("["+lobby.getLobbyId()+"] Sending broadcast: " + message.getClass() );
         this.lobby.sendBroadcast(message);
     }
 }
