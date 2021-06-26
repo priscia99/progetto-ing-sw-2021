@@ -74,6 +74,12 @@ public class MainGUIController {
     private Button endTurnButton;   // end turn button
     @FXML
     private Button confirmChoiceButton; // confirm choice button
+    @FXML
+    private Pane devCardZoomPane;   // dev cards zoom pane
+    @FXML
+    private Pane devCardZoomImage;
+    @FXML
+    private GridPane devCardZoomGrid;   // dev cards zoom grid
 
     // Secondary controllers
     StatsController statsController;
@@ -118,7 +124,7 @@ public class MainGUIController {
         strongBoxController = new StrongBoxController(clientController, strongboxPane, strongboxCoin, strongboxServant, strongboxShield, strongboxStone);
         developmentCardsController = new DevelopmentCardsController(clientController, firstDevSlot, secondDevSlot, thirdDevSlot, produceButton);
         marbleMarketController = new MarbleMarketController(clientController, marbleMarketPane, notForSaleMarble, tabPane, getMarbleMarketButtons());
-        developmentCardMarketController = new DevelopmentCardMarketController(clientController, developmentCardsMarketPane);
+        developmentCardMarketController = new DevelopmentCardMarketController(clientController, developmentCardsMarketPane, devCardZoomPane, devCardZoomGrid, devCardZoomImage);
         chooseLeadersController = new ChooseLeadersController(clientController, chooseLeadersPane, confirmLeadersButton);
         chooseResourcesController = new ChooseResourcesController(clientController, chooseResourcesPane, chooseResourcesLabel, this.getChooseResourcesIcons(), this.getChooseResourcesButtons());
         playerBoardController = new PlayerBoardController(clientController, playerSelector, playerBoardLabel);

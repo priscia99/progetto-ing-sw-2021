@@ -48,6 +48,9 @@ public class LeaderCardsController extends GenericGUIController{
         if (leaderCardsDeck.getClientLeaderCards().size() > 2) {
             return;
         }
+        for(int i = 0; i<2; i++){
+            leaderCardsPanesList.get(i).setStyle("-fx-background-image: url(" + LEADER_CARD_BACK_PATH + ");");
+        }
         for (int i = 0; i < leaderCardsDeck.getClientLeaderCards().size(); i++) {
             ClientLeaderCard tempCard = leaderCardsDeck.getClientLeaderCards().get(i);
             String cardImagePath = LEADER_CARD_FRONT_PATH + tempCard.getAssetLink() + ".png";
