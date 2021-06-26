@@ -70,6 +70,10 @@ public class MainGUIController {
     private GridPane leaderCardZoomGrid;    // leader card zoom grid
     @FXML
     private Button marketBtnC1, marketBtnC2, marketBtnC3, marketBtnC4, marketBtnR1, marketBtnR2, marketBtnR3;   // marble market buttons
+    @FXML
+    private Button endTurnButton;   // end turn button
+    @FXML
+    private Button confirmChoiceButton; // confirm choice button
 
     // Secondary controllers
     StatsController statsController;
@@ -83,6 +87,7 @@ public class MainGUIController {
     ChooseLeadersController chooseLeadersController;
     ChooseResourcesController chooseResourcesController;
     PlayerBoardController playerBoardController;
+    EndTurnButtonController endTurnButtonController;
 
     // Client controller
     ClientController clientController;
@@ -117,6 +122,7 @@ public class MainGUIController {
         chooseLeadersController = new ChooseLeadersController(clientController, chooseLeadersPane, confirmLeadersButton);
         chooseResourcesController = new ChooseResourcesController(clientController, chooseResourcesPane, chooseResourcesLabel, this.getChooseResourcesIcons(), this.getChooseResourcesButtons());
         playerBoardController = new PlayerBoardController(clientController, playerSelector, playerBoardLabel);
+        endTurnButtonController = new EndTurnButtonController(clientController, endTurnButton);
     }
 
     public Map<String, Button> getMarbleMarketButtons(){
@@ -155,12 +161,14 @@ public class MainGUIController {
         developmentCardsController.setProduceButtonEnable(false);
         leaderCardsController.disableLeaderCardsHandlers();
         leaderCardsController.setCanUserDoAction(false);
+        endTurnButtonController.enableEndTurn(false);
     }
 
     public void enableAllActions(){
         marbleMarketController.enableHandlers();
         leaderCardsController.setCanUserDoAction(true);
         leaderCardsController.enableLeaderCardsHandlers();
+        endTurnButtonController.enableEndTurn(true);
     }
 
     public StatsController getStatsController() {
