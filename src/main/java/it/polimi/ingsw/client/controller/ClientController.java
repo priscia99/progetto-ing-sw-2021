@@ -185,6 +185,14 @@ public class ClientController extends Observable<Message<ServerController>> {
         }
     }
 
+    private void executeIfNotMainActionYet(Runnable action){
+        if(game.isMainActionDone()){
+            userInterface.displayError("You have already done main action!");
+        } else {
+            action.run();
+        }
+    }
+
     public void activateLeaderCard(String cardId){
         executeIfCurrentPlayer(()->notify(new PlayLeaderCardMessage(cardId)));
     }
@@ -202,65 +210,88 @@ public class ClientController extends Observable<Message<ServerController>> {
     }
 
     public void buyDevelopmentCard(String cardId, int deckIndex,  ConsumeTarget toConsume){
-        executeIfCurrentPlayer(()->notify(new BuyDevelopmentCardMessage(cardId, deckIndex,toConsume)));
+        executeIfCurrentPlayer(
+                ()->executeIfNotMainActionYet(
+                        ()->notify(new BuyDevelopmentCardMessage(cardId, deckIndex,toConsume))
+                )
+        );
     }
 
     public void pickResources(MarbleSelection selection, ArrayList<ResourcePosition> positions, ArrayList<ResourceType> conversions){
-        executeIfCurrentPlayer(()->notify(new PickResourcesMessage(selection, positions, conversions)));
+        executeIfCurrentPlayer(
+                ()->executeIfNotMainActionYet(
+                        ()->notify(new PickResourcesMessage(selection, positions, conversions))
+                )
+        );
     }
 
     public void produceResources(ConsumeTarget consumed, ArrayList<String> ids, Optional<ProductionEffect> genericProduction, ArrayList<ProductionEffect> leadersProductions){
-        executeIfCurrentPlayer(()-> {
-                    ArrayList<ProductionEffect> toActivate = game.getPlayerBoardMap()
-                            .get(game.getCurrentPlayer()).getDevelopmentCards().getProductionAvailable(ids);
-                    genericProduction.ifPresent(toActivate::add);
-                    toActivate.addAll(leadersProductions);
-                    notify(new ProductionMessage(consumed, toActivate));
-            }
+        executeIfCurrentPlayer(
+                () -> executeIfNotMainActionYet(
+                        ()-> {
+                            ArrayList<ProductionEffect> toActivate = game.getPlayerBoardMap()
+                                    .get(game.getCurrentPlayer()).getDevelopmentCards().getProductionAvailable(ids);
+                            genericProduction.ifPresent(toActivate::add);
+                            toActivate.addAll(leadersProductions);
+                            notify(new ProductionMessage(consumed, toActivate));
+                        }
+                )
         );
     }
 
     public void pickCommandHandler(MarbleSelection selection){
-        executeIfCurrentPlayer(()->{
-            try{
-                ArrayList<ChangeEffect> changeEffects = new ArrayList<>();
-                ArrayList<DepotEffect> depotEffects;
-                ArrayList<Marble> selected = game.getClientMarbleMarket().getSelectedMarbles(selection);
-                if(selected.stream().map(Marble::getResourceType).collect(Collectors.toList()).contains(ResourceType.BLANK)){
-                    changeEffects = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                            .getClientLeaderCards().getActiveEffects(EffectType.CHANGE);
-                }
-                depotEffects = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                        .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
-                userInterface.displayPickResourceMenu(selection, selected, changeEffects, depotEffects);
-            } catch (Exception e){
-                userInterface.displayError("Cannot retrieve marbles from that position!");
-            }
-        });
+        executeIfCurrentPlayer(
+                ()->executeIfNotMainActionYet(
+                        ()->{
+                            try{
+                                ArrayList<ChangeEffect> changeEffects = new ArrayList<>();
+                                ArrayList<DepotEffect> depotEffects;
+                                ArrayList<Marble> selected = game.getClientMarbleMarket().getSelectedMarbles(selection);
+                                if(selected.stream().map(Marble::getResourceType).collect(Collectors.toList()).contains(ResourceType.BLANK)){
+                                    changeEffects = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                            .getClientLeaderCards().getActiveEffects(EffectType.CHANGE);
+                                }
+                                depotEffects = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                        .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
+                                userInterface.displayPickResourceMenu(selection, selected, changeEffects, depotEffects);
+                            } catch (Exception e){
+                                userInterface.displayError("Cannot retrieve marbles from that position!");
+                            }
+                        }
+                )
+        );
     }
 
     public void buyCommandHandler(String id){
-        executeIfCurrentPlayer(()->{
-            if(game.getClientCardsMarket().getCardById(id)==null){
-                userInterface.displayError("Cannot buy card with that id!");
-            } else {
-                ArrayList<DiscountEffect> discounts = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                        .getClientLeaderCards().getActiveEffects(EffectType.DISCOUNT);
-                ArrayList<DepotEffect> additionalDepots = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                        .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
-                userInterface.displayBuyDevelopmentCardMenu(id, discounts, additionalDepots);
-            }
-        });
+        executeIfCurrentPlayer(
+                ()->executeIfNotMainActionYet(
+                        ()->{
+                            if(game.getClientCardsMarket().getCardById(id)==null){
+                                userInterface.displayError("Cannot buy card with that id!");
+                            } else {
+                                ArrayList<DiscountEffect> discounts = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                        .getClientLeaderCards().getActiveEffects(EffectType.DISCOUNT);
+                                ArrayList<DepotEffect> additionalDepots = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                        .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
+                                userInterface.displayBuyDevelopmentCardMenu(id, discounts, additionalDepots);
+                            }
+                        }
+                )
+        );
     }
 
     public void produceCommandHandler(){
-        executeIfCurrentPlayer(()->{
-            ArrayList<ProductionEffect> leaderProductions = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                    .getClientLeaderCards().getActiveEffects(EffectType.PRODUCTION);
-            ArrayList<DepotEffect> additionalDepots = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                    .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
-            userInterface.displayProduceMenu(leaderProductions, additionalDepots);
-        });
+        executeIfCurrentPlayer(
+                ()->executeIfNotMainActionYet(
+                        ()->{
+                            ArrayList<ProductionEffect> leaderProductions = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                    .getClientLeaderCards().getActiveEffects(EffectType.PRODUCTION);
+                            ArrayList<DepotEffect> additionalDepots = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                    .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
+                            userInterface.displayProduceMenu(leaderProductions, additionalDepots);
+                        }
+                )
+        );
     }
 
     public void displayPlayerboardByUsername(String username){
