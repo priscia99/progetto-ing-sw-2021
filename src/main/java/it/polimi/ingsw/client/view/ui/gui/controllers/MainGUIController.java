@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientStrongbox;
 import it.polimi.ingsw.client.model.ClientWarehouse;
+import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -82,6 +83,8 @@ public class MainGUIController {
     private Pane devCardZoomImage;
     @FXML
     private GridPane devCardZoomGrid;   // dev cards zoom grid
+    @FXML
+    private Pane strongboxCoinIco, strongboxServantIco, strongboxShieldIco, strongboxStoneIco;
 
     // Secondary controllers
     StatsController statsController;
@@ -96,6 +99,7 @@ public class MainGUIController {
     ChooseResourcesController chooseResourcesController;
     PlayerBoardController playerBoardController;
     EndTurnButtonController endTurnButtonController;
+    PickResourcesFromStorageController pickResourcesFromStorageController;
 
     // Client controller
     ClientController clientController;
@@ -123,7 +127,7 @@ public class MainGUIController {
         leaderCardsController = new LeaderCardsController(clientController, leaderCardsPane, leaderZoomPane, leaderCardZoomGrid, leaderCardZoomImage);
         faithPathController = new FaithPathController(clientController, faithPathPane);
         warehouseController = new WarehouseController(clientController, firstDepot, secondDepot, thirdDepot, swapDepotsMenu, dropResource);
-        strongBoxController = new StrongBoxController(clientController, strongboxPane, strongboxCoin, strongboxServant, strongboxShield, strongboxStone);
+        strongBoxController = new StrongBoxController(clientController, strongboxPane, strongboxCoin, strongboxServant, strongboxShield, strongboxStone, strongboxCoinIco, strongboxServantIco, strongboxShieldIco, strongboxStoneIco);
         developmentCardsController = new DevelopmentCardsController(clientController, firstDevSlot, secondDevSlot, thirdDevSlot, produceButton);
         marbleMarketController = new MarbleMarketController(clientController, marbleMarketPane, notForSaleMarble, tabPane, getMarbleMarketButtons());
         developmentCardMarketController = new DevelopmentCardMarketController(clientController, developmentCardsMarketPane, devCardZoomPane, devCardZoomGrid, devCardZoomImage);
@@ -131,6 +135,7 @@ public class MainGUIController {
         chooseResourcesController = new ChooseResourcesController(clientController, chooseResourcesPane, chooseResourcesLabel, this.getChooseResourcesIcons(), this.getChooseResourcesButtons());
         playerBoardController = new PlayerBoardController(clientController, playerSelector, playerBoardLabel);
         endTurnButtonController = new EndTurnButtonController(clientController, endTurnButton);
+        pickResourcesFromStorageController = new PickResourcesFromStorageController(clientController, confirmChoiceButton);
     }
 
     public Map<String, Button> getMarbleMarketButtons(){
@@ -231,4 +236,13 @@ public class MainGUIController {
     public void disableMainActionState(){
         playerBoardController.enableChangePlayer();
     }
+
+    public EndTurnButtonController getEndTurnButtonController() {
+        return endTurnButtonController;
+    }
+
+    public PickResourcesFromStorageController getPickResourcesFromStorageController() {
+        return pickResourcesFromStorageController;
+    }
+
 }

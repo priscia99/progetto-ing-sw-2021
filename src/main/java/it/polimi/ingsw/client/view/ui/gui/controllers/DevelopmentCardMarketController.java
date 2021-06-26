@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientCardsMarket;
 import it.polimi.ingsw.client.model.ClientDevelopmentCard;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
+import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -74,7 +75,7 @@ public class DevelopmentCardMarketController extends GenericGUIController{
         Button buyDevCardButton = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(1)).getChildren().get(0);
         Button closeZoomButton = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(2)).getChildren().get(0);
 
-        //buyDevCardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onBuyCardButtonPressed);
+        buyDevCardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onBuyCardButtonPressed);
         closeZoomButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onCloseZoomButtonPressed);
 
         String cardImagePath = DEV_CARDS_FRONT_PATH + cardAssetPath + ".png";
@@ -85,6 +86,11 @@ public class DevelopmentCardMarketController extends GenericGUIController{
 
     private final EventHandler<MouseEvent> onCloseZoomButtonPressed = event -> {
         devCardZoomPane.setVisible(false);
+    };
+
+    private final EventHandler<MouseEvent> onBuyCardButtonPressed = event -> {
+        devCardZoomPane.setVisible(false);
+        SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 0);
     };
 
     public void setCardsMarket(ClientCardsMarket market){

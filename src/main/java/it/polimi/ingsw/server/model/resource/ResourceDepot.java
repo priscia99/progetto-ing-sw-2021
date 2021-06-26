@@ -47,7 +47,7 @@ public class ResourceDepot extends ResourceStock implements Serializable{
     @Override
     public void incrementResource(ResourceType resourceType) throws GameException {
         if (this.isFull()) {
-            throw new UnsupportedOperationException("Depot is full");
+            throw new GameException("Depot is full");
         }
         super.incrementResource(resourceType);
     }

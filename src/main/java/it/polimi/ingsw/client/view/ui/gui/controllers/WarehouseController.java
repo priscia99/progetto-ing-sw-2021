@@ -291,4 +291,36 @@ public class WarehouseController extends GenericGUIController {
         return iconPath;
     }
 
+    public void setResourcesAsPickable(boolean isPickable){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j <i+1; j++) {
+                Pane resourcePane = (Pane) warehouseElements.get(i).get(j);
+                if(j < activeWarehouse.getResourceDepot(i).getQuantity() && isPickable) {
+                    resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
+                }else{
+                    resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
+                }
+            }
+        }
+    }
+
+    private final EventHandler<MouseEvent> onClickedResource = event -> {
+        Pane triggeredPane = (Pane) event.getSource();
+        int rowIndex = Integer.parseInt(triggeredPane.getId().split("-")[1]);
+        triggeredPane.setEffect(new Glow(0.6));
+        removePickHandler(triggeredPane);
+        ResourcePosition resourcePosition = null;
+        switch (rowIndex){
+            case 1 -> resourcePosition = ResourcePosition.FIRST_DEPOT;
+            case 2 -> resourcePosition = ResourcePosition.SECOND_DEPOT;
+            case 3 -> resourcePosition = ResourcePosition.THIRD_DEPOT;
+
+        }
+        SceneController.getMainGUIController().getPickResourcesFromStorageController().addFromWarehouse(resourcePosition, activeWarehouse.getResourceDepot(rowIndex-1).getResourceType());
+    };
+
+    public void removePickHandler(Pane pane){
+        pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
+    }
+
 }
