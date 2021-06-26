@@ -15,9 +15,11 @@ import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.Pair;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.effect.Glow;
@@ -40,6 +42,7 @@ public class WarehouseController extends GenericGUIController {
     private GridPane secondDepot;
     private GridPane thirdDepot;
     private MenuButton swapDepotsMenu;
+    private Button dropResourceButton;
     private ArrayList<ObservableList<Node>> warehouseElements;
     private ClientWarehouse activeWarehouse;
     private Marble marbleToInsert;
@@ -52,13 +55,14 @@ public class WarehouseController extends GenericGUIController {
     private ArrayList<Pair<Integer, Integer>> occupiedCells;
     private MarbleSelection marbleSelection;
 
-    public WarehouseController(ClientController clientController, GridPane firstDepot, GridPane secondDepot, GridPane thirdDepot, MenuButton swapDepotsMenu) {
+    public WarehouseController(ClientController clientController, GridPane firstDepot, GridPane secondDepot, GridPane thirdDepot, MenuButton swapDepotsMenu, Button dropResourceButton) {
         super(clientController);
         this.swapDepotsMenu = swapDepotsMenu;
         warehouseElements = new ArrayList<>();
         this.firstDepot = firstDepot;
         this.secondDepot = secondDepot;
         this.thirdDepot = thirdDepot;
+        this.dropResourceButton = dropResourceButton;
         warehouseElements.add(firstDepot.getChildren());
         warehouseElements.add(secondDepot.getChildren());
         warehouseElements.add(thirdDepot.getChildren());
@@ -183,6 +187,7 @@ public class WarehouseController extends GenericGUIController {
     public void askForDestinationDepot(Marble marble) {
         this.marbleToInsert = marble;
         this.setSwapMenuEnable(false);
+        dropResourceButton.setVisible(true);
         if (activeWarehouse.isInitialized()) {
             // iterate through depots
             for (int i = 0; i < 3; i++) {
@@ -219,7 +224,14 @@ public class WarehouseController extends GenericGUIController {
                 }
             }
         }
+        dropResourceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onDropResourceClicked );
     }
+
+    private final EventHandler<MouseEvent> onDropResourceClicked = event -> {
+        positions.add(ResourcePosition.DROPPED);
+        insertPositionIndex++;
+        parseNextPosition();
+    };
 
     private final EventHandler<MouseEvent> onMarbleDestinationChosen = event -> {
         Pane triggeredPane = (Pane) event.getSource();
@@ -253,6 +265,9 @@ public class WarehouseController extends GenericGUIController {
                 resourcePane.setEffect(null);
             }
         }
+
+        dropResourceButton.removeEventHandler(MouseEvent.MOUSE_CLICKED, onDropResourceClicked);
+        dropResourceButton.setVisible(false);
     }
 
 

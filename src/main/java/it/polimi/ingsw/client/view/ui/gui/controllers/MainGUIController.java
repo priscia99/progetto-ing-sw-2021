@@ -23,7 +23,9 @@ public class MainGUIController {
     @FXML
     private MenuButton playerSelector;                 // player choice selector
     @FXML
-    private GridPane firstDepot, secondDepot, thirdDepot;   // warehouse panes
+    private GridPane firstDepot, secondDepot, thirdDepot;// warehouse panes
+    @FXML
+    private Button dropResource;
     @FXML
     private MenuButton swapDepotsMenu;                      // swap depots selector
     @FXML
@@ -120,7 +122,7 @@ public class MainGUIController {
         statsController = new StatsController(clientController, statsPane);
         leaderCardsController = new LeaderCardsController(clientController, leaderCardsPane, leaderZoomPane, leaderCardZoomGrid, leaderCardZoomImage);
         faithPathController = new FaithPathController(clientController, faithPathPane);
-        warehouseController = new WarehouseController(clientController, firstDepot, secondDepot, thirdDepot, swapDepotsMenu);
+        warehouseController = new WarehouseController(clientController, firstDepot, secondDepot, thirdDepot, swapDepotsMenu, dropResource);
         strongBoxController = new StrongBoxController(clientController, strongboxPane, strongboxCoin, strongboxServant, strongboxShield, strongboxStone);
         developmentCardsController = new DevelopmentCardsController(clientController, firstDevSlot, secondDevSlot, thirdDevSlot, produceButton);
         marbleMarketController = new MarbleMarketController(clientController, marbleMarketPane, notForSaleMarble, tabPane, getMarbleMarketButtons());

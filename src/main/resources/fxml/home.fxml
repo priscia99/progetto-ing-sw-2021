@@ -300,7 +300,6 @@
                                                                                           <Label text="1:" />
                                                                                           <Label text="2:" GridPane.rowIndex="1" />
                                                                                           <Label text="3:" GridPane.rowIndex="2" />
-
                                                                                           <GridPane id="depot-1" fx:id="firstDepot" GridPane.columnIndex="1">
                                                                                             <columnConstraints>
                                                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -349,6 +348,7 @@
                                                                                           </GridPane>
                                                                                        </children>
                                                                                     </GridPane>
+                                                                                     <Button fx:id="dropResource" id="drop-resource" mnemonicParsing="false" text="Drop" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" visible="false"/>
                                                                                  </children>
                                                                               </AnchorPane>
                                                                            </children>
@@ -783,7 +783,8 @@
                                                 </AnchorPane>
                                             </children>
                                         </GridPane>
-                                    </children></AnchorPane>
+                                    </children>
+                                </AnchorPane>
                             </content>
                         </Tab>
                     </tabs>

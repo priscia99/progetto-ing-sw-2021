@@ -50,9 +50,11 @@ public class SocketClientConnection extends Observable<Message<ServerController>
     }
 
     private void close() {
-        CustomLogger.getLogger().info("["+lobby.getLobbyId()+"] "+ "Clearing connection with " + authData.getUsername());
+        String source = (lobby == null) ? "server" : lobby.getLobbyId();
+        String target = (authData == null) ? this.toString() : authData.getUsername();
+        CustomLogger.getLogger().info("["+source+"] "+ "Clearing connection with " + target);
         server.unregisterConnection(this);
-        CustomLogger.getLogger().info("["+lobby.getLobbyId()+"] "+ "Connection successfully removed with " + authData.getUsername());
+        CustomLogger.getLogger().info("["+source+"] "+ "Connection successfully removed with " + target);
         this.closeConnection();
     }
 
