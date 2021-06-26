@@ -91,8 +91,9 @@ public class LeaderCardsController extends GenericGUIController{
         this.selectedCard = clientLeaderCard;
         String cardAssetPath = clientLeaderCard.getAssetLink();
         Button playLeaderCardButton = (Button)((AnchorPane)leaderCardZoomGrid.getChildren().get(1)).getChildren().get(0);
-        Button closeZoomButton = (Button)((AnchorPane)leaderCardZoomGrid.getChildren().get(2)).getChildren().get(0);
-
+        Button dropLeaderCardButton = (Button)((AnchorPane)leaderCardZoomGrid.getChildren().get(2)).getChildren().get(0);
+        Button closeZoomButton = (Button)((AnchorPane)leaderCardZoomGrid.getChildren().get(3)).getChildren().get(0);
+        dropLeaderCardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onDropCardButtonPressed);
         if(clientLeaderCard.isActive()) {
             playLeaderCardButton.setDisable(true);
         }else {
@@ -112,6 +113,11 @@ public class LeaderCardsController extends GenericGUIController{
 
     private final EventHandler<MouseEvent> onPlayCardButtonPressed = event -> {
         super.getClientController().activateLeaderCard(this.selectedCard.getId());
+        leaderZoomPane.setVisible(false);
+    };
+
+    private final EventHandler<MouseEvent> onDropCardButtonPressed = event -> {
+        super.getClientController().dropLeaderCard(this.selectedCard.getId());
         leaderZoomPane.setVisible(false);
     };
 }
