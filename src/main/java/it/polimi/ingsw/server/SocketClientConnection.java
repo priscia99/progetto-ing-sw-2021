@@ -19,6 +19,7 @@ public class SocketClientConnection extends Observable<Message<ServerController>
     private final Socket socket;  // single socket connection with one client
     private ObjectOutputStream out; // output stream to the client
     private final Server server;
+    private AuthData authData;
     private boolean alive = true;
 
     /**
@@ -49,9 +50,9 @@ public class SocketClientConnection extends Observable<Message<ServerController>
     }
 
     private void close() {
-        CustomLogger.getLogger().info("Clearing connection.");
+        CustomLogger.getLogger().info("["+lobby.getLobbyId()+"] "+ "Clearing connection with " + authData.getUsername());
         server.unregisterConnection(this);
-        CustomLogger.getLogger().info("Done!");
+        CustomLogger.getLogger().info("["+lobby.getLobbyId()+"] "+ "Connection successfully removed with " + authData.getUsername());
         this.closeConnection();
     }
 
@@ -66,7 +67,9 @@ public class SocketClientConnection extends Observable<Message<ServerController>
 
     private synchronized void send(Object message){
         try {
-            CustomLogger.getLogger().info("Sent message to " + this);
+            String source = (lobby == null) ? "server" : lobby.getLobbyId();
+            String target = (authData == null) ? this.toString() : authData.getUsername();
+            CustomLogger.getLogger().info("["+source+"] "+ " sent " + message.getClass() + " to " + target);
             out.reset();
             out.writeObject(message);
             out.flush();
@@ -88,17 +91,17 @@ public class SocketClientConnection extends Observable<Message<ServerController>
                     this.asyncSend("auth_request");
                     success = true;
                 }
-                AuthData authData = (AuthData) in.readObject();
-                System.out.println(authData.getUsername());
+                authData = (AuthData) in.readObject();
+                CustomLogger.getLogger().info("New player connected:" + authData.getUsername());
                 try {
                     if (authData.isCreateNewLobby()) {
                         lobby = server.lobby(authData.getLobbyPlayerNumber(), authData.getUsername(), this);
-                        // try to create a new lobby
                         this.asyncSend("auth_created#" + lobby.getLobbyId());
+                        CustomLogger.getLogger().info(authData.getUsername() + " created new lobby " + lobby.getLobbyId());
                     } else {
-                        System.out.println("User attempting to join lobby");
                         lobby = server.lobby(authData.getLobby(), authData.getUsername(), this);
                         this.asyncSend("auth_joined#" + lobby.getLobbyId());
+                        CustomLogger.getLogger().info(authData.getUsername() + " joined lobby " + lobby.getLobbyId());
                     }
                 }catch (InvalidLobbyException e){
                     this.asyncSend("auth_error#invalid_lobby");
@@ -110,7 +113,6 @@ public class SocketClientConnection extends Observable<Message<ServerController>
                 }
             }while(!success);
 
-            // while the connection is alive read every message and notify it to the server
             while(isAlive()) {
                 Object inputObject = in.readObject();
                 if(inputObject instanceof ServiceMessage){
@@ -118,13 +120,14 @@ public class SocketClientConnection extends Observable<Message<ServerController>
                     message.execute(lobby);
                 }
                 else if(inputObject instanceof Message){
-                    CustomLogger.getLogger().info("Ho ricevuto un: " + inputObject.getClass());
+                    CustomLogger.getLogger().info("["+lobby.getLobbyId()+"] "+ authData.getUsername() + " sent a " + inputObject.getClass());
                     notify((Message<ServerController>) inputObject);
                 }
             }
         } catch (Exception e) {
-            CustomLogger.getLogger().info(this + " lost connection with client." );
-        } finally { // when the connection die close it
+            assert authData != null;
+            CustomLogger.getLogger().info("["+lobby.getLobbyId()+"] "+ authData.getUsername() + " disconnected." );
+        } finally {
             close();
         }
 
