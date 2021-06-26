@@ -330,7 +330,7 @@ public class Player extends Observable<Message<ClientController>> {
      * @param index1
      * @param index2
      */
-    public void swapDepots(int index1, int index2) {
+    public void swapDepots(int index1, int index2) throws GameException {
         playerBoard.getWarehouse().swap(index1, index2);
         ArrayList<ResourceStock> resourceStocks = playerBoard.getWarehouse().getResourceStocks();
 

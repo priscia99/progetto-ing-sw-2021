@@ -186,7 +186,7 @@ public class ServerController {
         game.getCurrentPlayer().playLeaderCardById(cardId);
     }
 
-    public void swapDepots(int first, int second){
+    public void swapDepots(int first, int second) throws GameException {
         game.getCurrentPlayer().swapDepots(first, second);
     }
 

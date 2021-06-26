@@ -29,7 +29,7 @@ public class PickResourcesMessageTest {
 
     @Test
     @DisplayName("Test player picked resources from marble market")
-    public void testPlayerPickedResources(){
+    public void testPlayerPickedResources() throws GameException {
         // Generate mock marble market for testing purposes
         MockProvider.generateMockMarbleMarket(game);
         // Create a proper selection from marble market

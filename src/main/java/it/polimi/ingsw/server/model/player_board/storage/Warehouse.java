@@ -25,10 +25,13 @@ public class Warehouse extends Storage {
      * @param index2 index of the second depot (new index for the first depot)
      * @throws IllegalArgumentException if indexes are not in [0;2]
      */
-    public void swap(int index1, int index2) {
+    public void swap(int index1, int index2) throws GameException {
         this.checkValidIndex(index1);
         this.checkValidIndex(index2);
-
+        if(this.resourceStocks.get(index1).getQuantity() > ((ResourceDepot) this.resourceStocks.get(index1)).getCapacity() ||
+            this.resourceStocks.get(index2).getQuantity() > ((ResourceDepot) this.resourceStocks.get(index1)).getCapacity()){
+            throw new GameException("Cannot swap these depots!");
+        }
         Collections.swap(this.resourceStocks, index1, index2);
         ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index2+1);
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
@@ -48,7 +51,7 @@ public class Warehouse extends Storage {
      * @param index index of the depot to return
      * @return the depot that matches with the address given as input
      */
-    public ResourceDepot getDepot(int index) {
+    public ResourceDepot getDepot(int index) throws GameException {
         this.checkValidIndex(index);
         return (ResourceDepot) this.getResourceStock(index);
     }
@@ -132,9 +135,9 @@ public class Warehouse extends Storage {
      *
      * @param index index to check
      */
-    private void checkValidIndex(int index) {
+    private void checkValidIndex(int index) throws GameException {
         if(index < 0 || index > 2) {
-            throw new IllegalArgumentException("Indexes must be in [1;3]");
+            throw new GameException("Indexes must be in [1;3]");
         }
     }
 
