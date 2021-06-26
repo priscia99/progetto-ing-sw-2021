@@ -444,7 +444,26 @@ public class CLI implements UI {
             case "buy" -> buyCommandParser(inputCommand.getSecond());
             case "pick" -> pickCommandParser(inputCommand.getSecond());
             case "produce" -> controller.produceCommandHandler();
+            case "remove" -> removeResourceCommandHandler(inputCommand.getSecond());
         }
+    }
+
+    private void removeResourceCommandHandler(HashMap<String, String> params) {
+        try{
+
+            ResourcePosition selected = parseResourcePosition(params.get("d"));
+            ArrayList<ResourcePosition> validPositions = new ArrayList<>();
+            validPositions.add(ResourcePosition.FIRST_DEPOT);
+            validPositions.add(ResourcePosition.SECOND_DEPOT);
+            validPositions.add(ResourcePosition.THIRD_DEPOT);
+            if(!validPositions.contains(selected)) throw new GameException("Cannot drop resource from that position!");
+            controller.removeResource(selected);
+        } catch (Exception e){
+            displayError(e.getMessage());
+        }
+
+
+
     }
 
     private void viewCommandHandler(HashMap<String, String> params) {
@@ -555,7 +574,7 @@ public class CLI implements UI {
                     if(!marble.getResourceType().equals(ResourceType.BLANK) ||
                         marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()){
                         displayInfo("Insert position in which you want to add " + marble.getResourceType().toString());
-                        displayPossibleResourcePositions(depotEffects);
+                        displayPossibleResourcePositions(depotEffects, false);
                         String positionRaw = in.nextLine();
                         positions.add(parseResourcePosition(positionRaw));
                     }
@@ -566,8 +585,9 @@ public class CLI implements UI {
             }
     }
 
-    private void displayPossibleResourcePositions(ArrayList<DepotEffect> additionalDepots){
+    private void displayPossibleResourcePositions(ArrayList<DepotEffect> additionalDepots, boolean strongbox){
         String message = "Select between: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | DROPPED |";
+        if(strongbox) message += " STRONGBOX |";
         if(additionalDepots.size()==1) message += " FIRST_LEADER_DEPOT";
         if(additionalDepots.size()==2) message += " FIRST_LEADER_DEPOT | SECOND_LEADER_DEPOT ";
         displayInfo(message);
@@ -707,7 +727,7 @@ public class CLI implements UI {
         String confirmString = "add";
         while(!confirmString.equals("ok") && (needed.isEmpty() || (needed.get() == resourcesSelected.countStocks()))){
             displayInfo("Add resource stock: <position> <quantity> <type> ('quit' to choose another action)");
-            displayPossibleResourcePositions(depotEffects);
+            displayPossibleResourcePositions(depotEffects, true);
             String rawInput = in.nextLine();
             if(rawInput.equals("quit")) throw new Exception("User stopped action.");
             String[] resourceSelectionRaw = rawInput.split(" ");

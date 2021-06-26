@@ -58,8 +58,8 @@ public class ConsumeTarget implements Serializable {
             list -> list.stream().mapToInt(ResourceStock::getQuantity).sum()
     ).sum();}
 
-    public void put(ResourcePosition position, ResourceStock stock) throws Exception {
-        if(position.equals(ResourcePosition.DROPPED)) throw new Exception("Error while selecting consumable resources.");
+    public void put(ResourcePosition position, ResourceStock stock) throws GameException {
+        if(position.equals(ResourcePosition.DROPPED)) throw new GameException("Error while selecting consumable resources.");
         if(position.equals(ResourcePosition.STRONG_BOX)){
             if(isPositionPresent(position)){
                 toConsume.get(position).add(stock);
@@ -69,7 +69,7 @@ public class ConsumeTarget implements Serializable {
         }
         else if(isPositionPresent(position)){
             if(!toConsume.get(position).get(0).getResourceType().equals(stock.getResourceType())){
-                throw new Exception("Cannot select different resource types from the same depot.");
+                throw new GameException("Cannot select different resource types from the same depot.");
             }
             toConsume.get(position).get(0).incrementResource(stock.getResourceType(), stock.getQuantity());
         } else {

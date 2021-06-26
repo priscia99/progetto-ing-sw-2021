@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller;
 
+import it.polimi.ingsw.client.view.ui.cli.Command;
 import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.BackupManager;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
@@ -190,5 +191,15 @@ public class ServerController {
 
     public void nextTurn() throws GameException {
         game.nextTurn();
+    }
+
+    public void removeResource(ResourcePosition depot) throws GameException {
+        Player currentPlayer = game.getCurrentPlayer();
+        ResourceDepot depotSelected = currentPlayer.getPlayerBoard().getWarehouse().getDepot(depot.ordinal());
+        if(depotSelected.getQuantity()==0) throw new GameException("Cannot remove from empty depot!");
+        ConsumeTarget target = new ConsumeTarget();
+        target.put(depot, new ResourceStock(depotSelected.getResourceType(), 1));
+        currentPlayer.consumeResources(target);
+        game.currentPlayerDropsResource();
     }
 }

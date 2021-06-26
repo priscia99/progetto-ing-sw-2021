@@ -18,6 +18,8 @@ public class CLICommandsBuilder {
         toReturn.add(getSwapDepotsCommand());
         toReturn.add(buyCommand());
         toReturn.add(pickCommand());
+        toReturn.add(produceCommand());
+        toReturn.add(removeResourceCommand());
         return toReturn;
     }
 
@@ -87,5 +89,15 @@ public class CLICommandsBuilder {
         parameters.put("o", "[orientation] The orientation of marbles to pick. Can be | HORIZONTAL | VERTICAL |");
         parameters.put("i", "[second-index] The index of marble market");
         return new Command("pick", "Pick resources from marble market", true, parameters);
+    }
+
+    private static Command produceCommand(){
+        return new Command("produce", "Produce resources", true, new HashMap<>());
+    }
+
+    private static Command removeResourceCommand(){
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("d", "[depot] The depot from which resource has to be removed. | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT |");
+        return new Command("remove", "Remove resource from warehouse", true, parameters);
     }
 }

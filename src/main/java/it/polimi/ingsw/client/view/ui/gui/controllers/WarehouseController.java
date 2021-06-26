@@ -168,17 +168,15 @@ public class WarehouseController extends GenericGUIController {
             parseNextPosition();
             return;
         }
-        if (marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()) {
-            // TODO ask for discounts in GUI
-            // conversions.add(askForConversions(changeEffects));
-            insertPositionIndex++;
-            parseNextPosition();
-            return;
+        if (marble.getResourceType().equals(ResourceType.BLANK) && changeEffects.size() == 1) {
+            marble = new Marble(conversions.get(0));
+        }
+        if(marble.getResourceType().equals(ResourceType.BLANK) && changeEffects.size() == 2){
+
         }
         if (!marble.getResourceType().equals(ResourceType.BLANK) ||
                 marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Insert position in which you want to add " + marble.getResourceType().toString());
-            alert.show();
+            getClientController().viewInfoMessage("Insert position in which you want to add "+ marble.getResourceType().toString());
             // TODO manage leader card depots
             askForDestinationDepot(marble);
             // displayPossibleResourcePositions(depotEffects);

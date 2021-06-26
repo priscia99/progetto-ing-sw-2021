@@ -177,6 +177,8 @@ public class ClientController extends Observable<Message<ServerController>> {
         userInterface.displayError(message);
     }
 
+    public void viewInfoMessage(String message){userInterface.displayInfo(message);}
+
     private void executeIfCurrentPlayer(Runnable action){
         if(game.getCurrentPlayer().equals(game.getMyUsername())){
             action.run();
@@ -214,6 +216,12 @@ public class ClientController extends Observable<Message<ServerController>> {
                 ()->executeIfNotMainActionYet(
                         ()->notify(new BuyDevelopmentCardMessage(cardId, deckIndex,toConsume))
                 )
+        );
+    }
+
+    public void removeResource(ResourcePosition position){
+        executeIfCurrentPlayer(
+                ()->notify(new RemoveResourceMessage(position))
         );
     }
 
