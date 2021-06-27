@@ -57,6 +57,12 @@ public class ProductionController extends GenericGUIController{
         this.leaderCards = leaderProductions;
         this.productionIcons.entrySet().stream().forEach(entry -> entry.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceIcon));
         this.genericProductionPanes.entrySet().stream().forEach(entry -> entry.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedGenericPosition));
+        if(leaderCards.size()<2){
+            genericProductionPanes.get("generic-leader-2").removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedGenericPosition);
+        }
+        if(leaderCards.size()<1){
+            genericProductionPanes.get("generic-leader-1").removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedGenericPosition);
+        }
         for(int i=0; i<this.leaderCards.size(); i++){
             Pane tempCardPane = productionCardsPanes.get("leader-card-" + (i+1));
             String cardPath = LEADER_CARD_FRONT_PATH + leaderCards.get(i).getAssetLink() + ".png";
