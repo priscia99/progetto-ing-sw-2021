@@ -18,10 +18,10 @@ public class CardsMarketTest {
     public void setUp() throws Exception {
         cardsMarket = CardsMarket.getStartingMarket();
     }
-/*
+
     @Test
     @DisplayName("Test sell")
-    public void testSell(){
+    public void testSell() throws Exception {
         DevelopmentCard toSell = cardsMarket.getDecks()[0][0].peek();
         Player player = new Player("Pippo");
         player.addResourcesToStrongBox(new ResourceStock(ResourceType.SERVANT, 10));
@@ -29,12 +29,12 @@ public class CardsMarketTest {
         player.addResourcesToStrongBox(new ResourceStock(ResourceType.SHIELD, 10));
         player.addResourcesToStrongBox(new ResourceStock(ResourceType.STONE, 10));
         try {
-            Assertions.assertEquals(toSell, cardsMarket.sell("1", player));
+            Assertions.assertEquals(toSell, cardsMarket.sell(toSell.getId(), player));
         }catch (Exception e){
             e.printStackTrace();
         }
         DevelopmentCard showedCard = cardsMarket.getDecks()[0][0].peek();
         Assertions.assertTrue(showedCard != toSell);
     }
-    */
+
 }
