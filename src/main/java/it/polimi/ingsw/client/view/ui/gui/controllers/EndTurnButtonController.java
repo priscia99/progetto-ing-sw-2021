@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 public class EndTurnButtonController extends GenericGUIController{
     private Button endTurnButton;
 
+
     public EndTurnButtonController(ClientController clientController, Button endTurnButton) {
         super(clientController);
         this.endTurnButton = endTurnButton;
@@ -16,10 +17,18 @@ public class EndTurnButtonController extends GenericGUIController{
         this.endTurnButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onEndButtonClicked);
     }
 
+    /**
+     * Makes the end turn button available
+     * @param enable
+     */
     public void enableEndTurn(boolean enable){
         this.endTurnButton.setDisable(!enable);
     }
 
+    /**
+     * Handler that is triggered when the end turn button is pressed
+     * This handler calls the client controller method in order to end the turn
+     */
     private final EventHandler<MouseEvent> onEndButtonClicked = event -> {
         getClientController().endTurn();
     };

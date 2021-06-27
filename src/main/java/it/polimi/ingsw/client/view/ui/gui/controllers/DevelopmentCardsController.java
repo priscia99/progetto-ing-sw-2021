@@ -2,9 +2,14 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientDevelopmentCardDecks;
+import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
+import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.effect.Glow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -24,6 +29,7 @@ public class DevelopmentCardsController extends GenericGUIController {
         cardsSlots.add(firstDevSlot.getChildren());
         cardsSlots.add(secondDevSlot.getChildren());
         cardsSlots.add(thirdDevSlot.getChildren());
+        produceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onProduceButtonPressed);
     }
 
     /**
@@ -49,6 +55,10 @@ public class DevelopmentCardsController extends GenericGUIController {
             }
         }
     }
+
+    private final EventHandler<javafx.scene.input.MouseEvent> onProduceButtonPressed = event -> {
+        SceneController.getMainGUIController().getProductionController().startProduction();
+    };
 
     public void setProduceButtonEnable(boolean isEnable) {
         produceButton.setDisable(!isEnable);

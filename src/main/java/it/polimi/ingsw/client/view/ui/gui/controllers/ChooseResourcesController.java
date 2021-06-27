@@ -34,6 +34,10 @@ public class ChooseResourcesController extends GenericGUIController{
         this.chooseResourcesButtons = chooseResourcesButtons;
     }
 
+    /**
+     * Activates the choose resources screen and setup all listeners
+     * @param toChoose number of resources to choose
+     */
     public void activeScreen(int toChoose){
         // Init parameters
         this.resourcesToChoose = toChoose;
@@ -52,6 +56,10 @@ public class ChooseResourcesController extends GenericGUIController{
         chooseResourcesPane.setVisible(true);
     }
 
+    /**
+     * Handler that is triggered when a specific resource is chosen
+     * This handler removes all active handlers for resource icons and enable all possible destination buttons
+     */
     EventHandler<MouseEvent> onResourceChosen = event -> {
         Pane chosenIconPane = ((Pane)event.getSource());
         chosenIconPane.setEffect(new Glow(0.6));
@@ -66,6 +74,10 @@ public class ChooseResourcesController extends GenericGUIController{
         this.enableAllButtons();
     };
 
+    /**
+     * Handler that is triggered when a specific resource is unselected
+     * This handler re-add all handlers to icons and disable all effects for the previous chosen resource
+     */
     EventHandler<MouseEvent> onResourceUnselected = event -> {
         tempChosenType = null;
         Pane chosenIconPane = ((Pane)event.getSource());
@@ -74,6 +86,10 @@ public class ChooseResourcesController extends GenericGUIController{
         this.addIconsHandlers();
     };
 
+    /**
+     * Handler that is triggered when a specific warehouse position is selected
+     * This method saves the requested position
+     */
     EventHandler<MouseEvent> onSelectedPosition = event -> {
         if(tempChosenType != null) {
             Button clickedButton = (Button) event.getSource();
@@ -93,6 +109,10 @@ public class ChooseResourcesController extends GenericGUIController{
         this.nextChoice();
     };
 
+    /**
+     * Decrements the number of resources that were not chosen yet and if all resources are chosen, then sends data to client controller
+     * This method also makes all buttons disabled, removes all effects and re-add icon handlers
+     */
     private void nextChoice(){
         resourcesToChoose--;
         if(resourcesToChoose == 0){
@@ -106,16 +126,27 @@ public class ChooseResourcesController extends GenericGUIController{
         }
     }
 
+    /**
+     * Add an handler to the selected resource making that resource unselected if pressed again
+     * @param pane
+     */
     private void setUnselectedHandler(Pane pane){
         pane.addEventHandler(MouseEvent.MOUSE_CLICKED, onResourceUnselected);
     }
 
+    /**
+     * Resets all effects in resources icons
+     */
     private void resetEffects(){
         chooseResourcesIcons.get("coin-icon").setEffect(null);
         chooseResourcesIcons.get("shield-icon").setEffect(null);
         chooseResourcesIcons.get("stone-icon").setEffect(null);
         chooseResourcesIcons.get("servant-icon").setEffect(null);
     }
+
+    /**
+     * Enables all warehouse destination buttons and adds handlers to them
+     */
     private void enableAllButtons(){
         chooseResourcesButtons.get("firstdepot-button").setDisable(false);
         chooseResourcesButtons.get("seconddepot-button").setDisable(false);
@@ -127,6 +158,9 @@ public class ChooseResourcesController extends GenericGUIController{
         chooseResourcesButtons.get("confirmresources-button").addEventHandler(MouseEvent.MOUSE_CLICKED, onSelectedPosition);
     }
 
+    /**
+     * Makes all warehouse destination buttons disabled
+     */
     private void disableAllButtons(){
         chooseResourcesButtons.get("firstdepot-button").setDisable(true);
         chooseResourcesButtons.get("seconddepot-button").setDisable(true);
@@ -134,6 +168,9 @@ public class ChooseResourcesController extends GenericGUIController{
         chooseResourcesButtons.get("confirmresources-button").setDisable(true);
     }
 
+    /**
+     * Adds handlers to all resource icons
+     */
     private void addIconsHandlers(){
         chooseResourcesIcons.get("coin-icon").addEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
         chooseResourcesIcons.get("shield-icon").addEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
@@ -141,6 +178,9 @@ public class ChooseResourcesController extends GenericGUIController{
         chooseResourcesIcons.get("servant-icon").addEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
     }
 
+    /**
+     * Removes handlers to all resource icons
+     */
     private void removeIconsHandlers(){
         chooseResourcesIcons.get("coin-icon").removeEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
         chooseResourcesIcons.get("shield-icon").removeEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
