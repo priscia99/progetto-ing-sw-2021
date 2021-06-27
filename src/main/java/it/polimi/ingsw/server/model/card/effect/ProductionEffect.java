@@ -12,13 +12,13 @@ import java.util.List;
 /**
  * Extension of Effect to specify productions.
  */
-public class ProductionEffect extends Effect implements Serializable {
+public class ProductionEffect implements Effect, Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ArrayList<ResourceStock> inStocks;
     private final ArrayList<ResourceStock> outStocks;
     private static final String PRODUCTION_EFFECT_FORMAT = "[%s] ==> [%s]";
-
+    private EffectType effectType;
     /**
      * Create a ProductionEffect object.
      * @param inStocks the piles of resources consumed by the production
@@ -71,9 +71,8 @@ public class ProductionEffect extends Effect implements Serializable {
         return toReturn;
     }
 
-    @Override
     public EffectType getEffectType() {
-        return super.getEffectType();
+        return effectType;
     }
 
     @Override

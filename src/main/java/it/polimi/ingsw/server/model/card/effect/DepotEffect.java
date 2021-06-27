@@ -8,12 +8,12 @@ import java.io.Serializable;
 /**
  * Extension of effect to specify resources depot.
  */
-public class DepotEffect extends Effect implements Serializable {
+public class DepotEffect  implements Effect,  Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ResourceDepot resourceDepot;
     private static final String DEPOT_EFFECT_FORMAT = "%s DEPOT | Current state [%s, %s]";
-
+    private EffectType effectType;
     /**
      * Create a DepotEffect object.
      * @param resourceType the specific type of resource accepted
@@ -39,9 +39,8 @@ public class DepotEffect extends Effect implements Serializable {
         return this.resourceDepot;
     }
 
-    @Override
     public EffectType getEffectType() {
-        return super.getEffectType();
+        return effectType;
     }
 
     public String toString(){

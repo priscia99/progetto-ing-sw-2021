@@ -7,11 +7,12 @@ import java.io.Serializable;
 /**
  * Extension of Effect to specify discounts of the card market.
  */
-public class DiscountEffect extends Effect implements Serializable {
+public class DiscountEffect   implements Effect, Serializable {
 
     private static final long serialVersionUID = 1L;
     private final ResourceType resourceType;
     private static final String DISCOUNT_EFFECT_FORMAT = "%s -1 REQUIRED";
+    private EffectType effectType;
 
     /**
      * Create a DiscountEffect object.
@@ -30,9 +31,8 @@ public class DiscountEffect extends Effect implements Serializable {
         return resourceType;
     }
 
-    @Override
     public EffectType getEffectType() {
-        return super.getEffectType();
+        return effectType;
     }
 
     @Override
