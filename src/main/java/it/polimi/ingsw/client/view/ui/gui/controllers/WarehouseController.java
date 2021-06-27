@@ -56,6 +56,7 @@ public class WarehouseController extends GenericGUIController {
     private ArrayList<ClientLeaderCard> depotEffects;
     private ArrayList<Pair<Integer, Integer>> occupiedCells;
     private MarbleSelection marbleSelection;
+    private ResourcePosition resourcePositionToDrop;
 
     public WarehouseController(ClientController clientController, GridPane firstDepot, GridPane secondDepot, GridPane thirdDepot, MenuButton swapDepotsMenu, Button dropResourceButton) {
         super(clientController);
@@ -64,6 +65,7 @@ public class WarehouseController extends GenericGUIController {
         this.firstDepot = firstDepot;
         this.secondDepot = secondDepot;
         this.thirdDepot = thirdDepot;
+        this.resourcePositionToDrop = null;
         this.dropResourceButton = dropResourceButton;
         warehouseElements.add(firstDepot.getChildren());
         warehouseElements.add(secondDepot.getChildren());
@@ -105,6 +107,7 @@ public class WarehouseController extends GenericGUIController {
      * @param warehouse Player's warehouse to show
      */
     public void refreshWarehouse(ClientWarehouse warehouse, boolean isMine) {
+        System.out.println("Is mine: " + isMine);
         this.activeWarehouse = warehouse;
         this.setSwapMenuEnable(isMine);
         if (activeWarehouse.isInitialized()) {
@@ -118,9 +121,15 @@ public class WarehouseController extends GenericGUIController {
                         // if the position is an actual stored resource set a backround image
                         String iconPath = getPathByResourceType(activeWarehouse.getResourceDepot(i).getResourceType());
                         resourcePane.setStyle("-fx-background-image: url(" + iconPath + ");");
+                        if(isMine) {
+                            resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
+                        }else{
+                            resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
+                        }
                     } else {
                         // if the position is free set an empty background (no image)
                         resourcePane.setStyle("-fx-background-image: none;");
+                        resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
                     }
                 }
             }
@@ -232,6 +241,44 @@ public class WarehouseController extends GenericGUIController {
         positions.add(ResourcePosition.DROPPED);
         insertPositionIndex++;
         parseNextPosition();
+    };
+
+    private final EventHandler<MouseEvent> onClickedResourceToDrop = event -> {
+        if(resourcePositionToDrop == null) {
+            Pane triggeredPane = (Pane) event.getSource();
+            triggeredPane.setEffect(new Glow(0.6));
+            int triggeredPaneRowIndex = Integer.parseInt(triggeredPane.getId().split("-")[1]);
+            switch (triggeredPaneRowIndex) {
+                case 1 -> resourcePositionToDrop = ResourcePosition.FIRST_DEPOT;
+                case 2 -> resourcePositionToDrop = ResourcePosition.SECOND_DEPOT;
+                case 3 -> resourcePositionToDrop = ResourcePosition.THIRD_DEPOT;
+            }
+            addResourceRemovalHandlerToDropButton();
+            addUnclickedResourceHandler(triggeredPane);
+            dropResourceButton.setVisible(true);
+        }
+    };
+
+    private void addUnclickedResourceHandler(Pane pane){
+        pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
+        pane.addEventHandler(MouseEvent.MOUSE_CLICKED, onUnclickedResourceToDrop);
+    }
+
+    private final EventHandler<MouseEvent> onUnclickedResourceToDrop = event -> {
+        Pane triggeredPane = (Pane) event.getSource();
+        triggeredPane.setEffect(null);
+        resourcePositionToDrop = null;
+        dropResourceButton.setVisible(false);
+    };
+
+    public void addResourceRemovalHandlerToDropButton(){
+        dropResourceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onRemoveResourceConfirmClicked);
+    }
+
+    private final EventHandler<MouseEvent> onRemoveResourceConfirmClicked = event -> {
+        dropResourceButton.setVisible(false);
+        getClientController().removeResource(resourcePositionToDrop);
+        this.resourcePositionToDrop = null;
     };
 
     private final EventHandler<MouseEvent> onMarbleDestinationChosen = event -> {
