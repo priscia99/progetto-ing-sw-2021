@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
@@ -60,6 +61,9 @@ public class LeaderCardsController extends GenericGUIController{
                 cardPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
             else
                 cardPane.setStyle("-fx-background-image: url(" + LEADER_CARD_BACK_PATH + ");");
+            if(tempCard.isActive()){
+                cardPane.setEffect(new Glow(0.6));
+            }
         }
         if(isMine && canUserDoAction){
             enableLeaderCardsHandlers();
