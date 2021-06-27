@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.storage;
 
 
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
+import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,11 +59,11 @@ public class WarehouseTest {
         Assertions.assertTrue(this.warehouse.getDepot(1).isFull());
         Assertions.assertFalse(this.warehouse.getDepot(1).isEmpty());
         // Removing resources from depot until it is empty
-        this.warehouse.removeFromDepot(1, ResourceType.SERVANT);
+        this.warehouse.consume(new ResourceStock(ResourceType.SERVANT, 1));
         Assertions.assertEquals(1, this.warehouse.getDepot(1).getQuantity());
         Assertions.assertFalse(this.warehouse.getDepot(1).isEmpty());
         Assertions.assertFalse(this.warehouse.getDepot(1).isFull());
-        this.warehouse.removeFromDepot(1, ResourceType.SERVANT);
+        this.warehouse.consume(new ResourceStock(ResourceType.SERVANT, 1));
         Assertions.assertEquals(0, this.warehouse.getDepot(1).getQuantity());
         Assertions.assertTrue(this.warehouse.getDepot(1).isEmpty());
         Assertions.assertFalse(this.warehouse.getDepot(1).isFull());

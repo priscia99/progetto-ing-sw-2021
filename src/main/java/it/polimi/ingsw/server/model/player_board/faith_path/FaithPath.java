@@ -72,6 +72,7 @@ public class FaithPath extends Observable<Message<ClientController>>implements S
         if(!favor.isTriggered()){
             if (this.faithPoints >= favor.getFirstCellIndex()){
                 favor.setAcquired(true);
+                favor.setTriggered(true);
                 return true;
             }
             favor.setTriggered(true);

@@ -79,7 +79,6 @@ public class MarbleMarket extends Observable<Message<ClientController>> {
 
             notify(new MarbleMarketMessage(this));
 
-            Collections.reverse(soldMarbles);
             return soldMarbles;
 
         } else if (selection.getOrientation().equals(Orientation.VERTICAL)) {
@@ -100,7 +99,6 @@ public class MarbleMarket extends Observable<Message<ClientController>> {
 
             notify(new MarbleMarketMessage(this));
 
-            Collections.reverse(soldMarbles);
             return soldMarbles;
 
         } else {

@@ -95,18 +95,16 @@ public class Warehouse extends Storage {
 
     }
 
-    /**
-     * Remove a resource given its type and the index from which it needs to be removed
-     * @param index index of the depot
-     * @param resourceType type of the resource to delete
-     */
-    public void removeFromDepot(int index, ResourceType resourceType) throws Exception {
-        this.checkValidIndex(index);
-        this.getResourceStock(index).decrementResource(resourceType);
-        if (this.getResourceStock(index).isEmpty()) {
-            ((ResourceDepot) this.getResourceStock(index)).setResourceType(ResourceType.BLANK);
-        }
 
+    @Override
+    public void consume(ResourceStock toConsume) throws Exception {
+        super.consume(toConsume);
+        ResourceDepot consumed = (ResourceDepot) this.resourceStocks.stream()
+                .filter(resourceStock -> resourceStock.getResourceType().equals(toConsume.getResourceType()))
+                .findFirst().get();
+        if(consumed.getQuantity() == 0){
+            consumed.setResourceType(ResourceType.BLANK);
+        }
     }
 
     /**

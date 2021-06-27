@@ -214,7 +214,6 @@ public class ServerController {
                 if(stock.getResourceType().equals(ResourceType.FAITH)){
                     game.addFaithPointsToPlayer(currentPlayer, stock.getQuantity());
                 } else {
-
                     game.getCurrentPlayer().addResourcesToStrongBox(stock);
                 }
             }
