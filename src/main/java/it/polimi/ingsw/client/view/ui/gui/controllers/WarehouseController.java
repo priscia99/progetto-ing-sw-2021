@@ -57,9 +57,11 @@ public class WarehouseController extends GenericGUIController {
     private ArrayList<Pair<Integer, Integer>> occupiedCells;
     private MarbleSelection marbleSelection;
     private ResourcePosition resourcePositionToDrop;
+    private boolean isAddingResources;
 
     public WarehouseController(ClientController clientController, GridPane firstDepot, GridPane secondDepot, GridPane thirdDepot, MenuButton swapDepotsMenu, Button dropResourceButton) {
         super(clientController);
+        this.isAddingResources = false;
         this.swapDepotsMenu = swapDepotsMenu;
         warehouseElements = new ArrayList<>();
         this.firstDepot = firstDepot;
@@ -121,7 +123,7 @@ public class WarehouseController extends GenericGUIController {
                         // if the position is an actual stored resource set a backround image
                         String iconPath = getPathByResourceType(activeWarehouse.getResourceDepot(i).getResourceType());
                         resourcePane.setStyle("-fx-background-image: url(" + iconPath + ");");
-                        if(isMine) {
+                        if(isMine && !isAddingResources) {
                             resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
                         }else{
                             resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
@@ -131,6 +133,7 @@ public class WarehouseController extends GenericGUIController {
                         resourcePane.setStyle("-fx-background-image: none;");
                         resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
                     }
+                    resourcePane.setEffect(null);
                 }
             }
         } else {
@@ -148,6 +151,7 @@ public class WarehouseController extends GenericGUIController {
     }
 
     public void insertResourcesToDepot(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ClientLeaderCard> changeEffects, ArrayList<ClientLeaderCard> depotEffects) {
+        this.isAddingResources = true;
         this.marbleSelection = selection;
         this.occupiedCells = new ArrayList<>();
         this.positions = new ArrayList<>();
@@ -161,6 +165,7 @@ public class WarehouseController extends GenericGUIController {
 
     private void parseNextPosition() {
         if (insertPositionIndex >= selected.size()) {
+            this.isAddingResources = false;
             removeAllSelectionHandlers();
             refreshWarehouse(activeWarehouse, true);
             getClientController().pickResources(marbleSelection, positions, conversions);
@@ -235,6 +240,7 @@ public class WarehouseController extends GenericGUIController {
                 }
             }
         }
+        dropResourceButton.removeEventHandler(MouseEvent.MOUSE_CLICKED, onRemoveResourceConfirmClicked);
         dropResourceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onDropResourceClicked );
     }
 
