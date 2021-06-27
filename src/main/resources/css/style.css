@@ -437,14 +437,12 @@ AnchorPane, GridPane {
 }
 
 #top-leader-1{
-    -fx-background-image: url('../img/cards/front/leader-card-13.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 #top-leader-2{
-    -fx-background-image: url('../img/cards/front/leader-card-13.png');
     -fx-background-size: contain;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
