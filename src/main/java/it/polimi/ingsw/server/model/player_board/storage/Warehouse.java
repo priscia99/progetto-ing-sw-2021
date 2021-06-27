@@ -86,7 +86,7 @@ public class Warehouse extends Storage {
         this.checkValidIndex(index);
         if (this.getResourceStock(index).isEmpty()) {
             if (this.contains(resourceType)) {
-                throw new IllegalArgumentException("An other depot in the warehouse already contains " + resourceType.toString());
+                throw new Exception("An other depot in the warehouse already contains " + resourceType.toString());
             } else {
                 ((ResourceDepot) this.getResourceStock(index)).setResourceType(resourceType);
             }

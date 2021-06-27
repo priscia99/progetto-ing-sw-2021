@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.model.marble.Orientation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class MarbleMarket extends Observable<Message<ClientController>> {
@@ -78,6 +79,7 @@ public class MarbleMarket extends Observable<Message<ClientController>> {
 
             notify(new MarbleMarketMessage(this));
 
+            Collections.reverse(soldMarbles);
             return soldMarbles;
 
         } else if (selection.getOrientation().equals(Orientation.VERTICAL)) {
@@ -98,6 +100,7 @@ public class MarbleMarket extends Observable<Message<ClientController>> {
 
             notify(new MarbleMarketMessage(this));
 
+            Collections.reverse(soldMarbles);
             return soldMarbles;
 
         } else {

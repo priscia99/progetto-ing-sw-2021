@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
+import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.resource.ConsumeTarget;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
@@ -12,6 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 public class PickResourcesFromStorageController extends GenericGUIController{
 
     private Button confirmChooseButton;
@@ -19,13 +23,20 @@ public class PickResourcesFromStorageController extends GenericGUIController{
     private boolean isProduction;
     private String cardToBuyId;
     private int chosenDeckIndex;
+    private ArrayList<String> productionCardsIDs;
+    private Optional<ProductionEffect> genericProduction;
+    private ArrayList<ProductionEffect> leaderProductions;
 
     public PickResourcesFromStorageController(ClientController controller, Button confirmChooseButton){
         super(controller);
         this.confirmChooseButton = confirmChooseButton;
         confirmChooseButton.setVisible(false);
+        this.productionCardsIDs = new ArrayList<>();
+        this.genericProduction = Optional.empty();
+        this.leaderProductions = new ArrayList<>();
     }
 
+    // TODO change name chooseResourcesForBuy
     public void enablePickResources(String cardToBuyId, int chosenDeckIndex){
         this.isProduction = false;
         this.cardToBuyId = cardToBuyId;
@@ -37,6 +48,16 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         SceneController.getMainGUIController().getWarehouseController().setResourcesAsPickable(true);
         SceneController.getMainGUIController().getStrongBoxController().setResourcesAsPickable(true);
     }
+
+    public void chooseResourcesForProduction(){
+        this.isProduction = true;
+        consumeTarget = new ConsumeTarget();
+        confirmChooseButton.setVisible(true);
+        confirmChooseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedChooseButton);
+        SceneController.getMainGUIController().getWarehouseController().setResourcesAsPickable(true);
+        SceneController.getMainGUIController().getStrongBoxController().setResourcesAsPickable(true);
+    }
+
 
     public void addFromStrongbox(ResourceType resourceType) {
         try {
@@ -54,6 +75,14 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         }
     }
 
+    public void toggleProductionID(String cardID){
+        if(this.productionCardsIDs.contains(cardID)){
+            this.productionCardsIDs.remove(cardID);
+        }else {
+            this.productionCardsIDs.add(cardID);
+        }
+    }
+
     private final EventHandler<javafx.scene.input.MouseEvent> onClickedChooseButton = event -> {
         this.disable();
         this.sendPickedResources();
@@ -62,8 +91,10 @@ public class PickResourcesFromStorageController extends GenericGUIController{
 
     public void sendPickedResources(){
         if(this.isProduction) {
-            // send a production message
-            // super.getClientController().
+            super.getClientController().produceResources(consumeTarget, productionCardsIDs, genericProduction, leaderProductions);
+            this.productionCardsIDs.clear();
+            this.leaderProductions.clear();
+            this.genericProduction = Optional.empty();
         }
         else{
             super.getClientController().buyDevelopmentCard(cardToBuyId, chosenDeckIndex, consumeTarget);

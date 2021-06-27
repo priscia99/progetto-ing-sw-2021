@@ -87,6 +87,10 @@ public class MainGUIController {
     private Pane strongboxCoinIco, strongboxServantIco, strongboxShieldIco, strongboxStoneIco;
     @FXML
     private Pane productionPane;
+    @FXML
+    private Pane topDeckCard1, topDeckCard2, topDeckCard3;
+    @FXML
+    private Button confirmProductionButton, cancelProductionButton;
 
     // Secondary controllers
     StatsController statsController;
@@ -142,7 +146,15 @@ public class MainGUIController {
         playerBoardController = new PlayerBoardController(clientController, playerSelector, playerBoardLabel);
         endTurnButtonController = new EndTurnButtonController(clientController, endTurnButton);
         pickResourcesFromStorageController = new PickResourcesFromStorageController(clientController, confirmChoiceButton);
-        productionController = new ProductionController(clientController, productionPane);
+        productionController = new ProductionController(clientController, productionPane, getProductionCardsPanes(), confirmProductionButton, cancelProductionButton);
+    }
+
+    private Map<String, Pane> getProductionCardsPanes(){
+        Map<String, Pane> cardsPanes = new HashMap<>();
+        cardsPanes.put("dev-card-1", topDeckCard1);
+        cardsPanes.put("dev-card-2", topDeckCard2);
+        cardsPanes.put("dev-card-3", topDeckCard3);
+        return cardsPanes;
     }
 
     /**

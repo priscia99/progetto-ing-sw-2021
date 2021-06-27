@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.model.ClientDevelopmentCard;
 import it.polimi.ingsw.client.model.ClientDevelopmentCardDecks;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
@@ -21,6 +22,7 @@ public class DevelopmentCardsController extends GenericGUIController {
 
     private final ArrayList<ObservableList<Node>> cardsSlots;
     private final Button produceButton;
+    private ClientDevelopmentCardDecks decks;
 
     public DevelopmentCardsController(ClientController clientController, AnchorPane firstDevSlot, AnchorPane secondDevSlot, AnchorPane thirdDevSlot, Button produceButton) {
         super(clientController);
@@ -37,6 +39,7 @@ public class DevelopmentCardsController extends GenericGUIController {
      * @param decks Player's development card decks
      */
     public void refreshDevelopmentCards(ClientDevelopmentCardDecks decks, boolean isMine){
+        this.decks = decks;
         produceButton.setDisable(!isMine);
         if(decks.isInitialized()) {
             Pane tempPane;  // temporary card pane
@@ -57,7 +60,15 @@ public class DevelopmentCardsController extends GenericGUIController {
     }
 
     private final EventHandler<javafx.scene.input.MouseEvent> onProduceButtonPressed = event -> {
-        SceneController.getMainGUIController().getProductionController().startProduction();
+        ArrayList<ClientDevelopmentCard> availableProductions = new ArrayList<>();
+        for(int i=0; i<3; i++){
+            int deckSize = this.decks.getDeck(i).size();
+            if(this.decks.getDeck(i).size() >0){
+                availableProductions.add(this.decks.getDeck(i).get(deckSize-1));
+            }
+        }
+        SceneController.getMainGUIController().getProductionController().setAvailableDevelopments(availableProductions);
+        super.getClientController().produceCommandHandler();
     };
 
     public void setProduceButtonEnable(boolean isEnable) {

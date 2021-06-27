@@ -50,8 +50,9 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
 
     public ArrayList<ProductionEffect> getProductionAvailable(ArrayList<String> ids){
         return new ArrayList<>(this.developmentCards.stream()
-                .filter(deck->ids.contains(deck.get(0).getId()))
-                .map(deck->(ProductionEffect) deck.get(0).getEffect()).collect(Collectors.toList()));
+                .filter(deck -> deck.size()>0)
+                .filter(deck->ids.contains(deck.get(deck.size()-1).getId()))
+                .map(deck->(ProductionEffect) deck.get(deck.size()-1).getEffect()).collect(Collectors.toList()));
     }
 
 

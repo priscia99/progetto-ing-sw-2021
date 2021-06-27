@@ -120,6 +120,10 @@ public class ClientController extends Observable<Message<ServerController>> {
         this.getGame().getClientCardsMarket().setDecks(decks);
     }
 
+    public void refreshStrongbox(ArrayList<ResourceStock> resourceStocks, String player){
+        this.getGame().getPlayerBoardMap().get(player).getStrongbox().setResourceStocks(resourceStocks);
+    }
+
     public void startListening(){
         this.getGame().setGameStarted(true);
         userInterface.startListening();

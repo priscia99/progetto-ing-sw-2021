@@ -19,6 +19,6 @@ public class StrongboxMessage extends Message<ClientController> implements Seria
     }
 
     public void execute(ClientController target) {
-
+        target.refreshStrongbox(resourceStocks, playerUsername);
     }
 }

@@ -213,7 +213,9 @@ public class GUI implements UI{
 
     @Override
     public void displayProduceMenu(ArrayList<ProductionEffect> effects, ArrayList<DepotEffect> depotEffects) {
-
+        Platform.runLater(() -> {
+            SceneController.getMainGUIController().getProductionController().openProductionSelection(effects);
+        });
     }
 
     @Override

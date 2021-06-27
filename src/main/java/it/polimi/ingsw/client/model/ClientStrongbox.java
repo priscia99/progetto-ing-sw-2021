@@ -24,6 +24,7 @@ public class ClientStrongbox extends Observable<Pair<ClientStrongbox, String>> i
 
     public void setResourceStocks(ArrayList<ResourceStock> resourceStocks) {
         this.resourceStocks = resourceStocks;
+        notify(new Pair<>(this, owner));
     }
 
 

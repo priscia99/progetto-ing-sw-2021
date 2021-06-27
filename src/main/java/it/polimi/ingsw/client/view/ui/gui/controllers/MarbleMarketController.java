@@ -54,12 +54,7 @@ public class MarbleMarketController extends GenericGUIController{
 
         // refreshing not for sale marble
         marbleImagePath = this.getAssetLink(marbleMarket.getNotForSale());
-        marbleImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(marbleImagePath)));
-        bgImg = new BackgroundImage(marbleImage,
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
-        notForSaleMarble.setBackground(new Background(bgImg));
+        notForSaleMarble.setStyle("-fx-background-image: url(" + marbleImagePath + ");");
 
         // refreshing all other marbles
         Marble[][] marketPositions = marbleMarket.getOnSale();
