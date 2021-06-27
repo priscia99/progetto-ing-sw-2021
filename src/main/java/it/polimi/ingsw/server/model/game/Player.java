@@ -226,9 +226,10 @@ public class Player extends Observable<Message<ClientController>> {
     }
 
     public void addResourcesToStrongBox(ResourceStock resources) throws Exception {
-        // FIXME remove loops and add all resources at once
-        for(int i = 0; i < resources.getQuantity(); i++)
+        for(int i = 0; i < resources.getQuantity(); i++){
             playerBoard.getStrongbox().addResource(resources.getResourceType());
+        }
+        notify(new StrongboxMessage(playerBoard.getStrongbox().getResourceStocks(), username));
     }
 
     // count in strongbox, then count in warehouse and sum all in result
