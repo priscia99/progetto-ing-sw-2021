@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import javax.print.attribute.HashPrintJobAttributeSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -91,6 +92,10 @@ public class MainGUIController {
     private Pane topDeckCard1, topDeckCard2, topDeckCard3;
     @FXML
     private Button confirmProductionButton, cancelProductionButton;
+    @FXML
+    private Pane genericInput1, genericInput2, genericOutput;
+    @FXML
+    private Pane productionCoinIcon, productionShieldIcon, productionStoneIcon, productionServantIcon;
 
     // Secondary controllers
     StatsController statsController;
@@ -146,7 +151,7 @@ public class MainGUIController {
         playerBoardController = new PlayerBoardController(clientController, playerSelector, playerBoardLabel);
         endTurnButtonController = new EndTurnButtonController(clientController, endTurnButton);
         pickResourcesFromStorageController = new PickResourcesFromStorageController(clientController, confirmChoiceButton);
-        productionController = new ProductionController(clientController, productionPane, getProductionCardsPanes(), confirmProductionButton, cancelProductionButton);
+        productionController = new ProductionController(clientController, productionPane, getProductionCardsPanes(), getGenericProductionPanes(), getProductionIcons(), confirmProductionButton, cancelProductionButton);
     }
 
     private Map<String, Pane> getProductionCardsPanes(){
@@ -155,6 +160,23 @@ public class MainGUIController {
         cardsPanes.put("dev-card-2", topDeckCard2);
         cardsPanes.put("dev-card-3", topDeckCard3);
         return cardsPanes;
+    }
+
+    private Map<String, Pane> getGenericProductionPanes(){
+        Map<String, Pane> genericPanes = new HashMap<>();
+        genericPanes.put("generic-input-1", genericInput1);
+        genericPanes.put("generic-input-2", genericInput2);
+        genericPanes.put("generic-output", genericOutput);
+        return genericPanes;
+    }
+
+    private Map<String, Pane> getProductionIcons(){
+        Map<String, Pane> iconPanes = new HashMap<>();
+        iconPanes.put("production-coin", productionCoinIcon);
+        iconPanes.put("production-shield", productionShieldIcon);
+        iconPanes.put("production-servant", productionServantIcon);
+        iconPanes.put("production-stone", productionStoneIcon);
+        return iconPanes;
     }
 
     /**

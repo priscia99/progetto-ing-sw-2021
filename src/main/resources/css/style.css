@@ -411,3 +411,21 @@ AnchorPane, GridPane {
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
+
+#generic-input-1{
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#generic-input-2{
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#generic-output{
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
