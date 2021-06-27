@@ -57,7 +57,13 @@ public class ProductionController extends GenericGUIController{
         this.leaderCards = leaderProductions;
         this.productionIcons.entrySet().stream().forEach(entry -> entry.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceIcon));
         this.genericProductionPanes.entrySet().stream().forEach(entry -> entry.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedGenericPosition));
+        for(int i=0; i<this.leaderCards.size(); i++){
+            Pane tempCardPane = productionCardsPanes.get("leader-card-" + (i+1));
+            String cardPath = LEADER_CARD_FRONT_PATH + leaderCards.get(i).getAssetLink() + ".png";
+            tempCardPane.setStyle("-fx-background-image: url(" + cardPath + ");");
+        }
         productionPane.setVisible(true);
+
     }
 
     public void setAvailableDevelopments(ArrayList<ClientDevelopmentCard> developmentCards){
@@ -66,11 +72,6 @@ public class ProductionController extends GenericGUIController{
             Pane tempCardPane = productionCardsPanes.get("dev-card-" + (i+1));
             tempCardPane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedCard);
             String cardPath = DEV_CARDS_FRONT_PATH + developmentCards.get(i).getAssetLink() + ".png";
-            tempCardPane.setStyle("-fx-background-image: url(" + cardPath + ");");
-        }
-        for(int i=0; i<leaderCards.size(); i++){
-            Pane tempCardPane = productionCardsPanes.get("leader-card-" + (i+1));
-            String cardPath = LEADER_CARD_FRONT_PATH + leaderCards.get(i).getAssetLink() + ".png";
             tempCardPane.setStyle("-fx-background-image: url(" + cardPath + ");");
         }
     }
