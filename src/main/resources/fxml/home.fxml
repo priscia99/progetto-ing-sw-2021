@@ -1088,13 +1088,13 @@
                <children>
                   <Pane id="generic-production" prefHeight="200.0" prefWidth="441.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
                      <children>
-                        <Pane id="generic-input-1" layoutX="68.0" layoutY="188.0" prefHeight="77.0" prefWidth="77.0" />
-                        <Pane id="generic-output" layoutX="212.0" layoutY="226.0" prefHeight="77.0" prefWidth="77.0" />
-                        <Pane id="generic-input-2" layoutX="68.0" layoutY="265.0" prefHeight="77.0" prefWidth="77.0" />
-                        <Pane id="coin-icon" layoutX="10.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
-                        <Pane id="servant-icon" layoutX="85.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
-                        <Pane id="shield-icon" layoutX="167.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
-                        <Pane id="stone-icon" layoutX="250.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
+                        <Pane fx:id = "genericInput1" id="generic-input-1" layoutX="68.0" layoutY="188.0" prefHeight="77.0" prefWidth="77.0" />
+                        <Pane fx:id = "genericOutput" id="generic-output" layoutX="212.0" layoutY="226.0" prefHeight="77.0" prefWidth="77.0" />
+                        <Pane fx:id = "genericInput2" id="generic-input-2" layoutX="68.0" layoutY="265.0" prefHeight="77.0" prefWidth="77.0" />
+                        <Pane fx:id = "productionCoinIcon" id="coin-icon" layoutX="10.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
+                        <Pane fx:id = "productionServantIcon" id="servant-icon" layoutX="85.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
+                        <Pane fx:id = "productionShieldIcon" id="shield-icon" layoutX="167.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
+                        <Pane fx:id = "productionStoneIcon" id="stone-icon" layoutX="250.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
                      </children></Pane>
                   <Pane id="top-leader-1" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                   <Pane id="top-leader-2" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="5" GridPane.rowIndex="1" />

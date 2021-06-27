@@ -61,10 +61,12 @@ public class DevelopmentCardsController extends GenericGUIController {
 
     private final EventHandler<javafx.scene.input.MouseEvent> onProduceButtonPressed = event -> {
         ArrayList<ClientDevelopmentCard> availableProductions = new ArrayList<>();
-        for(int i=0; i<3; i++){
-            int deckSize = this.decks.getDeck(i).size();
-            if(this.decks.getDeck(i).size() >0){
-                availableProductions.add(this.decks.getDeck(i).get(deckSize-1));
+        if(decks != null && decks.isInitialized()){
+            for (int i = 0; i < 3; i++) {
+                int deckSize = this.decks.getDeck(i).size();
+                if (this.decks.getDeck(i).size() > 0) {
+                    availableProductions.add(this.decks.getDeck(i).get(deckSize - 1));
+                }
             }
         }
         SceneController.getMainGUIController().getProductionController().setAvailableDevelopments(availableProductions);
