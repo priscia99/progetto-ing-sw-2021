@@ -1,7 +1,4 @@
 package it.polimi.ingsw.server.model.player_board.storage;
-
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.network.message.from_server.StrongboxMessage;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
@@ -22,7 +19,7 @@ public class Strongbox extends Storage {
      * @param resourceType the type of the resource to be added
      */
     // FIXME implement resource quantity increment
-    public void addResource(ResourceType resourceType) throws GameException {
+    public void addResource(ResourceType resourceType) throws Exception {
         for(ResourceStock resourceStock : this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType()
                         .equals(resourceType)).collect(Collectors.toList())){
@@ -30,7 +27,7 @@ public class Strongbox extends Storage {
         }
     }
 
-    public Strongbox getCopy() throws GameException {
+    public Strongbox getCopy() throws Exception {
         Strongbox copy = new Strongbox();
         for(ResourceStock stock : resourceStocks){
             for(int i = 0; i<stock.getQuantity(); i++){
@@ -44,7 +41,7 @@ public class Strongbox extends Storage {
      * It removes from the strongbox a single unit of resource of the type given in input
      * @param resourceType the type of the resource to be removed
      */
-    public void removeResource(ResourceType resourceType) throws GameException {
+    public void removeResource(ResourceType resourceType) throws Exception {
         for(ResourceStock resourceStock : this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType()
                         .equals(resourceType)).collect(Collectors.toList())){

@@ -456,7 +456,7 @@ public class CLI implements UI {
             validPositions.add(ResourcePosition.FIRST_DEPOT);
             validPositions.add(ResourcePosition.SECOND_DEPOT);
             validPositions.add(ResourcePosition.THIRD_DEPOT);
-            if(!validPositions.contains(selected)) throw new GameException("Cannot drop resource from that position!");
+            if(!validPositions.contains(selected)) throw new Exception("Cannot drop resource from that position!");
             controller.removeResource(selected);
         } catch (Exception e){
             displayError(e.getMessage());

@@ -1,10 +1,8 @@
 package it.polimi.ingsw.server.model.player_board;
 
-import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.effect.DepotEffect;
-import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.EffectType;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
@@ -51,7 +49,7 @@ public class PlayerBoard {
         return developmentCardsDeck;
     }
 
-    public PlayerBoard getCopy() throws GameException {
+    public PlayerBoard getCopy() throws Exception {
         PlayerBoard copy = new PlayerBoard();
         copy.setFaithPath(this.getFaithPath().getCopy());
         DevelopmentCardsDeck[] decksCopy = new DevelopmentCardsDeck[3];
@@ -144,7 +142,7 @@ public class PlayerBoard {
      * @param depotIndex the index of the target depot
      * @param resourceType the type of the resource to add
      */
-    public void addToDepot(int depotIndex, ResourceType resourceType) throws GameException {
+    public void addToDepot(int depotIndex, ResourceType resourceType) throws Exception {
         warehouse.addToDepot(depotIndex, resourceType);
     }
 
@@ -154,8 +152,8 @@ public class PlayerBoard {
      * @param deckIndex the target deck index
      * @throws IllegalArgumentException
      */
-    public void addDevelopmentCard(DevelopmentCard card, int deckIndex) throws GameException {
-        if(deckIndex<0 || deckIndex>2) throw new GameException("Invalid deck number");
+    public void addDevelopmentCard(DevelopmentCard card, int deckIndex) throws Exception {
+        if(deckIndex<0 || deckIndex>2) throw new Exception("Invalid deck number");
         try{
             developmentCardsDecks[deckIndex].addCard(card);
         }catch(Exception e){
@@ -205,7 +203,7 @@ public class PlayerBoard {
         return depotCopies;
     }
 
-    public void addToAdditionalDepot(ResourceType type, int index) throws GameException {
+    public void addToAdditionalDepot(ResourceType type, int index) throws Exception {
         this.getAdditionalDepots().get(index).incrementResource(type);
     }
 
@@ -215,7 +213,7 @@ public class PlayerBoard {
         return isCorrectResource && areEnoughResources;
     }
 
-    public void consumeFromLeaderDepot(int index, ResourceStock toConsume) throws GameException {
+    public void consumeFromLeaderDepot(int index, ResourceStock toConsume) throws Exception {
         ResourceDepot consumed = this.getAdditionalDepots().get(index);
         for(int i = 0; i<toConsume.getQuantity(); i++) consumed.decrementResource(toConsume.getResourceType());
     }

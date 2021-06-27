@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.resource;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.network.message.from_server.PlayersOrderMessage;
 
 import java.io.Serializable;
@@ -33,8 +33,8 @@ public class ConsumeTarget implements Serializable {
         return toReturn;
     }
 
-    public ArrayList<ResourceStock> getToConsumeFromPosition(ResourcePosition position) throws GameException {
-        if(position.equals(ResourcePosition.DROPPED)) throw new GameException("Invalid position for selecting consumable resources.");
+    public ArrayList<ResourceStock> getToConsumeFromPosition(ResourcePosition position) throws Exception {
+        if(position.equals(ResourcePosition.DROPPED)) throw new Exception("Invalid position for selecting consumable resources.");
         return this.toConsume.get(position);
     }
 
@@ -58,8 +58,8 @@ public class ConsumeTarget implements Serializable {
             list -> list.stream().mapToInt(ResourceStock::getQuantity).sum()
     ).sum();}
 
-    public void put(ResourcePosition position, ResourceStock stock) throws GameException {
-        if(position.equals(ResourcePosition.DROPPED)) throw new GameException("Error while selecting consumable resources.");
+    public void put(ResourcePosition position, ResourceStock stock) throws Exception {
+        if(position.equals(ResourcePosition.DROPPED)) throw new Exception("Error while selecting consumable resources.");
         if(position.equals(ResourcePosition.STRONG_BOX)){
             if(isPositionPresent(position)){
                 toConsume.get(position).add(stock);
@@ -69,7 +69,7 @@ public class ConsumeTarget implements Serializable {
         }
         else if(isPositionPresent(position)){
             if(!toConsume.get(position).get(0).getResourceType().equals(stock.getResourceType())){
-                throw new GameException("Cannot select different resource types from the same depot.");
+                throw new Exception("Cannot select different resource types from the same depot.");
             }
             toConsume.get(position).get(0).incrementResource(stock.getResourceType(), stock.getQuantity());
         } else {

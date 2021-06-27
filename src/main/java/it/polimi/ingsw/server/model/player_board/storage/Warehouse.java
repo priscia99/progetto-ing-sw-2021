@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.model.player_board.storage;
 
-import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
@@ -25,19 +24,19 @@ public class Warehouse extends Storage {
      * @param index2 index of the second depot (new index for the first depot)
      * @throws IllegalArgumentException if indexes are not in [0;2]
      */
-    public void swap(int index1, int index2) throws GameException {
+    public void swap(int index1, int index2) throws Exception {
         this.checkValidIndex(index1);
         this.checkValidIndex(index2);
         if(this.resourceStocks.get(index1).getQuantity() > ((ResourceDepot) this.resourceStocks.get(index1)).getCapacity() ||
             this.resourceStocks.get(index2).getQuantity() > ((ResourceDepot) this.resourceStocks.get(index1)).getCapacity()){
-            throw new GameException("Cannot swap these depots!");
+            throw new Exception("Cannot swap these depots!");
         }
         Collections.swap(this.resourceStocks, index1, index2);
         ((ResourceDepot) this.getResourceStock(index2)).setCapacity(index2+1);
         ((ResourceDepot) this.getResourceStock(index1)).setCapacity(index1+1);
     }
 
-    public Warehouse getCopy() throws GameException {
+    public Warehouse getCopy() throws Exception {
         Warehouse toReturn = new Warehouse();
         for(int i = 0; i<3; i++){
             int quantityToAdd = this.resourceStocks.get(i).getQuantity();
@@ -51,7 +50,7 @@ public class Warehouse extends Storage {
      * @param index index of the depot to return
      * @return the depot that matches with the address given as input
      */
-    public ResourceDepot getDepot(int index) throws GameException {
+    public ResourceDepot getDepot(int index) throws Exception {
         this.checkValidIndex(index);
         return (ResourceDepot) this.getResourceStock(index);
     }
@@ -83,7 +82,7 @@ public class Warehouse extends Storage {
      * @param index index of the depot
      * @param resourceType type of the resource to insert
      */
-    public void addToDepot(int index, ResourceType resourceType) throws GameException {
+    public void addToDepot(int index, ResourceType resourceType) throws Exception {
         this.checkValidIndex(index);
         if (this.getResourceStock(index).isEmpty()) {
             if (this.contains(resourceType)) {
@@ -101,7 +100,7 @@ public class Warehouse extends Storage {
      * @param index index of the depot
      * @param resourceType type of the resource to delete
      */
-    public void removeFromDepot(int index, ResourceType resourceType) throws GameException {
+    public void removeFromDepot(int index, ResourceType resourceType) throws Exception {
         this.checkValidIndex(index);
         this.getResourceStock(index).decrementResource(resourceType);
         if (this.getResourceStock(index).isEmpty()) {
@@ -135,9 +134,9 @@ public class Warehouse extends Storage {
      *
      * @param index index to check
      */
-    private void checkValidIndex(int index) throws GameException {
+    private void checkValidIndex(int index) throws Exception {
         if(index < 0 || index > 2) {
-            throw new GameException("Indexes must be in [1;3]");
+            throw new Exception("Indexes must be in [1;3]");
         }
     }
 

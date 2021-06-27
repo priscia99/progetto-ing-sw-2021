@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.singleplayer;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.network.message.from_server.BlackCrossMessage;
 import it.polimi.ingsw.network.message.from_server.FaithPathMessage;
 import it.polimi.ingsw.network.message.from_server.LorenzoWinsMessage;
@@ -21,7 +21,7 @@ public class SinglePlayerGame extends Game {
     private int blackCrossPosition = 0;
 
     @Override
-    public void setup(ArrayList<Player> players) throws GameException {
+    public void setup(ArrayList<Player> players) throws Exception {
         super.setup(players);
         this.setupActionTokens();
         this.isFirstTurn = true;
@@ -50,7 +50,7 @@ public class SinglePlayerGame extends Game {
     }
 
     @Override
-    public SinglePlayerGame getBackup() throws GameException {
+    public SinglePlayerGame getBackup() throws Exception {
         SinglePlayerGame backup = new SinglePlayerGame();
         ArrayList<Player> playersBackup = new ArrayList<>();
         for(Player player : getPlayers()){
@@ -70,7 +70,7 @@ public class SinglePlayerGame extends Game {
     }
 
     @Override
-    public void nextTurn() throws GameException {
+    public void nextTurn() throws Exception {
         if(isFirstTurn){
             isFirstTurn = false;
         } else {

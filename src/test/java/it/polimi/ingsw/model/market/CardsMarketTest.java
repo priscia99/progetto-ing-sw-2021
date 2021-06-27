@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.market;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.market.CardsMarket;
@@ -15,7 +15,7 @@ public class CardsMarketTest {
     private CardsMarket cardsMarket;
 
     @BeforeEach
-    public void setUp() throws GameException {
+    public void setUp() throws Exception {
         cardsMarket = CardsMarket.getStartingMarket();
     }
 /*

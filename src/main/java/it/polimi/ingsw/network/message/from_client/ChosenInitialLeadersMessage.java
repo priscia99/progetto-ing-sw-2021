@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.message.from_client;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.card.LeaderCard;
@@ -19,7 +19,7 @@ public class ChosenInitialLeadersMessage extends Message<ServerController> imple
         this.playerUsername = username;
     }
 
-    public void execute(ServerController target) throws GameException {
+    public void execute(ServerController target) throws Exception {
         target.chooseInitialLeaders(leadersChosen, playerUsername);
     }
 

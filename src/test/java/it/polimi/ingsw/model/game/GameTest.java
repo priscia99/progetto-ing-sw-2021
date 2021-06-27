@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.game;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
@@ -17,7 +17,7 @@ public class GameTest {
     private Game game;
 
     @BeforeEach
-    public void setUp() throws GameException {
+    public void setUp() throws Exception {
         game = new Game();
         game.setPlayers(MockProvider.getMockPlayers());
         game.setupVictoryObservations();
@@ -47,7 +47,7 @@ public class GameTest {
             Assertions.assertEquals(game.getCurrentPlayer(), players.get(1));
             game.nextTurn();
             Assertions.assertEquals(game.getCurrentPlayer(), players.get(0));
-        } catch (GameException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
 
@@ -76,7 +76,7 @@ public class GameTest {
 
     @Test
     @DisplayName("Test check players choose initial cards")
-    public void testAllPlayersHaveStartingLeaderCard() throws GameException {
+    public void testAllPlayersHaveStartingLeaderCard() throws Exception {
         game.getPlayers().get(0).pickedLeaderCards(new ArrayList<>(MockProvider.getArrayListLeaderCardsMock().stream().map(LeaderCard::getId).collect(Collectors.toList())));
         game.getPlayers().get(1).pickedLeaderCards(new ArrayList<>(MockProvider.getArrayListLeaderCardsMock().stream().map(LeaderCard::getId).collect(Collectors.toList())));
         Assertions.assertTrue(game.allPlayersHaveStartingLeaderCards());

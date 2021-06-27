@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.storage;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +18,7 @@ public class WarehouseTest {
 
     @Test
     @DisplayName("Test insertion of a single resource")
-    public void testResourcesInsertion() throws GameException {
+    public void testResourcesInsertion() throws Exception {
         // Check if warehouse is empty at the beginning
         Assertions.assertTrue(this.warehouse.isEmpty());
         // Add a new resourse into the warehouse
@@ -31,7 +31,7 @@ public class WarehouseTest {
 
     @Test
     @DisplayName("Test insertion of multiple resources until a single depot is full")
-    public void testFullDepot() throws GameException {
+    public void testFullDepot() throws Exception {
         this.warehouse.addToDepot(2,ResourceType.STONE);
         this.warehouse.addToDepot(2,ResourceType.STONE);
         this.warehouse.addToDepot(2,ResourceType.STONE);
@@ -43,7 +43,7 @@ public class WarehouseTest {
 
     @Test
     @DisplayName("Test removal of a single resource from depot")
-    public void testRemovalFromSingleDepot() throws GameException {
+    public void testRemovalFromSingleDepot() throws Exception {
         // Check if depot is originally empty
         Assertions.assertTrue(this.warehouse.isEmpty());
         // Check if depot capacity is correct
@@ -70,7 +70,7 @@ public class WarehouseTest {
 
     @Test
     @DisplayName("Inserting resources until the entire warehouse is full")
-    public void testInsertingUntilFullWarehouse() throws GameException {
+    public void testInsertingUntilFullWarehouse() throws Exception {
         Assertions.assertTrue(warehouse.isEmpty());
         Assertions.assertFalse(warehouse.isFull());
         while(!warehouse.getDepot(0).isFull()){
@@ -88,7 +88,7 @@ public class WarehouseTest {
 
     @Test
     @DisplayName("Test swapping a depot")
-    public void testDepotSwap() throws GameException {
+    public void testDepotSwap() throws Exception {
         // Adding resources to depots
         this.warehouse.addToDepot(0, ResourceType.COIN);
         Assertions.assertEquals(ResourceType.COIN, this.warehouse.getDepot(0).getResourceType());
@@ -111,7 +111,7 @@ public class WarehouseTest {
 
     @Test
     @DisplayName("Test counting by resource type")
-    public void testCountingByResourceType() throws GameException {
+    public void testCountingByResourceType() throws Exception {
         // Adding several resources to depots in warehouse
         this.warehouse.addToDepot(0, ResourceType.SERVANT);
         this.warehouse.addToDepot(2, ResourceType.COIN);

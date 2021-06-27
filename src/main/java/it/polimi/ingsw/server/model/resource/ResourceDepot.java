@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.resource;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 
 import java.io.Serializable;
 
@@ -45,9 +45,9 @@ public class ResourceDepot extends ResourceStock implements Serializable{
     }
 
     @Override
-    public void incrementResource(ResourceType resourceType) throws GameException {
+    public void incrementResource(ResourceType resourceType) throws Exception {
         if (this.isFull()) {
-            throw new GameException("Depot is full");
+            throw new Exception("Depot is full");
         }
         super.incrementResource(resourceType);
     }

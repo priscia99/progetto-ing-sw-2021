@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.model.resource;
 
-import it.polimi.ingsw.exceptions.GameException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,25 +32,25 @@ public class ResourceStock implements Serializable {
         return this.quantity == 0;
     }
 
-    public void incrementResource(ResourceType resourceType) throws GameException{
+    public void incrementResource(ResourceType resourceType) throws Exception{
         if (!resourceType.equals(this.resourceType)) {
-            throw new GameException("You cannot have different resource types in the same depot");
+            throw new Exception("You cannot have different resource types in the same depot");
         }
         this.quantity++;
     }
 
-    public void incrementResource(ResourceType resourceType, int quantity) throws GameException {
+    public void incrementResource(ResourceType resourceType, int quantity) throws Exception {
         if (!resourceType.equals(this.resourceType)) {
-            throw new GameException("Trying to add different kind of resource!");
+            throw new Exception("Trying to add different kind of resource!");
         }
         this.quantity+=quantity;
     }
 
-    public void decrementResource(ResourceType resourceType) throws GameException {
+    public void decrementResource(ResourceType resourceType) throws Exception {
         if (!resourceType.equals(this.resourceType)) {
-            throw new GameException("Trying to decrement differend kind of resource!");
+            throw new Exception("Trying to decrement differend kind of resource!");
         } else if (this.quantity == 0) {
-            throw new GameException("Stock is already empty");
+            throw new Exception("Stock is already empty");
         }
         this.quantity--;
     }

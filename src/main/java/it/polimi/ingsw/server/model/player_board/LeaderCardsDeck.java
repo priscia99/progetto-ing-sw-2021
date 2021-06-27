@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model.player_board;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.data.LeaderCardsBuilder;
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.card.LeaderCard;
@@ -53,8 +53,8 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
      * Extract (and remove) the card at the top of the deck.
      * @return the top leader card.
      */
-    public LeaderCard pop() throws GameException {
-        if(leaderCards.isEmpty()) throw new GameException("This player's leader cards deck is empty.");
+    public LeaderCard pop() throws Exception {
+        if(leaderCards.isEmpty()) throw new Exception("This player's leader cards deck is empty.");
         return this.leaderCards.remove(this.leaderCards.size()-1);
     }
 
@@ -96,9 +96,9 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
      * Remove a card identified by its id.
      * @param cardId the id of the card to remove.
      */
-    public void removeLeaderCardById(String cardId) throws GameException {
+    public void removeLeaderCardById(String cardId) throws Exception {
         if(leaderCards.isEmpty()) {
-            throw new GameException("This player's leader cards deck is empty.");
+            throw new Exception("This player's leader cards deck is empty.");
         }
         else if (!leaderCards.removeIf(card-> card.getId().equals(cardId))) {
             throw new IllegalArgumentException("LeaderCard not present this player's deck");

@@ -1,11 +1,9 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
-import it.polimi.ingsw.server.model.market.MarbleMarket;
-import it.polimi.ingsw.server.model.player_board.PlayerBoard;
 import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
 import it.polimi.ingsw.utils.Pair;
 
@@ -74,7 +72,7 @@ public class ClientGame extends Observable<Pair<String, Boolean>> implements Ser
         }
     }
 
-    public static  ClientGame fromGame(Game game) throws GameException {
+    public static  ClientGame fromGame(Game game) throws Exception {
         ClientGame clientGame = new ClientGame(
                 game.getCurrentPlayer().getNickname(),
                 new ArrayList<>(game.getPlayers().stream().map(Player::getNickname).collect(Collectors.toList())));

@@ -1,16 +1,12 @@
 package it.polimi.ingsw.server.model.card.requirement;
 
-import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.resource.ConsumeTarget;
-import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
-import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,7 +61,7 @@ public class ResourceRequirement extends Requirement implements Serializable {
         return String.format(RESOURCE_REQUIREMENT_FORMAT, resourceString);
     }
 
-    static public ResourceRequirement merge(ArrayList<ResourceStock> requirements) throws GameException {
+    static public ResourceRequirement merge(ArrayList<ResourceStock> requirements) throws Exception {
         ArrayList<ResourceStock> stocks = new ArrayList<>();
         for(ResourceStock stock : requirements){
             Optional<ResourceStock> resourceTypeStock = stocks.stream()
@@ -83,7 +79,7 @@ public class ResourceRequirement extends Requirement implements Serializable {
      * Apply discounts when trying to buy from the market
      * @param discounts list of discount effects
      */
-    public void applyDiscounts(ArrayList<DiscountEffect> discounts) throws GameException {
+    public void applyDiscounts(ArrayList<DiscountEffect> discounts) throws Exception {
         for(DiscountEffect discount : discounts){
             for(ResourceStock stock : resourceStocks){
                 if(discount.getResourceType().equals(stock.getResourceType())){

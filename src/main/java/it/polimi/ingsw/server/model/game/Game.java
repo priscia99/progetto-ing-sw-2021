@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.model.game;
 
 import it.polimi.ingsw.client.controller.ClientController;
-import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_server.*;
 import it.polimi.ingsw.observer.Observable;
@@ -33,7 +32,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         CustomLogger.getLogger().info("Game created");
     }
 
-    public void setup(ArrayList<Player> players) throws GameException {
+    public void setup(ArrayList<Player> players) throws Exception {
         this.setPlayers(players);
         this.setupVictoryObservations();
         this.setupLeaderCards();
@@ -41,7 +40,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         this.setupMarbleMarket();
     }
 
-    public Game getBackup() throws GameException {
+    public Game getBackup() throws Exception {
         Game backup = new Game();
         ArrayList<Player> playersBackup = new ArrayList<>();
         for(Player player : players){
@@ -95,7 +94,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
 
 
 
-    public void nextTurn() throws GameException {
+    public void nextTurn() throws Exception {
         currentPlayerIndex++;
         currentPlayerIndex = currentPlayerIndex % players.size();
         if(isLastRound && getCurrentPlayer().isFirst()){
@@ -106,19 +105,19 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         }
     }
 
-    private void finalizeGame() throws GameException {
+    private void finalizeGame() throws Exception {
         for (Player player : this.players) {
             notify(new VictoryPointsMessage(player.getVictoryPoints(), player.getNickname()));
         }
         notify(new WinnerMessage(this.getWinnersUsername()));
     }
 
-    private ArrayList<String> getWinnersUsername() throws GameException{
+    private ArrayList<String> getWinnersUsername() throws Exception{
         ArrayList<Player> sorted = this.players.stream().sorted(Comparator.comparing(Player::getVictoryPoints)).collect(Collectors.toCollection(ArrayList::new));
         int maxVictoryPoints = sorted.get(0).getVictoryPoints();
         sorted = sorted.stream().filter(player->player.getVictoryPoints() == maxVictoryPoints).collect(Collectors.toCollection(ArrayList::new));
         OptionalInt maxResourcesResult = sorted.stream().mapToInt(Player::getResourceCount).max();
-        if(maxResourcesResult.isEmpty()) throw new GameException("No players found to assign victory!");
+        if(maxResourcesResult.isEmpty()) throw new Exception("No players found to assign victory!");
         int maxResources = maxResourcesResult.getAsInt();
         sorted = sorted.stream().filter(player->player.getResourceCount() == maxResources).collect(Collectors.toCollection(ArrayList::new));
         return sorted.stream().map(Player::getNickname).collect(Collectors.toCollection(ArrayList::new));
@@ -134,14 +133,14 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         return players.get(currentPlayerIndex);
     }
 
-    public Player getPlayerByUsername(String username) throws GameException {
+    public Player getPlayerByUsername(String username) throws Exception {
         for(Player player : players){
             if(player.getNickname().equals(username)) return player;
         }
-        throw new GameException("No player found with that username: " + username);
+        throw new Exception("No player found with that username: " + username);
     }
 
-    public void giveLeaderCardsToPlayers() throws GameException {
+    public void giveLeaderCardsToPlayers() throws Exception {
         final int numberCardsToGive = 4;
         for(Player player : players){
             CustomLogger.getLogger().info(String.format("Giving %s initial leader cards", player.getNickname()));
@@ -153,7 +152,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         }
     }
 
-    public void tryStart() throws GameException {
+    public void tryStart() throws Exception {
         if(isReady()) {
             notify(new GameReadyMessage());
             notify(new CardsMarketMessage(getCardMarket()));
@@ -226,7 +225,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         this.marbleMarket = MarbleMarket.getStartingMarket();
     }
 
-    public void setupCardsMarket() throws GameException {
+    public void setupCardsMarket() throws Exception {
         CustomLogger.getLogger().info("Setting up cards market");
         this.cardsMarket = CardsMarket.getStartingMarket();
     }

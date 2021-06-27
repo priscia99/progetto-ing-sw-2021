@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.exceptions.FullLobbyException;
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.service_message.GameStartedServiceMessage;
 import it.polimi.ingsw.observer.Observable;

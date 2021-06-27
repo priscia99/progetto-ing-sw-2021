@@ -1,6 +1,6 @@
 package it.polimi.ingsw.testUtils;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.color.Color;
@@ -49,7 +49,7 @@ public class MockProvider {
         );
     }
 
-    static public Game getMockGame() throws GameException {
+    static public Game getMockGame() throws Exception {
         Game game = new Game();
         ArrayList<Player> players = getMockPlayers();
         game.setPlayers(players);
@@ -61,7 +61,7 @@ public class MockProvider {
         game.giveInitialResources();
         try {
             game.nextTurn();
-        } catch (GameException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return game;

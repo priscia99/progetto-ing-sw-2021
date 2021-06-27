@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller.action;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.network.message.from_client.PickResourcesMessage;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.game.Game;
@@ -22,14 +22,14 @@ public class PickResourcesMessageTest {
     private ServerController controller;
 
     @BeforeEach
-    public void setUp() throws GameException {
+    public void setUp() throws Exception {
         game = MockProvider.getMockGame();
         controller = new ServerController(game);
     }
 
     @Test
     @DisplayName("Test player picked resources from marble market")
-    public void testPlayerPickedResources() throws GameException {
+    public void testPlayerPickedResources() throws Exception {
         // Generate mock marble market for testing purposes
         MockProvider.generateMockMarbleMarket(game);
         // Create a proper selection from marble market
@@ -86,7 +86,7 @@ public class PickResourcesMessageTest {
         positions.add(ResourcePosition.SECOND_DEPOT);
         // Creating a proper message
         PickResourcesMessage message = new PickResourcesMessage(marbleSelection, positions, new ArrayList<>());
-        Exception exception = assertThrows(GameException.class, () -> {
+        Exception exception = assertThrows(Exception.class, () -> {
                 message.execute(controller);
          });
         System.out.println("Got: " + exception.getMessage());

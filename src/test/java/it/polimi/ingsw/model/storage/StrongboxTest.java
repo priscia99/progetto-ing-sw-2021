@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.storage;
 
-import it.polimi.ingsw.exceptions.GameException;
+
 import it.polimi.ingsw.server.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import org.junit.jupiter.api.Assertions;
@@ -36,7 +36,7 @@ public class StrongboxTest {
 
     @Test
     @DisplayName("Test resources insertion inside strongbox")
-    public void testResourcesInsertion() throws GameException {
+    public void testResourcesInsertion() throws Exception {
         this.strongbox.addResource(ResourceType.STONE);
         this.strongbox.addResource(ResourceType.STONE);
         this.strongbox.addResource(ResourceType.STONE);
@@ -53,7 +53,7 @@ public class StrongboxTest {
 
     @Test
     @DisplayName("Test resources removal from strongbox")
-    public void testResourcesRemoval() throws GameException {
+    public void testResourcesRemoval() throws Exception {
         // Insert some resources inside strongbox
         testResourcesInsertion();
         // Testing resources removal
