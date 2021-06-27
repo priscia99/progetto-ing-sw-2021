@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
+import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientDevelopmentCard;
+import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
@@ -32,7 +34,7 @@ public class ProductionController extends GenericGUIController{
     private Map<String, Pane> productionCardsPanes;
     private Map<String, Pane> genericProductionPanes;
     private Map<String, Pane> productionIcons;
-    private ArrayList<ProductionEffect> leaderProductions;
+    private ArrayList<ClientLeaderCard> leaderProductions;
     private Button confirmButton, cancelButton;
     private ResourceType selectedResourceType;
     private Map<String, ResourceType> chosenGenericProduction;
@@ -51,7 +53,7 @@ public class ProductionController extends GenericGUIController{
         this.cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedCancelButton);
     }
 
-    public void openProductionSelection(ArrayList<ProductionEffect> leaderProductions){
+    public void openProductionSelection(ArrayList<ClientLeaderCard> leaderProductions){
         this.leaderProductions = leaderProductions;
         this.productionIcons.entrySet().stream().forEach(entry -> entry.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceIcon));
         this.genericProductionPanes.entrySet().stream().forEach(entry -> entry.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedGenericPosition));

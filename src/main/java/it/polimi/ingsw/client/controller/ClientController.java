@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.controller;
 
-import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.client.view.ui.UI;
 import it.polimi.ingsw.client.view.ui.gui.GUI;
@@ -8,18 +7,13 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_client.*;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
-import it.polimi.ingsw.server.model.card.LeaderCard;
 import it.polimi.ingsw.server.model.card.effect.*;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.resource.*;
-import it.polimi.ingsw.utils.Pair;
-import javafx.beans.property.IntegerPropertyBase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Optional;
-import java.util.concurrent.RunnableFuture;
 import java.util.stream.Collectors;
 
 public class ClientController extends Observable<Message<ServerController>> {
@@ -256,16 +250,16 @@ public class ClientController extends Observable<Message<ServerController>> {
                 ()->executeIfNotMainActionYet(
                         ()->{
                             try{
-                                ArrayList<ChangeEffect> changeEffects = new ArrayList<>();
-                                ArrayList<DepotEffect> depotEffects;
+                                ArrayList<ClientLeaderCard> changeEffectsCards = new ArrayList<>();
+                                ArrayList<ClientLeaderCard> depotEffectsCards;
                                 ArrayList<Marble> selected = game.getClientMarbleMarket().getSelectedMarbles(selection);
                                 if(selected.stream().map(Marble::getResourceType).collect(Collectors.toList()).contains(ResourceType.BLANK)){
-                                    changeEffects = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                                            .getClientLeaderCards().getActiveEffects(EffectType.CHANGE);
+                                    changeEffectsCards = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                            .getClientLeaderCards().getActiveCardByEffect(EffectType.CHANGE);
                                 }
-                                depotEffects = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                                        .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
-                                userInterface.displayPickResourceMenu(selection, selected, changeEffects, depotEffects);
+                                depotEffectsCards = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                        .getClientLeaderCards().getActiveCardByEffect(EffectType.DEPOT);
+                                userInterface.displayPickResourceMenu(selection, selected, changeEffectsCards, depotEffectsCards);
                             } catch (Exception e){
                                 userInterface.displayError("Cannot retrieve marbles from that position!");
                             }
@@ -281,11 +275,11 @@ public class ClientController extends Observable<Message<ServerController>> {
                             if(game.getClientCardsMarket().getCardById(id)==null){
                                 userInterface.displayError("Cannot buy card with that id!");
                             } else {
-                                ArrayList<DiscountEffect> discounts = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                                        .getClientLeaderCards().getActiveEffects(EffectType.DISCOUNT);
-                                ArrayList<DepotEffect> additionalDepots = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                                        .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
-                                userInterface.displayBuyDevelopmentCardMenu(id, discounts, additionalDepots);
+                                ArrayList<ClientLeaderCard> discountsCards = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                        .getClientLeaderCards().getActiveCardByEffect(EffectType.DISCOUNT);
+                                ArrayList<ClientLeaderCard> additionalDepotsCards = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                        .getClientLeaderCards().getActiveCardByEffect(EffectType.DEPOT);
+                                userInterface.displayBuyDevelopmentCardMenu(id, discountsCards, additionalDepotsCards);
                             }
                         }
                 )
@@ -296,11 +290,11 @@ public class ClientController extends Observable<Message<ServerController>> {
         executeIfCurrentPlayer(
                 ()->executeIfNotMainActionYet(
                         ()->{
-                            ArrayList<ProductionEffect> leaderProductions = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                                    .getClientLeaderCards().getActiveEffects(EffectType.PRODUCTION);
-                            ArrayList<DepotEffect> additionalDepots = game.getPlayerBoardMap().get(game.getCurrentPlayer())
-                                    .getClientLeaderCards().getActiveEffects(EffectType.DEPOT);
-                            userInterface.displayProduceMenu(leaderProductions, additionalDepots);
+                            ArrayList<ClientLeaderCard> leaderProductionsCard = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                    .getClientLeaderCards().getActiveCardByEffect(EffectType.PRODUCTION);
+                            ArrayList<ClientLeaderCard> additionalDepotsCard = game.getPlayerBoardMap().get(game.getCurrentPlayer())
+                                    .getClientLeaderCards().getActiveCardByEffect(EffectType.DEPOT);
+                            userInterface.displayProduceMenu(leaderProductionsCard, additionalDepotsCard);
                         }
                 )
         );

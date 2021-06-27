@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.model.ClientLeaderCard;
+import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
 import it.polimi.ingsw.client.model.ClientWarehouse;
 import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
@@ -50,8 +52,8 @@ public class WarehouseController extends GenericGUIController {
     private ArrayList<ResourceType> conversions = null;
     private int insertPositionIndex;
     private ArrayList<Marble> selected;
-    private ArrayList<ChangeEffect> changeEffects;
-    private ArrayList<DepotEffect> depotEffects;
+    private ArrayList<ClientLeaderCard> changeEffects;
+    private ArrayList<ClientLeaderCard> depotEffects;
     private ArrayList<Pair<Integer, Integer>> occupiedCells;
     private MarbleSelection marbleSelection;
 
@@ -136,7 +138,7 @@ public class WarehouseController extends GenericGUIController {
         swapDepotsMenu.setDisable(!isEnable);
     }
 
-    public void insertResourcesToDepot(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects, ArrayList<DepotEffect> depotEffects) {
+    public void insertResourcesToDepot(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ClientLeaderCard> changeEffects, ArrayList<ClientLeaderCard> depotEffects) {
         this.marbleSelection = selection;
         this.occupiedCells = new ArrayList<>();
         this.positions = new ArrayList<>();

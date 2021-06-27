@@ -202,17 +202,17 @@ public class GUI implements UI{
     }
 
     @Override
-    public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects, ArrayList<DepotEffect> depotEffects) {
+    public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ClientLeaderCard> changeEffects, ArrayList<ClientLeaderCard> depotEffects) {
         SceneController.getMainGUIController().getWarehouseController().insertResourcesToDepot(selection, selected, changeEffects, depotEffects);
     }
 
     @Override
-    public void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts, ArrayList<DepotEffect> depotEffects) {
+    public void displayBuyDevelopmentCardMenu(String id, ArrayList<ClientLeaderCard> discounts, ArrayList<ClientLeaderCard> depotEffects) {
 
     }
 
     @Override
-    public void displayProduceMenu(ArrayList<ProductionEffect> effects, ArrayList<DepotEffect> depotEffects) {
+    public void displayProduceMenu(ArrayList<ClientLeaderCard> effects, ArrayList<ClientLeaderCard> depotEffects) {
         Platform.runLater(() -> {
             SceneController.getMainGUIController().getProductionController().openProductionSelection(effects);
         });

@@ -562,8 +562,10 @@ public class CLI implements UI {
         }
     }
 
-    public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ChangeEffect> changeEffects, ArrayList<DepotEffect> depotEffects){
-            ArrayList<ResourcePosition> positions = new ArrayList<>();
+    public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ClientLeaderCard> changeEffectsCards, ArrayList<ClientLeaderCard> depotEffectsCards){
+        ArrayList<ChangeEffect> changeEffects = changeEffectsCards.stream().map(card -> (ChangeEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<DepotEffect> depotEffects = depotEffectsCards.stream().map(card -> (DepotEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<ResourcePosition> positions = new ArrayList<>();
             ArrayList<ResourceType> conversions = new ArrayList<>();
             try{
                 for(Marble marble : selected){
@@ -605,7 +607,9 @@ public class CLI implements UI {
         throw new Exception("Invalid size of change effects.");
     }
 
-    public void displayBuyDevelopmentCardMenu(String id, ArrayList<DiscountEffect> discounts, ArrayList<DepotEffect> depotEffects){
+    public void displayBuyDevelopmentCardMenu(String id, ArrayList<ClientLeaderCard> discountsCard, ArrayList<ClientLeaderCard> depotEffectsCard){
+        ArrayList<DepotEffect> depotEffects = depotEffectsCard.stream().map(card -> (DepotEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<DiscountEffect> discounts = discountsCard.stream().map(card -> (DiscountEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
         try{
             int index = askDevelopmentDeckIndex();
             displayUserDiscounts(discounts);
@@ -636,14 +640,17 @@ public class CLI implements UI {
         }
     }
 
-    public void displayProduceMenu(ArrayList<ProductionEffect> leaderEffects, ArrayList<DepotEffect> depotEffects){
+    public void displayProduceMenu(ArrayList<ClientLeaderCard> productionCards, ArrayList<ClientLeaderCard> depotEffectsCard){
+        ArrayList<ProductionEffect> productionEffects = productionCards.stream().map(card -> (ProductionEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<DepotEffect> depotEffects = depotEffectsCard.stream().map(card -> (DepotEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
+
         try{
             ConsumeTarget consumed = new ConsumeTarget();
             Optional<ProductionEffect> genericProduction;
             ArrayList<ProductionEffect> leaderProductions;
             ArrayList<String> cardIds;
             genericProduction = askForGenericProduction(consumed, depotEffects);
-            leaderProductions = askForLeaderProduction(leaderEffects);
+            leaderProductions = askForLeaderProduction(productionEffects);
             cardIds = askForListOfIds();
             ConsumeTarget toConsume = askResourcesToUse(Optional.empty(), depotEffects);
             consumed.putAll(toConsume);
