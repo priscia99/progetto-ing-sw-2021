@@ -112,7 +112,7 @@ public class ProductionController extends GenericGUIController{
             ArrayList<ResourceStock> outStocks = new ArrayList<>();
             inStocks.add(new ResourceStock(chosenGenericProduction.get("generic-input-1"), 1));
             inStocks.add(new ResourceStock(chosenGenericProduction.get("generic-input-2"), 1));
-            inStocks.add(new ResourceStock(chosenGenericProduction.get("generic-output"), 1));
+            outStocks.add(new ResourceStock(chosenGenericProduction.get("generic-output"), 1));
             genericProductionEffect = Optional.of(new ProductionEffect(inStocks, outStocks));
             SceneController.getMainGUIController().getPickResourcesFromStorageController().setGenericProduction(genericProductionEffect);
         }
