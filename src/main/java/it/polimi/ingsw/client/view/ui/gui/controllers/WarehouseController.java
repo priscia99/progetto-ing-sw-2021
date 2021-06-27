@@ -265,10 +265,16 @@ public class WarehouseController extends GenericGUIController {
         pane.addEventHandler(MouseEvent.MOUSE_CLICKED, onUnclickedResourceToDrop);
     }
 
+    private void addClickedResourceHandler(Pane pane){
+        pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onUnclickedResourceToDrop);
+        pane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
+    }
+
     private final EventHandler<MouseEvent> onUnclickedResourceToDrop = event -> {
         Pane triggeredPane = (Pane) event.getSource();
         triggeredPane.setEffect(null);
         resourcePositionToDrop = null;
+        addClickedResourceHandler(triggeredPane);
         dropResourceButton.setVisible(false);
     };
 
