@@ -180,7 +180,9 @@ public class WarehouseController extends GenericGUIController {
             return;
         }
         if (marble.getResourceType().equals(ResourceType.BLANK) && changeEffects.size() == 1) {
-            marble = new Marble(conversions.get(0));
+            marble = new Marble(((ChangeEffect)changeEffects.get(0).getEffect()).getResourceType());
+            this.marbleToInsert = marble;
+            conversions.add(marble.getResourceType());
         }
         if(marble.getResourceType().equals(ResourceType.BLANK) && changeEffects.size() == 2){
 
@@ -188,7 +190,6 @@ public class WarehouseController extends GenericGUIController {
         if (!marble.getResourceType().equals(ResourceType.BLANK) ||
                 marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()) {
             getClientController().viewInfoMessage("Insert position in which you want to add "+ marble.getResourceType().toString());
-            // TODO manage leader card depots
             askForDestinationDepot(marble);
             // displayPossibleResourcePositions(depotEffects);
         }
