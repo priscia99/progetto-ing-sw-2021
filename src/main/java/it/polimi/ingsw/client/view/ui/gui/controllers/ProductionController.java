@@ -106,6 +106,7 @@ public class ProductionController extends GenericGUIController{
         productionPane.setVisible(false);
         productionCardsPanes.entrySet().forEach(entry -> entry.getValue().setEffect(null));
         productionCardsPanes.entrySet().forEach(entry -> entry.getValue().removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedCard));
+        genericProductionPanes.entrySet().forEach(entry -> entry.getValue().setStyle("-fx-background-image:none;"));
         Optional<ProductionEffect> genericProductionEffect = Optional.empty();
         if(chosenGenericProduction.entrySet().size() == 3) {
             ArrayList<ResourceStock> inStocks = new ArrayList<>();
