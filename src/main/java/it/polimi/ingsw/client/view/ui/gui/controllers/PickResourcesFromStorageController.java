@@ -87,6 +87,10 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         this.genericProduction = genericProduction;
     }
 
+    public void setLeaderProductions(ArrayList<ProductionEffect> leaderProductions){
+        this.leaderProductions = leaderProductions;
+    }
+
     private final EventHandler<javafx.scene.input.MouseEvent> onClickedChooseButton = event -> {
         this.disable();
         this.sendPickedResources();

@@ -1,11 +1,9 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
-import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientDevelopmentCard;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
-import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
@@ -24,6 +22,8 @@ import java.util.Optional;
 public class ProductionController extends GenericGUIController{
 
     private static final String DEV_CARDS_FRONT_PATH = "/img/cards/front/development-card-";
+    private static final String LEADER_CARD_FRONT_PATH = "/img/cards/front/leader-card-";
+
     private static final String COIN_PATH = "/img/ico/coin.png";
     private static final String SERVANT_PATH = "/img/ico/servant.png";
     private static final String SHIELD_PATH = "/img/ico/shield.png";
@@ -34,7 +34,7 @@ public class ProductionController extends GenericGUIController{
     private Map<String, Pane> productionCardsPanes;
     private Map<String, Pane> genericProductionPanes;
     private Map<String, Pane> productionIcons;
-    private ArrayList<ClientLeaderCard> leaderProductions;
+    private ArrayList<ClientLeaderCard> leaderCards;
     private Button confirmButton, cancelButton;
     private ResourceType selectedResourceType;
     private Map<String, ResourceType> chosenGenericProduction;
@@ -54,10 +54,16 @@ public class ProductionController extends GenericGUIController{
     }
 
     public void openProductionSelection(ArrayList<ClientLeaderCard> leaderProductions){
-        this.leaderProductions = leaderProductions;
+        this.leaderCards = leaderProductions;
         this.productionIcons.entrySet().stream().forEach(entry -> entry.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceIcon));
         this.genericProductionPanes.entrySet().stream().forEach(entry -> entry.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedGenericPosition));
+        for(int i=0; i<this.leaderCards.size(); i++){
+            Pane tempCardPane = productionCardsPanes.get("leader-card-" + (i+1));
+            String cardPath = LEADER_CARD_FRONT_PATH + leaderCards.get(i).getAssetLink() + ".png";
+            tempCardPane.setStyle("-fx-background-image: url(" + cardPath + ");");
+        }
         productionPane.setVisible(true);
+
     }
 
     public void setAvailableDevelopments(ArrayList<ClientDevelopmentCard> developmentCards){
@@ -110,7 +116,9 @@ public class ProductionController extends GenericGUIController{
         productionCardsPanes.entrySet().forEach(entry -> entry.getValue().removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedCard));
         genericProductionPanes.entrySet().forEach(entry -> entry.getValue().setStyle("-fx-background-image:none;"));
         Optional<ProductionEffect> genericProductionEffect = Optional.empty();
-        if(chosenGenericProduction.entrySet().size() == 3) {
+        if(chosenGenericProduction.get("generic-input-1") != null &&
+                chosenGenericProduction.get("generic-input-2") != null &&
+                chosenGenericProduction.get("generic-output") != null) {
             ArrayList<ResourceStock> inStocks = new ArrayList<>();
             ArrayList<ResourceStock> outStocks = new ArrayList<>();
             inStocks.add(new ResourceStock(chosenGenericProduction.get("generic-input-1"), 1));
@@ -119,6 +127,26 @@ public class ProductionController extends GenericGUIController{
             genericProductionEffect = Optional.of(new ProductionEffect(inStocks, outStocks));
             SceneController.getMainGUIController().getPickResourcesFromStorageController().setGenericProduction(genericProductionEffect);
         }
+
+        ArrayList<ProductionEffect> leaderProductions = new ArrayList<>();
+
+        if(chosenGenericProduction.get("generic-leader-1") != null){
+            ResourceType convertedType = chosenGenericProduction.get("generic-leader-1");
+            ArrayList<ResourceStock> inStock = ((ProductionEffect)leaderCards.get(0).getEffect()).getInStocks();
+            ArrayList<ResourceStock> outStock = ((ProductionEffect)leaderCards.get(0).getEffect()).getOutStockConverted(convertedType);
+            ProductionEffect firstLeaderProduction = new ProductionEffect(inStock,outStock);
+            leaderProductions.add(firstLeaderProduction);
+        }
+
+        if(chosenGenericProduction.get("generic-leader-2") != null){
+            ResourceType convertedType = chosenGenericProduction.get("generic-leader-2");
+            ArrayList<ResourceStock> inStock = ((ProductionEffect)leaderCards.get(1).getEffect()).getInStocks();
+            ArrayList<ResourceStock> outStock = ((ProductionEffect)leaderCards.get(1).getEffect()).getOutStockConverted(convertedType);
+            ProductionEffect firstLeaderProduction = new ProductionEffect(inStock,outStock);
+            leaderProductions.add(firstLeaderProduction);
+        }
+
+        SceneController.getMainGUIController().getPickResourcesFromStorageController().setLeaderProductions(leaderProductions);
         SceneController.getMainGUIController().getPickResourcesFromStorageController().chooseResourcesForProduction();
         chosenGenericProduction.clear();
     };

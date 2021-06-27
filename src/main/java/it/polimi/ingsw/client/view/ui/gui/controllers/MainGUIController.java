@@ -89,11 +89,11 @@ public class MainGUIController {
     @FXML
     private Pane productionPane;
     @FXML
-    private Pane topDeckCard1, topDeckCard2, topDeckCard3;
+    private Pane topDeckCard1, topDeckCard2, topDeckCard3, productionLeader1, productionLeader2;;
     @FXML
     private Button confirmProductionButton, cancelProductionButton;
     @FXML
-    private Pane genericInput1, genericInput2, genericOutput;
+    private Pane genericInput1, genericInput2, genericOutput, genericLeader1, genericLeader2;
     @FXML
     private Pane productionCoinIcon, productionShieldIcon, productionStoneIcon, productionServantIcon;
 
@@ -159,6 +159,8 @@ public class MainGUIController {
         cardsPanes.put("dev-card-1", topDeckCard1);
         cardsPanes.put("dev-card-2", topDeckCard2);
         cardsPanes.put("dev-card-3", topDeckCard3);
+        cardsPanes.put("leader-card-1", productionLeader1);
+        cardsPanes.put("leader-card-2", productionLeader2);
         return cardsPanes;
     }
 
@@ -167,6 +169,8 @@ public class MainGUIController {
         genericPanes.put("generic-input-1", genericInput1);
         genericPanes.put("generic-input-2", genericInput2);
         genericPanes.put("generic-output", genericOutput);
+        genericPanes.put("generic-leader-1", genericLeader1);
+        genericPanes.put("generic-leader-2", genericLeader2);
         return genericPanes;
     }
 
