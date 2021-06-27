@@ -36,10 +36,14 @@ public class StrongBoxController extends GenericGUIController {
      */
     public void refreshStrongbox(ClientStrongbox strongbox){
         if(strongbox.isInitialized()) {
-            strongboxCoin.setText(String.valueOf(strongbox.gerResourceStock(0).getQuantity()));
-            strongboxServant.setText(String.valueOf(strongbox.gerResourceStock(1).getQuantity()));
-            strongboxShield.setText(String.valueOf(strongbox.gerResourceStock(2).getQuantity()));
-            strongboxStone.setText(String.valueOf(strongbox.gerResourceStock(3).getQuantity()));
+            for(int i = 0; i<4; i++){
+                switch (strongbox.getResourceStock(i).getResourceType()) {
+                    case COIN -> strongboxCoin.setText(String.valueOf(strongbox.getResourceStock(i).getQuantity()));
+                    case SERVANT -> strongboxServant.setText(String.valueOf(strongbox.getResourceStock(i).getQuantity()));
+                    case SHIELD -> strongboxShield.setText(String.valueOf(strongbox.getResourceStock(i).getQuantity()));
+                    case STONE -> strongboxStone.setText(String.valueOf(strongbox.getResourceStock(i).getQuantity()));
+                }
+            }
         }
         else{
             strongboxCoin.setText("0");

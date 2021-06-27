@@ -28,9 +28,10 @@ public class ClientStrongbox extends Observable<Pair<ClientStrongbox, String>> i
     }
 
 
-    public ResourceStock gerResourceStock(int index) {
+    public ResourceStock getResourceStock(int index) {
         return resourceStocks.get(index);
     }
+
 
     public void show(){
         notify(new Pair<>(this, owner));

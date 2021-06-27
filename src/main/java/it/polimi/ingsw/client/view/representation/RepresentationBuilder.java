@@ -167,10 +167,10 @@ public class RepresentationBuilder {
         if(!strongbox.isInitialized()){
             return String.format(STRONGBOX_FORMAT, 0, 0, 0, 0);
         }
-        int coinCount = strongbox.gerResourceStock(0).getQuantity();
-        int servantCount = strongbox.gerResourceStock(1).getQuantity();
-        int shieldCount = strongbox.gerResourceStock(2).getQuantity();
-        int stoneCount = strongbox.gerResourceStock(3).getQuantity();
+        int coinCount = strongbox.getResourceStock(0).getQuantity();
+        int servantCount = strongbox.getResourceStock(1).getQuantity();
+        int shieldCount = strongbox.getResourceStock(2).getQuantity();
+        int stoneCount = strongbox.getResourceStock(3).getQuantity();
         return String.format(STRONGBOX_FORMAT, coinCount, servantCount, shieldCount, stoneCount);
     }
 
