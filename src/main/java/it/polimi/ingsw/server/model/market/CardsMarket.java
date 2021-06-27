@@ -80,7 +80,9 @@ public class CardsMarket extends Observable<Message<ClientController>> {
     public DevelopmentCard popCardById(String id){
         for(int i = 0; i<4; i++){
             for(int j = 0; j<3; j++){
-                if(this.decks[i][j].peek().getId().equals(id)) return this.decks[i][j].pop();
+                if(this.decks[i][j].size() > 0) {
+                    if (this.decks[i][j].peek().getId().equals(id)) return this.decks[i][j].pop();
+                }
             }
         }
         return null;
