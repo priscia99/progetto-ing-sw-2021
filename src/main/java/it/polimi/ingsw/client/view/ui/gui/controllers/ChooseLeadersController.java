@@ -31,6 +31,10 @@ public class ChooseLeadersController extends GenericGUIController{
         this.confirmLeadersButton = confirmLeadersButton;
     }
 
+    /**
+     * Activates the choose leader cards screen
+     * @param cardIDs
+     */
     public void activeScreen(ArrayList<String> cardIDs) {
         this.cardIDs = cardIDs;
         this.selectedIDs = new ArrayList<>();
@@ -39,6 +43,9 @@ public class ChooseLeadersController extends GenericGUIController{
         confirmLeadersButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onConfirmLeadersBtnClicked);
     }
 
+    /**
+     *  Refreshes all available leader cards and add handlers on them
+     */
     public void refreshAvailableCards(){
         for(int i=0; i<4; i++){
             Pane cardPane = (Pane) cardsPanes.get(i);
@@ -49,6 +56,9 @@ public class ChooseLeadersController extends GenericGUIController{
         chooseLeadersPane.requestLayout();
     }
 
+    /**
+     * Handler that is triggered when user confirm his leader cards choice
+     */
     private EventHandler<MouseEvent> onConfirmLeadersBtnClicked = event -> {
         if(selectedIDs.size() == 2) {
             super.getClientController().chooseInitialLeaders(selectedIDs);
@@ -56,6 +66,9 @@ public class ChooseLeadersController extends GenericGUIController{
         }
     };
 
+    /**
+     * Handler that is triggered when user choose a leader card
+     */
     private EventHandler<MouseEvent> onLeaderCardClicked = event -> {
         Pane clickedPane = (Pane) event.getSource();
         int cardIndex = Integer.parseInt(clickedPane.getId()) - 1;

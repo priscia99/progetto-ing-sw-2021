@@ -38,6 +38,9 @@ public class DevelopmentCardMarketController extends GenericGUIController{
         this.devCardZoomImage = devCardZoomImage;
     }
 
+    /**
+     * Refreshes the development cards market
+     */
     public void refreshCardsMarket(){
         String cardImagePath = null;
         Image cardImage = null;
@@ -65,10 +68,18 @@ public class DevelopmentCardMarketController extends GenericGUIController{
         }
     }
 
+    /**
+     * Handler that is triggered when a development card is clicked from the market
+     * This handler manage to show the selected development card zoom
+     */
     private final EventHandler<javafx.scene.input.MouseEvent> onClickedDevCard = event -> {
         showCardZoom(developmentCardsMap.get((Pane)event.getSource()));
     };
 
+    /**
+     * Makes the development card zoom pane enabled and displays all possible actions
+     * @param clientDevCard chosen development card
+     */
     public void showCardZoom(ClientDevelopmentCard clientDevCard){
         this.selectedCard = clientDevCard;
         String cardAssetPath = clientDevCard.getAssetLink();
@@ -84,27 +95,45 @@ public class DevelopmentCardMarketController extends GenericGUIController{
 
         String cardImagePath = DEV_CARDS_FRONT_PATH + cardAssetPath + ".png";
         devCardZoomImage.setStyle("-fx-background-image: url(" + cardImagePath + ");");
-        System.out.println("Set as visible! ");
         devCardZoomPane.setVisible(true);
     }
 
+    /**
+     * Handler that is triggered when user wants to close the zoom pane
+     * This handler disables the pane
+     */
     private final EventHandler<MouseEvent> onCloseZoomButtonPressed = event -> {
         devCardZoomPane.setVisible(false);
     };
 
+    /**
+     * Handler that is triggered when user wants to buy the selected card and put it on first deck
+     */
     private final EventHandler<MouseEvent> onBuyCard1ButtonPressed = event -> {
         devCardZoomPane.setVisible(false);
         SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 0);
     };
+
+    /**
+     * Handler that is triggered when user wants to buy the selected card and put it on second deck
+     */
     private final EventHandler<MouseEvent> onBuyCard2ButtonPressed = event -> {
         devCardZoomPane.setVisible(false);
         SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 1);
     };
+
+    /**
+     * Handler that is triggered when user wants to buy the selected card and put it on third deck
+     */
     private final EventHandler<MouseEvent> onBuyCard3ButtonPressed = event -> {
         devCardZoomPane.setVisible(false);
         SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 2);
     };
 
+    /**
+     * Set the cards market
+     * @param market game developmet cards market
+     */
     public void setCardsMarket(ClientCardsMarket market){
         this.cardsMarket = market;
         this.refreshCardsMarket();

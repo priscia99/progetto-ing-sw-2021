@@ -85,6 +85,8 @@ public class MainGUIController {
     private GridPane devCardZoomGrid;   // dev cards zoom grid
     @FXML
     private Pane strongboxCoinIco, strongboxServantIco, strongboxShieldIco, strongboxStoneIco;
+    @FXML
+    private Pane productionPane;
 
     // Secondary controllers
     StatsController statsController;
@@ -100,6 +102,7 @@ public class MainGUIController {
     PlayerBoardController playerBoardController;
     EndTurnButtonController endTurnButtonController;
     PickResourcesFromStorageController pickResourcesFromStorageController;
+    ProductionController productionController;
 
     // Client controller
     ClientController clientController;
@@ -108,7 +111,6 @@ public class MainGUIController {
 
     @FXML
     public void initialize(){
-        // TODO implement development card market controller
         // controllers init
         tabPane.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Tab>() {
@@ -121,6 +123,10 @@ public class MainGUIController {
 
     }
 
+    /**
+     * Init the Graphic User Interface by initialazing all GUI controllers
+     * @param controller Client controller
+     */
     public void initGUI(ClientController controller) {
         this.clientController = controller;
         statsController = new StatsController(clientController, statsPane);
@@ -136,9 +142,14 @@ public class MainGUIController {
         playerBoardController = new PlayerBoardController(clientController, playerSelector, playerBoardLabel);
         endTurnButtonController = new EndTurnButtonController(clientController, endTurnButton);
         pickResourcesFromStorageController = new PickResourcesFromStorageController(clientController, confirmChoiceButton);
+        productionController = new ProductionController(clientController, productionPane);
     }
 
-    public Map<String, Button> getMarbleMarketButtons(){
+    /**
+     * Initializes and returns map with all marble market arrows (in order to choose resources from market)
+     * @return A map with all marble market buttons
+     */
+    private Map<String, Button> getMarbleMarketButtons(){
         Map<String, Button> buttonsMap = new HashMap<>();
         buttonsMap.put("btn-c-1", marketBtnC1);
         buttonsMap.put("btn-c-2", marketBtnC2);
@@ -150,6 +161,10 @@ public class MainGUIController {
         return buttonsMap;
     }
 
+    /**
+     * Initializes and returns a map with all resources icons (in order to choose initial resources)
+     * @return A map with all resources icons
+     */
     public Map<String, Pane> getChooseResourcesIcons(){
         Map<String, Pane> iconsMap = new HashMap<>();
         iconsMap.put("coin-icon", chooseCoinIcon);
@@ -159,6 +174,10 @@ public class MainGUIController {
         return iconsMap;
     }
 
+    /**
+     * Initializes and returns a map with all destinations button (in order to choose where to put initial resources)
+     * @return A map with all resources destinations
+     */
     public Map<String, Button> getChooseResourcesButtons(){
         Map<String, Button> buttonsMap = new HashMap<>();
         buttonsMap.put("firstdepot-button", firstDepotButton);
@@ -168,6 +187,9 @@ public class MainGUIController {
         return buttonsMap;
     }
 
+    /**
+     * Disable all possible actions if it's not the user's turn
+     */
     public void disableAllActions() {
         // TODO complete with other actions to disable
         warehouseController.setSwapMenuEnable(false);
@@ -177,11 +199,30 @@ public class MainGUIController {
         endTurnButtonController.enableEndTurn(false);
     }
 
+    /**
+     * Enable all possible actions if it's the user's turn
+     */
     public void enableAllActions(){
         marbleMarketController.enableHandlers();
         leaderCardsController.setCanUserDoAction(true);
         leaderCardsController.enableLeaderCardsHandlers();
         endTurnButtonController.enableEndTurn(true);
+    }
+
+    /**
+     * When main action is chosen, enable the main action state by displaying the user's playerboard
+     * @param toShow
+     */
+    public void enableMainActionState(String toShow){
+        clientController.displayPlayerboardByUsername(toShow);
+        playerBoardController.disableChangePlayer();
+    }
+
+    /**
+     * When a main action is done, make all other playerboards visible
+     */
+    public void disableMainActionState(){
+        playerBoardController.enableChangePlayer();
     }
 
     public StatsController getStatsController() {
@@ -228,15 +269,6 @@ public class MainGUIController {
         return playerBoardController;
     }
 
-    public void enableMainActionState(String toShow){
-        clientController.displayPlayerboardByUsername(toShow);
-        playerBoardController.disableChangePlayer();
-    }
-
-    public void disableMainActionState(){
-        playerBoardController.enableChangePlayer();
-    }
-
     public EndTurnButtonController getEndTurnButtonController() {
         return endTurnButtonController;
     }
@@ -245,4 +277,7 @@ public class MainGUIController {
         return pickResourcesFromStorageController;
     }
 
+    public ProductionController getProductionController() {
+        return productionController;
+    }
 }
