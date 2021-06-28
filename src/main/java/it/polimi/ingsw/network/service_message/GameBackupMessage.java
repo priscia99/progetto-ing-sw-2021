@@ -19,13 +19,7 @@ public class GameBackupMessage extends ServiceMessage<Client> implements Seriali
     }
 
     public void execute(Client client) throws Exception {
-        backup.setMyProperty(client.getMyUsername());
-        ArrayList<String> current = new ArrayList<>();
-        current.add(backup.getCurrentPlayer());
-        client.setupMVC(current);
         client.applyGameBackup(backup);
-        client.startListening();
-        client.startUI();
     }
 
 }

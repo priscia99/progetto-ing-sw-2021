@@ -99,7 +99,10 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     public void nextTurn() throws Exception {
         currentPlayerIndex++;
         currentPlayerIndex = currentPlayerIndex % players.size();
-        if(deads.contains(getCurrentPlayer())) nextTurn();
+        if(deads.contains(getCurrentPlayer())) {
+            nextTurn();
+            return;
+        }
         if(isLastRound && getCurrentPlayer().isFirst()){
             finalizeGame();
         } else {

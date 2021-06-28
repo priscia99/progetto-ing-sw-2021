@@ -98,6 +98,10 @@ public class MainGUIController {
     private Pane productionCoinIcon, productionShieldIcon, productionStoneIcon, productionServantIcon;
     @FXML
     private Pane leader1depot1, leader1depot2, leader2depot1, leader2depot2;
+    @FXML
+    private AnchorPane chooseMarbleToConvertPane;
+    @FXML
+    private Pane resourceToConvert1, resourceToConvert2;
 
     // Secondary controllers
     StatsController statsController;
@@ -114,6 +118,7 @@ public class MainGUIController {
     EndTurnButtonController endTurnButtonController;
     PickResourcesFromStorageController pickResourcesFromStorageController;
     ProductionController productionController;
+    ChooseConvertionController chooseConvertionController;
 
     // Client controller
     ClientController clientController;
@@ -139,7 +144,7 @@ public class MainGUIController {
      * @param controller Client controller
      */
     public void initGUI(ClientController controller) {
-        this.clientController = controller;
+        clientController = controller;
         statsController = new StatsController(clientController, statsPane);
         leaderCardsController = new LeaderCardsController(clientController, leaderCardsPane, leaderZoomPane, leaderCardZoomGrid, leaderCardZoomImage, leader1depot1, leader1depot2, leader2depot1, leader2depot2);
         faithPathController = new FaithPathController(clientController, faithPathPane);
@@ -154,6 +159,7 @@ public class MainGUIController {
         endTurnButtonController = new EndTurnButtonController(clientController, endTurnButton);
         pickResourcesFromStorageController = new PickResourcesFromStorageController(clientController, confirmChoiceButton);
         productionController = new ProductionController(clientController, productionPane, getProductionCardsPanes(), getGenericProductionPanes(), getProductionIcons(), confirmProductionButton, cancelProductionButton);
+        chooseConvertionController = new ChooseConvertionController(clientController, chooseMarbleToConvertPane, resourceToConvert1, resourceToConvert2);
     }
 
     private Map<String, Pane> getProductionCardsPanes(){
@@ -254,9 +260,11 @@ public class MainGUIController {
      * @param toShow
      */
     public void enableMainActionState(String toShow){
-        endTurnButtonController.enableEndTurn(false);
-        clientController.displayPlayerboardByUsername(toShow);
-        playerBoardController.disableChangePlayer();
+        if(clientController.getGame().getMyUsername().equals(clientController.getGame().getCurrentPlayer())){
+            endTurnButtonController.enableEndTurn(false);
+            clientController.displayPlayerboardByUsername(toShow);
+            playerBoardController.disableChangePlayer();
+        }
     }
 
     /**
