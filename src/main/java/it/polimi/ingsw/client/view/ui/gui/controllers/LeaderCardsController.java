@@ -165,6 +165,9 @@ public class LeaderCardsController extends GenericGUIController{
     };
 
     public void setResourcesAsPickable(boolean isPickable){
+        if(isPickable){
+            disableLeaderCardsHandlers();
+        }
         this.depotResourceTypes = new ArrayList<>();
         this.leaderDepotActivePanes = new HashMap<>();
         this.activeDepotsNumber = 0;
