@@ -13,8 +13,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
+/**
+ * Class that models an object that handle the socket connections with the clients (on the server).
+ */
 public class SocketClientConnection extends Observable<Message<ServerController>> implements ClientConnection, Runnable {
+
     private Lobby lobby;
     private final Socket socket;  // single socket connection with one client
     private ObjectOutputStream out; // output stream to the client
@@ -32,6 +37,10 @@ public class SocketClientConnection extends Observable<Message<ServerController>
         this.server = server;
     }
 
+    /**
+     * Test if the connection is alive.
+     * @return true if the connection is alive; else false
+     */
     private synchronized boolean isAlive() {
         return alive;
     }
@@ -49,6 +58,9 @@ public class SocketClientConnection extends Observable<Message<ServerController>
         alive = false;
     }
 
+    /**
+     * Close the connection and handles the effects.
+     */
     private void close() {
         String source = (lobby == null) ? "server" : lobby.getLobbyId();
         String target = (authData == null) ? this.toString() : authData.getUsername();
@@ -131,7 +143,8 @@ public class SocketClientConnection extends Observable<Message<ServerController>
             }
         } catch (Exception e) {
             assert authData != null;
-            CustomLogger.getLogger().info("["+lobby.getLobbyId()+"] "+ authData.getUsername() + " disconnected." );
+            CustomLogger.getLogger().info("["+lobby.getLobbyId()+"] "+ authData.getUsername() + " DISCONNECTED!" );
+            lobby.addDisconnected(authData.getUsername());
         } finally {
             close();
         }

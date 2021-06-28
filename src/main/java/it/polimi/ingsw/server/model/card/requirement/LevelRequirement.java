@@ -22,6 +22,9 @@ public class LevelRequirement extends Requirement implements Serializable {
         this.color = color;
     }
 
+    /**
+     * Create a default LevelRequirement object.
+     */
     public LevelRequirement(){}
 
     /**

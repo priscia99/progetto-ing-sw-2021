@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model.market;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.data.DevCardMarketBuilder;
-
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_server.CardsMarketMessage;
 import it.polimi.ingsw.observer.Observable;
@@ -13,11 +13,19 @@ import it.polimi.ingsw.server.model.game.Player;
 import java.util.Arrays;
 import java.util.Stack;
 
+/**
+ * Class that models the development cards' market.
+ */
 public class CardsMarket extends Observable<Message<ClientController>> {
 
     private final Stack<DevelopmentCard>[][] decks;
 
-    static public CardsMarket getStartingMarket() throws Exception {
+    /**
+     * Create an initialized CardsMarket object.
+     * @return the market object
+     * @throws GameException
+     */
+    static public CardsMarket getStartingMarket() throws GameException {
         // market scheme:
         // lv3 row [purple, yellow, green, blue]
         // lv2 row [purple, yellow, green, blue]
@@ -49,14 +57,23 @@ public class CardsMarket extends Observable<Message<ClientController>> {
         return new CardsMarket(decks);
     }
 
+    /**
+     * Create a CardsMarket object with the given development cards.
+     * @param decks development cards organised in decks
+     */
     public CardsMarket(Stack<DevelopmentCard>[][] decks) {
         this.decks = decks;
     }
 
+    /**
+     *
+     * @return a copy object of the market
+     */
     public CardsMarket getCopy(){
         CardsMarket copy = new CardsMarket(this.decks);
         return copy;
     }
+
 
     public Stack<DevelopmentCard>[][] getDecks() {
         return decks;
@@ -77,6 +94,11 @@ public class CardsMarket extends Observable<Message<ClientController>> {
         throw new Exception("The requested card is not available in the market");
     }
 
+    /**
+     * Pop a card found by its id from the decks.
+     * @param id the id of the card to pop
+     * @return the searched card if exists; else null
+     */
     public DevelopmentCard popCardById(String id){
         for(int i = 0; i<4; i++){
             for(int j = 0; j<3; j++){
@@ -88,7 +110,14 @@ public class CardsMarket extends Observable<Message<ClientController>> {
         return null;
     }
 
-    public DevelopmentCard sell(String id, Player player) throws Exception{
+    /**
+     * Sell a card to a player (pop the card).
+     * @param id the id of the card to sell
+     * @param player the player that bought the card
+     * @return the wanted card
+     * @throws GameException
+     */
+    public DevelopmentCard sell(String id, Player player) throws GameException{
         DevelopmentCard card = getCardById(id);
         if (card.getRequirement().isFulfilled(player)) {
             card = popCardById(id);

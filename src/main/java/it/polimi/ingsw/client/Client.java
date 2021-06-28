@@ -18,6 +18,7 @@ import it.polimi.ingsw.server.model.player_board.PlayerBoard;
 import it.polimi.ingsw.utils.CustomLogger;
 
 public class Client {
+
     private final UI userInterface;               // type of chosen UI (CLI, GUI)
     private ClientController controller;
     private final ClientMessageEncoder clientMessageEncoder;

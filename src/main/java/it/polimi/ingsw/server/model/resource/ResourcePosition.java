@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.model.resource;
 
 import java.io.Serializable;
 
+/**
+ * Enumeration to define the position of depots.
+ */
 public enum ResourcePosition {
     FIRST_DEPOT,
     SECOND_DEPOT,

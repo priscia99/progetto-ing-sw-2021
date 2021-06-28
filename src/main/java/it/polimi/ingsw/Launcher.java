@@ -1,7 +1,7 @@
 package it.polimi.ingsw;
 
 public class Launcher {
-    private static String ip = "52.87.233.62";
+    private static String ip = "52.3.250.239";
     private static int port = 5000;
 
     public static void main(String[] args) throws Exception {

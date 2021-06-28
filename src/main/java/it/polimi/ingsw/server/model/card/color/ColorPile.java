@@ -38,6 +38,11 @@ public class ColorPile implements Serializable {
         return quantity;
     }
 
+    /**
+     * Static method to convert ColorPiles into String representation.
+     * @param piles ColorPiles to convert
+     * @return a String representing the input piles
+     */
     public static String pilesToString(ArrayList<ColorPile> piles) {
         StringBuilder render = new StringBuilder();
         piles.forEach(

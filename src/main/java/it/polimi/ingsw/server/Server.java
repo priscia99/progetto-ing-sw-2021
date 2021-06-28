@@ -11,12 +11,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * Class to model the server object that contains and manage every lobby.
+ */
 public class Server {
 
     private static final int PORT = 5000;
     private final ServerSocket serverSocket;
     private final Map<String, Lobby> lobbyMap = new HashMap<>();
 
+    /**
+     * Create a new default Server object.
+     * @throws IOException
+     */
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
     }
@@ -91,6 +98,9 @@ public class Server {
     }
 
 
+    /**
+     * @return a random alphanumeric String.
+     */
     private String generateRandomString() {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 + "0123456789";

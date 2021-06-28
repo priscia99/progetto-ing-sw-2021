@@ -15,6 +15,7 @@ public enum EffectType {
         this.literal = literal;
     }
 
+    @Override
     public String toString() {
         return literal;
     }

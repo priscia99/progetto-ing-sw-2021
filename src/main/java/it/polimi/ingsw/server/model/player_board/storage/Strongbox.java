@@ -1,11 +1,20 @@
 package it.polimi.ingsw.server.model.player_board.storage;
+
+import it.polimi.ingsw.exceptions.GameException;
+import it.polimi.ingsw.network.message.from_server.StrongboxMessage;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.util.stream.Collectors;
 
+/**
+ * Class that models the strongbox of the player board.
+ */
 public class Strongbox extends Storage {
 
+    /**
+     * Create a new default Strongbox object.
+     */
     public Strongbox() {
         super();
         this.resourceStocks.add(new ResourceStock(ResourceType.COIN));
@@ -27,7 +36,11 @@ public class Strongbox extends Storage {
         }
     }
 
-    public Strongbox getCopy() throws Exception {
+    /**
+     * @return a copy object fo the strongbox
+     * @throws GameException
+     */
+    public Strongbox getCopy() throws GameException {
         Strongbox copy = new Strongbox();
         for(ResourceStock stock : resourceStocks){
             for(int i = 0; i<stock.getQuantity(); i++){

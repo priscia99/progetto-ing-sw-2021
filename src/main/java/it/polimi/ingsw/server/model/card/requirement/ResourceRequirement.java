@@ -1,12 +1,16 @@
 package it.polimi.ingsw.server.model.card.requirement;
 
+import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.resource.ConsumeTarget;
+import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,8 +32,11 @@ public class ResourceRequirement extends Requirement implements Serializable {
         this.resourceStocks = resourceStocks;
     }
 
-
+    /**
+     * Create a default ResourceRequirement object.
+     */
     public ResourceRequirement(){}
+
     /**
      *
      * @return return the list of resource piles.
@@ -38,6 +45,11 @@ public class ResourceRequirement extends Requirement implements Serializable {
         return resourceStocks;
     }
 
+    /**
+     * Test if player fulfill requirement to activate a card.
+     * @param player the player to check
+     * @return true if requirements are fulfilled; else false
+     */
     @Override
     public boolean isFulfilled(Player player) {
          return this.resourceStocks
@@ -46,6 +58,8 @@ public class ResourceRequirement extends Requirement implements Serializable {
                          player.countByResource(resourcePile.getResourceType()) >= resourcePile.getQuantity());
     }
 
+    // TODO il creatore di questa funzione verifichi la correttezza del commento
+    // FIXME ATTENZIONE! metodo già presente derivante da classe astratta: nuovo metodo ambiguo
     public boolean isFulfilled(ConsumeTarget toConsume){
         return !this.resourceStocks.stream().map(
                 stock-> {
@@ -61,7 +75,14 @@ public class ResourceRequirement extends Requirement implements Serializable {
         return String.format(RESOURCE_REQUIREMENT_FORMAT, resourceString);
     }
 
-    static public ResourceRequirement merge(ArrayList<ResourceStock> requirements) throws Exception {
+    /**
+     * Merge resource requirements together.
+     * @param requirements list of requirements to merge
+     * @return the requirement obtained after the merging process
+     * @throws GameException
+     */
+    // TODO il creatore di questa funzione verifichi la correttezza del commento
+    static public ResourceRequirement merge(ArrayList<ResourceStock> requirements) throws GameException {
         ArrayList<ResourceStock> stocks = new ArrayList<>();
         for(ResourceStock stock : requirements){
             Optional<ResourceStock> resourceTypeStock = stocks.stream()

@@ -10,10 +10,16 @@ import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract class that models a generic storage of resources. Observable by a controller to monitor changes.
+ */
 public abstract class Storage extends Observable<Message<ClientController>> {
 
     protected ArrayList<ResourceStock> resourceStocks;
 
+    /**
+     * Create a new empty Storage object.
+     */
     public Storage() {
         this.resourceStocks = new ArrayList<>();
     }
@@ -51,10 +57,20 @@ public abstract class Storage extends Observable<Message<ClientController>> {
      */
     public abstract int countByResourceType(ResourceType resourceType);
 
+    /**
+     * @return the quantity of resources contained into the storage
+     */
     public int getResourceCount(){
         return this.resourceStocks.stream().mapToInt(ResourceStock::getQuantity).sum();
     }
 
+    /**
+     * Consume a resource stock of the storage.
+     * @param toConsume the stock to consume
+     * @throws GameException
+     */
+    // TODO il creatore controlli la coerenza e correttezza del commento
+    public void consume(ResourceStock toConsume) throws GameException {
     public void consume(ResourceStock toConsume) throws Exception {
         ResourceStock consumed = this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(toConsume.getResourceType()))

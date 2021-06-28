@@ -43,6 +43,7 @@ public class DepotEffect  implements Effect,  Serializable {
         return effectType;
     }
 
+    @Override
     public String toString(){
         String firstResource = resourceDepot.getQuantity() > 0 ? resourceDepot.getResourceType().toString() : "EMPTY";
         String secondResource = resourceDepot.getQuantity() > 1 ? resourceDepot.getResourceType().toString() : "EMPTY";

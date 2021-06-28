@@ -6,9 +6,16 @@ import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.observer.Observer;
 import it.polimi.ingsw.utils.CustomLogger;
 
+/**
+ * Class to models the message encoder on the server. It receive messages to transmit over the net.
+ */
 public class ServerMessageEncoder implements Observer<Message<ClientController>> {
     private Lobby lobby;
 
+    /**
+     * Create a new ServerMessageEncoder object with a given Lobby.
+     * @param lobby
+     */
     public ServerMessageEncoder(Lobby lobby) {
         this.lobby = lobby;
     }
