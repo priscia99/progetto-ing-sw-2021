@@ -216,10 +216,10 @@ public class Player extends Observable<Message<ClientController>> {
 
     public void addAllResourceToDepots(ArrayList<ResourceType> types, ArrayList<ResourcePosition> depots) throws Exception {
         for(int i = 0; i< types.size(); i++){
-            switch (depots.get(i)){
-                case FIRST_LEADER_DEPOT: addToLeaderDepot(types.get(i), 0);
-                case SECOND_LEADER_DEPOT: addToLeaderDepot(types.get(i), 1);
-                default: addResourceToDepot(types.get(i), depots.get(i).ordinal());
+            switch (depots.get(i)) {
+                case FIRST_LEADER_DEPOT -> addToLeaderDepot(types.get(i), 0);
+                case SECOND_LEADER_DEPOT -> addToLeaderDepot(types.get(i), 1);
+                default -> addResourceToDepot(types.get(i), depots.get(i).ordinal());
             }
         }
         notify(new WarehouseMessage(this.playerBoard.getWarehouse().getDepots(), username));
