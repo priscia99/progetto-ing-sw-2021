@@ -33,22 +33,22 @@ public class ServerController {
     }
 
     private void tryCreateBackup(){
-        try{
-            backupManager.load(game.getBackup());
-        } catch (Exception e){
-            CustomLogger.getLogger().info("Error while creating game backup!");
-            e.printStackTrace();
+        if(game.isStarted()){
+            try{
+                backupManager.load(game.getBackup());
+            } catch (Exception e){
+                CustomLogger.getLogger().info("Error while creating game backup!");
+                e.printStackTrace();
+            }
         }
     }
 
     private void tryApplyBackup(){
-        if(game.isStarted()){
             try {
                 backupManager.applyBackup();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }
     }
 
     public void tryAction(CustomRunnable action){
