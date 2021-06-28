@@ -211,6 +211,7 @@ public class CLI implements UI {
                                 resourceType.equals(ResourceType.FAITH)){
                             throw new Exception("Cannot select this resource!");
                         }
+                        validSelection = true;
                     } catch (Exception e){
                         validSelection = false;
                         displayError(e.getMessage());
@@ -224,6 +225,7 @@ public class CLI implements UI {
                             resourcePosition.equals(ResourcePosition.STRONG_BOX)){
                             throw new Exception("Cannot insert resource in that position!");
                         }
+                        validSelection = true;
                     } catch (Exception e){
                         validSelection = false;
                         displayError(e.getMessage());
