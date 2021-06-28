@@ -30,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -58,6 +59,8 @@ public class WarehouseController extends GenericGUIController {
     private MarbleSelection marbleSelection;
     private ResourcePosition resourcePositionToDrop;
     private boolean isAddingResources;
+    private Map<String, Pane> leaderDepotActivePanes;
+    private ArrayList<ResourceType> leaderDepotResourceTypes;
 
     public WarehouseController(ClientController clientController, GridPane firstDepot, GridPane secondDepot, GridPane thirdDepot, MenuButton swapDepotsMenu, Button dropResourceButton) {
         super(clientController);
@@ -151,6 +154,9 @@ public class WarehouseController extends GenericGUIController {
     }
 
     public void insertResourcesToDepot(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ClientLeaderCard> changeEffects, ArrayList<ClientLeaderCard> depotEffects) {
+        this.leaderDepotActivePanes = SceneController.getMainGUIController().getLeaderCardsController().getLeaderDepotActivePanes();
+        this.leaderDepotResourceTypes = SceneController.getMainGUIController().getLeaderCardsController().getDepotResourceTypes();
+
         this.isAddingResources = true;
         this.marbleSelection = selection;
         this.occupiedCells = new ArrayList<>();
@@ -240,6 +246,8 @@ public class WarehouseController extends GenericGUIController {
                 }
             }
         }
+        SceneController.getMainGUIController().getLeaderCardsController().disableLeaderCardsHandlers();
+        this.leaderDepotActivePanes.entrySet().stream().forEach(entry -> entry.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, onDestinationChosenFromLeaderDepot));
         dropResourceButton.removeEventHandler(MouseEvent.MOUSE_CLICKED, onRemoveResourceConfirmClicked);
         dropResourceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onDropResourceClicked );
     }
@@ -313,8 +321,30 @@ public class WarehouseController extends GenericGUIController {
         parseNextPosition();
     };
 
+    private final EventHandler<MouseEvent> onDestinationChosenFromLeaderDepot = event -> {
+        Pane triggeredPane = (Pane) event.getSource();
+        System.out.println("Pressed from leader depot!!!");
+        String iconPath = this.getPathByResourceType(marbleToInsert.getResourceType());
+        triggeredPane.setStyle("-fx-background-image: url(" + iconPath + ");");
+        triggeredPane.setEffect(new Glow(0.6));
+
+        if(triggeredPane.getId().contains("leader-1")){
+            positions.add(ResourcePosition.FIRST_LEADER_DEPOT);
+        } else if(triggeredPane.getId().contains("leader-2")){
+            positions.add(ResourcePosition.SECOND_LEADER_DEPOT);
+        }
+        removeMarbleDestinationFromDepotChosenHandler(triggeredPane);
+        this.leaderDepotActivePanes.remove(triggeredPane.getId());
+        insertPositionIndex++;
+        parseNextPosition();
+    };
+
     public void removeMarbleDestinationChosenHandler(Pane pane) {
         pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onMarbleDestinationChosen);
+    }
+
+    public void removeMarbleDestinationFromDepotChosenHandler(Pane pane) {
+        pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onDestinationChosenFromLeaderDepot);
     }
 
     public void removeAllSelectionHandlers() {
@@ -326,7 +356,7 @@ public class WarehouseController extends GenericGUIController {
                 resourcePane.setEffect(null);
             }
         }
-
+        this.leaderDepotActivePanes.entrySet().stream().forEach(entry -> entry.getValue().removeEventHandler(MouseEvent.MOUSE_CLICKED, onDestinationChosenFromLeaderDepot));
         dropResourceButton.removeEventHandler(MouseEvent.MOUSE_CLICKED, onDropResourceClicked);
         dropResourceButton.setVisible(false);
     }

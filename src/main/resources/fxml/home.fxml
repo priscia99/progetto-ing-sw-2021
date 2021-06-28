@@ -48,7 +48,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                            <children>
-                              <SplitPane dividerPositions="0.5426008968609866" layoutX="220.0" layoutY="192.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <SplitPane dividerPositions="0.6382660687593423" layoutX="220.0" layoutY="192.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <items>
                                   <AnchorPane minHeight="0.0" minWidth="360.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: whitesmoke; -fx-background-radius: 5;">
                                        <children>
@@ -204,7 +204,7 @@
                                                                               <Pane id="dev-slot-2-1" layoutX="-4.0" layoutY="56.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
                                                                               <Pane id="dev-slot-2-2" layoutX="6.0" layoutY="66.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
                                                                               <Pane id="dev-slot-2-3" layoutX="6.0" layoutY="66.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                                              <Button fx:id="produceButton" mnemonicParsing="false" styleClass="glow-button" text="Produce" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                                                              <Button fx:id="produceButton" layoutX="-11.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="87.0" styleClass="glow-button" text="Produce" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                                                            </children>
                                                                            <padding>
                                                                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -272,7 +272,7 @@
                                                                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                                                  <children>
 
-                                                                                    <MenuButton fx:id="swapDepotsMenu" mnemonicParsing="false" styleClass="glow-button" text="Swap depots" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                    <MenuButton fx:id="swapDepotsMenu" mnemonicParsing="false" styleClass="glow-button" text="Swap" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                       <items>
                                                                                       </items>
                                                                                     </MenuButton>
@@ -414,8 +414,8 @@
                                                 </GridPane>
                                                 <GridPane>
                                                   <columnConstraints>
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="154.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.0" minWidth="10.0" prefWidth="270.0" />
                                                   </columnConstraints>
                                                   <rowConstraints>
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -426,10 +426,10 @@
                                                             <Insets left="5.0" />
                                                          </padding>
                                                       </Label>
-                                                      <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                                      <ButtonBar prefHeight="30.0" prefWidth="253.0" GridPane.columnIndex="1">
                                                         <buttons>
-                                                            <Button id="confirm-choice" fx:id="confirmChoiceButton" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" text="Confirm choice" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                            <Button id="end-turn" fx:id="endTurnButton" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" text="End turn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button id="confirm-choice" fx:id="confirmChoiceButton" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" text="Put" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <Button id="end-turn" fx:id="endTurnButton" layoutX="18.0" layoutY="18.0" minWidth="32.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" text="End turn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                             <MenuButton fx:id="playerSelector" mnemonicParsing="false" styleClass="glow-button" text="Players">
                                                               <items>
                                                               </items>
@@ -470,8 +470,16 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <Pane id="leader-1" prefHeight="200.0" prefWidth="200.0" />
-                                                      <Pane id="leader-2" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                                                      <Pane id="leader-1" prefHeight="200.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Pane id="leader-1-depot-1" fx:id="leader1depot1" layoutX="65.0" layoutY="177.0" prefHeight="40.0" prefWidth="43.0" />
+                                                            <Pane id="leader-1-depot-2" fx:id="leader1depot2" layoutX="125.0" layoutY="177.0" prefHeight="40.0" prefWidth="41.0" />
+                                                         </children></Pane>
+                                                      <Pane id="leader-2" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                                         <children>
+                                                            <Pane id="leader-2-depot-1" fx:id="leader2depot1" layoutX="64.0" layoutY="176.0" prefHeight="40.0" prefWidth="41.0" />
+                                                            <Pane id="leader-2-depot-2" fx:id="leader2depot2" layoutX="125.0" layoutY="176.0" prefHeight="40.0" prefWidth="41.0" />
+                                                         </children></Pane>
                                                    </children>
                                                    <padding>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -1096,13 +1104,13 @@
                         <Pane id="shield-icon" fx:id="productionShieldIcon" layoutX="167.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
                         <Pane id="stone-icon" fx:id="productionStoneIcon" layoutX="250.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
                      </children></Pane>
-                  <Pane fx:id = "productionLeader1" id="top-leader-1" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                  <Pane id="top-leader-1" fx:id="productionLeader1" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="4" GridPane.rowIndex="1">
                      <children>
-                        <Pane fx:id="genericLeader1" id="generic-leader-1" layoutX="78.0" layoutY="197.0" prefHeight="37.0" prefWidth="40.0" />
+                        <Pane id="generic-leader-1" fx:id="genericLeader1" layoutX="78.0" layoutY="197.0" prefHeight="37.0" prefWidth="40.0" />
                      </children></Pane>
-                  <Pane fx:id="productionLeader2" id="top-leader-2" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                  <Pane id="top-leader-2" fx:id="productionLeader2" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="5" GridPane.rowIndex="1">
                      <children>
-                        <Pane fx:id="genericLeader2" id="generic-leader-2" layoutX="77.0" layoutY="194.0" prefHeight="37.0" prefWidth="40.0" />
+                        <Pane id="generic-leader-2" fx:id="genericLeader2" layoutX="77.0" layoutY="194.0" prefHeight="37.0" prefWidth="40.0" />
                      </children></Pane>
                   <Pane id="top-deck-card-1" fx:id="topDeckCard1" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="3" />
                   <Pane id="top-deck-card-2" fx:id="topDeckCard2" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="4" />
