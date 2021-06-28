@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.network.message.from_server.GameBackupMessage;
+import it.polimi.ingsw.network.service_message.GameBackupMessage;
 import it.polimi.ingsw.server.Lobby;
 import it.polimi.ingsw.server.model.game.Game;
 

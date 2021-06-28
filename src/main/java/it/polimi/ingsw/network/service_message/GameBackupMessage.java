@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.message.from_server;
+package it.polimi.ingsw.network.service_message;
 
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.model.ClientGame;
@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.service_message.ServiceMessage;
 import it.polimi.ingsw.server.model.game.Game;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class GameBackupMessage extends ServiceMessage<Client> implements Serializable {
 
@@ -19,7 +20,11 @@ public class GameBackupMessage extends ServiceMessage<Client> implements Seriali
 
     public void execute(Client client) throws Exception {
         backup.setMyProperty(client.getMyUsername());
+        ArrayList<String> current = new ArrayList<>();
+        current.add(backup.getCurrentPlayer());
+        client.setupMVC(current);
         client.applyGameBackup(backup);
+        client.startListening();
     }
 
 }

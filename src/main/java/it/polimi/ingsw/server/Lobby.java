@@ -3,10 +3,7 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.exceptions.FullLobbyException;
 
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.from_client.EndTurnMessage;
-import it.polimi.ingsw.network.message.from_server.ExceptionMessage;
-import it.polimi.ingsw.network.message.from_server.GameBackupMessage;
-import it.polimi.ingsw.network.message.from_server.SetupMessage;
+import it.polimi.ingsw.network.service_message.GameBackupMessage;
 import it.polimi.ingsw.network.service_message.GameStartedServiceMessage;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -58,6 +55,7 @@ public class Lobby extends Observable<Message> {
             if(this.isFull()) init();
         } else {
             CustomLogger.getLogger().info("["+this.getLobbyId()+"] "+ username + " RECONNECTED!!" );
+            clientConnectionMap.put(username, clientConnection);
             disconnectedUsernames.remove(username);
             GameBackupMessage backup;
             try{

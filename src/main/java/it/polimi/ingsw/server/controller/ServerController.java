@@ -43,6 +43,7 @@ public class ServerController {
         }
         try{
             action.tryRun();
+            backupManager.load(game.getBackup());
         } catch (ValidationException e){
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
         } catch (Exception e){
