@@ -1,9 +1,6 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
-import it.polimi.ingsw.client.model.ClientStrongbox;
-import it.polimi.ingsw.client.model.ClientWarehouse;
-import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -12,8 +9,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-import javax.print.attribute.HashPrintJobAttributeSet;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,7 +113,7 @@ public class MainGUIController {
     EndTurnButtonController endTurnButtonController;
     PickResourcesFromStorageController pickResourcesFromStorageController;
     ProductionController productionController;
-    ChooseConvertionController chooseConvertionController;
+    ChooseConversionController chooseConversionController;
 
     // Client controller
     ClientController clientController;
@@ -159,7 +154,7 @@ public class MainGUIController {
         endTurnButtonController = new EndTurnButtonController(clientController, endTurnButton);
         pickResourcesFromStorageController = new PickResourcesFromStorageController(clientController, confirmChoiceButton);
         productionController = new ProductionController(clientController, productionPane, getProductionCardsPanes(), getGenericProductionPanes(), getProductionIcons(), confirmProductionButton, cancelProductionButton);
-        chooseConvertionController = new ChooseConvertionController(clientController, chooseMarbleToConvertPane, resourceToConvert1, resourceToConvert2);
+        chooseConversionController = new ChooseConversionController(clientController, chooseMarbleToConvertPane, resourceToConvert1, resourceToConvert2);
     }
 
     private Map<String, Pane> getProductionCardsPanes(){
@@ -330,4 +325,6 @@ public class MainGUIController {
     public ProductionController getProductionController() {
         return productionController;
     }
+
+    public ChooseConversionController getChooseConversionController(){return chooseConversionController;}
 }

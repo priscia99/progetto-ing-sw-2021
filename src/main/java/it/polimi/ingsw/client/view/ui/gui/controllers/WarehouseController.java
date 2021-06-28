@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
@@ -196,7 +197,10 @@ public class WarehouseController extends GenericGUIController {
             conversions.add(marble.getResourceType());
         }
         if(marble.getResourceType().equals(ResourceType.BLANK) && changeEffects.size() == 2){
-
+            ResourceType firstChoice = ((ChangeEffect)changeEffects.get(0).getEffect()).getResourceType();
+            ResourceType secondChoice = ((ChangeEffect)changeEffects.get(1).getEffect()).getResourceType();
+            SceneController.getMainGUIController().getChooseConversionController().showSelection(firstChoice, secondChoice);
+            return;
         }
         if (!marble.getResourceType().equals(ResourceType.BLANK) ||
                 marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()) {
