@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
+import it.polimi.ingsw.server.model.player_board.PlayerBoard;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -285,5 +286,16 @@ public class ServerController {
         target.put(depot, new ResourceStock(depotSelected.getResourceType(), 1));
         currentPlayer.consumeResources(target);
         game.currentPlayerDropsResource();
+    }
+
+    public void playerDied(String dead) {
+        tryAction(()->game.addDead(dead));
+        if(game.getCurrentPlayer().getNickname().equals(dead)){
+            tryAction(this::nextTurn);
+        }
+    }
+
+    public void playerRevived(String revived){
+        tryAction(()->game.removeDead(revived));
     }
 }

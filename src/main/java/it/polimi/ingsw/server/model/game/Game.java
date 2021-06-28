@@ -24,11 +24,13 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     protected MarbleMarket marbleMarket;
     protected boolean isLastRound;
     private boolean started = false;
+    private ArrayList<Player> deads;
 
     public Game() {
         CustomLogger.getLogger().info("Creating Game");
         this.isLastRound = false;
         this.currentPlayerIndex = -1;
+        this.deads = new ArrayList<>();
         CustomLogger.getLogger().info("Game created");
     }
 
@@ -97,6 +99,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     public void nextTurn() throws Exception {
         currentPlayerIndex++;
         currentPlayerIndex = currentPlayerIndex % players.size();
+        if(deads.contains(getCurrentPlayer())) nextTurn();
         if(isLastRound && getCurrentPlayer().isFirst()){
             finalizeGame();
         } else {
@@ -250,4 +253,11 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         notify(new ExceptionMessage(errorMessage, player));
     }
 
+    public void addDead(String dead) throws Exception {
+        this.deads.add(getPlayerByUsername(dead));
+    }
+
+    public void removeDead(String revived) throws Exception {
+        this.deads.remove(getPlayerByUsername(revived));
+    }
 }

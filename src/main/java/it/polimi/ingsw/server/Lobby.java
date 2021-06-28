@@ -23,6 +23,7 @@ public class Lobby extends Observable<Message> {
     private final int dimension;    // number of players
     private final Map<String, ClientConnection> clientConnectionMap= new HashMap<>();
     private Game game;
+    private ServerController gameController;
     private final BackupManager backupManager;
     private int playerReady = 0;
     ServerMessageDecoder serverMessageDecoder;
@@ -57,6 +58,7 @@ public class Lobby extends Observable<Message> {
             CustomLogger.getLogger().info("["+this.getLobbyId()+"] "+ username + " RECONNECTED!!" );
             clientConnectionMap.put(username, clientConnection);
             disconnectedUsernames.remove(username);
+            this.playerRevived(username);
             GameBackupMessage backup;
             try{
                 backup = new GameBackupMessage(backupManager.getBackup());
@@ -129,7 +131,7 @@ public class Lobby extends Observable<Message> {
         CustomLogger.getLogger().info("["+lobbyId+"]"+" Un giocatore e' pronto! (" + playerReady + " su " + dimension + ")");
         if (playerReady == dimension) {
             CustomLogger.getLogger().info("["+lobbyId+"]"+ " Tutti i giocatori sono pronti!");
-            ServerController gameController = new ServerController(game);
+            gameController = new ServerController(game);
             gameController.setBackupManager(backupManager);
             serverMessageDecoder = new ServerMessageDecoder(gameController);
             serverMessageEncoder = new ServerMessageEncoder(this);
@@ -210,5 +212,13 @@ public class Lobby extends Observable<Message> {
 
     public void addDisconnected(String username) {
         this.disconnectedUsernames.add(username);
+    }
+
+    public void playerDied(String dead){
+        gameController.playerDied(dead);
+    }
+
+    public void playerRevived(String username){
+        gameController.playerRevived(username);
     }
 }

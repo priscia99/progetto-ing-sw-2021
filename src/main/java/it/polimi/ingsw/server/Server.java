@@ -79,12 +79,11 @@ public class Server {
      * @param toRemove client connection to remove
      */
     public synchronized void unregisterConnection(ClientConnection toRemove) {
-        lobbyMap.entrySet().forEach(entry-> {
-            if(entry.getValue().contains(toRemove)) entry.getValue().removeClientConnection(toRemove);
-        });
         for (Map.Entry<String, Lobby> entry : lobbyMap.entrySet()) {
             if (entry.getValue().contains(toRemove)) {
-                CustomLogger.getLogger().info("[" + entry.getValue().getLobbyId() + "]" + "Unregistering " + ((SocketClientConnection) toRemove).getClientUsername());
+                String dead = ((SocketClientConnection) toRemove).getClientUsername();
+                CustomLogger.getLogger().info("[" + entry.getValue().getLobbyId() + "]" + "Unregistering " + dead);
+                entry.getValue().playerDied(dead);
                 entry.getValue().removeClientConnection(toRemove);
             }
         }
