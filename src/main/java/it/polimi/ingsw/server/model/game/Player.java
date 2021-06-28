@@ -212,6 +212,7 @@ public class Player extends Observable<Message<ClientController>> {
 
     private void addToLeaderDepot(ResourceType resourceType, int index) throws Exception {
         playerBoard.addToAdditionalDepot(resourceType, index);
+        notify(new LeaderCardsMessage(this.playerBoard.getLeaderCardsDeck().getLeaderCards(), username));
     }
 
     public void addAllResourceToDepots(ArrayList<ResourceType> types, ArrayList<ResourcePosition> depots) throws Exception {
@@ -373,14 +374,14 @@ public class Player extends Observable<Message<ClientController>> {
                         .map(stock->this.playerBoard.getStrongbox().canConsume(stock))
                         .collect(Collectors.toList()).contains(false);
             } else {
-                switch(position){
-                    case FIRST_LEADER_DEPOT: return this.playerBoard
+                return switch (position) {
+                    case FIRST_LEADER_DEPOT -> this.playerBoard
                             .canConsumeFromLeaderDepot(0, toConsume.getToConsumeFromDepot(position));
-                    case SECOND_LEADER_DEPOT: return this.playerBoard
+                    case SECOND_LEADER_DEPOT -> this.playerBoard
                             .canConsumeFromLeaderDepot(1, toConsume.getToConsumeFromDepot(position));
-                    default: return this.playerBoard.getWarehouse()
+                    default -> this.playerBoard.getWarehouse()
                             .canConsumeFromDepot(position, toConsume.getToConsumeFromDepot(position));
-                }
+                };
 
             }
         }).collect(Collectors.toList()).contains(false);
@@ -393,13 +394,14 @@ public class Player extends Observable<Message<ClientController>> {
                     this.playerBoard.getStrongbox().consume(stock);
                 }
             } else {
-                switch (position){
-                    case FIRST_LEADER_DEPOT: this.playerBoard.consumeFromLeaderDepot(0, toConsume.getToConsumeFromDepot(position));
-                    case SECOND_LEADER_DEPOT: this.playerBoard.consumeFromLeaderDepot(1, toConsume.getToConsumeFromDepot(position));
-                    default: this.playerBoard.getWarehouse().consume(toConsume.getToConsumeFromDepot(position));
+                switch (position) {
+                    case FIRST_LEADER_DEPOT -> this.playerBoard.consumeFromLeaderDepot(0, toConsume.getToConsumeFromDepot(position));
+                    case SECOND_LEADER_DEPOT -> this.playerBoard.consumeFromLeaderDepot(1, toConsume.getToConsumeFromDepot(position));
+                    default -> this.playerBoard.getWarehouse().consume(toConsume.getToConsumeFromDepot(position));
                 }
             }
         }
+        notify(new LeaderCardsMessage(this.playerBoard.getLeaderCardsDeck().getLeaderCards(), username));
         notify(new StrongboxMessage(this.playerBoard.getStrongbox().getResourceStocks(), username));
         notify(new WarehouseMessage(
                 this.playerBoard.getWarehouse().getResourceStocks()

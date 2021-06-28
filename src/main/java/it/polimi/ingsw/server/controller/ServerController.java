@@ -157,6 +157,7 @@ public class ServerController {
                                 resourceToAdd = converted.get(convIndex);
                                 convIndex++;
                             }
+
                             switch (selectedPosition) {
                                 case FIRST_LEADER_DEPOT -> validateLeaderDepots.get(0).incrementResource(resourceToAdd);
                                 case SECOND_LEADER_DEPOT -> validateLeaderDepots.get(1).incrementResource(resourceToAdd);

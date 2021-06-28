@@ -183,7 +183,9 @@ public class PlayerBoard {
     }
 
     public int countByResourceType(ResourceType resourceType) {
-        return this.warehouse.countByResourceType(resourceType) + this.strongbox.countByResourceType(resourceType);
+        return this.warehouse.countByResourceType(resourceType)
+                + this.strongbox.countByResourceType(resourceType)
+                + this.leaderCardsDeck.countByResourceType(resourceType);
     }
 
     public ArrayList<ResourceDepot> getAdditionalDepots(){
