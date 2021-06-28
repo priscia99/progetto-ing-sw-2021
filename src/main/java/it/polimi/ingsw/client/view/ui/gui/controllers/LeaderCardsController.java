@@ -42,6 +42,7 @@ public class LeaderCardsController extends GenericGUIController{
     private Pane leader1depot1, leader1depot2, leader2depot1, leader2depot2;
     private Map<String, Pane> leaderDepotActivePanes;
     private ArrayList<ResourceType> depotResourceTypes;
+    private int activeDepotsNumber;
 
     public LeaderCardsController(ClientController clientController, GridPane leaderCardsPane, AnchorPane leaderZoomPane, GridPane leaderCardZoomGrid, Pane leaderCardZoomImage,
                                  Pane leader1depot1, Pane leader1depot2, Pane leader2depot1, Pane leader2depot2) {
@@ -166,6 +167,7 @@ public class LeaderCardsController extends GenericGUIController{
     public void setResourcesAsPickable(boolean isPickable){
         this.depotResourceTypes = new ArrayList<>();
         this.leaderDepotActivePanes = new HashMap<>();
+        this.activeDepotsNumber = 0;
         leader1depot1.setStyle("-fx-background-image: none;");
         leader1depot2.setStyle("-fx-background-image: none;");
         leader2depot1.setStyle("-fx-background-image: none;");
@@ -178,6 +180,7 @@ public class LeaderCardsController extends GenericGUIController{
             ClientLeaderCard tempCard = leaderCardsDeck.getCard(i);
             System.out.println("Card effect" + tempCard.getEffect().getEffectType());
             if(tempCard.getEffect().getEffectType().equals(EffectType.DEPOT)){
+                this.activeDepotsNumber++;
                 DepotEffect depotEffect = (DepotEffect) tempCard.getEffect();
                 ResourceDepot leaderDepot = depotEffect.getDepot();
                 ResourceType depotType = leaderDepot.getResourceType();
@@ -253,5 +256,9 @@ public class LeaderCardsController extends GenericGUIController{
 
     public ArrayList<ResourceType> getDepotResourceTypes(){
         return this.depotResourceTypes;
+    }
+
+    public int getActiveDepotsNumber(){
+        return activeDepotsNumber;
     }
 }

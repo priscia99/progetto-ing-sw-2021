@@ -322,6 +322,7 @@ public class WarehouseController extends GenericGUIController {
     };
 
     private final EventHandler<MouseEvent> onDestinationChosenFromLeaderDepot = event -> {
+        int activeLeaderDepots = SceneController.getMainGUIController().getLeaderCardsController().getActiveDepotsNumber();
         Pane triggeredPane = (Pane) event.getSource();
         System.out.println("Pressed from leader depot!!!");
         String iconPath = this.getPathByResourceType(marbleToInsert.getResourceType());
@@ -331,7 +332,11 @@ public class WarehouseController extends GenericGUIController {
         if(triggeredPane.getId().contains("leader-1")){
             positions.add(ResourcePosition.FIRST_LEADER_DEPOT);
         } else if(triggeredPane.getId().contains("leader-2")){
-            positions.add(ResourcePosition.SECOND_LEADER_DEPOT);
+            if(activeLeaderDepots == 1) {
+                positions.add(ResourcePosition.FIRST_LEADER_DEPOT);
+            }else {
+                positions.add(ResourcePosition.SECOND_LEADER_DEPOT);
+            }
         }
         removeMarbleDestinationFromDepotChosenHandler(triggeredPane);
         this.leaderDepotActivePanes.remove(triggeredPane.getId());
