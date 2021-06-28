@@ -254,6 +254,7 @@ public class MainGUIController {
      * @param toShow
      */
     public void enableMainActionState(String toShow){
+        endTurnButtonController.enableEndTurn(false);
         clientController.displayPlayerboardByUsername(toShow);
         playerBoardController.disableChangePlayer();
     }
@@ -262,6 +263,7 @@ public class MainGUIController {
      * When a main action is done, make all other playerboards visible
      */
     public void disableMainActionState(){
+        endTurnButtonController.enableEndTurn(true);
         playerBoardController.enableChangePlayer();
     }
 

@@ -110,6 +110,7 @@ public class DevelopmentCardMarketController extends GenericGUIController{
      * Handler that is triggered when user wants to buy the selected card and put it on first deck
      */
     private final EventHandler<MouseEvent> onBuyCard1ButtonPressed = event -> {
+        SceneController.startMainAction();
         devCardZoomPane.setVisible(false);
         SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 0);
     };
@@ -118,6 +119,7 @@ public class DevelopmentCardMarketController extends GenericGUIController{
      * Handler that is triggered when user wants to buy the selected card and put it on second deck
      */
     private final EventHandler<MouseEvent> onBuyCard2ButtonPressed = event -> {
+        SceneController.startMainAction();
         devCardZoomPane.setVisible(false);
         SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 1);
     };
@@ -126,6 +128,7 @@ public class DevelopmentCardMarketController extends GenericGUIController{
      * Handler that is triggered when user wants to buy the selected card and put it on third deck
      */
     private final EventHandler<MouseEvent> onBuyCard3ButtonPressed = event -> {
+        SceneController.startMainAction();
         devCardZoomPane.setVisible(false);
         SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 2);
     };

@@ -102,7 +102,7 @@ public class PickResourcesFromStorageController extends GenericGUIController{
     private final EventHandler<javafx.scene.input.MouseEvent> onClickedChooseButton = event -> {
         this.disable();
         this.sendPickedResources();
-
+        SceneController.endMainAction();
     };
 
     public void sendPickedResources(){
