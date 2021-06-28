@@ -1175,8 +1175,8 @@
                            </rowConstraints>
                            <children>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
-                              <Pane id="servant-icon" fx:id="chooseServantIcon1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-                              <Pane id="shield-icon" fx:id="chooseShieldIcon1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                              <Pane id="resource-toconvert-1" fx:id="resourceToConvert1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                              <Pane id="resource-toconvert-2" fx:id="resourceToConvert2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                                  <padding>
                                     <Insets bottom="40.0" left="50.0" right="50.0" top="40.0" />
