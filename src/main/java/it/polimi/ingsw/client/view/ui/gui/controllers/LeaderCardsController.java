@@ -241,6 +241,16 @@ public class LeaderCardsController extends GenericGUIController{
             ResourceType selectedResType = ((DepotEffect)(leaderCardsDeck.getCard(0).getEffect())).getResourceType();
             SceneController.getMainGUIController()
                     .getPickResourcesFromStorageController().addFromLeaderDepot(ResourcePosition.FIRST_LEADER_DEPOT,selectedResType);
+        }else{
+            ResourceType selectedResType = ((DepotEffect)(leaderCardsDeck.getCard(1).getEffect())).getResourceType();
+            if(activeDepotsNumber == 1){
+                SceneController.getMainGUIController()
+                        .getPickResourcesFromStorageController().addFromLeaderDepot(ResourcePosition.FIRST_LEADER_DEPOT,selectedResType);
+            }
+            else{
+                SceneController.getMainGUIController()
+                        .getPickResourcesFromStorageController().addFromLeaderDepot(ResourcePosition.SECOND_LEADER_DEPOT,selectedResType);
+            }
         }
         triggeredPane.setEffect(new Glow(0.6));
         removePickedHandlerForPane(triggeredPane);
