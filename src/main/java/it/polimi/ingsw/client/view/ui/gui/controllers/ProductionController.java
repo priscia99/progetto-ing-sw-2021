@@ -159,5 +159,6 @@ public class ProductionController extends GenericGUIController{
 
     private final EventHandler<MouseEvent> onClickedCancelButton = event -> {
         productionPane.setVisible(false);
+        SceneController.endMainAction();
     };
 }
