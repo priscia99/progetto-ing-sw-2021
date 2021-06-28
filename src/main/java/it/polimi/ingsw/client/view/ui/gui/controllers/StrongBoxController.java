@@ -74,12 +74,17 @@ public class StrongBoxController extends GenericGUIController {
     public void disableHandlers(){
         strongboxCoinIco.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
         strongboxCoinIco.setEffect(null);
+        strongboxCoin.setEffect(null);
         strongboxServantIco.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
         strongboxServantIco.setEffect(null);
+        strongboxServant.setEffect(null);
         strongboxShieldIco.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
         strongboxShieldIco.setEffect(null);
+        strongboxShield.setEffect(null);
         strongboxStoneIco.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
         strongboxStoneIco.setEffect(null);
+        strongboxStone.setEffect(null);
+
     }
 
     public void enableHandlers(){
