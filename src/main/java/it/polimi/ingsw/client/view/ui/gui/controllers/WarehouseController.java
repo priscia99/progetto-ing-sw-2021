@@ -200,13 +200,12 @@ public class WarehouseController extends GenericGUIController {
         }
         if (!marble.getResourceType().equals(ResourceType.BLANK) ||
                 marble.getResourceType().equals(ResourceType.BLANK) && !changeEffects.isEmpty()) {
-            getClientController().viewInfoMessage("Insert position in which you want to add "+ marble.getResourceType().toString());
             askForDestinationDepot(marble);
-            // displayPossibleResourcePositions(depotEffects);
         }
     }
 
     public void askForDestinationDepot(Marble marble) {
+        getClientController().viewInfoMessage("Insert position in which you want to add "+ marble.getResourceType().toString());
         this.marbleToInsert = marble;
         this.setSwapMenuEnable(false);
         dropResourceButton.setVisible(true);
@@ -417,6 +416,11 @@ public class WarehouseController extends GenericGUIController {
 
     public void removePickHandler(Pane pane){
         pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
+    }
+
+    public void convertionSelected(ResourceType selectedResource){
+        this.conversions.add(selectedResource);
+        askForDestinationDepot(new Marble(selectedResource));
     }
 
 }

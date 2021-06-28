@@ -37,8 +37,15 @@ public class Client {
     }
 
     public void applyGameBackup(ClientGame backup){
+        backup.setMyProperty(myUsername);
+        ArrayList<String> current = new ArrayList<>();
+        current.add(backup.getCurrentPlayer());
+        setupMVC(current);
+        startListening();
+
         controller.setGame(backup);
         controller.getGame().setMyUsername(myUsername);
+        startUI();
         setupGameObservers();
     }
 

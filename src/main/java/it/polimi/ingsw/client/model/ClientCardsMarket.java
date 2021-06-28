@@ -30,21 +30,6 @@ public class ClientCardsMarket extends Observable<ClientCardsMarket> implements 
         this.decks = tempDecks;
     }
 
-    public ClientCardsMarket(Stack<DevelopmentCard>[][] decks) {
-        ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> tempDecks = new ArrayList<>();
-        for (Stack<DevelopmentCard>[] deck : decks) {
-            ArrayList<ArrayList<ClientDevelopmentCard>> tempDeck = new ArrayList<>();
-            for (Stack<DevelopmentCard> developmentCards : deck) {
-                ArrayList<ClientDevelopmentCard> tempStack = (new ArrayList<>(developmentCards))
-                        .stream()
-                        .map(ClientDevelopmentCard::new)
-                        .collect(Collectors.toCollection(ArrayList::new));
-                tempDeck.add(tempStack);
-            }
-            tempDecks.add(tempDeck);
-        }
-        this.decks = tempDecks;
-    }
 
     public void setDecks(ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> decks) {
         this.decks = decks;

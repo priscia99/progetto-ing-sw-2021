@@ -11,7 +11,6 @@ import java.io.IOException;
 public class JavaFXClient extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = null;
         Client client = new Client("127.0.0.1", 5000, new GUI(primaryStage));
         new Thread(() -> {
         try{

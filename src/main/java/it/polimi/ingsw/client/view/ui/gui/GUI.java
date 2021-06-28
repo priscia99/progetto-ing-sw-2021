@@ -226,9 +226,16 @@ public class GUI implements UI{
         Platform.runLater(() -> {
             SceneController.getMainGUIController().initGUI(controller);
             SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(game.getPlayerBoardMap().get(game.getMyUsername()).getWarehouse(), true);
-            SceneController.getMainGUIController().getStrongBoxController().initStrongboxScreen();
+            SceneController.getMainGUIController().getStrongBoxController().refreshStrongbox(game.getPlayerBoardMap().get(myUsername).getStrongbox());
+            SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(game.getPlayerBoardMap().get(game.getMyUsername()).getClientLeaderCards(), true);
             SceneController.getMainGUIController().getPlayerBoardController().initClientSelector(new ArrayList<>(game.getPlayerBoardMap().keySet()));
             SceneController.getMainGUIController().getPlayerBoardController().setUsername(game.getMyUsername(), true);
+            if(game.getClientMarbleMarket().getNotForSale()!=null){
+                SceneController.getMainGUIController().getMarbleMarketController().setMarbleMarket(game.getClientMarbleMarket());
+            }
+            if(!game.getClientCardsMarket().getDecks().isEmpty()){
+                SceneController.getMainGUIController().getDevelopmentCardMarketController().setCardsMarket(game.getClientCardsMarket());
+            }
         });
     }
 
