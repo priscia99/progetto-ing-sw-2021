@@ -42,15 +42,17 @@ public class ServerController {
     }
 
     private void tryApplyBackup(){
-        try {
-            backupManager.applyBackup();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if(game.isStarted()){
+            try {
+                backupManager.applyBackup();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
     public void tryAction(CustomRunnable action){
-        if(game.isStarted()) tryCreateBackup();
+        tryCreateBackup();
         try{
             action.tryRun();
         } catch (ValidationException e){
@@ -60,7 +62,7 @@ public class ServerController {
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
             tryApplyBackup();
         } finally {
-            if(game.isStarted()) tryCreateBackup();
+            tryCreateBackup();
         }
     }
 
