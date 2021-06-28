@@ -54,8 +54,7 @@ public class ResourceRequirement extends Requirement implements Serializable {
     }
 
     // TODO il creatore di questa funzione verifichi la correttezza del commento
-    // FIXME ATTENZIONE! metodo già presente derivante da classe astratta: nuovo metodo ambiguo
-    public boolean isFulfilled(ConsumeTarget toConsume){
+    public boolean matchRequirement(ConsumeTarget toConsume){
         return !this.resourceStocks.stream().map(
                 stock-> {
                     int quantityConsumable = toConsume.countResourceType(stock.getResourceType());

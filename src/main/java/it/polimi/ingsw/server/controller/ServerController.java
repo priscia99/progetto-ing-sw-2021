@@ -10,13 +10,11 @@ import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
-import it.polimi.ingsw.server.model.player_board.PlayerBoard;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.CustomRunnable;
 
-import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -93,7 +91,7 @@ public class ServerController {
                     DevelopmentCard toBuy = game.getCardMarket().getCardById(cardId);
                     ResourceRequirement requirement = (ResourceRequirement) toBuy.getRequirement();
                     requirement.applyDiscounts(game.getCurrentPlayer().getDiscounts());
-                    if(!requirement.isFulfilled(toConsume)) throw new Exception("Wrong resources to buy card!");
+                    if(!requirement.matchRequirement(toConsume)) throw new Exception("Wrong resources to buy card!");
                     if(!currentPlayer.canConsume(toConsume)) throw new Exception("You do not own resources selected!");
                     if(!currentPlayer.canAddDevelopmentCard(toBuy, deckIndex)) throw new Exception("You can't add development card to selected deck!");
                 }
@@ -211,7 +209,7 @@ public class ServerController {
                 }
                 ResourceRequirement globalProductionsRequirement = ResourceRequirement.merge(inStocks);
                 if(!currentPlayer.canConsume(consumedResources)) throw new Exception("You can't consume resources defined, check them and try again!");
-                if(!globalProductionsRequirement.isFulfilled(consumedResources)) throw new Exception("Selected resources does not correspond to those requested by productions!");
+                if(!globalProductionsRequirement.matchRequirement(consumedResources)) throw new Exception("Selected resources does not correspond to those requested by productions!");
             }
         );
     }

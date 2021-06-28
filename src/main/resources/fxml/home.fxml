@@ -1086,23 +1086,13 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Pane id="generic-production" prefHeight="200.0" prefWidth="441.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
+                  <Pane id="top-leader-1" fx:id="productionLeader1" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="4" GridPane.rowIndex="1">
                      <children>
-                        <Pane id="generic-input-1" fx:id="genericInput1" layoutX="68.0" layoutY="188.0" prefHeight="77.0" prefWidth="77.0" />
-                        <Pane id="generic-output" fx:id="genericOutput" layoutX="212.0" layoutY="226.0" prefHeight="77.0" prefWidth="77.0" />
-                        <Pane id="generic-input-2" fx:id="genericInput2" layoutX="68.0" layoutY="265.0" prefHeight="77.0" prefWidth="77.0" />
-                        <Pane id="coin-icon" fx:id="productionCoinIcon" layoutX="10.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
-                        <Pane id="servant-icon" fx:id="productionServantIcon" layoutX="85.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
-                        <Pane id="shield-icon" fx:id="productionShieldIcon" layoutX="167.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
-                        <Pane id="stone-icon" fx:id="productionStoneIcon" layoutX="250.0" layoutY="422.0" prefHeight="60.0" prefWidth="60.0" />
+                        <Pane id="generic-leader-1" fx:id="genericLeader1" layoutX="78.0" layoutY="197.0" prefHeight="37.0" prefWidth="40.0" />
                      </children></Pane>
-                  <Pane fx:id = "productionLeader1" id="top-leader-1" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                  <Pane id="top-leader-2" fx:id="productionLeader2" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="5" GridPane.rowIndex="1">
                      <children>
-                        <Pane fx:id="genericLeader1" id="generic-leader-1" layoutX="78.0" layoutY="197.0" prefHeight="37.0" prefWidth="40.0" />
-                     </children></Pane>
-                  <Pane fx:id="productionLeader2" id="top-leader-2" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                     <children>
-                        <Pane fx:id="genericLeader2" id="generic-leader-2" layoutX="77.0" layoutY="194.0" prefHeight="37.0" prefWidth="40.0" />
+                        <Pane id="generic-leader-2" fx:id="genericLeader2" layoutX="77.0" layoutY="194.0" prefHeight="37.0" prefWidth="40.0" />
                      </children></Pane>
                   <Pane id="top-deck-card-1" fx:id="topDeckCard1" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="3" />
                   <Pane id="top-deck-card-2" fx:id="topDeckCard2" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="4" />
@@ -1129,11 +1119,97 @@
                      </children>
                   </GridPane>
                   <Pane id="top-deck-card-3" fx:id="topDeckCard21" prefHeight="200.0" prefWidth="200.0" styleClass="production" GridPane.columnIndex="5" />
+                  <GridPane id="generic-production" GridPane.columnSpan="2" GridPane.rowSpan="2">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Pane id="generic-output" fx:id="genericOutput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="65.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <GridPane GridPane.columnSpan="2" GridPane.rowIndex="2">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Pane id="coin-icon" fx:id="productionCoinIcon" prefHeight="60.0" prefWidth="60.0" GridPane.rowIndex="1" />
+                              <Pane id="stone-icon" fx:id="productionStoneIcon" prefHeight="60.0" prefWidth="60.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Pane id="servant-icon" fx:id="productionServantIcon" prefHeight="60.0" prefWidth="60.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Pane id="shield-icon" fx:id="productionShieldIcon" prefHeight="60.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <GridPane GridPane.rowIndex="1">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="65.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                           <children>
+                              <Pane id="generic-input-2" fx:id="genericInput2" prefHeight="77.0" prefWidth="77.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Pane id="generic-input-1" fx:id="genericInput1" prefHeight="77.0" prefWidth="77.0" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </GridPane>
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </GridPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane id="production-menu" fx:id="productionPane1" layoutX="20.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" styleClass="poppup-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane opacity="0.7" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <GridPane layoutX="440.0" layoutY="260.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Pane fx:id="change1" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                              <Pane fx:id="change2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </children>
