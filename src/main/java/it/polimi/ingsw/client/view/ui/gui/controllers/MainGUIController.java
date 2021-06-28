@@ -96,6 +96,8 @@ public class MainGUIController {
     private Pane genericInput1, genericInput2, genericOutput, genericLeader1, genericLeader2;
     @FXML
     private Pane productionCoinIcon, productionShieldIcon, productionStoneIcon, productionServantIcon;
+    @FXML
+    private Pane leader1depot1, leader1depot2, leader2depot1, leader2depot2;
 
     // Secondary controllers
     StatsController statsController;
@@ -139,7 +141,7 @@ public class MainGUIController {
     public void initGUI(ClientController controller) {
         this.clientController = controller;
         statsController = new StatsController(clientController, statsPane);
-        leaderCardsController = new LeaderCardsController(clientController, leaderCardsPane, leaderZoomPane, leaderCardZoomGrid, leaderCardZoomImage);
+        leaderCardsController = new LeaderCardsController(clientController, leaderCardsPane, leaderZoomPane, leaderCardZoomGrid, leaderCardZoomImage, leader1depot1, leader1depot2, leader2depot1, leader2depot2);
         faithPathController = new FaithPathController(clientController, faithPathPane);
         warehouseController = new WarehouseController(clientController, firstDepot, secondDepot, thirdDepot, swapDepotsMenu, dropResource);
         strongBoxController = new StrongBoxController(clientController, strongboxPane, strongboxCoin, strongboxServant, strongboxShield, strongboxStone, strongboxCoinIco, strongboxServantIco, strongboxShieldIco, strongboxStoneIco);
@@ -252,6 +254,7 @@ public class MainGUIController {
      * @param toShow
      */
     public void enableMainActionState(String toShow){
+        endTurnButtonController.enableEndTurn(false);
         clientController.displayPlayerboardByUsername(toShow);
         playerBoardController.disableChangePlayer();
     }
@@ -260,6 +263,7 @@ public class MainGUIController {
      * When a main action is done, make all other playerboards visible
      */
     public void disableMainActionState(){
+        endTurnButtonController.enableEndTurn(true);
         playerBoardController.enableChangePlayer();
     }
 

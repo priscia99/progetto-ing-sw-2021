@@ -6,7 +6,10 @@ import it.polimi.ingsw.data.LeaderCardsBuilder;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.observer.Observable;
 import it.polimi.ingsw.server.model.card.LeaderCard;
+import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.effect.EffectType;
+import it.polimi.ingsw.server.model.resource.ResourceDepot;
+import it.polimi.ingsw.server.model.resource.ResourceType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,6 +113,15 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
                 .filter(card->card.getEffect().getEffectType().equals(effect))
                 .map(card->(T) card.getEffect())
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public int countByResourceType(ResourceType type){
+        ArrayList<DepotEffect> additionalDepots = getActiveEffects(EffectType.DEPOT);
+        int count = 0;
+        for(DepotEffect depot : additionalDepots){
+            if(depot.getResourceType().equals(type)) count += depot.getDepot().getQuantity();
+        }
+        return count;
     }
 
 

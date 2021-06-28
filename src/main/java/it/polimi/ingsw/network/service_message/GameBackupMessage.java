@@ -25,6 +25,7 @@ public class GameBackupMessage extends ServiceMessage<Client> implements Seriali
         client.setupMVC(current);
         client.applyGameBackup(backup);
         client.startListening();
+        client.startUI();
     }
 
 }

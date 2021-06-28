@@ -9,8 +9,6 @@ import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
@@ -47,6 +45,7 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         confirmChooseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedChooseButton);
         SceneController.getMainGUIController().getWarehouseController().setResourcesAsPickable(true);
         SceneController.getMainGUIController().getStrongBoxController().setResourcesAsPickable(true);
+        SceneController.getMainGUIController().getLeaderCardsController().setResourcesAsPickable(true);
     }
 
     public void chooseResourcesForProduction(){
@@ -56,6 +55,7 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         confirmChooseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedChooseButton);
         SceneController.getMainGUIController().getWarehouseController().setResourcesAsPickable(true);
         SceneController.getMainGUIController().getStrongBoxController().setResourcesAsPickable(true);
+        SceneController.getMainGUIController().getLeaderCardsController().setResourcesAsPickable(true);
     }
 
 
@@ -68,6 +68,14 @@ public class PickResourcesFromStorageController extends GenericGUIController{
     }
 
     public void addFromWarehouse(ResourcePosition position, ResourceType resourceType){
+        try{
+            consumeTarget.put(position, new ResourceStock(resourceType, 1));
+        }catch (Exception e){
+            super.getClientController().viewErrorMessage(e.getMessage());
+        }
+    }
+
+    public void addFromLeaderDepot(ResourcePosition position, ResourceType resourceType){
         try{
             consumeTarget.put(position, new ResourceStock(resourceType, 1));
         }catch (Exception e){
@@ -94,7 +102,7 @@ public class PickResourcesFromStorageController extends GenericGUIController{
     private final EventHandler<javafx.scene.input.MouseEvent> onClickedChooseButton = event -> {
         this.disable();
         this.sendPickedResources();
-
+        SceneController.endMainAction();
     };
 
     public void sendPickedResources(){
@@ -112,6 +120,7 @@ public class PickResourcesFromStorageController extends GenericGUIController{
     public void disable(){
         SceneController.getMainGUIController().getStrongBoxController().setResourcesAsPickable(false);
         SceneController.getMainGUIController().getWarehouseController().setResourcesAsPickable(false);
+        SceneController.getMainGUIController().getLeaderCardsController().setResourcesAsPickable(false);
     }
 
 }

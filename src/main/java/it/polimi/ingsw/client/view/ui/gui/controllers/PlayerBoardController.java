@@ -36,11 +36,7 @@ public class PlayerBoardController extends GenericGUIController{
     };
 
     public void setUsername(String username, boolean isMine){
-        if(isMine){
-            playerBoardLabel.setText("Your PlayerBoard (" + username + ")");
-        }else{
             playerBoardLabel.setText(username + "'s PlayerBoard");
-        }
     }
 
     public void disableChangePlayer(){
