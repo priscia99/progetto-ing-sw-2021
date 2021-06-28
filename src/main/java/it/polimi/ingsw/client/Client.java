@@ -46,6 +46,10 @@ public class Client {
         this.controller.startListening();
     }
 
+    public void startUI(){
+        this.controller.startUI();
+    }
+
     private void setupGameObservers(){
         ClientGame game = controller.getGame();
         GameView gameView = new GameView(userInterface);
