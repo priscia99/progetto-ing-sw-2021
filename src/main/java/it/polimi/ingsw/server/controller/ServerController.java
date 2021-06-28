@@ -15,6 +15,7 @@ import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.utils.CustomLogger;
 import it.polimi.ingsw.utils.CustomRunnable;
 
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -43,7 +44,6 @@ public class ServerController {
         }
         try{
             action.tryRun();
-            backupManager.load(game.getBackup());
         } catch (ValidationException e){
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
         } catch (Exception e){
@@ -51,8 +51,14 @@ public class ServerController {
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
             try {
                 backupManager.applyBackup();
-            } catch (Exception Exception) {
-                Exception.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            try{
+                backupManager.load(game.getBackup());
+            } catch (Exception e){
+                e.printStackTrace();
             }
         }
     }
