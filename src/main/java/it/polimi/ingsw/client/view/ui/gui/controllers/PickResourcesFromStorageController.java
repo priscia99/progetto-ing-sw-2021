@@ -106,6 +106,7 @@ public class PickResourcesFromStorageController extends GenericGUIController{
     };
 
     public void sendPickedResources(){
+        confirmChooseButton.setVisible(false);
         if(this.isProduction) {
             super.getClientController().produceResources(consumeTarget, productionCardsIDs, genericProduction, leaderProductions);
             this.productionCardsIDs.clear();

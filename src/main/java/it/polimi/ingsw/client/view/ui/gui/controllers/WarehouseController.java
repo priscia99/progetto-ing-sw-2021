@@ -25,10 +25,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,7 +115,6 @@ public class WarehouseController extends GenericGUIController {
      * @param warehouse Player's warehouse to show
      */
     public void refreshWarehouse(ClientWarehouse warehouse, boolean isMine) {
-        System.out.println("Is mine: " + isMine);
         this.activeWarehouse = warehouse;
         this.setSwapMenuEnable(isMine);
         if (activeWarehouse.isInitialized()) {
@@ -395,6 +396,7 @@ public class WarehouseController extends GenericGUIController {
                 Pane resourcePane = (Pane) warehouseElements.get(i).get(j);
                 if(j < activeWarehouse.getResourceDepot(i).getQuantity() && isPickable) {
                     resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
+                    resourcePane.setEffect(new Glow(0.6));  // remove for reverse effect
                 }else{
                     resourcePane.setEffect(null);
                     resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
