@@ -32,16 +32,25 @@ public class ServerController {
         this.backupManager = manager;
     }
 
+    private void tryCreateBackup(){
+        try{
+            backupManager.load(game.getBackup());
+        } catch (Exception e){
+            CustomLogger.getLogger().info("Error while creating game backup!");
+            e.printStackTrace();
+        }
+    }
+
+    private void tryApplyBackup(){
+        try {
+            backupManager.applyBackup();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public void tryAction(CustomRunnable action){
-        if(game.isStarted()){
-            try{
-                backupManager.load(game.getBackup());
-            } catch (Exception e){
-                CustomLogger.getLogger().info("Error while creating game backup!");
-                e.printStackTrace();
-            }
-        }
+        if(game.isStarted()) tryCreateBackup();
         try{
             action.tryRun();
         } catch (ValidationException e){
@@ -49,17 +58,9 @@ public class ServerController {
         } catch (Exception e){
             e.printStackTrace();
             game.notifyError(e.getMessage(), game.getCurrentPlayer().getNickname());
-            try {
-                backupManager.applyBackup();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            tryApplyBackup();
         } finally {
-            try{
-                backupManager.load(game.getBackup());
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+            if(game.isStarted()) tryCreateBackup();
         }
     }
 
