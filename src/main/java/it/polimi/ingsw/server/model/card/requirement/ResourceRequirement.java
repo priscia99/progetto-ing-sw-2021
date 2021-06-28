@@ -53,8 +53,8 @@ public class ResourceRequirement extends Requirement implements Serializable {
                          player.countByResource(resourcePile.getResourceType()) >= resourcePile.getQuantity());
     }
 
-    // TODO il creatore di questa funzione verifichi la correttezza del commento
     public boolean matchRequirement(ConsumeTarget toConsume){
+        if(this.resourceStocks.size()==0 && toConsume.countResources() != 0) return false;
         return !this.resourceStocks.stream().map(
                 stock-> {
                     int quantityConsumable = toConsume.countResourceType(stock.getResourceType());
