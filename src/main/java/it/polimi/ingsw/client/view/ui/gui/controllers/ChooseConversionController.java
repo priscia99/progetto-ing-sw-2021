@@ -37,12 +37,7 @@ public class ChooseConversionController extends GenericGUIController {
 
     private final EventHandler<MouseEvent> onResourceClicked = event -> {
         Pane clickedPane = (Pane) event.getSource();
-        ResourceType selected;
-        if(clickedPane.equals(firstResourceButton)){
-            selected = firstChoice;
-        } else {
-            selected = secondChoice;
-        }
+        ResourceType selected = (clickedPane.equals(firstResourceButton)) ? firstChoice : secondChoice;
         chooseConversionPane.setVisible(false);
         SceneController.getMainGUIController().getWarehouseController().convertionSelected(selected);
     };
