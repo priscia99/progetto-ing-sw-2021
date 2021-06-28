@@ -200,34 +200,30 @@ public class LeaderCardsController extends GenericGUIController{
                             else
                                 leader1depot1.removeEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
                             leader1depot1.setStyle("-fx-background-image: url(" + resourcePath + ");");
-                            System.out.println("Leader 1-1 activated and put");
                             leaderDepotActivePanes.remove("leader-1-depot-1");
                         }else{
-                            if(isPickable)
-                                leader1depot2.addEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
-                            else
-                                leader1depot2.removeEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
-                            leader2depot1.setStyle("-fx-background-image: url(" + resourcePath + ");");
-                            System.out.println("Leader 1-2 activated and put");
-                            leaderDepotActivePanes.remove("leader-1-depot-2");
-                        }
-                    }
-                    if(leaderDepot.getQuantity() > 1){
-                        if(i==1){
                             if(isPickable)
                                 leader2depot1.addEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
                             else
                                 leader2depot1.removeEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
                             leader2depot1.setStyle("-fx-background-image: url(" + resourcePath + ");");
-                            System.out.println("Leader 2-1 activated and put");
                             leaderDepotActivePanes.remove("leader-2-depot-1");
+                        }
+                    }
+                    if(leaderDepot.getQuantity() > 1){
+                        if(i==0){
+                            if(isPickable)
+                                leader1depot2.addEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
+                            else
+                                leader1depot2.removeEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
+                            leader1depot2.setStyle("-fx-background-image: url(" + resourcePath + ");");
+                            leaderDepotActivePanes.remove("leader-1-depot-2");
                         }else{
                             if(isPickable)
-                                leader2depot1.addEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
+                                leader2depot2.addEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
                             else
                                 leader2depot2.removeEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
                             leader2depot2.setStyle("-fx-background-image: url(" + resourcePath + ");");
-                            System.out.println("Leader 2-2 activated and put");
                             leaderDepotActivePanes.remove("leader-2-depot-2");
                         }
                     }
