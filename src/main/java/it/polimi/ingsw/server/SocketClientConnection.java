@@ -54,8 +54,11 @@ public class SocketClientConnection extends Observable<Message<ServerController>
         String target = (authData == null) ? this.toString() : authData.getUsername();
         CustomLogger.getLogger().info("["+source+"] "+ "Clearing connection with " + target);
         server.unregisterConnection(this);
-        CustomLogger.getLogger().info("["+source+"] "+ "Connection successfully removed with " + target);
         this.closeConnection();
+    }
+
+    public String getClientUsername(){
+        return this.authData.getUsername();
     }
 
     /**

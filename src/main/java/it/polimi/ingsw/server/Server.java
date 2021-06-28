@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Server {
@@ -74,19 +75,21 @@ public class Server {
         lobbyMap.entrySet().forEach(entry-> {
             if(entry.getValue().contains(toRemove)) entry.getValue().removeClientConnection(toRemove);
         });
-        lobbyMap.entrySet().removeIf(entry -> entry.getValue().isEmpty());
+        for (Map.Entry<String, Lobby> entry : lobbyMap.entrySet()) {
+            if (entry.getValue().contains(toRemove)) {
+                CustomLogger.getLogger().info("[" + entry.getValue().getLobbyId() + "]" + "Unregistering " + ((SocketClientConnection) toRemove).getClientUsername());
+                entry.getValue().removeClientConnection(toRemove);
+            }
+        }
+        for(Iterator<Map.Entry<String, Lobby>> it = lobbyMap.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, Lobby> entry = it.next();
+            if(entry.getValue().isEmpty()) {
+                CustomLogger.getLogger().info("Removing empty lobby: " + entry.getValue().getLobbyId());
+                it.remove();
+            }
+        }
     }
 
-    /**
-     * Remove a target lobby from the server.
-     * @param lobby lobby to remove
-     */
-    public void removeLobby(Lobby lobby) {
-        lobbyMap.keySet()
-                .stream()
-                .filter(key -> lobbyMap.get(key).equals(lobby))
-                .forEach(lobbyMap::remove);
-    }
 
     private String generateRandomString() {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
