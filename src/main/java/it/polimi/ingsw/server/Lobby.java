@@ -51,20 +51,23 @@ public class Lobby extends Observable<Message> {
      * @throws FullLobbyException if the lobby is complete
      */
     public void addClientConnection(String username, ClientConnection clientConnection) {
-        if (!this.isFull() && !this.disconnectedUsernames.contains(username)) {
+        if(this.isFull())throw new FullLobbyException("Full lobby");
+
+        if (!this.disconnectedUsernames.contains(username)) {
             clientConnectionMap.put(username, clientConnection);
             if(this.isFull()) init();
-        } else if (!this.isFull() && this.disconnectedUsernames.contains(username)) {
+        } else {
             CustomLogger.getLogger().info("["+this.getLobbyId()+"] "+ username + " RECONNECTED!!" );
             disconnectedUsernames.remove(username);
-//          this.sendUnicast(new GameBackupMessage(this.game.getBackup()), username);
-            this.sendUnicast(new GameStartedServiceMessage(null), username);
-        } else if (this.isFull() && !this.disconnectedUsernames.contains(username)) {
-            throw new FullLobbyException("Full lobby");
-        } else {
-            throw new FullLobbyException("Generic error while entering the lobby");
+            GameBackupMessage backup;
+            try{
+                backup = new GameBackupMessage(backupManager.getBackup());
+                this.sendUnicast(backup, username);
+            } catch (Exception e){
+                CustomLogger.getLogger().severe(e.getMessage());
+                e.printStackTrace();
+            }
         }
-
     }
 
 

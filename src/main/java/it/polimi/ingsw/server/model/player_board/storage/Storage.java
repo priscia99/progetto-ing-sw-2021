@@ -67,10 +67,8 @@ public abstract class Storage extends Observable<Message<ClientController>> {
     /**
      * Consume a resource stock of the storage.
      * @param toConsume the stock to consume
-     * @throws GameException
+     * @throws Exception
      */
-    // TODO il creatore controlli la coerenza e correttezza del commento
-    public void consume(ResourceStock toConsume) throws GameException {
     public void consume(ResourceStock toConsume) throws Exception {
         ResourceStock consumed = this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(toConsume.getResourceType()))

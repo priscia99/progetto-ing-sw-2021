@@ -1,7 +1,4 @@
 package it.polimi.ingsw.server.model.resource;
-
-import it.polimi.ingsw.exceptions.GameException;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -52,9 +49,9 @@ public class ResourceStock implements Serializable {
     /**
      * Increment by one the quantity of resources contained in the stock (only if the ResourceType of the new stock correspond to the one already contained).
      * @param resourceType the type of the new resource
-     * @throws GameException
+     * @throws Exception
      */
-    public void incrementResource(ResourceType resourceType) throws GameException{
+    public void incrementResource(ResourceType resourceType) throws Exception{
         if (!resourceType.equals(this.resourceType)) {
             throw new Exception("You cannot have different resource types in the same depot");
         }
@@ -65,9 +62,9 @@ public class ResourceStock implements Serializable {
      * Increment by a quantity the quantity of resources contained in the stock (only if the ResourceType of the new stock correspond to the one already contained).
      * @param resourceType the type of the new resource
      * @param quantity the quantity of resources to add
-     * @throws GameException
+     * @throws Exception
      */
-    public void incrementResource(ResourceType resourceType, int quantity) throws GameException {
+    public void incrementResource(ResourceType resourceType, int quantity) throws Exception {
         if (!resourceType.equals(this.resourceType)) {
             throw new Exception("Trying to add different kind of resource!");
         }
@@ -77,9 +74,9 @@ public class ResourceStock implements Serializable {
     /**
      * Decrement by one the quantity of resources contained in the stock (only if the ResourceType of the new stock correspond to the one already contained).
      * @param resourceType the type of the new resource
-     * @throws GameException
+     * @throws Exception
      */
-    public void decrementResource(ResourceType resourceType) throws GameException {
+    public void decrementResource(ResourceType resourceType) throws Exception {
         if (!resourceType.equals(this.resourceType)) {
             throw new Exception("Trying to decrement differend kind of resource!");
         } else if (this.quantity == 0) {

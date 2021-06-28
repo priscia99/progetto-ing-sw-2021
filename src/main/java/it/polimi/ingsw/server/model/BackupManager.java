@@ -20,4 +20,8 @@ public class BackupManager {
         lobby.setGame(backup);
         lobby.sendBroadcast(new GameBackupMessage(backup));
     }
+
+    public Game getBackup(){
+        return this.backup;
+    }
 }

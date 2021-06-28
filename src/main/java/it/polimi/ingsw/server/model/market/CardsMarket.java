@@ -2,7 +2,6 @@ package it.polimi.ingsw.server.model.market;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.data.DevCardMarketBuilder;
-import it.polimi.ingsw.exceptions.GameException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.from_server.CardsMarketMessage;
 import it.polimi.ingsw.observer.Observable;
@@ -23,9 +22,9 @@ public class CardsMarket extends Observable<Message<ClientController>> {
     /**
      * Create an initialized CardsMarket object.
      * @return the market object
-     * @throws GameException
+     * @throws Exception
      */
-    static public CardsMarket getStartingMarket() throws GameException {
+    static public CardsMarket getStartingMarket() throws Exception {
         // market scheme:
         // lv3 row [purple, yellow, green, blue]
         // lv2 row [purple, yellow, green, blue]
@@ -115,9 +114,9 @@ public class CardsMarket extends Observable<Message<ClientController>> {
      * @param id the id of the card to sell
      * @param player the player that bought the card
      * @return the wanted card
-     * @throws GameException
+     * @throws Exception
      */
-    public DevelopmentCard sell(String id, Player player) throws GameException{
+    public DevelopmentCard sell(String id, Player player) throws Exception{
         DevelopmentCard card = getCardById(id);
         if (card.getRequirement().isFulfilled(player)) {
             card = popCardById(id);

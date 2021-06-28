@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.model.player_board.storage;
 
-import it.polimi.ingsw.exceptions.GameException;
-import it.polimi.ingsw.network.message.from_server.StrongboxMessage;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
@@ -38,9 +36,9 @@ public class Strongbox extends Storage {
 
     /**
      * @return a copy object fo the strongbox
-     * @throws GameException
+     * @throws Exception
      */
-    public Strongbox getCopy() throws GameException {
+    public Strongbox getCopy() throws Exception {
         Strongbox copy = new Strongbox();
         for(ResourceStock stock : resourceStocks){
             for(int i = 0; i<stock.getQuantity(); i++){
