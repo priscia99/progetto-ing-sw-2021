@@ -256,9 +256,11 @@ public class MainGUIController {
      */
     public void enableMainActionState(String toShow){
         if(clientController.getGame().getMyUsername().equals(clientController.getGame().getCurrentPlayer())){
-            endTurnButtonController.enableEndTurn(false);
-            clientController.displayPlayerboardByUsername(toShow);
-            playerBoardController.disableChangePlayer();
+            if(!clientController.getGame().isMainActionDone()){
+                endTurnButtonController.enableEndTurn(false);
+                clientController.displayPlayerboardByUsername(toShow);
+                playerBoardController.disableChangePlayer();
+            }
         }
     }
 

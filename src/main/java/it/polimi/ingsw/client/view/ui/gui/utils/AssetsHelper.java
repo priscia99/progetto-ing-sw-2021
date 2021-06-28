@@ -15,4 +15,8 @@ public class AssetsHelper {
             case FAITH -> "img/ico/red_cross.png";
         };
     }
+
+    public static String getBlackMarblePath(){
+        return "/img/ico/black_marble.png";
+    }
 }
