@@ -243,7 +243,7 @@ public class WarehouseController extends GenericGUIController {
     private final EventHandler<MouseEvent> onClickedResourceToDrop = event -> {
         if(resourcePositionToDrop == null) {
             Pane triggeredPane = (Pane) event.getSource();
-            triggeredPane.setEffect(new Glow(0.6));
+            FXHelper.highlight(triggeredPane);
             int triggeredPaneRowIndex = Integer.parseInt(triggeredPane.getId().split("-")[1]);
             switch (triggeredPaneRowIndex) {
                 case 1 -> resourcePositionToDrop = ResourcePosition.FIRST_DEPOT;
@@ -348,12 +348,14 @@ public class WarehouseController extends GenericGUIController {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j <i+1; j++) {
                 Pane resourcePane = (Pane) warehouseElements.get(i).get(j);
-                if(j < activeWarehouse.getResourceDepot(i).getQuantity() && isPickable) {
-                    resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
-                    resourcePane.setEffect(new Glow(0.6));  // remove for reverse effect
-                }else{
-                    resourcePane.setEffect(null);
-                    resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
+                if(activeWarehouse.isInitialized()){
+                    if(j < activeWarehouse.getResourceDepot(i).getQuantity() && isPickable) {
+                        resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
+                    }else{
+                        resourcePane.setEffect(null);
+                        resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
+                    }
+                    resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onUnclickedResourceToDrop);
                 }
             }
         }
