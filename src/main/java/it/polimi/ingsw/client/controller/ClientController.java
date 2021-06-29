@@ -322,5 +322,8 @@ public class ClientController extends Observable<Message<ServerController>> {
         userInterface.showGameIsEnded();
     }
 
+    public void updateVictoryPoints(int points, String username){
+        game.getPlayerBoardMap().get(username).setVictoryPoints(points);
+    }
 
 }

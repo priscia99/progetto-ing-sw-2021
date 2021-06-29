@@ -16,6 +16,8 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> implements 
     private final ClientDevelopmentCardDecks developmentCards;
     private int order;
     private String username;
+    private int victoryPoints;
+
     public ClientPlayerBoard(boolean isMine, int order, String username) {
         this.username = username;
         this.order = order;
@@ -25,19 +27,21 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> implements 
         this.strongbox = new ClientStrongbox(username);
         this.clientLeaderCards = new ClientLeaderCardDeck(isMine, username);
         this.developmentCards = new ClientDevelopmentCardDecks(username);
+        this.victoryPoints = 0;
     }
 
     public void setOrder(int order) {this.order = order;}
     public int getOrder(){return order;}
     public ClientPlayerBoard(ClientFaithPath faithPath, ClientWarehouse warehouse, ClientStrongbox strongbox,
                              ClientLeaderCardDeck clientLeaderCards, ClientDevelopmentCardDecks developmentCards,
-                             boolean isMine) {
+                             boolean isMine, int victoryPoints) {
         this.isMine = isMine;
         this.faithPath = faithPath;
         this.warehouse = warehouse;
         this.strongbox = strongbox;
         this.clientLeaderCards = clientLeaderCards;
         this.developmentCards = developmentCards;
+        this.victoryPoints = victoryPoints;
     }
 
     public ClientFaithPath getFaithPath() {
@@ -64,5 +68,8 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> implements 
         return developmentCards;
     }
 
-    // TODO: add aggregators of data
+    public void setVictoryPoints(int points){
+        this.victoryPoints = points;
+        refreshStats();
+    }
 }

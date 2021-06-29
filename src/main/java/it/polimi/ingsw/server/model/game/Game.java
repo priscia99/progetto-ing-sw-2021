@@ -210,7 +210,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
                 player.checkPopeFavour(position);
             }
         }
-
+        notify(new UpdateVictoryPointsMessage(target.getVictoryPoints(), target.getNickname()));
     }
 
     public void currentPlayerDropsResource(){

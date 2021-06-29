@@ -85,6 +85,7 @@ public class ClientGame extends Observable<Pair<String, Boolean>> implements Ser
 
         for(String username : clientGame.getPlayerBoardMap().keySet()){
             Player player = game.getPlayerByUsername(username);
+            int victoryPoints = player.getVictoryPoints();
             FaithPath path = player.getPlayerBoard().getFaithPath();
             ClientFaithPath faithPath = new ClientFaithPath(path.getFaithPoints(), path.getAcquiredPopeFavours(), username);
             ClientWarehouse warehouse = new ClientWarehouse(player.getPlayerBoard().getWarehouse().getDepots());
@@ -94,7 +95,7 @@ public class ClientGame extends Observable<Pair<String, Boolean>> implements Ser
 
             ClientDevelopmentCardDecks developmentCards = new ClientDevelopmentCardDecks(player.getPlayerBoard().getDevelopmentCardsDecks(), username);
             clientGame.getPlayerBoardMap().put(username,
-                    new ClientPlayerBoard(faithPath, warehouse, strongbox, leaders, developmentCards, false));
+                    new ClientPlayerBoard(faithPath, warehouse, strongbox, leaders, developmentCards, false, victoryPoints));
 
         }
         return clientGame;

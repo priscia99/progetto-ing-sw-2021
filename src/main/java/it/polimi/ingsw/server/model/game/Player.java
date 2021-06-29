@@ -224,6 +224,7 @@ public class Player extends Observable<Message<ClientController>> {
             }
         }
         notify(new WarehouseMessage(this.playerBoard.getWarehouse().getDepots(), username));
+        notify(new UpdateVictoryPointsMessage(getVictoryPoints(), username));
     }
 
     public void addResourcesToStrongBox(ResourceStock resources) throws Exception {
@@ -231,6 +232,7 @@ public class Player extends Observable<Message<ClientController>> {
             playerBoard.getStrongbox().addResource(resources.getResourceType());
         }
         notify(new StrongboxMessage(playerBoard.getStrongbox().getResourceStocks(), username));
+        notify(new UpdateVictoryPointsMessage(getVictoryPoints(), username));
     }
 
     // count in strongbox, then count in warehouse and sum all in result
@@ -303,6 +305,7 @@ public class Player extends Observable<Message<ClientController>> {
     public void playLeaderCardById(String cardId) {
         this.playerBoard.getLeaderCardsDeck().activateLeaderCardById(cardId);
         notify(new LeaderCardsMessage(this.getPlayerBoard().getLeaderCardsDeck().getLeaderCards(), username));
+        notify(new UpdateVictoryPointsMessage(getVictoryPoints(), username));
     }
 
 
@@ -414,6 +417,7 @@ public class Player extends Observable<Message<ClientController>> {
     public void addDevelopmentCard(DevelopmentCard card, int deckIndex) throws Exception {
         this.playerBoard.addDevelopmentCard(card, deckIndex);
         notify(new DevelopmentCardsMessage(card, deckIndex, username));
+        notify(new UpdateVictoryPointsMessage(getVictoryPoints(), username));
     }
 
     public ArrayList<DiscountEffect> getDiscounts(){

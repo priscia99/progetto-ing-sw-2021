@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.exceptions.ValidationException;
+import it.polimi.ingsw.network.message.from_server.VictoryPointsMessage;
 import it.polimi.ingsw.server.model.BackupManager;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
