@@ -193,12 +193,11 @@ public class SceneController {
         mainGUIController.disableMainActionState();
     }
 
-    public void displayEndGame(String winner){
+    public void displayEndGame(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Game is ended!");
-        alert.setHeaderText("The winner is..." + winner + "!");
         alert.setResizable(false);
-        alert.setContentText("Press OK to end this game.");
+        alert.setContentText("Press OK to exit this game.");
 
         Optional<ButtonType> result = alert.showAndWait();
         ButtonType button = result.orElse(ButtonType.CANCEL);
