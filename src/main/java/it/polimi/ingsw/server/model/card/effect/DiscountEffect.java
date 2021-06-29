@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class DiscountEffect   implements Effect, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 22L;
     private final ResourceType resourceType;
     private static final String DISCOUNT_EFFECT_FORMAT = "%s -1 REQUIRED";
     private EffectType effectType;

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class DevelopmentCardsDeck extends Observable<Message<ClientController>> implements Serializable {
 
-    private static final long serialVersionUID = 1L;    // for serialization
+    private static final long serialVersionUID = 9L;    // for serialization
 
     private final ArrayList<DevelopmentCard> deck;
 

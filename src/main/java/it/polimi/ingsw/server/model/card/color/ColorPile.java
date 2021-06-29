@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class ColorPile implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 8L;
     private final Color color;
     private final int quantity;
 

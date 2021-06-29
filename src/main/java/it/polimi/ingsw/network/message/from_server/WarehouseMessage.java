@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class WarehouseMessage extends Message<ClientController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 10L;
     private final ArrayList<ResourceDepot> resourceDepots;
 
     public WarehouseMessage(ArrayList<ResourceDepot> resourceDepots, String playerUsername) {

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class DevelopmentCardsMessage extends Message<ClientController> implements Serializable{
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 24L;
     private int index;
     private ClientDevelopmentCard developmentCard;
 

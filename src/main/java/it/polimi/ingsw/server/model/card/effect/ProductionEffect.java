@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ProductionEffect implements Effect, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 31L;
     private final ArrayList<ResourceStock> inStocks;
     private final ArrayList<ResourceStock> outStocks;
     private static final String PRODUCTION_EFFECT_FORMAT = "[%s] ==> [%s]";

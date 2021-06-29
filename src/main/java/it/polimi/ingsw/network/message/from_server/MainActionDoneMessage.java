@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class MainActionDoneMessage extends Message<ClientController> implements Serializable{
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 43L;
     private final boolean done;
 
     public MainActionDoneMessage(boolean done){

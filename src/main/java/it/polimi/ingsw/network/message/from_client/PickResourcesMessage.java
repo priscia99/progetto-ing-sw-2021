@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class PickResourcesMessage extends Message<ServerController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 37L;
     private final MarbleSelection marbleSelection;
     private final ArrayList<ResourcePosition> positions;
     ArrayList<ResourceType> conversions;

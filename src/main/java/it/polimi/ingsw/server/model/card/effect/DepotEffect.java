@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class DepotEffect  implements Effect,  Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 11L;
     private final ResourceDepot resourceDepot;
     private static final String DEPOT_EFFECT_FORMAT = "%s DEPOT | Current state [%s, %s]";
     private EffectType effectType;

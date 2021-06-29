@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class BuyDevelopmentCardMessage extends Message<ServerController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 13L;
     private final String cardId;
     private final int deckIndex;
     private final ConsumeTarget toConsume;

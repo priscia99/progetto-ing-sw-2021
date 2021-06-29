@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class StrongboxMessage extends Message<ClientController> implements Serializable{
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 23L;
     private final ArrayList<ResourceStock> resourceStocks;
 
     public StrongboxMessage(ArrayList<ResourceStock> resourceStocks, String playerUsername) {

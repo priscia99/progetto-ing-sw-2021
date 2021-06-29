@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class SwapDepotsMessage extends Message<ServerController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 12L;
     int firstIndex;
     int secondIndex;
 

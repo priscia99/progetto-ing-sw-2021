@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class GameStartedServiceMessage extends ServiceMessage<Client> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 40L;
     private ArrayList<String> players;
 
     public GameStartedServiceMessage(ArrayList<String> players){

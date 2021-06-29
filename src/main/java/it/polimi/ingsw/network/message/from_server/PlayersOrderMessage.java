@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class PlayersOrderMessage extends Message<ClientController> implements Serializable{
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 16L;
     private final ArrayList<String> playersOrder;
 
     public PlayersOrderMessage(ArrayList<Player> players) {
