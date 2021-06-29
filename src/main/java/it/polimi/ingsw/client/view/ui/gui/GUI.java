@@ -225,6 +225,7 @@ public class GUI implements UI{
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
             SceneController.getMainGUIController().initGUI(controller);
+            SceneController.getMainGUIController().getFaithPathController().refreshFaithPath(game.getPlayerBoardMap().get(myUsername).getFaithPath());
             SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(game.getPlayerBoardMap().get(game.getMyUsername()).getWarehouse(), true);
             SceneController.getMainGUIController().getStrongBoxController().refreshStrongbox(game.getPlayerBoardMap().get(myUsername).getStrongbox());
             SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(game.getPlayerBoardMap().get(game.getMyUsername()).getClientLeaderCards(), true);
@@ -248,11 +249,17 @@ public class GUI implements UI{
 
     @Override
     public void showGameIsEnded() {
-        SceneController.displayEndGame();
+
+        Platform.runLater( () -> SceneController.displayEndGame());
     }
 
     public void setPlayerBoardUsername(String username, boolean isMine){
         this.selectedPlayerBoard = username;
+        if(isMine){
+            Platform.runLater(() -> {
+                SceneController.getMainGUIController().startingTurn();
+            });
+        }
         Platform.runLater(() -> SceneController.getMainGUIController().getPlayerBoardController().setUsername(username, isMine));
     }
 

@@ -97,6 +97,8 @@ public class MainGUIController {
     private AnchorPane chooseMarbleToConvertPane;
     @FXML
     private Pane resourceToConvert1, resourceToConvert2;
+    @FXML
+    private Pane popeFavor1, popeFavor2, popeFavor3;    // pope favors pane
 
     // Secondary controllers
     StatsController statsController;
@@ -142,7 +144,7 @@ public class MainGUIController {
         clientController = controller;
         statsController = new StatsController(clientController, statsPane);
         leaderCardsController = new LeaderCardsController(clientController, leaderCardsPane, leaderZoomPane, leaderCardZoomGrid, leaderCardZoomImage, leader1depot1, leader1depot2, leader2depot1, leader2depot2);
-        faithPathController = new FaithPathController(clientController, faithPathPane);
+        faithPathController = new FaithPathController(clientController, faithPathPane, popeFavor1, popeFavor2, popeFavor3);
         warehouseController = new WarehouseController(clientController, firstDepot, secondDepot, thirdDepot, swapDepotsMenu, dropResource);
         strongBoxController = new StrongBoxController(clientController, strongboxPane, strongboxCoin, strongboxServant, strongboxShield, strongboxStone, strongboxCoinIco, strongboxServantIco, strongboxShieldIco, strongboxStoneIco);
         developmentCardsController = new DevelopmentCardsController(clientController, firstDevSlot, secondDevSlot, thirdDevSlot, produceButton);
@@ -184,6 +186,11 @@ public class MainGUIController {
         iconPanes.put("production-servant", productionServantIcon);
         iconPanes.put("production-stone", productionStoneIcon);
         return iconPanes;
+    }
+
+    public void startingTurn(){
+        getDevelopmentCardsController().setProduceButtonEnable(true);
+        getWarehouseController().setSwapMenuEnable(true);
     }
 
     /**

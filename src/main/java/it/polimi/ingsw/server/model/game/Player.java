@@ -160,7 +160,7 @@ public class Player extends Observable<Message<ClientController>> {
     }
 
     public boolean finishedFaithPath() {
-        return playerBoard.getFaithPath().getFaithPoints() == playerBoard.getFaithPath().getCells().length;
+        return playerBoard.getFaithPath().getFaithPoints() >= playerBoard.getFaithPath().getCells().length-1;
     }
 
     public int getTotalDevelopmentCards(){
