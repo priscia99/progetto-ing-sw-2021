@@ -99,7 +99,6 @@ public class ClientController extends Observable<Message<ServerController>> {
     }
 
     public void refreshFaithPath(ArrayList<Boolean> popeFavors, int blackCrossPosition){
-        userInterface.displayInfo("Lorenzo Il Magnifico's faith points increased!");
         ClientFaithPath faithPath = this.getGame().getPlayerBoardMap().get(game.getCurrentPlayer()).getFaithPath();
         faithPath.setPopeFavors(popeFavors);
         faithPath.setBlackCrossPosition(blackCrossPosition);

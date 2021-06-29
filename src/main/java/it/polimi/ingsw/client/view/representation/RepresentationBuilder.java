@@ -116,7 +116,11 @@ public class RepresentationBuilder {
     }
 
     public static String render(ClientFaithPath faithPath) {
-        return String.format(FAITH_PATH_FORMAT, (Object[]) getFaithPathContents(faithPath));
+        String render = "";
+        if(faithPath.getBlackCrossPosition()>0){
+            render += "LORENZO'S POINTS: " + faithPath.getBlackCrossPosition() + "\n";
+        }
+        return render + String.format(FAITH_PATH_FORMAT, (Object[]) getFaithPathContents(faithPath));
     }
 
     private static String[] getFaithPathContents(ClientFaithPath faithPath){
