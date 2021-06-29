@@ -17,6 +17,8 @@ public class WinnerMessage extends Message<ClientController> implements Serializ
     }
 
     public void execute(ClientController target) {
-
+        for(String winnerName : winners){
+            target.viewInfoMessage("Winner is: " + winnerName);
+        }
     }
 }
