@@ -54,12 +54,12 @@ public class WarehouseController extends GenericGUIController {
     private ArrayList<Pair<Integer, Integer>> occupiedCells;
     private MarbleSelection marbleSelection;
     private ResourcePosition resourcePositionToDrop;
-    private boolean isAddingResources;
+    private boolean isManagingResources;
     private Map<String, Pane> leaderDepotActivePanes;
 
     public WarehouseController(ClientController clientController, GridPane firstDepot, GridPane secondDepot, GridPane thirdDepot, MenuButton swapDepotsMenu, Button dropResourceButton) {
         super(clientController);
-        this.isAddingResources = false;
+        this.isManagingResources = false;
         this.swapDepotsMenu = swapDepotsMenu;
         this.warehouseElements = new ArrayList<>();
         this.resourcePositionToDrop = null;
@@ -115,7 +115,7 @@ public class WarehouseController extends GenericGUIController {
                     Pane resourcePane = (Pane) warehouseElements.get(i).get(j);
                     if (j < tempDepot.getQuantity()) {
                         FXHelper.setBackground(resourcePane,AssetsHelper.getResourceIconPath(activeWarehouse.getResourceDepot(i).getResourceType()));
-                        if(isMine && !isAddingResources) {
+                        if(isMine && !isManagingResources) {
                             resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
                         }else{
                             resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
@@ -142,8 +142,7 @@ public class WarehouseController extends GenericGUIController {
 
     public void insertResourcesToDepot(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ClientLeaderCard> changeEffects, ArrayList<ClientLeaderCard> depotEffects) {
         this.leaderDepotActivePanes = SceneController.getMainGUIController().getLeaderCardsController().getLeaderDepotActivePanes();
-
-        this.isAddingResources = true;
+        this.isManagingResources = true;
         this.marbleSelection = selection;
         this.occupiedCells = new ArrayList<>();
         this.positions = new ArrayList<>();
@@ -156,7 +155,7 @@ public class WarehouseController extends GenericGUIController {
 
     private void parseNextPosition() {
         if (insertPositionIndex >= selected.size()) {
-            this.isAddingResources = false;
+            this.isManagingResources = false;
             removeAllSelectionHandlers();
             refreshWarehouse(activeWarehouse, true);
             getClientController().pickResources(marbleSelection, positions, conversions);
@@ -345,17 +344,19 @@ public class WarehouseController extends GenericGUIController {
     }
 
     public void setResourcesAsPickable(boolean isPickable){
+        isManagingResources = isPickable;
+        refreshWarehouse(activeWarehouse, true);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j <i+1; j++) {
                 Pane resourcePane = (Pane) warehouseElements.get(i).get(j);
+                resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onUnclickedResourceToDrop);
+                resourcePane.setEffect(null);
                 if(activeWarehouse.isInitialized()){
                     if(j < activeWarehouse.getResourceDepot(i).getQuantity() && isPickable) {
                         resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
                     }else{
-                        FXHelper.cleanEffects(resourcePane);
                         resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
                     }
-                    resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onUnclickedResourceToDrop);
                 }
             }
         }
