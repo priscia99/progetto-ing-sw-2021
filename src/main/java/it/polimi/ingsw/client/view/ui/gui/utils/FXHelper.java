@@ -8,11 +8,16 @@ public class FXHelper {
         target.setStyle("-fx-background-image: url(" + path + ");");
     }
 
+    public static void cleanBackground(Node target){
+        target.setStyle("-fx-background-image: none;");
+    }
+
     public static void cleanEffects(Node target){
         target.setEffect(null);
     }
 
     public static void highlight(Node target){
-        target.setEffect(new Glow(0.6));
+        target.setEffect(new Glow(0.8));
     }
+
 }

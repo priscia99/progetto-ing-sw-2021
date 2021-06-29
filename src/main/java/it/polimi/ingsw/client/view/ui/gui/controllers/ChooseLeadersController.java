@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -74,11 +75,12 @@ public class ChooseLeadersController extends GenericGUIController{
         int cardIndex = Integer.parseInt(clickedPane.getId()) - 1;
         if(selectedIDs.contains(cardIDs.get(cardIndex))){
             selectedIDs.remove(cardIDs.get(cardIndex));
-            clickedPane.setEffect(null);
+            FXHelper.cleanEffects(clickedPane);
+
         }
         else if(selectedIDs.size()<2){
             selectedIDs.add(cardIDs.get(cardIndex));
-            clickedPane.setEffect(new Glow(0.6));
+            FXHelper.highlight(clickedPane);
         }
     };
 }

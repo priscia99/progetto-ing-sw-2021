@@ -350,7 +350,7 @@ public class WarehouseController extends GenericGUIController {
             for (int j = 0; j <i+1; j++) {
                 Pane resourcePane = (Pane) warehouseElements.get(i).get(j);
                 resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onUnclickedResourceToDrop);
-                resourcePane.setEffect(null);
+                FXHelper.cleanEffects(resourcePane);
                 if(activeWarehouse.isInitialized()){
                     if(j < activeWarehouse.getResourceDepot(i).getQuantity() && isPickable) {
                         resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);

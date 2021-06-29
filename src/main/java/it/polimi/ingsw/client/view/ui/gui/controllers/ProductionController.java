@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientDevelopmentCard;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
+import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
@@ -86,9 +87,9 @@ public class ProductionController extends GenericGUIController{
         Pane triggeredPane = (Pane) event.getSource();
         int cardPosition = Integer.parseInt(triggeredPane.getId().split("-")[3]) - 1;
         if(triggeredPane.getEffect() != null){
-            triggeredPane.setEffect(null);
+            FXHelper.cleanEffects(triggeredPane);
         }else{
-            triggeredPane.setEffect(new Glow(0.6));
+            FXHelper.highlight(triggeredPane);
         }
         SceneController.getMainGUIController().getPickResourcesFromStorageController().toggleProductionID(developmentCards.get(cardPosition).getId());
     };
@@ -112,15 +113,15 @@ public class ProductionController extends GenericGUIController{
             case "shield-icon" -> selectedResourceType = ResourceType.SHIELD;
             case "stone-icon" -> selectedResourceType = ResourceType.STONE;
         }
-        this.productionIcons.entrySet().stream().forEach(entry -> entry.getValue().setEffect(null));
-        selectedIcon.setEffect(new Glow(0.6));
+        this.productionIcons.values().forEach(FXHelper::cleanEffects);
+        FXHelper.highlight(selectedIcon);
     };
 
     private final EventHandler<MouseEvent> onClickedConfirmButton = event -> {
         productionPane.setVisible(false);
-        productionCardsPanes.entrySet().forEach(entry -> entry.getValue().setEffect(null));
+        productionCardsPanes.values().forEach(FXHelper::cleanEffects);
         productionCardsPanes.entrySet().forEach(entry -> entry.getValue().removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedCard));
-        genericProductionPanes.entrySet().forEach(entry -> entry.getValue().setStyle("-fx-background-image:none;"));
+        productionCardsPanes.values().forEach(FXHelper::cleanBackground);
         Optional<ProductionEffect> genericProductionEffect = Optional.empty();
         if(chosenGenericProduction.get("generic-input-1") != null &&
                 chosenGenericProduction.get("generic-input-2") != null &&
