@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientDevelopmentCard;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
+import it.polimi.ingsw.client.view.ui.gui.utils.AssetsHelper;
 import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
@@ -21,14 +22,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ProductionController extends GenericGUIController{
-
-    private static final String DEV_CARDS_FRONT_PATH = "/img/cards/front/development-card-";
-    private static final String LEADER_CARD_FRONT_PATH = "/img/cards/front/leader-card-";
-
-    private static final String COIN_PATH = "/img/ico/coin.png";
-    private static final String SERVANT_PATH = "/img/ico/servant.png";
-    private static final String SHIELD_PATH = "/img/ico/shield.png";
-    private static final String STONE_PATH = "/img/ico/stone.png";
 
     private Pane productionPane;
     private ArrayList<ClientDevelopmentCard> developmentCards;
@@ -66,8 +59,7 @@ public class ProductionController extends GenericGUIController{
         }
         for(int i=0; i<this.leaderCards.size(); i++){
             Pane tempCardPane = productionCardsPanes.get("leader-card-" + (i+1));
-            String cardPath = LEADER_CARD_FRONT_PATH + leaderCards.get(i).getAssetLink() + ".png";
-            tempCardPane.setStyle("-fx-background-image: url(" + cardPath + ");");
+            FXHelper.setBackground(tempCardPane, AssetsHelper.getLeaderFrontPath(leaderCards.get(i)));
         }
         productionPane.setVisible(true);
 
@@ -78,8 +70,7 @@ public class ProductionController extends GenericGUIController{
         for(int i=0; i < developmentCards.size(); i++){
             Pane tempCardPane = productionCardsPanes.get("dev-card-" + (i+1));
             tempCardPane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedCard);
-            String cardPath = DEV_CARDS_FRONT_PATH + developmentCards.get(i).getAssetLink() + ".png";
-            tempCardPane.setStyle("-fx-background-image: url(" + cardPath + ");");
+            FXHelper.setBackground(tempCardPane, AssetsHelper.getDevelopmentFrontPath(developmentCards.get(i)));
         }
     }
 
@@ -97,12 +88,7 @@ public class ProductionController extends GenericGUIController{
     private final EventHandler<MouseEvent> onClickedGenericPosition = event -> {
         Pane selectedPosition = (Pane) event.getSource();
         chosenGenericProduction.put(selectedPosition.getId(), selectedResourceType);
-        switch (selectedResourceType){
-            case COIN -> selectedPosition.setStyle("-fx-background-image: url(" + COIN_PATH + ");");
-            case SERVANT -> selectedPosition.setStyle("-fx-background-image: url(" + SERVANT_PATH + ");");
-            case SHIELD -> selectedPosition.setStyle("-fx-background-image: url(" + SHIELD_PATH + ");");
-            case STONE -> selectedPosition.setStyle("-fx-background-image: url(" + STONE_PATH + ");");
-        }
+        FXHelper.setBackground(selectedPosition, AssetsHelper.getResourceIconPath(selectedResourceType));
     };
 
     private final EventHandler<MouseEvent> onClickedResourceIcon = event -> {
@@ -162,4 +148,10 @@ public class ProductionController extends GenericGUIController{
         productionPane.setVisible(false);
         SceneController.endMainAction();
     };
+
+    public void cleanIcons(){
+        for(Pane genericPane : genericProductionPanes.values()){
+            FXHelper.cleanBackground(genericPane);
+        }
+    }
 }

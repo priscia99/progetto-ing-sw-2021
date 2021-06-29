@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -30,6 +31,7 @@ public class EndTurnButtonController extends GenericGUIController{
      * This handler calls the client controller method in order to end the turn
      */
     private final EventHandler<MouseEvent> onEndButtonClicked = event -> {
+        SceneController.getMainGUIController().endTurn();
         getClientController().endTurn();
     };
 

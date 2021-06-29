@@ -26,4 +26,8 @@ public class AssetsHelper {
     public static String getLeaderFrontPath(ClientAsset asset){
         return "/img/cards/front/leader-card-" + asset.getAssetLink() + ".png";
     }
+
+    public static String getDevelopmentFrontPath(ClientAsset asset){
+        return "/img/cards/front/development-card-" + asset.getAssetLink() + ".png";
+    }
 }

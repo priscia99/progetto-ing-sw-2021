@@ -271,6 +271,10 @@ public class MainGUIController {
         }
     }
 
+    public void endTurn(){
+        getProductionController().cleanIcons();
+    }
+
     /**
      * When a main action is done, make all other playerboards visible
      */
