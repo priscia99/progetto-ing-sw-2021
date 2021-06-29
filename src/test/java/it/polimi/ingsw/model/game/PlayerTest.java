@@ -139,7 +139,7 @@ public class PlayerTest {
     @Test
     @DisplayName("Test meets win conditions for faith path")
     public void testMeetConditionFaithPath(){
-        for(int i=0; i<24; i++) {
+        for(int i=0; i<23; i++) {
             player.addFaithPoint();
         }
         Assertions.assertFalse(player.finishedFaithPath());
