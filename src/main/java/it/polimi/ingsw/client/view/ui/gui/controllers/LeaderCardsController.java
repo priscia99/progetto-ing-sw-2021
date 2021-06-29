@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.model.ClientCard;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
+import it.polimi.ingsw.client.view.ui.gui.utils.AssetsHelper;
 import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.effect.EffectType;
@@ -24,14 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LeaderCardsController extends GenericGUIController{
-    private static final String COIN_PATH = "/img/ico/coin.png";
-    private static final String SERVANT_PATH = "/img/ico/servant.png";
-    private static final String SHIELD_PATH = "/img/ico/shield.png";
-    private static final String STONE_PATH = "/img/ico/stone.png";
-    private static final String LEADER_CARD_FRONT_PATH = "/img/cards/front/leader-card-";
-    private static final String LEADER_CARD_BACK_PATH = "/img/cards/back/lead_back.png";
-
-    private final GridPane leaderCardsPane;
     private final ObservableList<Node> leaderCardsPanesList;
     private AnchorPane leaderZoomPane;
     private final GridPane leaderCardZoomGrid;
@@ -49,7 +42,6 @@ public class LeaderCardsController extends GenericGUIController{
                                  Pane leader1depot1, Pane leader1depot2, Pane leader2depot1, Pane leader2depot2) {
         super(clientController);
         this.canUserDoAction = false;
-        this.leaderCardsPane = leaderCardsPane;
         this.leaderZoomPane = leaderZoomPane;
         this.leaderCardZoomGrid = leaderCardZoomGrid;
         this.leaderCardZoomImage = leaderCardZoomImage;
@@ -72,20 +64,21 @@ public class LeaderCardsController extends GenericGUIController{
             return;
         }
         for(int i = 0; i<2; i++){
-            leaderCardsPanesList.get(i).setStyle("-fx-background-image: url(" + LEADER_CARD_BACK_PATH + ");");
+            FXHelper.setBackground(leaderCardsPanesList.get(i), AssetsHelper.getBackLeaderPath());
         }
         for (int i = 0; i < leaderCardsDeck.getClientLeaderCards().size(); i++) {
             ClientLeaderCard tempCard = leaderCardsDeck.getClientLeaderCards().get(i);
-            String cardImagePath = LEADER_CARD_FRONT_PATH + tempCard.getAssetLink() + ".png";
             Pane cardPane = (Pane) (leaderCardsPanesList.get(i));
             mappedCards.put(cardPane, tempCard);
             if (isMine || tempCard.isActive()) {
-                cardPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
+                FXHelper.setBackground(cardPane, AssetsHelper.getLeaderFrontPath(tempCard));
             }
             else
-                cardPane.setStyle("-fx-background-image: url(" + LEADER_CARD_BACK_PATH + ");");
+                FXHelper.setBackground(cardPane, AssetsHelper.getBackLeaderPath());
             if(tempCard.isActive()){
                 FXHelper.highlight(cardPane);
+            } else {
+                FXHelper.cleanEffects(cardPane);
             }
         }
         if(isMine && canUserDoAction){
@@ -94,17 +87,6 @@ public class LeaderCardsController extends GenericGUIController{
             disableLeaderCardsHandlers();
         }
         setResourcesAsPickable(false);
-    }
-
-    public String getResourcePathByType(ResourceType resourceType){
-        String path = null;
-        switch (resourceType){
-            case COIN -> path = COIN_PATH;
-            case SHIELD -> path = SHIELD_PATH;
-            case STONE -> path = STONE_PATH;
-            case SERVANT -> path = SERVANT_PATH;
-        }
-        return path;
     }
 
     public void disableLeaderCardsHandlers() {
@@ -133,7 +115,6 @@ public class LeaderCardsController extends GenericGUIController{
 
     public void showCardZoom(ClientLeaderCard clientLeaderCard){
         this.selectedCard = clientLeaderCard;
-        String cardAssetPath = clientLeaderCard.getAssetLink();
         Button playLeaderCardButton = (Button)((AnchorPane)leaderCardZoomGrid.getChildren().get(1)).getChildren().get(0);
         Button dropLeaderCardButton = (Button)((AnchorPane)leaderCardZoomGrid.getChildren().get(2)).getChildren().get(0);
         Button closeZoomButton = (Button)((AnchorPane)leaderCardZoomGrid.getChildren().get(3)).getChildren().get(0);
@@ -146,8 +127,7 @@ public class LeaderCardsController extends GenericGUIController{
         }
         closeZoomButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onCloseZoomButtonPressed);
 
-        String cardImagePath = LEADER_CARD_FRONT_PATH + cardAssetPath + ".png";
-        leaderCardZoomImage.setStyle("-fx-background-image: url(" + cardImagePath + ");");
+        FXHelper.setBackground(leaderCardZoomImage, AssetsHelper.getLeaderFrontPath(clientLeaderCard));
         leaderZoomPane.setVisible(true);
     }
 
@@ -172,27 +152,23 @@ public class LeaderCardsController extends GenericGUIController{
         this.depotResourceTypes = new ArrayList<>();
         this.leaderDepotActivePanes = new HashMap<>();
         this.activeDepotsNumber = 0;
-        leader1depot1.setStyle("-fx-background-image: none;");
-        leader1depot2.setStyle("-fx-background-image: none;");
-        leader2depot1.setStyle("-fx-background-image: none;");
-        leader2depot2.setStyle("-fx-background-image: none;");
+        FXHelper.cleanBackground(leader1depot1);
+        FXHelper.cleanBackground(leader1depot2);
+        FXHelper.cleanBackground(leader2depot1);
+        FXHelper.cleanBackground(leader2depot2);
         FXHelper.cleanEffects(leader1depot1);
         FXHelper.cleanEffects(leader1depot2);
         FXHelper.cleanEffects(leader2depot1);
         FXHelper.cleanEffects(leader2depot2);
         for(int i=0; i<leaderCardsDeck.getClientLeaderCards().size(); i++){
             ClientLeaderCard tempCard = leaderCardsDeck.getCard(i);
-            System.out.println("Card effect" + tempCard.getEffect().getEffectType());
             if(tempCard.getEffect().getEffectType().equals(EffectType.DEPOT)){
                 this.activeDepotsNumber++;
                 DepotEffect depotEffect = (DepotEffect) tempCard.getEffect();
                 ResourceDepot leaderDepot = depotEffect.getDepot();
                 ResourceType depotType = leaderDepot.getResourceType();
                 depotResourceTypes.add(depotType);
-                System.out.println("Activated Depot Resource Type: " + depotType);
                 if(depotType != null && depotType != ResourceType.BLANK && tempCard.isActive()){
-                    System.out.println("Sono entrato");
-                    String resourcePath = getResourcePathByType(depotType);
                     if(i==0){
                         leaderDepotActivePanes.put("leader-1-depot-1", leader1depot1);
                         leaderDepotActivePanes.put("leader-1-depot-2", leader1depot2);
@@ -202,35 +178,39 @@ public class LeaderCardsController extends GenericGUIController{
                     }
                     if(leaderDepot.getQuantity() > 0){
                         if(i==0){
-                            if(isPickable)
+                            if(isPickable){
                                 leader1depot1.addEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
-                            else
+                            }else{
                                 leader1depot1.removeEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
-                            leader1depot1.setStyle("-fx-background-image: url(" + resourcePath + ");");
+                            }
+                            FXHelper.setBackground(leader1depot1, AssetsHelper.getResourceIconPath(depotType));
                             leaderDepotActivePanes.remove("leader-1-depot-1");
                         }else{
-                            if(isPickable)
+                            if(isPickable){
                                 leader2depot1.addEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
-                            else
+                            } else{
                                 leader2depot1.removeEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
-                            leader2depot1.setStyle("-fx-background-image: url(" + resourcePath + ");");
+                            }
+                            FXHelper.setBackground(leader2depot1,AssetsHelper.getResourceIconPath(depotType) );
                             leaderDepotActivePanes.remove("leader-2-depot-1");
                         }
                     }
                     if(leaderDepot.getQuantity() > 1){
                         if(i==0){
-                            if(isPickable)
+                            if(isPickable){
                                 leader1depot2.addEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
-                            else
+                            } else{
                                 leader1depot2.removeEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
-                            leader1depot2.setStyle("-fx-background-image: url(" + resourcePath + ");");
+                            }
+                            FXHelper.setBackground(leader1depot2, AssetsHelper.getResourceIconPath(depotType));
                             leaderDepotActivePanes.remove("leader-1-depot-2");
                         }else{
-                            if(isPickable)
+                            if(isPickable){
                                 leader2depot2.addEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
-                            else
+                            } else {
                                 leader2depot2.removeEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
-                            leader2depot2.setStyle("-fx-background-image: url(" + resourcePath + ");");
+                            }
+                            FXHelper.setBackground(leader2depot2,  AssetsHelper.getResourceIconPath(depotType));
                             leaderDepotActivePanes.remove("leader-2-depot-2");
                         }
                     }

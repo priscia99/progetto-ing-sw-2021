@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.view.ui.gui.utils;
 
+import it.polimi.ingsw.client.model.ClientAsset;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 
 public class AssetsHelper {
@@ -18,5 +19,11 @@ public class AssetsHelper {
 
     public static String getBlackMarblePath(){
         return "/img/ico/black_marble.png";
+    }
+
+    public static String getBackLeaderPath(){ return "/img/cards/back/lead_back.png";}
+
+    public static String getLeaderFrontPath(ClientAsset asset){
+        return "/img/cards/front/leader-card-" + asset.getAssetLink() + ".png";
     }
 }
