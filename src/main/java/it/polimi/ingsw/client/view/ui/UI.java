@@ -45,4 +45,5 @@ public interface UI {
     void displayProduceMenu(ArrayList<ClientLeaderCard> effects, ArrayList<ClientLeaderCard> depotEffects);
     void startUI(ClientGame game);
     void displayUserStats(ClientPlayerBoard playerBoard);
+    void showGameIsEnded();
 }

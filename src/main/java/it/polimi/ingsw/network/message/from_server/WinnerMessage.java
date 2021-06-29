@@ -20,5 +20,6 @@ public class WinnerMessage extends Message<ClientController> implements Serializ
         for(String winnerName : winners){
             target.viewInfoMessage("Winner is: " + winnerName);
         }
+        target.endGame();
     }
 }

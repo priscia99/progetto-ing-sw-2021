@@ -319,7 +319,9 @@ public class ClientController extends Observable<Message<ServerController>> {
         userInterface.startUI(getGame());
     }
 
-
+    public void endGame(){
+        userInterface.showGameIsEnded();
+    }
 
 
 }

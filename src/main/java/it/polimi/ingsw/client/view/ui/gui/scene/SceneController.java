@@ -193,7 +193,7 @@ public class SceneController {
         mainGUIController.disableMainActionState();
     }
 
-    public void displayEndGame(){
+    public static void displayEndGame(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Game is ended!");
         alert.setResizable(false);

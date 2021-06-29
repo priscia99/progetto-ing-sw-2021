@@ -758,5 +758,11 @@ public class CLI implements UI {
         }
         return resourcesSelected;
     }
+
+    public void showGameIsEnded(){
+        displayInfo("Game is ended, press any key to close.");
+        String ok = in.nextLine();
+        System.exit(0);
+    }
 }
 

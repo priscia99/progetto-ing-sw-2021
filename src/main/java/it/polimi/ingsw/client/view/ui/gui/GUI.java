@@ -246,6 +246,11 @@ public class GUI implements UI{
         });
     }
 
+    @Override
+    public void showGameIsEnded() {
+        SceneController.displayEndGame();
+    }
+
     public void setPlayerBoardUsername(String username, boolean isMine){
         this.selectedPlayerBoard = username;
         Platform.runLater(() -> SceneController.getMainGUIController().getPlayerBoardController().setUsername(username, isMine));
