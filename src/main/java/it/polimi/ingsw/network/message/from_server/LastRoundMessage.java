@@ -10,6 +10,6 @@ public class LastRoundMessage extends Message<ClientController> implements Seria
     private static final long serialVersionUID = 48L;
 
     public void execute(ClientController target) {
-
+        target.viewInfoMessage("This is last round!");
     }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class FaithPath extends Observable<Message<ClientController>>implements Serializable {
+public class FaithPath extends Observable<Object>implements Serializable {
 
     private final Cell[] cells;
     private int faithPoints;
@@ -61,6 +61,7 @@ public class FaithPath extends Observable<Message<ClientController>>implements S
     public void goToNextCell() {
         this.cells[this.faithPoints].reach();
         faithPoints++;
+        notify(this);
     }
 
 

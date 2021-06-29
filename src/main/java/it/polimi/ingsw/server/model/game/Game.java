@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Game extends Observable<Message<ClientController>> implements Observer<Message<ClientController>> {
+public class Game extends Observable<Message<ClientController>> implements Observer<Object> {
 
     private ArrayList<Player> players;
     protected int currentPlayerIndex;
@@ -210,6 +210,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
                 player.checkPopeFavour(position);
             }
         }
+
     }
 
     public void currentPlayerDropsResource(){
@@ -243,7 +244,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     }
 
     @Override
-    public void update(Message<ClientController> object) {
+    public void update(Object object) {
         players.forEach((player)->{
             if(player.finishedFaithPath() || player.getTotalDevelopmentCards()>6) {
                 isLastRound = true;
