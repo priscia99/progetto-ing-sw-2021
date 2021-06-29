@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.view.ui.gui.utils.AssetsHelper;
 import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -13,9 +14,6 @@ import javafx.scene.layout.*;
 import java.util.ArrayList;
 
 public class ChooseLeadersController extends GenericGUIController{
-
-    private static final String LEADER_CARD_FRONT_PATH = "/img/cards/front/leader-card-";
-    private static final String LEADER_CARD_BACK_PATH = "/img/cards/back/lead_back.png";
 
     private AnchorPane chooseLeadersPane;
     private final ObservableList<Node> cardsPanes;
@@ -50,8 +48,7 @@ public class ChooseLeadersController extends GenericGUIController{
     public void refreshAvailableCards(){
         for(int i=0; i<4; i++){
             Pane cardPane = (Pane) cardsPanes.get(i);
-            String filePath = LEADER_CARD_FRONT_PATH + cardIDs.get(i).substring(1) + ".png";
-            cardPane.setStyle("-fx-background-image: url(" + filePath + ");");
+            FXHelper.setBackground(cardPane, AssetsHelper.getLeaderFrontPath(cardIDs.get(i).substring(1)));
             cardPane.addEventHandler(MouseEvent.MOUSE_CLICKED, onLeaderCardClicked);
         }
         chooseLeadersPane.requestLayout();

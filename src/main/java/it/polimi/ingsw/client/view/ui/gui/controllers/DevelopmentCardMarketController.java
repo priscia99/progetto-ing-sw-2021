@@ -5,6 +5,8 @@ import it.polimi.ingsw.client.model.ClientCardsMarket;
 import it.polimi.ingsw.client.model.ClientDevelopmentCard;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
+import it.polimi.ingsw.client.view.ui.gui.utils.AssetsHelper;
+import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -18,11 +20,7 @@ import java.util.Map;
 
 public class DevelopmentCardMarketController extends GenericGUIController{
 
-    private static final String DEV_CARDS_FRONT_PATH = "/img/cards/front/development-card-";
-    private static final String DEV_CARDS_BACK_PATH = "/img/cards/back/dev_back_";
-
     private final GridPane developmentCardsMarketPane;
-    private ObservableList<Node> marketCards;
     private ClientCardsMarket cardsMarket;
     private Pane devCardZoomPane;
     private GridPane devCardZoomGrid;
@@ -42,28 +40,24 @@ public class DevelopmentCardMarketController extends GenericGUIController{
      * Refreshes the development cards market
      */
     public void refreshCardsMarket(){
-        String cardImagePath = null;
-        Image cardImage = null;
-        BackgroundImage bgImg = null;
         developmentCardsMap = new HashMap<>();
-        int index = 0;
         for(int i = 0; i<4; i++){
             for(int j = 0; j < 3 ; j ++){
                 int deckSize = cardsMarket.getDecks().get(i).get(j).size();
-                Pane tempCardPane = (Pane) developmentCardsMarketPane.lookup("#card-" + String.valueOf(j+1) + "-" + String.valueOf(i+1));
+                Pane tempCardPane = (Pane) developmentCardsMarketPane.lookup("#card-" + (j+1) + "-" + (i+1));
+                String cardImagePath;
                 if(deckSize>0){
                     // there is a development card available for this cell -> display image
                     ClientDevelopmentCard tempCard = cardsMarket.getDecks().get(i).get(j).get(deckSize-1);
                     developmentCardsMap.put(tempCardPane, tempCard);
                     tempCardPane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedDevCard);
-                    cardImagePath = DEV_CARDS_FRONT_PATH + tempCard.getAssetLink() + ".png";
+                    cardImagePath = AssetsHelper.getDevelopmentFrontPath(tempCard);
                 } else {
                     // the current cell is empty -> display back card based on proper level and color of the cell
                     int cardPathNumber = 1 + j*4 + i;
-                    cardImagePath = DEV_CARDS_BACK_PATH + cardPathNumber + ".png";
+                    cardImagePath = AssetsHelper.getBackDevelopmentPath(String.valueOf(cardPathNumber));
                 }
-                tempCardPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
-                index++;
+                FXHelper.setBackground(tempCardPane, cardImagePath);
             }
         }
     }
@@ -82,7 +76,6 @@ public class DevelopmentCardMarketController extends GenericGUIController{
      */
     public void showCardZoom(ClientDevelopmentCard clientDevCard){
         this.selectedCard = clientDevCard;
-        String cardAssetPath = clientDevCard.getAssetLink();
         Button buyDevCardButton1 = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(1)).getChildren().get(0);
         Button buyDevCardButton2 = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(2)).getChildren().get(0);
         Button buyDevCardButton3 = (Button)((AnchorPane)devCardZoomGrid.getChildren().get(3)).getChildren().get(0);
@@ -93,8 +86,7 @@ public class DevelopmentCardMarketController extends GenericGUIController{
         buyDevCardButton3.addEventHandler(MouseEvent.MOUSE_CLICKED, onBuyCard3ButtonPressed);
         closeZoomButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onCloseZoomButtonPressed);
 
-        String cardImagePath = DEV_CARDS_FRONT_PATH + cardAssetPath + ".png";
-        devCardZoomImage.setStyle("-fx-background-image: url(" + cardImagePath + ");");
+        FXHelper.setBackground(devCardZoomImage, AssetsHelper.getDevelopmentFrontPath(clientDevCard));
         devCardZoomPane.setVisible(true);
     }
 
