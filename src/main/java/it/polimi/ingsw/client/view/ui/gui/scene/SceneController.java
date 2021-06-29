@@ -10,10 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -21,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class SceneController {
     private static Client client;
@@ -193,5 +191,20 @@ public class SceneController {
 
     public static void endMainAction(){
         mainGUIController.disableMainActionState();
+    }
+
+    public void displayEndGame(String winner){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Game is ended!");
+        alert.setHeaderText("The winner is..." + winner + "!");
+        alert.setResizable(false);
+        alert.setContentText("Press OK to end this game.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        ButtonType button = result.orElse(ButtonType.CANCEL);
+
+        if (button == ButtonType.OK) {
+            System.exit(0);
+        }
     }
 }
