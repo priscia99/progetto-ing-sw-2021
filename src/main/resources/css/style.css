@@ -543,3 +543,9 @@ AnchorPane, GridPane {
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
+
+#card-market-pane{
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}

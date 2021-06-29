@@ -25,7 +25,8 @@ public class ClientWarehouse extends Observable<Pair<ClientWarehouse, String>> i
         notify(new Pair<>(this, owner));
     }
 
-    public ClientWarehouse(ArrayList<ResourceDepot> resourcePiles) {
+    public ClientWarehouse(ArrayList<ResourceDepot> resourcePiles, String owner) {
+        this.owner = owner;
         this.resourceDepots = resourcePiles;
     }
 

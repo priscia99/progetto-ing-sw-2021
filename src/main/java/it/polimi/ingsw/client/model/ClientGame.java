@@ -82,21 +82,21 @@ public class ClientGame extends Observable<Pair<String, Boolean>> implements Ser
         clientGame.setClientMarbleMarket(new ClientMarbleMarket(
                 game.getMarbleMarket().getOnSale(),
                 game.getMarbleMarket().getNotForSale()));
-
+        int order=0;
         for(String username : clientGame.getPlayerBoardMap().keySet()){
             Player player = game.getPlayerByUsername(username);
             int victoryPoints = player.getVictoryPoints();
             FaithPath path = player.getPlayerBoard().getFaithPath();
             ClientFaithPath faithPath = new ClientFaithPath(path.getFaithPoints(), path.getAcquiredPopeFavours(), username);
-            ClientWarehouse warehouse = new ClientWarehouse(player.getPlayerBoard().getWarehouse().getDepots());
+            ClientWarehouse warehouse = new ClientWarehouse(player.getPlayerBoard().getWarehouse().getDepots(), username);
             ClientStrongbox strongbox = new ClientStrongbox(player.getPlayerBoard().getStrongbox().getResourceStocks(), username);
             ClientLeaderCardDeck leaders = new ClientLeaderCardDeck(
                    false, username, player.getPlayerBoard().getLeaderCardsDeck().getLeaderCards());
 
             ClientDevelopmentCardDecks developmentCards = new ClientDevelopmentCardDecks(player.getPlayerBoard().getDevelopmentCardsDecks(), username);
             clientGame.getPlayerBoardMap().put(username,
-                    new ClientPlayerBoard(faithPath, warehouse, strongbox, leaders, developmentCards, false, victoryPoints));
-
+                    new ClientPlayerBoard(faithPath, warehouse, strongbox, leaders, developmentCards, false, victoryPoints, username, order));
+            order++;
         }
         return clientGame;
     }

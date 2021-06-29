@@ -34,7 +34,8 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> implements 
     public int getOrder(){return order;}
     public ClientPlayerBoard(ClientFaithPath faithPath, ClientWarehouse warehouse, ClientStrongbox strongbox,
                              ClientLeaderCardDeck clientLeaderCards, ClientDevelopmentCardDecks developmentCards,
-                             boolean isMine, int victoryPoints) {
+                             boolean isMine, int victoryPoints, String username, int order) {
+        this.username = username;
         this.isMine = isMine;
         this.faithPath = faithPath;
         this.warehouse = warehouse;
@@ -42,6 +43,7 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> implements 
         this.clientLeaderCards = clientLeaderCards;
         this.developmentCards = developmentCards;
         this.victoryPoints = victoryPoints;
+        this.order = order;
     }
 
     public ClientFaithPath getFaithPath() {
@@ -71,5 +73,9 @@ public class ClientPlayerBoard extends Observable<ClientPlayerBoard> implements 
     public void setVictoryPoints(int points){
         this.victoryPoints = points;
         refreshStats();
+    }
+
+    public int getVictoryPoints() {
+        return victoryPoints;
     }
 }

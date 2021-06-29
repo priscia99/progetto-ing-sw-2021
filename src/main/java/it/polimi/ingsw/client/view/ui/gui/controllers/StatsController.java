@@ -18,16 +18,23 @@ public class StatsController extends GenericGUIController {
     GridPane statsPane;
     private final ObservableList<Node> statsList;
     private String localUsername = "";
-    private final Map<String, Integer> otherPlayersOrder;
+    private final Map<String, Integer> playerOrders;
+    private GridPane firstPlayerStatsPane, secondPlayerStatsPane, thirdPlayerStatsPane, fourthPlayerStatsPane;
+    private String myUsername;
 
     /**
      * Create a stats controller for GUI
      * @param statsPane Grid pane in which player stats are located
      */
-    public StatsController(ClientController clientController, GridPane statsPane){
+    public StatsController(ClientController clientController, GridPane statsPane, GridPane firstPlayerStatsPane, GridPane secondPlayerStatsPane, GridPane thirdPlayerStatsPane, GridPane fourthPlayerStatsPane){
         super(clientController);
-        otherPlayersOrder = new HashMap<>();
+        playerOrders = new HashMap<>();
         statsList = statsPane.getChildren();
+        this.firstPlayerStatsPane = firstPlayerStatsPane;
+        this.secondPlayerStatsPane = secondPlayerStatsPane;
+        this.thirdPlayerStatsPane = thirdPlayerStatsPane;
+        this.fourthPlayerStatsPane = fourthPlayerStatsPane;
+        this.myUsername = null;
     }
 
     /**
@@ -35,75 +42,84 @@ public class StatsController extends GenericGUIController {
      * @param playerBoard the playerboard of the player whose statistics need to be updated
      */
     public void initStats(ClientPlayerBoard playerBoard){
-        // FIXME victory points?
-        if(playerBoard.getOrder() == 0){
-            localUsername = playerBoard.getUsername();
-        }else{
-            otherPlayersOrder.put(playerBoard.getUsername(), playerBoard.getOrder());
-        }
-        AnchorPane playerPane = (AnchorPane)statsList.get(playerBoard.getOrder());
-        Label playerUsername = null;
-        TextField playerVp = null, playerFp = null, playerDc = null;
         if(playerBoard.isMine()){
-            // Get proper player name label
-            playerUsername = ((Label)((GridPane)playerPane.getChildren().get(0)).getChildren().get(0).lookup("#local-username"));
-            // Get proper player victory points
-            playerVp = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(4).lookup("#local-vp"));
-            // Get proper player faith points
-            playerFp = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(5).lookup("#local-fp"));
-            // Get proper player development cards number
-            playerDc = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(6).lookup("#local-dc"));
-
+            this.myUsername = playerBoard.getUsername();
+        }
+        if(!playerOrders.containsKey(playerBoard.getUsername())){
+            playerOrders.put(playerBoard.getUsername(), playerBoard.getOrder());
+        }
+        GridPane selectedGridPane = getPaneByOrder(playerBoard.getOrder());
+        int playerOrder = playerBoard.getOrder() + 1;
+        if(myUsername != null && myUsername.equals(playerBoard.getUsername())) {
+            ((Label) selectedGridPane.lookup("#username-" + playerOrder)).setText("[YOU] " + playerBoard.getUsername());
         }
         else{
-            int playerOrder = playerBoard.getOrder()+1;
-            playerUsername = ((Label)((GridPane)playerPane.getChildren().get(0)).getChildren().get(0).lookup("#username-" + playerOrder));
-            playerVp = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(4).lookup("#vp-" + playerOrder));
-            playerFp = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(5).lookup("#fp-" + playerOrder));
-            playerDc = ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(6).lookup("#dc-" + playerOrder));
+            ((Label) selectedGridPane.lookup("#username-" + playerOrder)).setText(playerBoard.getUsername());
         }
-        playerUsername.setText(playerBoard.getUsername());
-        playerVp.setText(String.valueOf(playerBoard.getFaithPath().getFaithPoints()));
-        playerFp.setText(String.valueOf(playerBoard.getFaithPath().getFaithPoints()));
-        playerDc.setText(String.valueOf(playerBoard.getDevelopmentCards().getCardsNumber()));
+        ((TextField)selectedGridPane.lookup("#fp-" + playerOrder)).setText(String.valueOf(playerBoard.getFaithPath().getFaithPoints()));
+        ((TextField)selectedGridPane.lookup("#dc-" + playerOrder)).setText(String.valueOf(playerBoard.getDevelopmentCards().getCardsNumber()));
+        ((TextField)selectedGridPane.lookup("#vp-" + playerOrder)).setText(String.valueOf(playerBoard.getVictoryPoints()));
+
+    }
+
+    private GridPane getPaneByOrder(int order){
+        GridPane selectedGridPane = null;
+        switch (order){
+            case 0 -> selectedGridPane = firstPlayerStatsPane;
+            case 1 -> selectedGridPane = secondPlayerStatsPane;
+            case 2 -> selectedGridPane = thirdPlayerStatsPane;
+            case 3 -> selectedGridPane = fourthPlayerStatsPane;
+        }
+        return selectedGridPane;
     }
 
     public void refreshFaithPoints(int faithPoints, String playerUsername){
-        String paneId;
-        AnchorPane playerPane;
-        if(playerUsername.equals(localUsername)){
-            paneId = "#local-fp";
-            playerPane = (AnchorPane)statsList.get(0);
-        }else{
-            paneId = "#fp-" + otherPlayersOrder.get(playerUsername) + 1;
-            playerPane = (AnchorPane)statsList.get(otherPlayersOrder.get(playerUsername));
+        if(playerOrders.containsKey(playerUsername)){
+            int order = playerOrders.get(playerUsername);
+            GridPane playerPane = getPaneByOrder(order);
+            ((TextField)playerPane.lookup("#fp-" + (order+1))).setText(String.valueOf(faithPoints));
         }
-       // ((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(5).lookup(paneId)).setText(String.valueOf(faithPoints));
     }
 
     public void refreshVictoryPoints(int victoryPoints, String playerUsername){
-        String paneId;
-        AnchorPane playerPane;
-        if(playerUsername.equals(localUsername)){
-            paneId = "#local-vp";
-            playerPane = (AnchorPane)statsList.get(0);
-        }else{
-            paneId = "#vp-" + otherPlayersOrder.get(playerUsername) + 1;
-            playerPane = (AnchorPane)statsList.get(otherPlayersOrder.get(playerUsername));
+        if(playerOrders.containsKey(playerUsername)){
+            int order = playerOrders.get(playerUsername);
+            GridPane playerPane = getPaneByOrder(order);
+            ((TextField)playerPane.lookup("#vp-" + (order+1))).setText(String.valueOf(victoryPoints));
         }
-        //((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(4).lookup(paneId)).setText(String.valueOf(victoryPoints));
     }
 
     public void refreshDevelopmentCardNumbers(int cardNumbers, String playerUsername){
-        String paneId;
-        AnchorPane playerPane;
-        if(playerUsername.equals(localUsername)){
-            paneId = "#local-dc";
-            playerPane = (AnchorPane)statsList.get(0);
-        }else{
-            paneId = "#dc-" +   otherPlayersOrder.get(playerUsername)+ 1;
-            playerPane = (AnchorPane)statsList.get(otherPlayersOrder.get(playerUsername));
+        if(playerOrders.containsKey(playerUsername)){
+            int order = playerOrders.get(playerUsername);
+            GridPane playerPane = getPaneByOrder(order);
+            ((TextField)playerPane.lookup("#dc-" + (order+1))).setText(String.valueOf(cardNumbers));
         }
-        //((TextField)((GridPane)playerPane.getChildren().get(0)).getChildren().get(6).lookup(paneId)).setText(String.valueOf(cardNumbers));
     }
+
+    public void refreshTurn(String playerInTurn){
+        playerOrders.entrySet().forEach(
+                entry -> {
+                    int order = playerOrders.get(entry.getKey());
+                    String tempUsername = entry.getKey();
+                    GridPane playerPane = getPaneByOrder(order);
+                    if(tempUsername.equals(playerInTurn)){
+                        if(myUsername.equals(entry.getKey())){
+                            ((Label) playerPane.lookup("#username-" + (order+1))).setText("[YOU] " + playerInTurn + " (In turn)");
+                        }
+                        else{
+                            ((Label) playerPane.lookup("#username-" + (order+1))).setText(playerInTurn + " (In turn)");
+                        }
+                    }else{
+                        if(myUsername.equals(entry.getKey())){
+                            ((Label) playerPane.lookup("#username-" + (order+1))).setText("[YOU] " + entry.getKey());
+                        }
+                        else{
+                            ((Label) playerPane.lookup("#username-" + (order+1))).setText(entry.getKey());
+                        }
+                    }
+                }
+        );
+    }
+
 }

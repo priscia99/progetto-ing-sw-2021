@@ -507,7 +507,7 @@
                                  <children>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: whitesmoke; -fx-background-radius: 5; -fx-border-color: red;">
                                        <children>
-                                          <GridPane fx:id="playerStatsPane" hgap="5.0" layoutX="12.0" layoutY="2.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="220.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <GridPane fx:id="firstPlayerStatsPane" hgap="5.0" layoutX="12.0" layoutY="2.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="220.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
@@ -519,17 +519,17 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label id="local-username" style="-fx-font-weight: bolder;" text="USERNAME" />
+                                                <Label id="username-1" style="-fx-font-weight: bolder;" text="USERNAME" />
                                                 <Label text="Victory Points:" GridPane.rowIndex="1" />
                                                 <Label text="Faith Points:" GridPane.rowIndex="2" />
                                                 <Label text="Development Cards:" GridPane.rowIndex="3" />
-                                                <TextField id="local-vp" disable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                <TextField id="vp-1" disable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <TextField id="local-fp" disable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <TextField id="local-dc" disable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextField id="fp-1" disable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField id="dc-1" disable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" prefWidth="15.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                              </children>
                                              <padding>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -549,7 +549,7 @@
                                     </AnchorPane>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-background-color: whitesmoke; -fx-background-radius: 5;" GridPane.rowIndex="1">
                                        <children>
-                                          <GridPane hgap="5.0" layoutX="-54.0" layoutY="-41.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <GridPane fx:id="secondPlayerStatsPane" hgap="5.0" layoutX="-54.0" layoutY="-41.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
@@ -583,7 +583,7 @@
                                        </padding></AnchorPane>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-background-color: whitesmoke; -fx-background-radius: 5;" GridPane.columnIndex="1">
                                        <children>
-                                          <GridPane hgap="5.0" layoutX="106.0" layoutY="-30.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <GridPane fx:id="thirdPlayerStatsPane" hgap="5.0" layoutX="106.0" layoutY="-30.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
@@ -617,7 +617,7 @@
                                        </padding></AnchorPane>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-background-color: whitesmoke; -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
-                                          <GridPane hgap="5.0" layoutX="80.0" layoutY="-19.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <GridPane fx:id="fourthPlayerStatsPane" hgap="5.0" layoutX="80.0" layoutY="-19.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />

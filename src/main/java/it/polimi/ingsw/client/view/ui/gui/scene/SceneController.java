@@ -140,6 +140,10 @@ public class SceneController {
             e.printStackTrace();
         }
 
+        primaryStage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
+
         mainGUIController = loader.getController();
         Scene scene = new Scene(root);
         primaryStage.setResizable(true);

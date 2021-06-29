@@ -34,6 +34,7 @@ public class GUI implements UI{
     private Stage primaryStage;             // GUI Application primary stage
     private String selectedPlayerBoard = null;
     private String myUsername = null;
+    private boolean arePlayerStatsInitialized = false;
 
     public void loadAuthScreen(Client client){
         Platform.runLater(() -> SceneController.requestAuth(primaryStage, client));
@@ -74,11 +75,16 @@ public class GUI implements UI{
     public void displayLobbyJoined(String lobbyId) {
         primaryStage.getScene().lookup("#join-button").setDisable(true);
         primaryStage.getScene().lookup("#create-button").setDisable(true);
-        Platform.runLater(() -> ((TextField)primaryStage.getScene().lookup("#login-message")).setText("Joined lobby " + lobbyId));
+        if(primaryStage.getScene().lookup("#login-message") != null){
+            Platform.runLater(() -> ((TextField)primaryStage.getScene().lookup("#login-message")).setText("Joined lobby " + lobbyId));
+        }
     }
 
     @Override
     public void displayNewTurn(String player, Boolean myTurn) {
+        Platform.runLater(() -> {
+            SceneController.getMainGUIController().getStatsController().refreshTurn(player);
+        });
         if(myTurn){
             Platform.runLater(() -> {
                 SceneController.getMainGUIController().startingTurn();
@@ -224,6 +230,7 @@ public class GUI implements UI{
         this.myUsername = game.getMyUsername();
         Platform.runLater(() -> SceneController.showGameScene(primaryStage));
         Platform.runLater(() -> {
+            displayUserStats(game.getPlayerBoardMap().get(myUsername));
             SceneController.getMainGUIController().initGUI(controller);
             SceneController.getMainGUIController().getFaithPathController().refreshFaithPath(game.getPlayerBoardMap().get(myUsername).getFaithPath());
             SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(game.getPlayerBoardMap().get(game.getMyUsername()).getWarehouse(), true);
@@ -242,9 +249,19 @@ public class GUI implements UI{
 
     @Override
     public void displayUserStats(ClientPlayerBoard playerBoard) {
-        Platform.runLater(() -> {
-            SceneController.getMainGUIController().getStatsController().initStats(playerBoard);
-        });
+        if(!arePlayerStatsInitialized){
+            controller.getGame().getPlayerBoardMap().entrySet().forEach(
+                    entry -> {
+                        Platform.runLater(() ->  SceneController.getMainGUIController().getStatsController().initStats(entry.getValue()));
+                    }
+            );
+            arePlayerStatsInitialized = true;
+        }
+        else {
+            Platform.runLater(() -> {
+                SceneController.getMainGUIController().getStatsController().initStats(playerBoard);
+            });
+        }
     }
 
     @Override

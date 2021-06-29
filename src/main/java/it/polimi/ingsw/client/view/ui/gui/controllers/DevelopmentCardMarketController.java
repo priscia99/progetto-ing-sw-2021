@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class DevelopmentCardMarketController extends GenericGUIController{
 
+    private static final String BACKGROUND_MARKET = "img/background-markets.png";
     private final GridPane developmentCardsMarketPane;
     private ClientCardsMarket cardsMarket;
     private Pane devCardZoomPane;
@@ -31,6 +32,7 @@ public class DevelopmentCardMarketController extends GenericGUIController{
     public DevelopmentCardMarketController(ClientController clientController, GridPane developmentCardsMarketPane, Pane devCardZoomPane, GridPane devCardZoomGrid, Pane devCardZoomImage) {
         super(clientController);
         this.developmentCardsMarketPane = developmentCardsMarketPane;
+        FXHelper.setBackground(this.developmentCardsMarketPane, BACKGROUND_MARKET);
         this.devCardZoomPane = devCardZoomPane;
         this.devCardZoomGrid = devCardZoomGrid;
         this.devCardZoomImage = devCardZoomImage;

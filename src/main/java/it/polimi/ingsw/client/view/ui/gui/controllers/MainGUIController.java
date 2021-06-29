@@ -99,6 +99,8 @@ public class MainGUIController {
     private Pane resourceToConvert1, resourceToConvert2;
     @FXML
     private Pane popeFavor1, popeFavor2, popeFavor3;    // pope favors pane
+    @FXML
+    private GridPane firstPlayerStatsPane, secondPlayerStatsPane, thirdPlayerStatsPane, fourthPlayerStatsPane;
 
     // Secondary controllers
     StatsController statsController;
@@ -142,7 +144,7 @@ public class MainGUIController {
      */
     public void initGUI(ClientController controller) {
         clientController = controller;
-        statsController = new StatsController(clientController, statsPane);
+        statsController = new StatsController(clientController, statsPane, firstPlayerStatsPane, secondPlayerStatsPane, thirdPlayerStatsPane, fourthPlayerStatsPane);
         leaderCardsController = new LeaderCardsController(clientController, leaderCardsPane, leaderZoomPane, leaderCardZoomGrid, leaderCardZoomImage, leader1depot1, leader1depot2, leader2depot1, leader2depot2);
         faithPathController = new FaithPathController(clientController, faithPathPane, popeFavor1, popeFavor2, popeFavor3);
         warehouseController = new WarehouseController(clientController, firstDepot, secondDepot, thirdDepot, swapDepotsMenu, dropResource);

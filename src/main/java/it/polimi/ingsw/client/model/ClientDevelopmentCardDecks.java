@@ -78,7 +78,13 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
     public void show(){
         notify(new Pair<>(this, owner));
     }
-    public int getCardsNumber(){return developmentCards.size();}
+    public int getCardsNumber(){
+        int cardsNumber = 0;
+        for(ArrayList<ClientDevelopmentCard> cardsDeck: developmentCards){
+            cardsNumber += cardsDeck.size();
+        }
+        return cardsNumber;
+    }
     public boolean isInitialized(){
         return developmentCards.size() != 0;
     }
