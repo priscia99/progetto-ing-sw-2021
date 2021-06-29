@@ -18,6 +18,6 @@ public class VictoryPointsMessage extends Message<ClientController> implements S
     }
 
     public void execute(ClientController target) {
-
+        target.viewInfoMessage(playerUsername + " has " + victoryPoints + " points!");
     }
 }
