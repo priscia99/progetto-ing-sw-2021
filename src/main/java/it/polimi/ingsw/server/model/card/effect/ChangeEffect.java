@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class ChangeEffect implements Effect, Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 34L;
     private final ResourceType resourceType;
     private static final String CHANGE_EFFECT_FORMAT = "WHITE MARBLE --> [%s]";
     private EffectType effectType;

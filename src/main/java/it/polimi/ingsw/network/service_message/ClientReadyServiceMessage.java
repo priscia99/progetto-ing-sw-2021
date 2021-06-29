@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class ClientReadyServiceMessage extends ServiceMessage<Lobby> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 47L;
     @Override
     public void execute(Lobby lobby) {
         lobby.setupMVC();

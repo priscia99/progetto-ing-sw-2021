@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class CardsMarketMessage extends Message<ClientController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 39L;
     private final ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> decks;
 
     public CardsMarketMessage(CardsMarket market) {

@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class ProductionMessage extends Message<ServerController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 44L;
     ConsumeTarget consumedResources;
     ArrayList<ProductionEffect> productionsToActivate;
 

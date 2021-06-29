@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class FaithPathMessage extends Message<ClientController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 30L;
     private final int faithPoints;
     private final ArrayList<Boolean> popeFavors;
 

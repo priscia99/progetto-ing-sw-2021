@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class PlayLeaderCardMessage extends Message<ServerController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 38L;
     private final String cardId;
 
     public PlayLeaderCardMessage(String id) {

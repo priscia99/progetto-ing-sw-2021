@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 public class MarbleMarketMessage extends Message<ClientController> implements Serializable{
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 28L;
     private final Marble[][] onSale;
     private final Marble notForSale;
 

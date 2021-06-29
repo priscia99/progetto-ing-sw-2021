@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ChooseInitialResourcesMessage extends Message<ClientController> implements Serializable{
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 33L;
 
     private int toChoose;
 

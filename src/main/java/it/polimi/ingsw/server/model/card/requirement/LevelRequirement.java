@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class LevelRequirement extends Requirement implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 20L;
     private Color color;
     private static final String LEVEL_REQUIREMENT_FORMAT = "%s Lv 2";
 

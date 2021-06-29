@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class BlackCrossMessage extends Message<ClientController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 25L;
     private final int position;
     private final ArrayList<Boolean> popeFavors;
 

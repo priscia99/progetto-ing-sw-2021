@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ChosenInitialLeadersMessage extends Message<ServerController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 26L;
     private final ArrayList<String> leadersChosen;
     private final String playerUsername;
 

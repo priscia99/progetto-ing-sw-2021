@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class ExceptionMessage extends Message<ClientController> implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4L;
     private final String errorMessage;
     private final String player;
 

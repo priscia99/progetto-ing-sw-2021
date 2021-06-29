@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  */
 public class ResourceRequirement extends Requirement implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 14L;
     private List<ResourceStock> resourceStocks;
     private static final String RESOURCE_REQUIREMENT_FORMAT = "[%s]";
 

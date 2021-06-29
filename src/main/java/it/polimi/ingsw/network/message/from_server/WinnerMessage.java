@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class WinnerMessage extends Message<ClientController> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 7L;
     private final ArrayList<String> winners;
 
     public WinnerMessage(ArrayList<String> playersUsername) {
