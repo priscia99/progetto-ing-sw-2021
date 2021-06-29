@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.model.ClientCard;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
+import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.effect.EffectType;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
@@ -84,7 +85,7 @@ public class LeaderCardsController extends GenericGUIController{
             else
                 cardPane.setStyle("-fx-background-image: url(" + LEADER_CARD_BACK_PATH + ");");
             if(tempCard.isActive()){
-                cardPane.setEffect(new Glow(0.6));
+                FXHelper.highlight(cardPane);
             }
         }
         if(isMine && canUserDoAction){
@@ -175,10 +176,10 @@ public class LeaderCardsController extends GenericGUIController{
         leader1depot2.setStyle("-fx-background-image: none;");
         leader2depot1.setStyle("-fx-background-image: none;");
         leader2depot2.setStyle("-fx-background-image: none;");
-        leader1depot1.setEffect(null);
-        leader1depot2.setEffect(null);
-        leader2depot1.setEffect(null);
-        leader2depot2.setEffect(null);
+        FXHelper.cleanEffects(leader1depot1);
+        FXHelper.cleanEffects(leader1depot2);
+        FXHelper.cleanEffects(leader2depot1);
+        FXHelper.cleanEffects(leader2depot2);
         for(int i=0; i<leaderCardsDeck.getClientLeaderCards().size(); i++){
             ClientLeaderCard tempCard = leaderCardsDeck.getCard(i);
             System.out.println("Card effect" + tempCard.getEffect().getEffectType());
@@ -255,7 +256,7 @@ public class LeaderCardsController extends GenericGUIController{
                         .getPickResourcesFromStorageController().addFromLeaderDepot(ResourcePosition.SECOND_LEADER_DEPOT,selectedResType);
             }
         }
-        triggeredPane.setEffect(new Glow(0.6));
+        FXHelper.highlight(triggeredPane);
         removePickedHandlerForPane(triggeredPane);
     };
 

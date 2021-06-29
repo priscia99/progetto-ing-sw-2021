@@ -1,11 +1,13 @@
 package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import it.polimi.ingsw.server.model.resource.ConsumeTarget;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceStock;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
@@ -62,7 +64,7 @@ public class ChooseResourcesController extends GenericGUIController{
      */
     EventHandler<MouseEvent> onResourceChosen = event -> {
         Pane chosenIconPane = ((Pane)event.getSource());
-        chosenIconPane.setEffect(new Glow(0.6));
+        FXHelper.highlight(chosenIconPane);
         switch (chosenIconPane.getId()) {
             case "coin-icon" -> tempChosenType = ResourceType.COIN;
             case "shield-icon" -> tempChosenType = ResourceType.SHIELD;
@@ -81,7 +83,7 @@ public class ChooseResourcesController extends GenericGUIController{
     EventHandler<MouseEvent> onResourceUnselected = event -> {
         tempChosenType = null;
         Pane chosenIconPane = ((Pane)event.getSource());
-        chosenIconPane.setEffect(null);
+        FXHelper.cleanEffects(chosenIconPane);
         this.removeIconsHandlers();
         this.addIconsHandlers();
     };
@@ -138,54 +140,46 @@ public class ChooseResourcesController extends GenericGUIController{
      * Resets all effects in resources icons
      */
     private void resetEffects(){
-        chooseResourcesIcons.get("coin-icon").setEffect(null);
-        chooseResourcesIcons.get("shield-icon").setEffect(null);
-        chooseResourcesIcons.get("stone-icon").setEffect(null);
-        chooseResourcesIcons.get("servant-icon").setEffect(null);
+        for(Pane icon : chooseResourcesIcons.values()){
+            FXHelper.cleanEffects(icon);
+        }
     }
 
     /**
      * Enables all warehouse destination buttons and adds handlers to them
      */
     private void enableAllButtons(){
-        chooseResourcesButtons.get("firstdepot-button").setDisable(false);
-        chooseResourcesButtons.get("seconddepot-button").setDisable(false);
-        chooseResourcesButtons.get("thirddepot-button").setDisable(false);
-        chooseResourcesButtons.get("confirmresources-button").setDisable(false);
-        chooseResourcesButtons.get("firstdepot-button").addEventHandler(MouseEvent.MOUSE_CLICKED, onSelectedPosition);
-        chooseResourcesButtons.get("seconddepot-button").addEventHandler(MouseEvent.MOUSE_CLICKED, onSelectedPosition);
-        chooseResourcesButtons.get("thirddepot-button").addEventHandler(MouseEvent.MOUSE_CLICKED, onSelectedPosition);
-        chooseResourcesButtons.get("confirmresources-button").addEventHandler(MouseEvent.MOUSE_CLICKED, onSelectedPosition);
+        for(Button button : chooseResourcesButtons.values()){
+            button.setDisable(false);
+            button.addEventHandler(MouseEvent.MOUSE_CLICKED, onSelectedPosition);
+        }
     }
 
     /**
      * Makes all warehouse destination buttons disabled
      */
     private void disableAllButtons(){
-        chooseResourcesButtons.get("firstdepot-button").setDisable(true);
-        chooseResourcesButtons.get("seconddepot-button").setDisable(true);
-        chooseResourcesButtons.get("thirddepot-button").setDisable(true);
-        chooseResourcesButtons.get("confirmresources-button").setDisable(true);
+        for(Button button : chooseResourcesButtons.values()){
+            button.setDisable(true);
+        }
     }
 
     /**
      * Adds handlers to all resource icons
      */
     private void addIconsHandlers(){
-        chooseResourcesIcons.get("coin-icon").addEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
-        chooseResourcesIcons.get("shield-icon").addEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
-        chooseResourcesIcons.get("stone-icon").addEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
-        chooseResourcesIcons.get("servant-icon").addEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
+        for(Pane icon : chooseResourcesIcons.values()){
+            icon.addEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
+        }
     }
 
     /**
      * Removes handlers to all resource icons
      */
     private void removeIconsHandlers(){
-        chooseResourcesIcons.get("coin-icon").removeEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
-        chooseResourcesIcons.get("shield-icon").removeEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
-        chooseResourcesIcons.get("stone-icon").removeEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
-        chooseResourcesIcons.get("servant-icon").removeEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
+        for(Pane icon : chooseResourcesIcons.values()){
+            icon.removeEventHandler(MouseEvent.MOUSE_CLICKED, onResourceChosen);
+        }
     }
 
 }

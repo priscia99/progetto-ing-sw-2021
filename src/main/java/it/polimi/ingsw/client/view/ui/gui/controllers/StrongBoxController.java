@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientStrongbox;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
+import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
@@ -73,18 +74,17 @@ public class StrongBoxController extends GenericGUIController {
 
     public void disableHandlers(){
         strongboxCoinIco.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
-        strongboxCoinIco.setEffect(null);
-        strongboxCoin.setEffect(null);
+        FXHelper.cleanEffects(strongboxCoinIco);
+        FXHelper.cleanEffects(strongboxCoin);
         strongboxServantIco.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
-        strongboxServantIco.setEffect(null);
-        strongboxServant.setEffect(null);
+        FXHelper.cleanEffects(strongboxServantIco);
+        FXHelper.cleanEffects(strongboxServant);
         strongboxShieldIco.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
-        strongboxShieldIco.setEffect(null);
-        strongboxShield.setEffect(null);
+        FXHelper.cleanEffects(strongboxShieldIco);
+        FXHelper.cleanEffects(strongboxShield);
         strongboxStoneIco.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
-        strongboxStoneIco.setEffect(null);
-        strongboxStone.setEffect(null);
-
+        FXHelper.cleanEffects(strongboxStoneIco);
+        FXHelper.cleanEffects(strongboxStone);
     }
 
     public void enableHandlers(){
@@ -123,19 +123,19 @@ public class StrongBoxController extends GenericGUIController {
         switch (triggeredPane.getId()){
             case "coin-icon":       resourceType = ResourceType.COIN;
                                     strongboxCoin.setText(String.valueOf(Integer.parseInt(strongboxCoin.getText()) - 1));
-                                    strongboxCoin.setEffect(new Glow(0.6));
+                                    FXHelper.highlight(strongboxCoin);
                                     break;
             case "stone-icon":      resourceType = ResourceType.STONE;
                                     strongboxStone.setText(String.valueOf(Integer.parseInt(strongboxStone.getText()) - 1));
-                                    strongboxStone.setEffect(new Glow(0.6));
+                                    FXHelper.highlight(strongboxStone);
                                     break;
             case "servant-icon":    resourceType = ResourceType.SERVANT;
                                     strongboxServant.setText(String.valueOf(Integer.parseInt(strongboxServant.getText()) - 1));
-                                    strongboxServant.setEffect(new Glow(0.6));
+                                    FXHelper.highlight(strongboxServant);
                                     break;
             case "shield-icon":     resourceType = ResourceType.SHIELD;
                                     strongboxShield.setText(String.valueOf(Integer.parseInt(strongboxShield.getText()) - 1));
-                                    strongboxShield.setEffect(new Glow(0.6));
+                                    FXHelper.highlight(strongboxShield);
                                     break;
         }
         this.enableHandlers();

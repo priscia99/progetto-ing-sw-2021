@@ -268,7 +268,7 @@ public class WarehouseController extends GenericGUIController {
 
     private final EventHandler<MouseEvent> onUnclickedResourceToDrop = event -> {
         Pane triggeredPane = (Pane) event.getSource();
-        triggeredPane.setEffect(null);
+        FXHelper.cleanEffects(triggeredPane);
         resourcePositionToDrop = null;
         addClickedResourceHandler(triggeredPane);
         dropResourceButton.setVisible(false);
@@ -306,7 +306,7 @@ public class WarehouseController extends GenericGUIController {
         int activeLeaderDepots = SceneController.getMainGUIController().getLeaderCardsController().getActiveDepotsNumber();
         Pane triggeredPane = (Pane) event.getSource();
         FXHelper.setBackground(triggeredPane, AssetsHelper.getResourceIconPath(marbleToInsert.getResourceType()));
-        triggeredPane.setEffect(new Glow(0.6));
+        FXHelper.highlight(triggeredPane);
 
         if(triggeredPane.getId().contains("leader-1")){
             positions.add(ResourcePosition.FIRST_LEADER_DEPOT);
@@ -336,7 +336,7 @@ public class WarehouseController extends GenericGUIController {
             for (int j = 0; j <i+1; j++) {
                 Pane resourcePane = (Pane) warehouseElements.get(i).get(j);
                 resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onMarbleDestinationChosen);
-                resourcePane.setEffect(null);
+                FXHelper.cleanEffects(resourcePane);
             }
         }
         this.leaderDepotActivePanes.entrySet().stream().forEach(entry -> entry.getValue().removeEventHandler(MouseEvent.MOUSE_CLICKED, onDestinationChosenFromLeaderDepot));
@@ -352,7 +352,7 @@ public class WarehouseController extends GenericGUIController {
                     if(j < activeWarehouse.getResourceDepot(i).getQuantity() && isPickable) {
                         resourcePane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
                     }else{
-                        resourcePane.setEffect(null);
+                        FXHelper.cleanEffects(resourcePane);
                         resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
                     }
                     resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onUnclickedResourceToDrop);
@@ -364,7 +364,7 @@ public class WarehouseController extends GenericGUIController {
     private final EventHandler<MouseEvent> onClickedResource = event -> {
         Pane triggeredPane = (Pane) event.getSource();
         int rowIndex = Integer.parseInt(triggeredPane.getId().split("-")[1]);
-        triggeredPane.setEffect(new Glow(0.6));
+        FXHelper.highlight(triggeredPane);
         removePickHandler(triggeredPane);
         ResourcePosition resourcePosition = null;
         switch (rowIndex){
