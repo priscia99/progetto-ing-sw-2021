@@ -81,13 +81,13 @@ public class GUI implements UI{
     public void displayNewTurn(String player, Boolean myTurn) {
         if(myTurn){
             Platform.runLater(() -> {
-                // TODO enable all actions
-                // SceneController.getMainGUIController().enableAllActions();
+                SceneController.getMainGUIController().startingTurn();
                 SceneController.getMainGUIController().enableAllActions();
                 SceneController.displayPopupMessage(primaryStage, player + ", it's your turn!");
             });
         }else{
             Platform.runLater(() -> {
+                SceneController.getMainGUIController().disableButtons();
                 SceneController.getMainGUIController().disableAllActions();
             });
         }
@@ -157,7 +157,7 @@ public class GUI implements UI{
     @Override
     public void displayStrongBox(ClientStrongbox strongbox, String username) {
         if (isToRefresh(username)) {
-            Platform.runLater(() -> SceneController.getMainGUIController().getStrongBoxController().refreshStrongbox(strongbox));
+            Platform.runLater(() -> SceneController.getMainGUIController().getStrongBoxController().refreshStrongbox(strongbox, isMine(username)));
         }
     }
 
@@ -227,7 +227,7 @@ public class GUI implements UI{
             SceneController.getMainGUIController().initGUI(controller);
             SceneController.getMainGUIController().getFaithPathController().refreshFaithPath(game.getPlayerBoardMap().get(myUsername).getFaithPath());
             SceneController.getMainGUIController().getWarehouseController().refreshWarehouse(game.getPlayerBoardMap().get(game.getMyUsername()).getWarehouse(), true);
-            SceneController.getMainGUIController().getStrongBoxController().refreshStrongbox(game.getPlayerBoardMap().get(myUsername).getStrongbox());
+            SceneController.getMainGUIController().getStrongBoxController().refreshStrongbox(game.getPlayerBoardMap().get(myUsername).getStrongbox(), true);
             SceneController.getMainGUIController().getLeaderCardsController().refreshLeaderCards(game.getPlayerBoardMap().get(game.getMyUsername()).getClientLeaderCards(), true);
             SceneController.getMainGUIController().getPlayerBoardController().initClientSelector(new ArrayList<>(game.getPlayerBoardMap().keySet()));
             SceneController.getMainGUIController().getPlayerBoardController().setUsername(game.getMyUsername(), true);
@@ -255,9 +255,13 @@ public class GUI implements UI{
 
     public void setPlayerBoardUsername(String username, boolean isMine){
         this.selectedPlayerBoard = username;
-        if(isMine){
+        if(isMine && username.equals(controller.getGame().getCurrentPlayer())){
             Platform.runLater(() -> {
                 SceneController.getMainGUIController().startingTurn();
+            });
+        }else{
+            Platform.runLater(() -> {
+                SceneController.getMainGUIController().disableButtons();
             });
         }
         Platform.runLater(() -> SceneController.getMainGUIController().getPlayerBoardController().setUsername(username, isMine));

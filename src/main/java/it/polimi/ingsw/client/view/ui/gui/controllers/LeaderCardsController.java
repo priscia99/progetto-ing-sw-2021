@@ -37,11 +37,13 @@ public class LeaderCardsController extends GenericGUIController{
     private Map<String, Pane> leaderDepotActivePanes;
     private ArrayList<ResourceType> depotResourceTypes;
     private int activeDepotsNumber;
+    private boolean isManagingLeaderDepots;
 
     public LeaderCardsController(ClientController clientController, GridPane leaderCardsPane, AnchorPane leaderZoomPane, GridPane leaderCardZoomGrid, Pane leaderCardZoomImage,
                                  Pane leader1depot1, Pane leader1depot2, Pane leader2depot1, Pane leader2depot2) {
         super(clientController);
         this.canUserDoAction = false;
+        this.isManagingLeaderDepots = false;
         this.leaderZoomPane = leaderZoomPane;
         this.leaderCardZoomGrid = leaderCardZoomGrid;
         this.leaderCardZoomImage = leaderCardZoomImage;
@@ -81,12 +83,12 @@ public class LeaderCardsController extends GenericGUIController{
                 FXHelper.cleanEffects(cardPane);
             }
         }
-        if(isMine && canUserDoAction){
+        if(isMine && canUserDoAction && !isManagingLeaderDepots){
             enableLeaderCardsHandlers();
         }else{
             disableLeaderCardsHandlers();
         }
-        setResourcesAsPickable(false);
+        setResourcesAsPickable(isManagingLeaderDepots);
     }
 
     public void disableLeaderCardsHandlers() {
@@ -146,29 +148,20 @@ public class LeaderCardsController extends GenericGUIController{
     };
 
     public void setResourcesAsPickable(boolean isPickable){
-        if(isPickable){
-            disableLeaderCardsHandlers();
-        }
+        this.isManagingLeaderDepots = isPickable;
         this.depotResourceTypes = new ArrayList<>();
         this.leaderDepotActivePanes = new HashMap<>();
         this.activeDepotsNumber = 0;
-        FXHelper.cleanBackground(leader1depot1);
-        FXHelper.cleanBackground(leader1depot2);
-        FXHelper.cleanBackground(leader2depot1);
-        FXHelper.cleanBackground(leader2depot2);
-        FXHelper.cleanEffects(leader1depot1);
-        FXHelper.cleanEffects(leader1depot2);
-        FXHelper.cleanEffects(leader2depot1);
-        FXHelper.cleanEffects(leader2depot2);
+        this.removeLeaderDepotsBackground();
         for(int i=0; i<leaderCardsDeck.getClientLeaderCards().size(); i++){
             ClientLeaderCard tempCard = leaderCardsDeck.getCard(i);
             if(tempCard.getEffect().getEffectType().equals(EffectType.DEPOT)){
-                this.activeDepotsNumber++;
                 DepotEffect depotEffect = (DepotEffect) tempCard.getEffect();
                 ResourceDepot leaderDepot = depotEffect.getDepot();
                 ResourceType depotType = leaderDepot.getResourceType();
                 depotResourceTypes.add(depotType);
                 if(depotType != null && depotType != ResourceType.BLANK && tempCard.isActive()){
+                    this.activeDepotsNumber++;
                     if(i==0){
                         leaderDepotActivePanes.put("leader-1-depot-1", leader1depot1);
                         leaderDepotActivePanes.put("leader-1-depot-2", leader1depot2);
@@ -217,6 +210,7 @@ public class LeaderCardsController extends GenericGUIController{
                 }
             }
         }
+        this.removeLeaderDepotsEffects();
     }
 
     private final EventHandler<MouseEvent> onPickedDepotResource = event -> {
@@ -254,5 +248,19 @@ public class LeaderCardsController extends GenericGUIController{
 
     public int getActiveDepotsNumber(){
         return activeDepotsNumber;
+    }
+
+    public void removeLeaderDepotsEffects(){
+        FXHelper.cleanEffects(leader1depot1);
+        FXHelper.cleanEffects(leader1depot2);
+        FXHelper.cleanEffects(leader2depot1);
+        FXHelper.cleanEffects(leader2depot2);
+    }
+
+    public void removeLeaderDepotsBackground(){
+        FXHelper.cleanBackground(leader1depot1);
+        FXHelper.cleanBackground(leader1depot2);
+        FXHelper.cleanBackground(leader2depot1);
+        FXHelper.cleanBackground(leader2depot2);
     }
 }

@@ -193,6 +193,11 @@ public class MainGUIController {
         getWarehouseController().setSwapMenuEnable(true);
     }
 
+    public void disableButtons(){
+        getDevelopmentCardsController().setProduceButtonEnable(false);
+        getWarehouseController().setSwapMenuEnable(false);
+    }
+
     /**
      * Initializes and returns map with all marble market arrows (in order to choose resources from market)
      * @return A map with all marble market buttons

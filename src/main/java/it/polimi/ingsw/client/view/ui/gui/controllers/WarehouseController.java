@@ -54,6 +54,7 @@ public class WarehouseController extends GenericGUIController {
     private ArrayList<Pair<Integer, Integer>> occupiedCells;
     private MarbleSelection marbleSelection;
     private ResourcePosition resourcePositionToDrop;
+    private Pane resourcePaneToDrop;
     private boolean isManagingResources;
     private Map<String, Pane> leaderDepotActivePanes;
 
@@ -62,6 +63,7 @@ public class WarehouseController extends GenericGUIController {
         this.isManagingResources = false;
         this.swapDepotsMenu = swapDepotsMenu;
         this.warehouseElements = new ArrayList<>();
+        this.resourcePositionToDrop = null;
         this.resourcePositionToDrop = null;
         this.dropResourceButton = dropResourceButton;
         this.warehouseElements.add(firstDepot.getChildren());
@@ -157,6 +159,8 @@ public class WarehouseController extends GenericGUIController {
         if (insertPositionIndex >= selected.size()) {
             this.isManagingResources = false;
             removeAllSelectionHandlers();
+            SceneController.getMainGUIController().getLeaderCardsController().removeLeaderDepotsBackground();
+            SceneController.getMainGUIController().getLeaderCardsController().removeLeaderDepotsEffects();
             refreshWarehouse(activeWarehouse, true);
             getClientController().pickResources(marbleSelection, positions, conversions);
             SceneController.endMainAction();
@@ -242,6 +246,7 @@ public class WarehouseController extends GenericGUIController {
     private final EventHandler<MouseEvent> onClickedResourceToDrop = event -> {
         if(resourcePositionToDrop == null) {
             Pane triggeredPane = (Pane) event.getSource();
+            this.resourcePaneToDrop = triggeredPane;
             FXHelper.highlight(triggeredPane);
             int triggeredPaneRowIndex = Integer.parseInt(triggeredPane.getId().split("-")[1]);
             switch (triggeredPaneRowIndex) {
@@ -279,6 +284,10 @@ public class WarehouseController extends GenericGUIController {
 
     private final EventHandler<MouseEvent> onRemoveResourceConfirmClicked = event -> {
         dropResourceButton.setVisible(false);
+        if(this.resourcePaneToDrop != null){
+            FXHelper.cleanEffects(resourcePaneToDrop);
+            this.resourcePaneToDrop = null;
+        }
         getClientController().removeResource(resourcePositionToDrop);
         this.resourcePositionToDrop = null;
     };

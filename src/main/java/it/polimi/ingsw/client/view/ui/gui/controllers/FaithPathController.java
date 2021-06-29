@@ -15,9 +15,12 @@ public class FaithPathController extends GenericGUIController {
     private static final String CROSS_PATH = "/img/croce.png";      // cross image path
     private static final String LORENZO_PATH = "/img/lorenzo.png";
     private static final String CROSSES_PATH = "/img/crosses.png";
-    private static final String FAVOR_1_PATH = "/img/favor-1-inactive.png";
-    private static final String FAVOR_2_PATH = "/img/favor-2-inactive.png";
-    private static final String FAVOR_3_PATH = "/img/favor-3-inactive.png";
+    private static final String FAVOR_1_PATH_INACTIVE = "/img/favor-1-inactive.png";
+    private static final String FAVOR_2_PATH_INACTIVE = "/img/favor-2-inactive.png";
+    private static final String FAVOR_3_PATH_INACTIVE = "/img/favor-3-inactive.png";
+    private static final String FAVOR_1_PATH_ACTIVE = "/img/favor-1-active.png";
+    private static final String FAVOR_2_PATH_ACTIVE = "/img/favor-2-active.png";
+    private static final String FAVOR_3_PATH_ACTIVE = "/img/favor-3-active.png";
 
     private final Pane popeFavor1, popeFavor2, popeFavor3;
     GridPane faithPathPane;                                         // faith path generic pane
@@ -61,19 +64,24 @@ public class FaithPathController extends GenericGUIController {
         }
 
 
-        FXHelper.setBackground(popeFavor1, FAVOR_1_PATH);
+
         if(faithPath.getPopeFavor(0)){
-            FXHelper.highlight(popeFavor1);
+            FXHelper.setBackground(popeFavor1, FAVOR_1_PATH_ACTIVE);
+        }else{
+            FXHelper.setBackground(popeFavor1, FAVOR_1_PATH_INACTIVE);
         }
 
-        FXHelper.setBackground(popeFavor2, FAVOR_2_PATH);
+
         if(faithPath.getPopeFavor(1)){
-            FXHelper.highlight(popeFavor2);
+            FXHelper.setBackground(popeFavor2, FAVOR_2_PATH_ACTIVE);
+        }else{
+            FXHelper.setBackground(popeFavor2, FAVOR_2_PATH_INACTIVE);
         }
 
-        FXHelper.setBackground(popeFavor3, FAVOR_3_PATH);
         if(faithPath.getPopeFavor(2)){
-            FXHelper.highlight(popeFavor3);
+            FXHelper.setBackground(popeFavor3, FAVOR_3_PATH_ACTIVE);
+        }else{
+            FXHelper.setBackground(popeFavor3, FAVOR_3_PATH_INACTIVE);
         }
 
     }

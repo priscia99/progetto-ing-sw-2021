@@ -17,6 +17,8 @@ public class StrongBoxController extends GenericGUIController {
     private GridPane strongboxPane;
     private TextField strongboxCoin, strongboxServant, strongboxShield, strongboxStone;
     private Pane strongboxCoinIco, strongboxServantIco, strongboxShieldIco, strongboxStoneIco;
+    private boolean isManagingResources;
+    private ClientStrongbox activeStrongbox;
 
     public StrongBoxController(ClientController clientController, GridPane strongboxPane, TextField strongboxCoin, TextField strongboxServant, TextField strongboxShield, TextField strongboxStone, Pane strongboxCoinIco, Pane strongboxServantIco, Pane strongboxShieldIco, Pane strongboxStoneIco) {
         super(clientController);
@@ -29,13 +31,15 @@ public class StrongBoxController extends GenericGUIController {
         this.strongboxServantIco = strongboxServantIco;
         this.strongboxShieldIco = strongboxShieldIco;
         this.strongboxStoneIco = strongboxStoneIco;
+        this.isManagingResources = false;
     }
 
     /**
      * Refreshes strongbox pane with given strongbox object
      * @param strongbox Player's strongbox
      */
-    public void refreshStrongbox(ClientStrongbox strongbox){
+    public void refreshStrongbox(ClientStrongbox strongbox, boolean isMine){
+        this.activeStrongbox = strongbox;
         if(strongbox.isInitialized()) {
             for(int i = 0; i<4; i++){
                 switch (strongbox.getResourceStock(i).getResourceType()) {
@@ -52,6 +56,10 @@ public class StrongBoxController extends GenericGUIController {
             strongboxShield.setText("0");
             strongboxStone.setText("0");
         }
+        if(isMine)
+            enableHandlers();
+        else
+            disableHandlers();
     }
 
     public void initStrongboxScreen(){
@@ -62,6 +70,8 @@ public class StrongBoxController extends GenericGUIController {
     }
 
     public void setResourcesAsPickable(boolean isPickable){
+        this.isManagingResources = isPickable;
+        refreshStrongbox(activeStrongbox, true);
         if(isPickable) {
             strongboxPane.setStyle("-fx-border-color: darkred;");
             this.enableHandlers();
