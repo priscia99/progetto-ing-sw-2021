@@ -57,6 +57,7 @@ public class Lobby extends Observable<Message> {
         } else {
             CustomLogger.getLogger().info("["+this.getLobbyId()+"] "+ username + " RECONNECTED!!" );
             clientConnectionMap.put(username, clientConnection);
+            ((SocketClientConnection) clientConnection).addObserver(serverMessageDecoder);
             disconnectedUsernames.remove(username);
             this.playerRevived(username);
             GameBackupMessage backup;
