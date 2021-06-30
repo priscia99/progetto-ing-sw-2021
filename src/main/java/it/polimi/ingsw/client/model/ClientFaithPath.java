@@ -15,6 +15,10 @@ public class ClientFaithPath extends Observable<Pair<ClientFaithPath, String>> i
     private Integer blackCrossPosition;
     private String owner;
 
+    /**
+     * Initialize the client faith path with default values
+     * @param owner the name of the faith path's owner
+     */
     public ClientFaithPath(String owner) {
         this.faithPoints = 0;
         this.popeFavors = new ArrayList<>();
@@ -25,6 +29,12 @@ public class ClientFaithPath extends Observable<Pair<ClientFaithPath, String>> i
         this.owner = owner;
     }
 
+    /**
+     * Initialize the client faith path by passing all parameters
+     * @param faithPoints number of faith points
+     * @param popeFavors list of all pope favors
+     * @param owner the name of the faith path's owner
+     */
     public ClientFaithPath(int faithPoints, ArrayList<Boolean> popeFavors, String owner) {
         this.faithPoints = faithPoints;
         this.owner = owner;

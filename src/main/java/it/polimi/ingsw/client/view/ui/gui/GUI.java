@@ -1,33 +1,19 @@
 package it.polimi.ingsw.client.view.ui.gui;
 
-import com.sun.tools.javac.Main;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.client.view.ui.UI;
-import it.polimi.ingsw.client.view.ui.gui.controllers.MainGUIController;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import it.polimi.ingsw.network.auth_data.AuthData;
-import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
-import it.polimi.ingsw.server.model.card.effect.DepotEffect;
-import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
-import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
-import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
-import it.polimi.ingsw.server.model.resource.ResourcePosition;
-import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.CustomLogger;
 import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class GUI implements UI{
     private ClientController controller;    // reference to client controller

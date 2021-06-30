@@ -17,6 +17,23 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
     private final ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards;
     private String owner;
 
+    /**
+     * Initialize the client development cards decks with default values
+     * @param username the name of the deck's owner
+     */
+    public ClientDevelopmentCardDecks(String username) {
+        this.owner = username;
+        this.developmentCards = new ArrayList<>();
+        this.developmentCards.add(new ArrayList<>());
+        this.developmentCards.add(new ArrayList<>());
+        this.developmentCards.add(new ArrayList<>());
+    }
+
+    /**
+     * Initialize the client development cards decks by passing all parameters
+     * @param developmentCards list of development card decks
+     * @param username the name of the deck's owner
+     */
     public ClientDevelopmentCardDecks(DevelopmentCardsDeck[] developmentCards, String username) {
         ArrayList<ArrayList<ClientDevelopmentCard>> clientCards = new ArrayList<>();
         for (DevelopmentCardsDeck list : developmentCards) {
@@ -30,22 +47,28 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
         this.owner = username;
     }
 
-    public ClientDevelopmentCardDecks(String username) {
-        this.owner = username;
-        this.developmentCards = new ArrayList<>();
-        this.developmentCards.add(new ArrayList<>());
-        this.developmentCards.add(new ArrayList<>());
-        this.developmentCards.add(new ArrayList<>());
-    }
-
+    /**
+     *
+     * @return all player's development cards
+     */
     public ArrayList<ArrayList<ClientDevelopmentCard>> getDevelopmentCards() {
         return developmentCards;
     }
 
+    /**
+     * Retrieves the selected development card
+     * @param coordinates development card coordinates in the deck
+     * @return the selected development card
+     */
     public ClientDevelopmentCard getCard(Pair<Integer, Integer> coordinates) {
         return this.developmentCards.get(coordinates.getFirst()).get(coordinates.getSecond());
     }
 
+    /**
+     * Retrieves the selected development card deck
+     * @param index index of the deck
+     * @return the selected development card deck
+     */
     public ArrayList<ClientDevelopmentCard> getDeck(int index){return this.developmentCards.get(index);}
 
     public ArrayList<ProductionEffect> getProductionAvailable(ArrayList<String> ids){
@@ -55,19 +78,32 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
                 .map(deck->(ProductionEffect) deck.get(deck.size()-1).getEffect()).collect(Collectors.toList()));
     }
 
-
+    /**
+     * Add a development card to the selected deck
+     * @param card development card to add
+     * @param index index of the deck in which the card needs to be placed
+     */
     public void addCard(ClientDevelopmentCard card, int index) {
         this.developmentCards.get(index).add(card);
 
         notify(new Pair<>(this, owner));
     }
 
+    /**
+     * Add a list of development cards to the selected deck
+     * @param cards list of development cards to add
+     * @param index index of the deck in which the cards need to be placed
+     */
     public void addCards(ArrayList<ClientDevelopmentCard> cards, int index) {
         this.developmentCards.get(index).addAll(cards);
 
         notify(new Pair<>(this, owner));
     }
 
+    /**
+     * Remove a development card from one of the decks
+     * @param coordinates the coordinates in which the card to be removed is located
+     */
     public void removeCard(Pair<Integer, Integer> coordinates) {
         ClientDevelopmentCard cardToRemove = this.developmentCards.get(coordinates.getFirst()).get(coordinates.getSecond());
         this.developmentCards.get(coordinates.getFirst()).remove(cardToRemove);
@@ -75,9 +111,10 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
         notify(new Pair<>(this, owner));
     }
 
-    public void show(){
-        notify(new Pair<>(this, owner));
-    }
+    /**
+     * Retrieves the number of development cards stored in the decks
+     * @return the number of development cards stored in the decks
+     */
     public int getCardsNumber(){
         int cardsNumber = 0;
         for(ArrayList<ClientDevelopmentCard> cardsDeck: developmentCards){
@@ -85,6 +122,11 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
         }
         return cardsNumber;
     }
+
+    public void show(){
+        notify(new Pair<>(this, owner));
+    }
+
     public boolean isInitialized(){
         return developmentCards.size() != 0;
     }

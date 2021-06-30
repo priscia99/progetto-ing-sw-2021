@@ -24,6 +24,11 @@ public class SceneController {
     private static Client client;
     private static MainGUIController mainGUIController;
 
+    /**
+     * Displays the login message
+     * @param primaryStage GUI primary stage
+     * @param c client object
+     */
     public static void requestAuth(Stage primaryStage, Client c) {
             // Retrieving and storing the current client class object
             client = c;
@@ -129,6 +134,10 @@ public class SceneController {
             primaryStage.show();
     }
 
+    /**
+     * Displays the game main scene
+     * @param primaryStage GUI primary stage
+     */
     public static void showGameScene(Stage primaryStage){
 
         FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/home.fxml"));
@@ -153,15 +162,31 @@ public class SceneController {
         primaryStage.show();
     }
 
+    /**
+     * Display a popup message
+     * @param stage GUI stage
+     * @param message message to show
+     */
     public static void displayPopupMessage(Stage stage, String message){
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message);
         alert.show();
     }
 
+    /**
+     * Displays a popup error
+     * @param stage GUI stage
+     * @param message message to show
+     */
     public static void displayPopupError(Stage stage, String message){
         new Alert(Alert.AlertType.ERROR, message).show();
     }
 
+    /**
+     * Check all login parameters
+     * @param scene GUI scene
+     * @param authType set 1 if player wants to create lobby, 2 if player wants to join lobby
+     * @return true if parameters are correct, false otherwise
+     */
     private static boolean checkParameters(Scene scene, int authType){
         TextField nickname = (TextField) scene.lookup("#nickname-field");
         TextField loginInfo = null;
@@ -176,7 +201,10 @@ public class SceneController {
             // Validating create lobby parameters
             loginInfo = (TextField) scene.lookup("#lobby-dimension-field");
             try {
-                Integer.parseInt(loginInfo.getText());
+                int numberOfPlayers = Integer.parseInt(loginInfo.getText());
+                if(numberOfPlayers > 4){
+                    return false;
+                }
             } catch(NumberFormatException e) {
                 return false;
             }
@@ -196,6 +224,9 @@ public class SceneController {
         mainGUIController.disableMainActionState();
     }
 
+    /**
+     * Displays the end of the game
+     */
     public static void displayEndGame(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Game is ended!");

@@ -13,25 +13,42 @@ public class ClientStrongbox extends Observable<Pair<ClientStrongbox, String>> i
     private ArrayList<ResourceStock> resourceStocks;
     private String owner;
 
+    /**
+     * Initialize the client strongbox
+     * @param owner the name of the strongbox's owner
+     */
     public ClientStrongbox(String owner) {
         this.owner = owner;
         this.resourceStocks = new ArrayList<>();
     }
+
+    /**
+     * Initialize the client strongbox
+     * @param resourcePiles list of strongbox resource piles
+     * @param owner the name of the strongbox's owner
+     */
     public ClientStrongbox(ArrayList<ResourceStock> resourcePiles, String owner) {
         this.owner = owner;
         this.resourceStocks = resourcePiles;
     }
 
+    /**
+     * Sets the strongbox resource stocks
+     * @param resourceStocks list of resource stocks
+     */
     public void setResourceStocks(ArrayList<ResourceStock> resourceStocks) {
         this.resourceStocks = resourceStocks;
         notify(new Pair<>(this, owner));
     }
 
-
+    /**
+     * Retrieves the resource stock
+     * @param index index of the resource stock
+     * @return the selected resource stock
+     */
     public ResourceStock getResourceStock(int index) {
         return resourceStocks.get(index);
     }
-
 
     public void show(){
         notify(new Pair<>(this, owner));

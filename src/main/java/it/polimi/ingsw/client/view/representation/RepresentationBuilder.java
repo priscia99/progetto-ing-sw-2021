@@ -19,6 +19,11 @@ public class RepresentationBuilder {
     private static final String WAREHOUSE_FORMAT = "Warehouse: \n[%1$9s]\n[%2$9s][%3$9s]\n[%4$9s][%5$9s][%6$9s]\n";
     private static final String STRONGBOX_FORMAT = "Strongbox: \n| COIN      | SERVANT   | SHIELD    | STONE     |\n| %1$9d | %2$9d | %3$9d | %4$9d |";
 
+    /**
+     * Render a client development card
+     * @param card development card
+     * @return rendered development card
+     */
     public static String render(ClientDevelopmentCard card) {
         String requirementString = card.getRequirement().toString();
         String effectString = card.getEffect().toString();
@@ -31,6 +36,12 @@ public class RepresentationBuilder {
                 effectString);
     }
 
+    /**
+     * Render a client leader card
+     * @param card leader card
+     * @param isMine set true if the owner is the same as the player that opens this client instance
+     * @return rendered leader card
+     */
     public static String render(ClientLeaderCard card, boolean isMine) {
         String requirementString = card.getRequirement().toString();
         String effectString = card.getEffect().toString();
@@ -43,6 +54,11 @@ public class RepresentationBuilder {
         );
     }
 
+    /**
+     * Render a client leader card deck
+     * @param deck leader card deck
+     * @return rendered leader card deck
+     */
     public static String render(ClientLeaderCardDeck deck) {
         StringBuilder tempString = new StringBuilder();
         ArrayList<String> renderCards = deck.getClientLeaderCards()
@@ -56,6 +72,11 @@ public class RepresentationBuilder {
         return String.format(LEADER_CARD_DECK_FORMAT, tempString.toString());
     }
 
+    /**
+     * Render client development cards decks
+     * @param decks development cards decks
+     * @return rendered developmen cards decks
+     */
     public static String render(ClientDevelopmentCardDecks decks) {
 
         if(!decks.isInitialized()){
@@ -77,6 +98,11 @@ public class RepresentationBuilder {
         return String.format(DEVELOPMENT_CARD_DECK_FORMAT, tempStrings.get(0), tempStrings.get(1), tempStrings.get(2));
     }
 
+    /**
+     * Render the client marble market
+     * @param market marble market
+     * @return rendered marble market
+     */
     public static String render(ClientMarbleMarket market) {
         return String.format(MARBLE_MARKET_FORMAT,
                 market.getOnSale()[0][0].getResourceType().toString(),
@@ -94,10 +120,20 @@ public class RepresentationBuilder {
                 market.getNotForSale().getResourceType().toString());
     }
 
+    /**
+     * Render client marble development cards market
+     * @param market development cards market
+     * @return rendered development cards market
+     */
     public static String render(ClientCardsMarket market) {
         return String.format(CARD_MARKET_FORMAT, (Object[]) getCardMarketContents(market));
     }
 
+    /**
+     * Retrieves rendered content from the development cards market
+     * @param market development cards market
+     * @return rendered content from the development cards market
+     */
     private static String[] getCardMarketContents(ClientCardsMarket market){
         String[] content = new String[12];
         int index = 0;
@@ -115,6 +151,11 @@ public class RepresentationBuilder {
         return content;
     }
 
+    /**
+     * Render client faith path
+     * @param faithPath faith path
+     * @return rendered faith path
+     */
     public static String render(ClientFaithPath faithPath) {
         String render = "";
         if(faithPath.getBlackCrossPosition()>0){
@@ -123,6 +164,11 @@ public class RepresentationBuilder {
         return render + String.format(FAITH_PATH_FORMAT, (Object[]) getFaithPathContents(faithPath));
     }
 
+    /**
+     * Retrieves rendered faith path contents
+     * @param faithPath faith path
+     * @return rendered faith path contents
+     */
     private static String[] getFaithPathContents(ClientFaithPath faithPath){
         String[] content = new String[28];
         content[0] = faithPath.getFaithPoints() + "";
@@ -138,13 +184,12 @@ public class RepresentationBuilder {
         return content;
     }
 
+    /**
+     * Render the client warehouse
+     * @param warehouse client warehouse
+     * @return rendered client warehouse
+     */
     public static String render(ClientWarehouse warehouse) {
-        // FIXME fix return output when warehouse is not initialized
-        /*
-            Pizza, ho creato questa funzione isWarehouseInitialized giusto per non far crashare il client
-            Prova a sistemare il costruttore per inizializzare il warehouse ma senza le risorse al suo interno
-            E in seguito togli pure lo schifo che ho fatto ahahahah
-         */
         if(warehouse.isInitialized()) {
             ResourceDepot depot1 = warehouse.getResourceDepot(0);
             ResourceDepot depot2 = warehouse.getResourceDepot(1);
@@ -167,6 +212,12 @@ public class RepresentationBuilder {
                 " "
         );
     }
+
+    /**
+     * Render client strongbox
+     * @param strongbox client strongbox
+     * @return rendered client strongbox
+     */
     public static String render(ClientStrongbox strongbox) {
         if(!strongbox.isInitialized()){
             return String.format(STRONGBOX_FORMAT, 0, 0, 0, 0);
@@ -176,11 +227,6 @@ public class RepresentationBuilder {
         int shieldCount = strongbox.getResourceStock(2).getQuantity();
         int stoneCount = strongbox.getResourceStock(3).getQuantity();
         return String.format(STRONGBOX_FORMAT, coinCount, servantCount, shieldCount, stoneCount);
-    }
-
-    public static String getAsset() {
-        // TODO complete
-        return null;
     }
 
     private static String hiddenText(String text) {

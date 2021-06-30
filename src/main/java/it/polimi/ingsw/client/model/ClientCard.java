@@ -13,6 +13,13 @@ public abstract class ClientCard implements Serializable {
     private final Effect effect;
     private final int victoryPoints;
 
+    /**
+     * Initialized a generic client card by passing all parameters
+     * @param id the card id
+     * @param requirement the card requirement
+     * @param effect the card effect
+     * @param victoryPoints victory points given by the card
+     */
     public ClientCard(String id, Requirement requirement, Effect effect, int victoryPoints) {
         this.id = id;
         this.requirement = requirement;

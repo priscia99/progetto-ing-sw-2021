@@ -18,7 +18,11 @@ public class AssetsHelper {
     private static final String DEVELOPMENT_FRONT = "/img/cards/front/development-card-";
     private static final String DEVELOPMENT_BACK = "/img/cards/back/dev_back_";
 
-
+    /**
+     * Retrieves the proper icon asset path based on the resource path
+     * @param resource resource type
+     * @return icon asset path
+     */
     public static String getResourceIconPath(ResourceType resource){
         return switch (resource){
             case COIN -> COIN_ICON;
