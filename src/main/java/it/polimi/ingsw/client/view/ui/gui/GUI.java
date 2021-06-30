@@ -22,16 +22,24 @@ public class GUI implements UI{
     private String myUsername = null;
     private boolean arePlayerStatsInitialized = false;
 
+    /**
+     * Initialize the GUI by setting the primary stage
+     * @param primaryStage GUI primary stage
+     */
+    public GUI(Stage primaryStage){
+        this.primaryStage = primaryStage;
+    }
+
+    /**
+     * Loads the auth screen in GUI
+     * @param client client object
+     */
     public void loadAuthScreen(Client client){
         Platform.runLater(() -> SceneController.requestAuth(primaryStage, client));
     }
 
     @Override
     public AuthData requestAuth() {return null;}
-
-    public GUI(Stage primaryStage){
-        this.primaryStage = primaryStage;
-    }
 
     @Override
     public void setController(ClientController controller) {
@@ -252,10 +260,14 @@ public class GUI implements UI{
 
     @Override
     public void showGameIsEnded() {
-
         Platform.runLater( () -> SceneController.displayEndGame());
     }
 
+    /**
+     * Sets the playerboard username in GUI
+     * @param username name of the player whose playerboard has to be shown
+     * @param isMine set true if the player is the same as the one who is connected with this client instance
+     */
     public void setPlayerBoardUsername(String username, boolean isMine){
         this.selectedPlayerBoard = username;
         if(isMine && username.equals(controller.getGame().getCurrentPlayer())){
@@ -270,10 +282,20 @@ public class GUI implements UI{
         Platform.runLater(() -> SceneController.getMainGUIController().getPlayerBoardController().setUsername(username, isMine));
     }
 
+    /**
+     *
+     * @param username name of the player
+     * @return true if the playerboard needs to be refreshed, false otherwise
+     */
     private boolean isToRefresh(String username){
         return username.equals(selectedPlayerBoard);
     }
 
+    /**
+     *
+     * @param username name of the player
+     * @return true if the player is the same as the one who is connected with this client instance
+     */
     private boolean isMine(String username){
         return username.equals(myUsername);
     }
