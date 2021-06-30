@@ -615,6 +615,7 @@ public class CLI implements UI {
         try{
             int index = askDevelopmentDeckIndex();
             displayUserDiscounts(discounts);
+            // TODO optional empty? how can i buy a card if i can't have any resource to pick?
             Optional<Integer> specificQuantity = Optional.empty();
             ConsumeTarget resourcesSelected = askResourcesToUse(specificQuantity, depotEffects);
             controller.buyDevelopmentCard(id, index, resourcesSelected);
@@ -677,8 +678,9 @@ public class CLI implements UI {
         try{
             displayInfo("Insert IDs of card to use, separated by space: ");
             String productionsRaw = in.nextLine();
-            return (ArrayList<String>) Arrays.asList(productionsRaw.split(" "));
+            return new ArrayList(Arrays.asList(productionsRaw.split(" ")));
         } catch (Exception e){
+            e.printStackTrace();
             throw new Exception("Cannot parse ids, try again.");
         }
     }
@@ -734,7 +736,7 @@ public class CLI implements UI {
     private ConsumeTarget askResourcesToUse(Optional<Integer> needed, ArrayList<DepotEffect> depotEffects) throws Exception {
         ConsumeTarget resourcesSelected = new ConsumeTarget();
         String confirmString = "add";
-        while(!confirmString.equals("ok") && (needed.isEmpty() || (needed.get() == resourcesSelected.countStocks()))){
+        while(!confirmString.equals("ok") && !(needed.isEmpty() || (needed.get() == resourcesSelected.countStocks()))){
             displayInfo("Add resource stock: <position> <quantity> <type> ('quit' to choose another action)");
             displayPossibleResourcePositions(depotEffects, true);
             String rawInput = in.nextLine();
@@ -749,7 +751,7 @@ public class CLI implements UI {
                 if(needed.isPresent()){
                     if(resourcesSelected.countStocks() == needed.get()) return resourcesSelected;
                 }
-                if(needed.isPresent() && needed.get() > resourcesSelected.countResources()) throw new Exception("Exceeded resources that you can provide!");
+                if(needed.isPresent() && needed.get() < resourcesSelected.countResources()) throw new Exception("Exceeded resources that you can provide!");
                 displayInfo("Stock added correctly, press enter to add another stock, 'ok' to continue.");
             } catch(Exception e ){
                 throw new Exception("Error while parsing resources.");

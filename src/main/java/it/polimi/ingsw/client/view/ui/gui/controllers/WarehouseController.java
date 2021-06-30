@@ -82,21 +82,21 @@ public class WarehouseController extends GenericGUIController {
      * Handler that is triggered when the user wants depots 1 an 2 to be swapped
      */
     private final EventHandler<ActionEvent> swap1and2 = event -> {
-        super.getClientController().swapDepots(1, 2);
+        super.getClientController().swapDepots(0, 1);
     };
 
     /**
      * Handler that is triggered when the user wants depots 1 an 3 to be swapped
      */
     private final EventHandler<ActionEvent> swap1and3 = event -> {
-        super.getClientController().swapDepots(1, 3);
+        super.getClientController().swapDepots(0, 2);
     };
 
     /**
      * Handler that is triggered when the user wants depots 2 an 3 to be swapped
      */
     private final EventHandler<ActionEvent> swap2and3 = event -> {
-        super.getClientController().swapDepots(2, 3);
+        super.getClientController().swapDepots(1, 2);
     };
 
     /**

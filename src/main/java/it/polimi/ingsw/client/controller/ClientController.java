@@ -348,7 +348,7 @@ public class ClientController extends Observable<Message<ServerController>> {
      * @param second second depot that needs to be swapped
      */
     public void swapDepots(int first, int second){
-        executeIfCurrentPlayer(()->notify(new SwapDepotsMessage(first-1, second-1)));
+        executeIfCurrentPlayer(()->notify(new SwapDepotsMessage(first, second)));
     }
 
     /**
