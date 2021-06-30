@@ -31,18 +31,33 @@ public class PlayerBoardController extends GenericGUIController{
         }
     }
 
+    /**
+     * Handler that is triggered when the user wants to view another player's playerboard
+     * This handler tells the controller that the user wants to view a specific playerboard
+     */
     EventHandler<ActionEvent> onPlayerSelected = event -> {
         super.getClientController().displayPlayerboardByUsername(((MenuItem)event.getSource()).getText());
     };
 
+    /**
+     * Sets the active playerboard username
+     * @param username name of the player which playerboard is displayed
+     * @param isMine set true is the player is the same as the window game player
+     */
     public void setUsername(String username, boolean isMine){
             playerBoardLabel.setText(username + "'s PlayerBoard");
     }
 
+    /**
+     * Makes the playerboard selector disable
+     */
     public void disableChangePlayer(){
         this.playerSelector.setDisable(true);
     }
 
+    /**
+     * Makes the playerboard selector enable
+     */
     public void enableChangePlayer(){
         this.playerSelector.setDisable(false);
     }

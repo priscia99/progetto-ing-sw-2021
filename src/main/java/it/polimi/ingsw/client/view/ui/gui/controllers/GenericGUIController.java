@@ -14,6 +14,10 @@ public abstract class GenericGUIController {
         return clientController;
     }
 
+    /**
+     * Sets the client controller
+     * @param clientController the client controller
+     */
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
     }

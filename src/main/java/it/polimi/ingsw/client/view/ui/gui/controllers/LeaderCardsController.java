@@ -91,6 +91,9 @@ public class LeaderCardsController extends GenericGUIController{
         setResourcesAsPickable(isManagingLeaderDepots);
     }
 
+    /**
+     * Disable all leader cards handlers
+     */
     public void disableLeaderCardsHandlers() {
         // disable leader cards handlers
         System.out.println("Disabled leader cards handlers");
@@ -99,6 +102,9 @@ public class LeaderCardsController extends GenericGUIController{
         }
     }
 
+    /**
+     * Enable all leader cards handlers
+     */
     public void enableLeaderCardsHandlers(){
         // enable leader cards handlers
         System.out.println("Enabled leader cards handlers");
@@ -111,10 +117,18 @@ public class LeaderCardsController extends GenericGUIController{
         this.canUserDoAction = canUserDoAction;
     }
 
+    /**
+     * Handler that is triggered when a leader card is pressed
+     * This handler makes the leader card zoom pane visible
+     */
     private final EventHandler<MouseEvent> onClickedLeaderCard = event -> {
         showCardZoom(mappedCards.get((Pane)event.getSource()));
     };
 
+    /**
+     * Show the leader card zoom for the requested leader card
+     * @param clientLeaderCard leader card to be displayed
+     */
     public void showCardZoom(ClientLeaderCard clientLeaderCard){
         this.selectedCard = clientLeaderCard;
         Button playLeaderCardButton = (Button)((AnchorPane)leaderCardZoomGrid.getChildren().get(1)).getChildren().get(0);
@@ -133,20 +147,36 @@ public class LeaderCardsController extends GenericGUIController{
         leaderZoomPane.setVisible(true);
     }
 
+    /**
+     * Handler that is triggered when the close button is pressed
+     * This handler makes the zoome pane not visible
+     */
     private final EventHandler<MouseEvent> onCloseZoomButtonPressed = event -> {
         leaderZoomPane.setVisible(false);
     };
 
+    /**
+     * Handler that is triggered when the play card button is pressed
+     * This handler tells the controller that the user wants to activate the leader card
+     */
     private final EventHandler<MouseEvent> onPlayCardButtonPressed = event -> {
         super.getClientController().activateLeaderCard(this.selectedCard.getId());
         leaderZoomPane.setVisible(false);
     };
 
+    /**
+     * Handler that is triggered when the drop card button is pressed
+     * This handler tells the controller that the user wants to drop the leader card
+     */
     private final EventHandler<MouseEvent> onDropCardButtonPressed = event -> {
         super.getClientController().dropLeaderCard(this.selectedCard.getId());
         leaderZoomPane.setVisible(false);
     };
 
+    /**
+     * Set all resources as pickable adding to all panes the proper handlers
+     * @param isPickable status of pickable resources
+     */
     public void setResourcesAsPickable(boolean isPickable){
         this.isManagingLeaderDepots = isPickable;
         this.depotResourceTypes = new ArrayList<>();
@@ -213,6 +243,9 @@ public class LeaderCardsController extends GenericGUIController{
         this.removeLeaderDepotsEffects();
     }
 
+    /**
+     * Handler that is triggered when a resource is taken from an activated leader card with depot effects
+     */
     private final EventHandler<MouseEvent> onPickedDepotResource = event -> {
         Pane triggeredPane = (Pane) event.getSource();
         if(triggeredPane == leader1depot1 || triggeredPane == leader1depot2){
@@ -234,22 +267,41 @@ public class LeaderCardsController extends GenericGUIController{
         removePickedHandlerForPane(triggeredPane);
     };
 
+    /**
+     * Removes the picked resources handler for the requested pane
+     * @param pane pane whose handler has to be removed
+     */
     private void removePickedHandlerForPane(Pane pane){
         pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onPickedDepotResource);
     }
 
+    /**
+     * Retrieves a map of panes thet contains an activated leader card with depot effects
+     * @return a map that contains the pane id as string and the pane object as value
+     */
     public Map<String, Pane> getLeaderDepotActivePanes(){
         return this.leaderDepotActivePanes;
     }
 
+    /**
+     * Retrieves a list with all resource types for the activated leader cards with depot effects
+     * @return the resource types for the activated leader cards with depot effects
+     */
     public ArrayList<ResourceType> getDepotResourceTypes(){
         return this.depotResourceTypes;
     }
 
+    /**
+     * Retrieves the number of the activated leader cards with depot effects
+     * @return
+     */
     public int getActiveDepotsNumber(){
         return activeDepotsNumber;
     }
 
+    /**
+     * Removes all the effects for the additional depots
+     */
     public void removeLeaderDepotsEffects(){
         FXHelper.cleanEffects(leader1depot1);
         FXHelper.cleanEffects(leader1depot2);
@@ -257,6 +309,9 @@ public class LeaderCardsController extends GenericGUIController{
         FXHelper.cleanEffects(leader2depot2);
     }
 
+    /**
+     * Removes all the background images for the additional depots
+     */
     public void removeLeaderDepotsBackground(){
         FXHelper.cleanBackground(leader1depot1);
         FXHelper.cleanBackground(leader1depot2);

@@ -161,6 +161,10 @@ public class MainGUIController {
         chooseConversionController = new ChooseConversionController(clientController, chooseMarbleToConvertPane, resourceToConvert1, resourceToConvert2);
     }
 
+    /**
+     * Retrieves all production cards panes for the production screen
+     * @return a map that contains the pane id as key and the pane object as value
+     */
     private Map<String, Pane> getProductionCardsPanes(){
         Map<String, Pane> cardsPanes = new HashMap<>();
         cardsPanes.put("dev-card-1", topDeckCard1);
@@ -171,6 +175,10 @@ public class MainGUIController {
         return cardsPanes;
     }
 
+    /**
+     * Retrieves the generic production panes for the production screen
+     * @return a map that contains the pane id as key and the pane object as value
+     */
     private Map<String, Pane> getGenericProductionPanes(){
         Map<String, Pane> genericPanes = new HashMap<>();
         genericPanes.put("generic-input-1", genericInput1);
@@ -181,6 +189,10 @@ public class MainGUIController {
         return genericPanes;
     }
 
+    /**
+     * Retrieves all resources icons for the production screen
+     * @return a map that contains the pane id as key and the pane object as value
+     */
     private Map<String, Pane> getProductionIcons(){
         Map<String, Pane> iconPanes = new HashMap<>();
         iconPanes.put("production-coin", productionCoinIcon);
@@ -190,11 +202,17 @@ public class MainGUIController {
         return iconPanes;
     }
 
+    /**
+     * Manage the starting turn process by activating action buttons
+     */
     public void startingTurn(){
         getDevelopmentCardsController().setProduceButtonEnable(true);
         getWarehouseController().setSwapMenuEnable(true);
     }
 
+    /**
+     * Disable the action buttons
+     */
     public void disableButtons(){
         getDevelopmentCardsController().setProduceButtonEnable(false);
         getWarehouseController().setSwapMenuEnable(false);
@@ -278,6 +296,9 @@ public class MainGUIController {
         }
     }
 
+    /**
+     * Manage the end of a turn
+     */
     public void endTurn(){
         getProductionController().cleanIcons();
     }

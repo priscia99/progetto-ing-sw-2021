@@ -59,6 +59,10 @@ public class DevelopmentCardsController extends GenericGUIController {
         }
     }
 
+    /**
+     * Handler that is triggered when the "Produce" button is pressed
+     * This handler calculates the possible productions and makes them ready for the production screen
+     */
     private final EventHandler<javafx.scene.input.MouseEvent> onProduceButtonPressed = event -> {
         SceneController.startMainAction();
         ArrayList<ClientDevelopmentCard> availableProductions = new ArrayList<>();
@@ -74,6 +78,10 @@ public class DevelopmentCardsController extends GenericGUIController {
         super.getClientController().produceCommandHandler();
     };
 
+    /**
+     * Makes the "Produce" button enable based on the given parameter
+     * @param isEnable status of the button
+     */
     public void setProduceButtonEnable(boolean isEnable) {
         produceButton.setDisable(!isEnable);
     }

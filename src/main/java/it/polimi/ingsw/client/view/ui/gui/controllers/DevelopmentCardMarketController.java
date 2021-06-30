@@ -3,15 +3,11 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientCardsMarket;
 import it.polimi.ingsw.client.model.ClientDevelopmentCard;
-import it.polimi.ingsw.client.model.ClientLeaderCard;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import it.polimi.ingsw.client.view.ui.gui.utils.AssetsHelper;
 import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
@@ -106,7 +102,7 @@ public class DevelopmentCardMarketController extends GenericGUIController{
     private final EventHandler<MouseEvent> onBuyCard1ButtonPressed = event -> {
         SceneController.startMainAction();
         devCardZoomPane.setVisible(false);
-        SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 0);
+        SceneController.getMainGUIController().getPickResourcesFromStorageController().chooseResourcesForBuyAction(selectedCard.getId(), 0);
     };
 
     /**
@@ -115,7 +111,7 @@ public class DevelopmentCardMarketController extends GenericGUIController{
     private final EventHandler<MouseEvent> onBuyCard2ButtonPressed = event -> {
         SceneController.startMainAction();
         devCardZoomPane.setVisible(false);
-        SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 1);
+        SceneController.getMainGUIController().getPickResourcesFromStorageController().chooseResourcesForBuyAction(selectedCard.getId(), 1);
     };
 
     /**
@@ -124,7 +120,7 @@ public class DevelopmentCardMarketController extends GenericGUIController{
     private final EventHandler<MouseEvent> onBuyCard3ButtonPressed = event -> {
         SceneController.startMainAction();
         devCardZoomPane.setVisible(false);
-        SceneController.getMainGUIController().getPickResourcesFromStorageController().enablePickResources(selectedCard.getId(), 2);
+        SceneController.getMainGUIController().getPickResourcesFromStorageController().chooseResourcesForBuyAction(selectedCard.getId(), 2);
     };
 
     /**

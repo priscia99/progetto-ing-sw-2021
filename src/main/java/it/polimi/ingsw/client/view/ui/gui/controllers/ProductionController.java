@@ -47,6 +47,10 @@ public class ProductionController extends GenericGUIController{
         this.cancelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedCancelButton);
     }
 
+    /**
+     * Open the production selection pane
+     * @param leaderProductions list of leader cards with production effects
+     */
     public void openProductionSelection(ArrayList<ClientLeaderCard> leaderProductions){
         this.leaderCards = leaderProductions;
         this.productionIcons.entrySet().stream().forEach(entry -> entry.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceIcon));
@@ -65,6 +69,10 @@ public class ProductionController extends GenericGUIController{
 
     }
 
+    /**
+     * Set the available development cards usable for a production action
+     * @param developmentCards list of development cards usable for a production action
+     */
     public void setAvailableDevelopments(ArrayList<ClientDevelopmentCard> developmentCards){
         this.developmentCards = developmentCards;
         for(int i=0; i < developmentCards.size(); i++){
@@ -74,6 +82,10 @@ public class ProductionController extends GenericGUIController{
         }
     }
 
+    /**
+     * Handler that is triggered when a development card is selected for the production action
+     * This handler adds the selected card to the list of ones used for the production action
+     */
     private final EventHandler<MouseEvent> onClickedCard = event -> {
         Pane triggeredPane = (Pane) event.getSource();
         int cardPosition = Integer.parseInt(triggeredPane.getId().split("-")[3]) - 1;
@@ -85,12 +97,20 @@ public class ProductionController extends GenericGUIController{
         SceneController.getMainGUIController().getPickResourcesFromStorageController().toggleProductionID(developmentCards.get(cardPosition).getId());
     };
 
+    /**
+     * Handler that is triggered when a generic production pane is selected
+     * This handler creates the generic production effect and refreshes the background
+     */
     private final EventHandler<MouseEvent> onClickedGenericPosition = event -> {
         Pane selectedPosition = (Pane) event.getSource();
         chosenGenericProduction.put(selectedPosition.getId(), selectedResourceType);
         FXHelper.setBackground(selectedPosition, AssetsHelper.getResourceIconPath(selectedResourceType));
     };
 
+    /**
+     * Handler that is triggered when a resource icon is selected
+     * This handler selects the proper resource as the one used for a generic production or a leader card production
+     */
     private final EventHandler<MouseEvent> onClickedResourceIcon = event -> {
         Pane selectedIcon = (Pane) event.getSource();
         switch (selectedIcon.getId()){
@@ -103,6 +123,10 @@ public class ProductionController extends GenericGUIController{
         FXHelper.highlight(selectedIcon);
     };
 
+    /**
+     * Handler that is triggered when the user wants to confirm his productions choice
+     * The handler tells to another controller that the player has now to choose the resources
+     */
     private final EventHandler<MouseEvent> onClickedConfirmButton = event -> {
         productionPane.setVisible(false);
         productionCardsPanes.values().forEach(FXHelper::cleanEffects);
@@ -144,11 +168,18 @@ public class ProductionController extends GenericGUIController{
         chosenGenericProduction.clear();
     };
 
+    /**
+     * Handler that is triggered when an user wants to abort a production action
+     * This handler sets the production screen not visible
+     */
     private final EventHandler<MouseEvent> onClickedCancelButton = event -> {
         productionPane.setVisible(false);
         SceneController.endMainAction();
     };
 
+    /**
+     * Clear all icons backgrounds in production screen
+     */
     public void cleanIcons(){
         for(Pane genericPane : genericProductionPanes.values()){
             FXHelper.cleanBackground(genericPane);

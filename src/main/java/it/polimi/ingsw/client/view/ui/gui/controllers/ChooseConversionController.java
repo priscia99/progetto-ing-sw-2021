@@ -26,6 +26,11 @@ public class ChooseConversionController extends GenericGUIController {
         this.chooseConversionPane = chooseConversionPane;
     }
 
+    /**
+     * Displays the conversion pane to the player who has to choose between two marble conversions
+     * @param firstChoice first conversion choice
+     * @param secondChoice second conversion choice
+     */
     public void showSelection(ResourceType firstChoice, ResourceType secondChoice) {
         this.firstChoice = firstChoice;
         this.secondChoice = secondChoice;
@@ -35,6 +40,10 @@ public class ChooseConversionController extends GenericGUIController {
         secondResourceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onResourceClicked);
     }
 
+    /**
+     * Handler which is triggered by a resource which is clicked
+     * This handler updates the user chosen conversion marble to the controller
+     */
     private final EventHandler<MouseEvent> onResourceClicked = event -> {
         Pane clickedPane = (Pane) event.getSource();
         ResourceType selected = (clickedPane.equals(firstResourceButton)) ? firstChoice : secondChoice;
@@ -42,6 +51,9 @@ public class ChooseConversionController extends GenericGUIController {
         SceneController.getMainGUIController().getWarehouseController().convertionSelected(selected);
     };
 
+    /**
+     * Refreshes the resource icons in the screen
+     */
     private void refreshIcons(){
         FXHelper.setBackground(firstResourceButton, AssetsHelper.getResourceIconPath(firstChoice));
         FXHelper.setBackground(secondResourceButton, AssetsHelper.getResourceIconPath(secondChoice));

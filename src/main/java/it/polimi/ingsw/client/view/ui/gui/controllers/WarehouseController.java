@@ -2,42 +2,29 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientLeaderCard;
-import it.polimi.ingsw.client.model.ClientLeaderCardDeck;
 import it.polimi.ingsw.client.model.ClientWarehouse;
-import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
 import it.polimi.ingsw.client.view.ui.gui.utils.AssetsHelper;
 import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
-import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
-import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.ResourceDepot;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import it.polimi.ingsw.server.model.resource.ResourceType;
 import it.polimi.ingsw.utils.Pair;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Glow;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class WarehouseController extends GenericGUIController {
 
@@ -72,6 +59,9 @@ public class WarehouseController extends GenericGUIController {
         this.initSwapSelector();
     }
 
+    /**
+     * Inits the swap depots selector with all possible choices
+     */
     private void initSwapSelector() {
         MenuItem tempItem;
 
@@ -88,14 +78,23 @@ public class WarehouseController extends GenericGUIController {
         swapDepotsMenu.getItems().add(tempItem);
     }
 
+    /**
+     * Handler that is triggered when the user wants depots 1 an 2 to be swapped
+     */
     private final EventHandler<ActionEvent> swap1and2 = event -> {
         super.getClientController().swapDepots(1, 2);
     };
 
+    /**
+     * Handler that is triggered when the user wants depots 1 an 3 to be swapped
+     */
     private final EventHandler<ActionEvent> swap1and3 = event -> {
         super.getClientController().swapDepots(1, 3);
     };
 
+    /**
+     * Handler that is triggered when the user wants depots 2 an 3 to be swapped
+     */
     private final EventHandler<ActionEvent> swap2and3 = event -> {
         super.getClientController().swapDepots(2, 3);
     };
@@ -126,7 +125,6 @@ public class WarehouseController extends GenericGUIController {
                         FXHelper.setBackground(resourcePane, AssetsHelper.getBlackMarblePath());
                         resourcePane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
                     }
-                    //FXHelper.cleanEffects(resourcePane);
                 }
             }
         } else {
@@ -138,6 +136,10 @@ public class WarehouseController extends GenericGUIController {
         }
     }
 
+    /**
+     * Sets the swap selector enable based on the parameter given in input
+     * @param isEnable set true is the swap selector should be enabled
+     */
     public void setSwapMenuEnable(boolean isEnable) {
         swapDepotsMenu.setDisable(!isEnable);
     }
@@ -155,6 +157,10 @@ public class WarehouseController extends GenericGUIController {
         parseNextPosition();
     }
 
+    /**
+     * Parse the next marble selection when user wants to buy a specific row / column of resources from marble market
+     * If all resources were previously selected, tells the controller that the user has finished the action
+     */
     private void parseNextPosition() {
         if (insertPositionIndex >= selected.size()) {
             this.isManagingResources = false;
@@ -195,6 +201,10 @@ public class WarehouseController extends GenericGUIController {
         }
     }
 
+    /**
+     * Asks to the player in which depot the requested marble has to be placed
+     * @param marble the marble that needs to be placed
+     */
     public void askForDestinationDepot(Marble marble) {
         getClientController().viewInfoMessage("Insert position in which you want to add "+ marble.getResourceType().toString());
         this.marbleToInsert = marble;
@@ -237,12 +247,18 @@ public class WarehouseController extends GenericGUIController {
         dropResourceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onDropResourceClicked );
     }
 
+    /**
+     * Handler that is triggered when the user wants to drop a resource while trying to buy resources from marble market
+     */
     private final EventHandler<MouseEvent> onDropResourceClicked = event -> {
         positions.add(ResourcePosition.DROPPED);
         insertPositionIndex++;
         parseNextPosition();
     };
 
+    /**
+     * Handler that is triggered when the user selects a resource to be dropped that already present in one of the depots
+     */
     private final EventHandler<MouseEvent> onClickedResourceToDrop = event -> {
         if(resourcePositionToDrop == null) {
             Pane triggeredPane = (Pane) event.getSource();
@@ -260,16 +276,27 @@ public class WarehouseController extends GenericGUIController {
         }
     };
 
+    /**
+     * Adds the handler that manage a resource that is unclicked to a selected pane
+     * @param pane pane in which handler has to be added
+     */
     private void addUnclickedResourceHandler(Pane pane){
         pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
         pane.addEventHandler(MouseEvent.MOUSE_CLICKED, onUnclickedResourceToDrop);
     }
 
+    /**
+     * Adds the handler that manage a resource that is clicked to a selected pane
+     * @param pane pane in which handler has to be added
+     */
     private void addClickedResourceHandler(Pane pane){
         pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onUnclickedResourceToDrop);
         pane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResourceToDrop);
     }
 
+    /**
+     * Handler that is triggered when the player doesn't want anymore to drop a specific resource from a depot
+     */
     private final EventHandler<MouseEvent> onUnclickedResourceToDrop = event -> {
         Pane triggeredPane = (Pane) event.getSource();
         FXHelper.cleanEffects(triggeredPane);
@@ -278,10 +305,17 @@ public class WarehouseController extends GenericGUIController {
         dropResourceButton.setVisible(false);
     };
 
+    /**
+     * Adds the handler to the Drop Resource button that is triggered when the user wants to drop a resource
+     */
     public void addResourceRemovalHandlerToDropButton(){
         dropResourceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, onRemoveResourceConfirmClicked);
     }
 
+    /**
+     * Handler that is triggered when the player wants to confirm its choice to drop a resource from the depot
+     * This handler tells the controller that a resource has to be dropped
+     */
     private final EventHandler<MouseEvent> onRemoveResourceConfirmClicked = event -> {
         dropResourceButton.setVisible(false);
         if(this.resourcePaneToDrop != null){
@@ -292,6 +326,9 @@ public class WarehouseController extends GenericGUIController {
         this.resourcePositionToDrop = null;
     };
 
+    /**
+     * Handler that is triggered when a destination for a resource from the marble market has been chosen
+     */
     private final EventHandler<MouseEvent> onMarbleDestinationChosen = event -> {
         Pane triggeredPane = (Pane) event.getSource();
         FXHelper.setBackground(triggeredPane, AssetsHelper.getResourceIconPath(marbleToInsert.getResourceType()));
@@ -310,6 +347,10 @@ public class WarehouseController extends GenericGUIController {
         parseNextPosition();
     };
 
+    /**
+     * Handler that is triggered when a destination for a resource from the marble market has been chosen and a leader card
+     * with depot effects has been selected
+     */
     private final EventHandler<MouseEvent> onDestinationChosenFromLeaderDepot = event -> {
         int activeLeaderDepots = SceneController.getMainGUIController().getLeaderCardsController().getActiveDepotsNumber();
         Pane triggeredPane = (Pane) event.getSource();
@@ -331,14 +372,25 @@ public class WarehouseController extends GenericGUIController {
         parseNextPosition();
     };
 
+    /**
+     * Removes the destination chosen handler for a selected pane
+     * @param pane pane which handler needs to be removed
+     */
     public void removeMarbleDestinationChosenHandler(Pane pane) {
         pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onMarbleDestinationChosen);
     }
 
+    /**
+     * Removes the destination chosen handler for a selected pane in a leader card with depot effects
+     * @param pane pane which handler needs to be removed
+     */
     public void removeMarbleDestinationFromDepotChosenHandler(Pane pane) {
         pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onDestinationChosenFromLeaderDepot);
     }
 
+    /**
+     * Removes all selection handlers for resources in the warehouse
+     */
     public void removeAllSelectionHandlers() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j <i+1; j++) {
@@ -352,6 +404,10 @@ public class WarehouseController extends GenericGUIController {
         dropResourceButton.setVisible(false);
     }
 
+    /**
+     * Sets all resources from warehouse as selectable for a buy or production action, based on the parameter given
+     * @param isPickable set true is the resources needs to be selectable
+     */
     public void setResourcesAsPickable(boolean isPickable){
         isManagingResources = isPickable;
         refreshWarehouse(activeWarehouse, true);
@@ -371,6 +427,10 @@ public class WarehouseController extends GenericGUIController {
         }
     }
 
+    /**
+     * Handler that is triggered when a resource is selected for a buy or production action
+     * This handler tells the controller that the specific resource from warehouse has been selected
+     */
     private final EventHandler<MouseEvent> onClickedResource = event -> {
         Pane triggeredPane = (Pane) event.getSource();
         int rowIndex = Integer.parseInt(triggeredPane.getId().split("-")[1]);
@@ -386,10 +446,18 @@ public class WarehouseController extends GenericGUIController {
         SceneController.getMainGUIController().getPickResourcesFromStorageController().addFromWarehouse(resourcePosition, activeWarehouse.getResourceDepot(rowIndex-1).getResourceType());
     };
 
+    /**
+     * Remove the pick resource handler for a specific pane
+     * @param pane the pane which handler has to be removed
+     */
     public void removePickHandler(Pane pane){
         pane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
     }
 
+    /**
+     * Ask for the position in which a white converted marble corresponding resource has to be placed
+     * @param selectedResource converted resource type
+     */
     public void convertionSelected(ResourceType selectedResource){
         this.conversions.add(selectedResource);
         askForDestinationDepot(new Marble(selectedResource));

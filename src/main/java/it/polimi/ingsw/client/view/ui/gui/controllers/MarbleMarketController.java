@@ -73,6 +73,9 @@ public class MarbleMarketController extends GenericGUIController{
         tabPane.requestLayout();
     }
 
+    /**
+     * Add the proper handlers to the marble market arrows
+     */
     public void enableHandlers(){
         for (String btnID : marbleMarketButtons.keySet()){
             Button tempBtn = marbleMarketButtons.get(btnID);
@@ -80,6 +83,10 @@ public class MarbleMarketController extends GenericGUIController{
         }
     }
 
+    /**
+     * Handler that is triggered when a market arrow button is pressed
+     * This handler tells the controller that a market row/column is chosen
+     */
     private final EventHandler<MouseEvent> onPressedMarketChoice = event -> {
         SceneController.startMainAction();
         Orientation choiceOrientation;
@@ -122,6 +129,10 @@ public class MarbleMarketController extends GenericGUIController{
         return path;
     }
 
+    /**
+     * Sets the marble market tab
+     * @param market game marble market
+     */
     public void setMarbleMarket(ClientMarbleMarket market){
         this.marbleMarket = market;
         this.refreshMarbleMarket();

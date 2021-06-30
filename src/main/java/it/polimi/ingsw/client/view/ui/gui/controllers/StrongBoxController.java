@@ -62,6 +62,9 @@ public class StrongBoxController extends GenericGUIController {
             disableHandlers();
     }
 
+    /**
+     * Inits the strongbox screen by displaying a default strongbox with no resources inside
+     */
     public void initStrongboxScreen(){
         strongboxCoin.setText("0");
         strongboxServant.setText("0");
@@ -69,6 +72,10 @@ public class StrongBoxController extends GenericGUIController {
         strongboxStone.setText("0");
     }
 
+    /**
+     * Makes all the resources selectable based on the parametrer given
+     * @param isPickable set true is user can select the resources from the strongbox
+     */
     public void setResourcesAsPickable(boolean isPickable){
         this.isManagingResources = isPickable;
         refreshStrongbox(activeStrongbox, true);
@@ -82,6 +89,9 @@ public class StrongBoxController extends GenericGUIController {
 
     }
 
+    /**
+     * Disable all the handlers for the strongbox icons
+     */
     public void disableHandlers(){
         strongboxCoinIco.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
         FXHelper.cleanEffects(strongboxCoinIco);
@@ -97,6 +107,9 @@ public class StrongBoxController extends GenericGUIController {
         FXHelper.cleanEffects(strongboxStone);
     }
 
+    /**
+     * Enable all the handlers for the strongbox icons
+     */
     public void enableHandlers(){
         if(Integer.parseInt(strongboxCoin.getText())>0){
             strongboxCoinIco.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedResource);
@@ -127,6 +140,10 @@ public class StrongBoxController extends GenericGUIController {
         }
     }
 
+    /**
+     * Handler that is triggered when a specific resource is selected from the strongbox
+     * This handler tells the controller that a specific resource is chosen from the strongbox
+     */
     private final EventHandler<MouseEvent> onClickedResource = event -> {
         Pane triggeredPane = (Pane)event.getSource();
         ResourceType resourceType = null;

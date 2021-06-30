@@ -63,8 +63,6 @@ public class FaithPathController extends GenericGUIController {
             }
         }
 
-
-
         if(faithPath.getPopeFavor(0)){
             FXHelper.setBackground(popeFavor1, FAVOR_1_PATH_ACTIVE);
         }else{

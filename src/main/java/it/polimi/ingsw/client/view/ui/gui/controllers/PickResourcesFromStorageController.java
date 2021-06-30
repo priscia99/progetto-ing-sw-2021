@@ -34,8 +34,12 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         this.leaderProductions = new ArrayList<>();
     }
 
-    // TODO change name chooseResourcesForBuy
-    public void enablePickResources(String cardToBuyId, int chosenDeckIndex){
+    /**
+     * Enable all resources ready to be selectable in order to buy a development card from the cards market
+     * @param cardToBuyId ID of the card that the user wants to buy
+     * @param chosenDeckIndex the deck position in which player wants to put the development card
+     */
+    public void chooseResourcesForBuyAction(String cardToBuyId, int chosenDeckIndex){
         this.isProduction = false;
         this.cardToBuyId = cardToBuyId;
         this.chosenDeckIndex = chosenDeckIndex;
@@ -48,6 +52,9 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         SceneController.getMainGUIController().getLeaderCardsController().setResourcesAsPickable(true);
     }
 
+    /**
+     * Enable all resources ready to be selectable in order to start a production action
+     */
     public void chooseResourcesForProduction(){
         this.isProduction = true;
         consumeTarget = new ConsumeTarget();
@@ -58,7 +65,10 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         SceneController.getMainGUIController().getLeaderCardsController().setResourcesAsPickable(true);
     }
 
-
+    /**
+     * Add a resource selected from the strongbox to the list of selectes ones for a production or a buy action
+     * @param resourceType the type of selected resource
+     */
     public void addFromStrongbox(ResourceType resourceType) {
         try {
             consumeTarget.put(ResourcePosition.STRONG_BOX, new ResourceStock(resourceType, 1));
@@ -67,6 +77,11 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         }
     }
 
+    /**
+     * Add a resource selected from the warehouse to the list of selectes ones for a production or a buy action
+     * @param position the depot position of selected resource
+     * @param resourceType the type of selected resource
+     */
     public void addFromWarehouse(ResourcePosition position, ResourceType resourceType){
         try{
             consumeTarget.put(position, new ResourceStock(resourceType, 1));
@@ -75,6 +90,11 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         }
     }
 
+    /**
+     * Add a resource selected from the an activated leader card with depot effects to the list of selectes ones for a production or a buy action
+     * @param position
+     * @param resourceType
+     */
     public void addFromLeaderDepot(ResourcePosition position, ResourceType resourceType){
         try{
             consumeTarget.put(position, new ResourceStock(resourceType, 1));
@@ -83,6 +103,10 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         }
     }
 
+    /**
+     * Add a card to the list of productions or remove if it was previously selected
+     * @param cardID the card ID
+     */
     public void toggleProductionID(String cardID){
         if(this.productionCardsIDs.contains(cardID)){
             this.productionCardsIDs.remove(cardID);
@@ -91,20 +115,35 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         }
     }
 
+    /**
+     * Set the generic production
+     * @param genericProduction the generic production effect
+     */
     public void setGenericProduction(Optional<ProductionEffect> genericProduction){
         this.genericProduction = genericProduction;
     }
 
+    /**
+     * Set productions from the leader cards
+     * @param leaderProductions a list of productions from leader cards with production effect
+     */
     public void setLeaderProductions(ArrayList<ProductionEffect> leaderProductions){
         this.leaderProductions = leaderProductions;
     }
 
+    /**
+     * Handler that is triggered when user confirms the resources choise
+     * This handler manages to end the action
+     */
     private final EventHandler<javafx.scene.input.MouseEvent> onClickedChooseButton = event -> {
         this.disable();
         this.sendPickedResources();
         SceneController.endMainAction();
     };
 
+    /**
+     * Send the buy or production action to the client controller
+     */
     public void sendPickedResources(){
         confirmChooseButton.setVisible(false);
         if(this.isProduction) {
@@ -118,6 +157,9 @@ public class PickResourcesFromStorageController extends GenericGUIController{
         }
     }
 
+    /**
+     * Disable all resources and makes them not selectable anymore
+     */
     public void disable(){
         SceneController.getMainGUIController().getStrongBoxController().setResourcesAsPickable(false);
         SceneController.getMainGUIController().getWarehouseController().setResourcesAsPickable(false);
