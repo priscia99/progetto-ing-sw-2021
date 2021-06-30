@@ -16,6 +16,7 @@ public class TestParser
 {
     public static void main( String[] args )
     {
+        /*
         // --- HOW TO GENERATE THE LEADER CARDS DECK
         ArrayList<LeaderCard> leaderCardDeck = LeaderCardsBuilder.getDeck();
 
@@ -43,7 +44,7 @@ public class TestParser
             It is not a Singleton for the simple reason we may need to generate different markets with different
             marbles position if we implement multiple games functionality in the same server.
             Using a singleton class, we would receive the same market with same positions.
-         */
+
 
         // The following code is just an example created to show that it's possibile to generate a totally different
         // marble market using a new Builder
@@ -69,5 +70,6 @@ public class TestParser
         // HOW TO GET THE FAITH PATH USING ITS BUILDER
         FaithPath faithPath = FaithPath.getStandardFaithPath();
         System.out.println(faithPath);
+        */
     }
 }

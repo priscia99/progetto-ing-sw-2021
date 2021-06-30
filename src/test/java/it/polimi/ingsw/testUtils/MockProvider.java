@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.model.game.Player;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.market.MarbleMarket;
 import it.polimi.ingsw.server.model.resource.ResourceType;
+import it.polimi.ingsw.server.model.singleplayer.SinglePlayerGame;
 
 import java.util.ArrayList;
 
@@ -59,6 +60,26 @@ public class MockProvider {
         game.setupMarbleMarket();
         game.giveLeaderCardsToPlayers();
         game.giveInitialResources();
+        try {
+            game.nextTurn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return game;
+    }
+
+    public static SinglePlayerGame getSinglePlayerMockGame() throws Exception{
+        SinglePlayerGame game = new SinglePlayerGame();
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(new Player("Pippo"));
+        game.setPlayers(players);
+        game.setupVictoryObservations();
+        game.setupLeaderCards();
+        game.setupCardsMarket();
+        game.setupMarbleMarket();
+        game.giveLeaderCardsToPlayers();
+        game.giveInitialResources();
+        game.setup(players);
         try {
             game.nextTurn();
         } catch (Exception e) {

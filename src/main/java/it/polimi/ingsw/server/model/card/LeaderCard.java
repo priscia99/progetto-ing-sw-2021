@@ -29,11 +29,4 @@ public class LeaderCard extends Card {
         return effect;
     }
 
-    @Override
-    public String toString(){
-        return super.toString() +
-                getRequirement().toString() +
-                getEffect().toString() +
-                "\n";
-    }
 }

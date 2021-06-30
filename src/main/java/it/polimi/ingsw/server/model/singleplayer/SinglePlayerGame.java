@@ -27,6 +27,9 @@ public class SinglePlayerGame extends Game {
         this.isFirstTurn = true;
     }
 
+    public int getBlackCrossPosition(){
+        return blackCrossPosition;
+    }
 
     public void setBlackCrossPosition(int position){
         this.blackCrossPosition = position;

@@ -26,6 +26,7 @@ public class GameTest {
         game.setupMarbleMarket();
         game.giveLeaderCardsToPlayers();
         game.giveInitialResources();
+        game.giveInitialResources();
     }
 
     @Test

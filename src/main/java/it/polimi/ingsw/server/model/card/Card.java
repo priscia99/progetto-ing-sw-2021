@@ -68,18 +68,4 @@ public abstract class Card {
      * @param active true to activate the card, false to inactivate it
      */
     public void setActive(boolean active){ this.active = active; }
-
-    @Override
-    public String toString(){
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("Status: ");
-        if(isActive())
-            buffer.append("ACTIVE");
-        else
-            buffer.append("NOT ACTIVE");
-        buffer.append("\n");
-
-        buffer.append("Victory points: ").append(victoryPoints).append("\n");
-        return buffer.toString();
-    }
 }
