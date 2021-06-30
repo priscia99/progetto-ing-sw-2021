@@ -24,7 +24,6 @@ public class SceneController {
     private static Client client;
     private static MainGUIController mainGUIController;
 
-    public static void changeRootPane(){}
     public static void requestAuth(Stage primaryStage, Client c) {
             // Retrieving and storing the current client class object
             client = c;
