@@ -25,6 +25,10 @@ public class DevCardMarketBuilder {
     private static Stack<DevelopmentCard>[][] marketDecks;
     private static final String file_path = "dev_cards.json";
 
+    /**
+     * Initialize the development card market builder by reading the data from the proper JSON file and
+     * creating all the elements for the development cards market
+     */
     private static void initBuilder(){
         try {
             marketDecks = new Stack[NUM_LEVELS][NUM_COLORS];

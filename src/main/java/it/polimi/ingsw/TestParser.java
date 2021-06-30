@@ -1,7 +1,6 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.data.DevCardMarketBuilder;
-import it.polimi.ingsw.data.DevelopmentCardsBuilder;
 import it.polimi.ingsw.data.LeaderCardsBuilder;
 import it.polimi.ingsw.data.MarbleMarketBuilder;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
@@ -22,13 +21,6 @@ public class TestParser
 
         for(int i=0; i<leaderCardDeck.size(); i++){
            System.out.println("--- CARD " + (i+1) + " ---\n" + leaderCardDeck.get(i));
-        }
-
-        // --- HOW TO GENERATE THE DEVELOPMENT CARDS DECK
-        ArrayList<DevelopmentCard> devCardDeck = DevelopmentCardsBuilder.getDeck();
-
-        for(int i=0; i<devCardDeck.size(); i++){
-            System.out.println("--- CARD " + (i+1) + " ---\n" + devCardDeck.get(i));
         }
 
         // --- HOW TO GENERATE THE MARBLE MARKET USING MARBLEMARKETBUILDER

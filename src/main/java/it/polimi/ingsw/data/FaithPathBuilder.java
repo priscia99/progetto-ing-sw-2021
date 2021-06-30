@@ -16,6 +16,10 @@ public class FaithPathBuilder {
     private static final String file_path = "faith_path.json";
     private static Cell[] path = null;
 
+    /**
+     * Initialize the faith path builder by reading the data from the proper JSON file and
+     * creating all the elements for the faith path
+     */
     private static void initBuild(){
         try {
             path = new Cell[PATH_DIM];

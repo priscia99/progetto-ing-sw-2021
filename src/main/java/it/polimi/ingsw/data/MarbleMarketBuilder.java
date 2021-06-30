@@ -28,7 +28,10 @@ public class MarbleMarketBuilder {
         buildMarket();
     }
 
-    // Parse marbles from json input file
+    /**
+     * Initialize the card market builder by reading the data from the proper JSON file and
+     * creating all the elements for the marble market builder
+     */
     private static void parseMarbles(){
         try {
             InputStream stream = LeaderCardsBuilder.class.getClassLoader().getResourceAsStream(file_path);

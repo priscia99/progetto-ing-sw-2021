@@ -29,6 +29,12 @@ public class Client {
     private ObjectInputStream socketIn = null;      // input socket
     private ObjectOutputStream socketOut = null;    // output socket
 
+    /**
+     * Initialize the client
+     * @param ip the ip of the server in which the client has to connect
+     * @param port the port of the server in which the client has to connect
+     * @param userInterface the selected user interface
+     */
     public Client(String ip, int port, UI userInterface){
         this.ip = ip;
         this.port = port;
@@ -36,6 +42,10 @@ public class Client {
         clientMessageEncoder = new ClientMessageEncoder(this);
     }
 
+    /**
+     * Applies the game backup restart the game from a previous state
+     * @param backup backup of the client game
+     */
     public void applyGameBackup(ClientGame backup){
         backup.setMyProperty(myUsername);
         ArrayList<String> current = new ArrayList<>();
@@ -49,14 +59,23 @@ public class Client {
         setupGameObservers();
     }
 
+    /**
+     * Tells the client controller to start listening
+     */
     public void startListening(){
         this.controller.startListening();
     }
 
+    /**
+     * Tells the controller to start the User Interface
+     */
     public void startUI(){
         this.controller.startUI();
     }
 
+    /**
+     * Setting up all views and observers
+     */
     private void setupGameObservers(){
         ClientGame game = controller.getGame();
         GameView gameView = new GameView(userInterface);
@@ -104,6 +123,10 @@ public class Client {
         });
     }
 
+    /**
+     * Setting up the Model-View-Controller pattern by creating the client game (model) and setting up the controllers
+     * @param players
+     */
     public void setupMVC(ArrayList<String> players){
 
         ClientGame game = new ClientGame(myUsername, players.get(0), players);
@@ -115,16 +138,24 @@ public class Client {
         setupGameObservers();
     }
 
+    /**
+     *
+     * @return the active status of the client
+     */
     public synchronized boolean isActive(){
         return active;
     }
 
+    /**
+     * Sets the status of the client
+     * @param active true if client is active, false otherwhise
+     */
     public synchronized void setActive(boolean active){
         this.active = active;
     }
 
     /**
-     * Read asynchronously messages from the socket until the client is active.
+     * Read asynchronously messages from the socket while the client is active.
      * @return reading thread
      * @throws IllegalArgumentException if the message format is unexpected
      * @throws Exception if a generic exception happens shut down the server
@@ -163,7 +194,8 @@ public class Client {
 
 
     /**
-     * Thread-like run function.
+     * Thread-like run function which tries to connect to the server, setting up the input and output streams
+     * and keeps listening while the server is active
      * @throws IOException
      * @throws NoSuchElementException
      */
@@ -187,6 +219,11 @@ public class Client {
         }
     }
 
+    /**
+     * Manages the authentication process to the server by contacting the user interface and requesting to the user
+     * the proper authentication data
+     * @param authInfo
+     */
     public void manageAuth(final String authInfo){
         Thread t = new Thread(() -> {
             String[] command = authInfo.split("#");
@@ -215,6 +252,10 @@ public class Client {
         t.start();
     }
 
+    /**
+     * Send an object to the socket
+     * @param objToSend object to send
+     */
     public void sendToSocket(Object objToSend){
         Thread t = new Thread(() -> {
             try {
@@ -226,10 +267,17 @@ public class Client {
         t.start();
     }
 
+    /**
+     * Sets the player's username
+     * @param myUsername player's username
+     */
     public void setMyUsername(String myUsername){
         this.myUsername = myUsername;
     }
 
-
+    /**
+     * Retrieves the player username
+     * @return the player username
+     */
     public String getMyUsername(){return myUsername;}
 }

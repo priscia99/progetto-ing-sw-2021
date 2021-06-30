@@ -28,6 +28,10 @@ public class LeaderCardsBuilder{
     static private ArrayList<LeaderCard> leaderCardList;
     static final private String leaderCardsPath = "leader_cards.json";
 
+    /**
+     * Initialize the list of leader cards by reading the data from the proper JSON file and
+     * creating all the elements for the development cards
+     */
     static private void initBuilder() throws IllegalArgumentException{
         try {
             leaderCardList = new ArrayList<>();
