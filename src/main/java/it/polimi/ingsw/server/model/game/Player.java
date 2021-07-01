@@ -49,14 +49,6 @@ public class Player extends Observable<Message<ClientController>> {
         this.initialResourcesReady = initialResourcesReady;
     }
 
-    private int getInitialResourceToChoose() {
-        return initialResourceToChoose;
-    }
-
-    private boolean isHasDoneMainAction() {
-        return hasDoneMainAction;
-    }
-
     private void setId(String id){
         this.id = id;
     }
@@ -65,6 +57,11 @@ public class Player extends Observable<Message<ClientController>> {
         this.username = username;
     }
 
+    /**
+     *
+     * @return Copy of this player
+     * @throws Exception
+     */
     public Player getCopy() throws Exception {
         Player copy = new Player();
         copy.setId(this.id);
@@ -118,8 +115,6 @@ public class Player extends Observable<Message<ClientController>> {
 
     public void setInitialResourceToChoose(int value){
         initialResourceToChoose = value;
-        System.out.println(username + " deve scegliere risorse");
-        System.out.println("Mi stanno osservando in " + super.observers.size());
         notify(new ChooseInitialResourcesMessage(this.username, value));
     }
 
@@ -139,6 +134,7 @@ public class Player extends Observable<Message<ClientController>> {
     public boolean isFirst() {
         return first;
     }
+
     public void setFirst(boolean value) {
         first = value;
     }
@@ -155,11 +151,7 @@ public class Player extends Observable<Message<ClientController>> {
         return playerBoard;
     }
 
-    public void setNickname(String nickname) {
-        this.username = nickname;
-    }
-
-    public boolean finishedFaithPath() {
+    public boolean hasFinishedFaithPath() {
         return playerBoard.getFaithPath().getFaithPoints() >= playerBoard.getFaithPath().getCells().length-1;
     }
 
@@ -168,6 +160,11 @@ public class Player extends Observable<Message<ClientController>> {
                 .mapToInt(DevelopmentCardsDeck::getCardNumber).sum();
     }
 
+    /**
+     * Update leader cards of player with the ones matching IDs in argument
+     * @param cardIDs IDs of initial cards selected
+     * @throws Exception
+     */
     public void pickedLeaderCards(ArrayList<String> cardIDs) throws Exception {
 
         ArrayList<LeaderCard> cards = this.playerBoard.getLeaderCardsDeck().getLeaderCards()
@@ -178,11 +175,14 @@ public class Player extends Observable<Message<ClientController>> {
             this.playerBoard.getLeaderCardsDeck().removeLeaderCardById(card.getId());
         }
         initialLeadersReady = true;
-
-        // TODO merge in LeadersReadyMessage ore delete it
         notify(new LeaderCardsMessage(playerBoard.getLeaderCardsDeck().getLeaderCards(), username));
     }
 
+    /**
+     * Add resources selected when game is starting
+     * @param toAdd Resources and position selected
+     * @throws Exception
+     */
     public void pickedInitialResources(ConsumeTarget toAdd) throws Exception {
         if(toAdd.countResources() != initialResourceToChoose) throw new Exception("Invalid resource choice");
         for (ResourcePosition depotIndex : toAdd.getPositions()) {
@@ -203,15 +203,33 @@ public class Player extends Observable<Message<ClientController>> {
         return playerBoard.isThereAnyLeaderCard();
     }
 
+    /**
+     * Add resource in depot selected
+     * @param resourceType Resource to insert
+     * @param depotIndex Depot selected for insertion
+     * @throws Exception
+     */
     public void addResourceToDepot(ResourceType resourceType, int depotIndex) throws Exception {
         playerBoard.getWarehouse().addToDepot(depotIndex, resourceType);
     }
 
+    /**
+     * Add resource in leader depot
+     * @param resourceType Resource to insert
+     * @param index Leader depot selected for insertion
+     * @throws Exception
+     */
     private void addToLeaderDepot(ResourceType resourceType, int index) throws Exception {
         playerBoard.addToAdditionalDepot(resourceType, index);
         notify(new LeaderCardsMessage(this.playerBoard.getLeaderCardsDeck().getLeaderCards(), username));
     }
 
+    /**
+     * Add multiple resources to multiple depots
+     * @param types Resources to insert
+     * @param depots Depot positions
+     * @throws Exception
+     */
     public void addAllResourceToDepots(ArrayList<ResourceType> types, ArrayList<ResourcePosition> depots) throws Exception {
         for(int i = 0; i< types.size(); i++){
             switch (depots.get(i)) {
@@ -224,6 +242,11 @@ public class Player extends Observable<Message<ClientController>> {
         notify(new UpdateVictoryPointsMessage(getVictoryPoints(), username));
     }
 
+    /**
+     * Add resources to strongbox
+     * @param resources Resources to insert
+     * @throws Exception
+     */
     public void addResourcesToStrongBox(ResourceStock resources) throws Exception {
         for(int i = 0; i < resources.getQuantity(); i++){
             playerBoard.getStrongbox().addResource(resources.getResourceType());
@@ -232,7 +255,11 @@ public class Player extends Observable<Message<ClientController>> {
         notify(new UpdateVictoryPointsMessage(getVictoryPoints(), username));
     }
 
-    // count in strongbox, then count in warehouse and sum all in result
+    /**
+     *
+     * @param resourceType Resources to count
+     * @return Quantity of resource owned by player with selected resource type
+     */
     public int countByResource(ResourceType resourceType) {
         return this.playerBoard.countByResourceType(resourceType);
     }

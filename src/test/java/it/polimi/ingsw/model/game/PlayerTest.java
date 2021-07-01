@@ -142,9 +142,9 @@ public class PlayerTest {
         for(int i=0; i<23; i++) {
             player.addFaithPoint();
         }
-        Assertions.assertFalse(player.finishedFaithPath());
+        Assertions.assertFalse(player.hasFinishedFaithPath());
         player.addFaithPoint();
-        Assertions.assertTrue(player.finishedFaithPath());
+        Assertions.assertTrue(player.hasFinishedFaithPath());
     }
 
     @Test
