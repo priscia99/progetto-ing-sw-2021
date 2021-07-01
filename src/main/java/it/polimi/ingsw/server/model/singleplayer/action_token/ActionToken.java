@@ -5,8 +5,15 @@ import it.polimi.ingsw.server.model.singleplayer.SinglePlayerGame;
 
 import java.util.ArrayList;
 
+/**
+ * Action token triggered at each end turn in single player game.
+ */
 public abstract class ActionToken {
 
+    /**
+     *
+     * @return List of tokens accordingly to game rules
+     */
     public static ArrayList<ActionToken> getStartingTokens(){
         ArrayList<ActionToken> tokens = new ArrayList<>();
         tokens.add(new AdvanceAndShuffleToken());
@@ -18,5 +25,9 @@ public abstract class ActionToken {
         return tokens;
     }
 
+    /**
+     * Apply token effect to a game
+     * @param toApplyOn Game into which apply token effect
+     */
     public abstract void applyOn(SinglePlayerGame toApplyOn);
 }

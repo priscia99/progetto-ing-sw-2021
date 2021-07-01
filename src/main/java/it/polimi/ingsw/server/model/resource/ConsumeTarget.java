@@ -6,12 +6,21 @@ import it.polimi.ingsw.network.message.from_server.PlayersOrderMessage;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Used to wrap information about resource choices.
+ * Contains data about type of resources selected and their positions.
+ */
 public class ConsumeTarget implements Serializable {
 
     private final HashMap<ResourcePosition, ArrayList<ResourceStock>> toConsume = new HashMap<>();
 
     public ConsumeTarget(){}
 
+    /**
+     *
+     * @param type Resource type to count
+     * @return Quantity of selected resource type present
+     */
     public int countResourceType(ResourceType type){
         return this.toConsume.values().stream().mapToInt(
                 stocks -> stocks.stream().mapToInt(
@@ -21,10 +30,18 @@ public class ConsumeTarget implements Serializable {
         ).sum();
     }
 
+    /**
+     *
+     * @return Set of position selected
+     */
     public Set<ResourcePosition> getPositions(){
         return this.toConsume.keySet();
     }
 
+    /**
+     *
+     * @return List of resource stock selected
+     */
     public ArrayList<ResourceStock> getStocks(){
         ArrayList<ResourceStock> toReturn = new ArrayList<>();
         for(ResourcePosition position : this.getPositions()){
@@ -33,15 +50,30 @@ public class ConsumeTarget implements Serializable {
         return toReturn;
     }
 
+    /**
+     *
+     * @param position Resource position selected
+     * @return List of resource stock to consume from selected position
+     * @throws Exception
+     */
     public ArrayList<ResourceStock> getToConsumeFromPosition(ResourcePosition position) throws Exception {
         if(position.equals(ResourcePosition.DROPPED)) throw new Exception("Invalid position for selecting consumable resources.");
         return this.toConsume.get(position);
     }
 
+    /**
+     *
+     * @return List of resource stock to consume from strongbox
+     */
     public ArrayList<ResourceStock> getToConsumeFromStrongBox(){
         return toConsume.get(ResourcePosition.STRONG_BOX);
     }
 
+    /**
+     *
+     * @param depot Depot selected
+     * @return List of resource stock to consume from selected depot
+     */
     public ResourceStock getToConsumeFromDepot(ResourcePosition depot) {
         if(depot.equals(ResourcePosition.DROPPED) || depot.equals(ResourcePosition.STRONG_BOX)) {
             throw new RuntimeException("Error while checking resources to consume.");
@@ -50,14 +82,20 @@ public class ConsumeTarget implements Serializable {
         return toConsume.get(depot).get(0);
     }
 
-    public int countStocks(){
-        return this.toConsume.values().stream().mapToInt(ArrayList::size).sum();
-    }
-
+    /**
+     *
+     * @return Quantity of resources selected
+     */
     public int countResources() {return this.toConsume.values().stream().mapToInt(
             list -> list.stream().mapToInt(ResourceStock::getQuantity).sum()
     ).sum();}
 
+    /**
+     * Add resources to consume from position selected
+     * @param position Position from wich consume resources
+     * @param stock Resources to consume
+     * @throws Exception
+     */
     public void put(ResourcePosition position, ResourceStock stock) throws Exception {
         if(position.equals(ResourcePosition.DROPPED)) throw new Exception("Error while selecting consumable resources.");
         if(position.equals(ResourcePosition.STRONG_BOX)){
@@ -77,6 +115,11 @@ public class ConsumeTarget implements Serializable {
         }
     }
 
+    /**
+     * Merge another consume target into this one
+     * @param consumed Resource selection to consume
+     * @throws Exception
+     */
     public void putAll(ConsumeTarget consumed) throws Exception {
         for (ResourcePosition position : consumed.getPositions()) {
             for(ResourceStock stock : consumed.getToConsumeFromPosition(position)){
@@ -85,6 +128,11 @@ public class ConsumeTarget implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param position Resource position selected
+     * @return Check if position is present in resource to consume definition
+     */
     private boolean isPositionPresent(ResourcePosition position){
         return toConsume.get(position) != null;
     }

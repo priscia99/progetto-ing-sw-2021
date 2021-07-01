@@ -12,11 +12,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Client application launcher
+ */
 public class ClientApp
 {
     private static String ip;
     private static int port;
 
+    /**
+     * Start selected type of client, connecting to selected address
+     * @param selection Type of UI
+     * @param ip IP address to connect to
+     * @param port Port of server
+     * @throws Exception
+     */
     public static void main(String selection, String ip, int port) throws Exception {
         ClientApp.ip = ip;
         ClientApp.port = port;
@@ -28,6 +38,9 @@ public class ClientApp
 
     }
 
+    /**
+     * Start a CLI base client
+     */
     private static void startCLIClient(){
         Client client = new Client(ClientApp.ip, ClientApp.port, new CLI());
         try{
@@ -37,6 +50,9 @@ public class ClientApp
         }
     }
 
+    /**
+     * Start a GUI based client
+     */
     private static void startGUIClient(){
         JavaFXClient.setIp(ClientApp.ip);
         Application.launch(JavaFXClient.class);

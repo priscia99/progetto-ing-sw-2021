@@ -4,9 +4,15 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.logging.*;
 
+/**
+ * Helper class used to centralize logging logic
+ */
 public class CustomLogger {
     static private Logger customLogger;
 
+    /**
+     * Init the standard Java logger with custom properties
+     */
     static private void initLogger(){
         customLogger = Logger.getLogger(CustomLogger.class.getName());
         customLogger.setUseParentHandlers(false);
@@ -29,6 +35,10 @@ public class CustomLogger {
         customLogger.setLevel(Level.ALL);
     }
 
+    /**
+     * Expose the logger created to callers
+     * @return The custom logger
+     */
     static public Logger getLogger(){
         if(Objects.isNull(customLogger)) initLogger();
         return customLogger;

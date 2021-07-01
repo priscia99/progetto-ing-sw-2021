@@ -5,6 +5,9 @@ import it.polimi.ingsw.server.Server;
 
 import java.io.IOException;
 
+/**
+ * Server application launcher
+ */
 public class ServerApp
 {
     public static void main()

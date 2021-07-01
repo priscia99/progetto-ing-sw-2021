@@ -82,6 +82,10 @@ public class SocketClientConnection extends Observable<Message<ServerController>
         new Thread(() -> send(message)).start();
     }
 
+    /**
+     * Send message to client
+     * @param message Message to send
+     */
     private synchronized void send(Object message){
         try {
             String source = (lobby == null) ? "server" : lobby.getLobbyId();
@@ -95,6 +99,9 @@ public class SocketClientConnection extends Observable<Message<ServerController>
         }
     }
 
+    /**
+     * Loop where connection handles message transportation
+     */
     @Override
     public void run() {
         try {
