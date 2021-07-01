@@ -27,6 +27,11 @@ The most important methods of the model and the server controller were tested.
 No tests have been carried out for getters/setters and toString() methods.
 Below is provided a screenshot with the coverage results for the tested classes.
 
+| Element  | Class [%] | Method [%] | Line [%] |
+| ------------- | ------------- | ------------- | ------------- |
+| Controller  | 100% (2/2) | 71% (25/35) | 66% (127/192) |
+| Model  | 97%  (44/45) | 71% (249/350) | 66% (761/1138) |
+
 ## Functionalities
 
 - **Complete rules**
@@ -52,7 +57,7 @@ cd shade
 Execute the Jar by typing this command in the terminal.
 
 ```
-java -jar masters_of_the_renaissance.jar [Selected UI] [Server]
+java -jar masters_of_the_renaissance.jar [cli|gui|server] [IP]
 ```
 
 #### Parameters
@@ -60,9 +65,22 @@ java -jar masters_of_the_renaissance.jar [Selected UI] [Server]
     - ```cli``` to play the game as a client with a Command Line Interface (CLI)
     - ```gui``` to play the game as a client with a Graphical User Interface (GUI)
     - ```server``` if you want to set up a server instance
-- Server:
-    - ```local``` if you want to play the game with a server in the same PC. (IP is 127.0.0.1)
-    - When no value is provided as ```[Server]``` parameter, the client tries to connect to the remote hosted server.
+- Server IP:
+    - Provide the IP of the server, only for ```cli|gui```
+
+#### Examples
+
+If you want run the client as CLI, with the server hosted at ```192.168.1.55```, execute the Jar as follows:
+
+```java -jar masters_of_the_renaissance.jar cli 192.168.1.55```
+
+If you want run the client as GUI, with the server hosted at ```192.168.1.55```, execute the Jar as follows:
+
+```java -jar masters_of_the_renaissance.jar gui 192.168.1.55```
+
+If you want run a new server instance, execute the Jar as follows
+
+```java -jar masters_of_the_renaissance.jar server```
     
 ## Cross-platform compatibility
 
