@@ -13,6 +13,11 @@ public class EndTurnMessage extends Message<ServerController> implements Seriali
     public EndTurnMessage() {
     }
 
+    /**
+     * Executes next turn action on server
+     * @param target
+     * @throws Exception
+     */
     public void execute(ServerController target) throws Exception {
         target.nextTurn();
     }

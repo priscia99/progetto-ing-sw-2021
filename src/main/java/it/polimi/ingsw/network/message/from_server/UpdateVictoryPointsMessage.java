@@ -15,6 +15,11 @@ public class UpdateVictoryPointsMessage extends Message<ClientController> implem
     }
 
 
+    /**
+     * Update victory points on client
+     * @param target
+     * @throws Exception
+     */
     @Override
     public void execute(ClientController target) throws Exception {
         target.updateVictoryPoints(points, username);

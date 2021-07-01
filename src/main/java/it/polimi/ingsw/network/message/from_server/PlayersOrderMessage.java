@@ -23,6 +23,10 @@ public class PlayersOrderMessage extends Message<ClientController> implements Se
         }
     }
 
+    /**
+     * Start UI process on client and sets order of playerboards
+     * @param target
+     */
     public void execute(ClientController target) {
         LinkedHashMap<String, ClientPlayerBoard> ordered = new LinkedHashMap();
         int playerOrder = 1;

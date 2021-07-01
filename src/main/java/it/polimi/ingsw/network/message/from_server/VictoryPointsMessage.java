@@ -17,6 +17,10 @@ public class VictoryPointsMessage extends Message<ClientController> implements S
         super.setPlayerUsername(playerUsername);
     }
 
+    /**
+     * Display victory points of player on client
+     * @param target
+     */
     public void execute(ClientController target) {
         target.viewInfoMessage(playerUsername + " has " + victoryPoints + " points!");
     }

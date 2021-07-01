@@ -14,6 +14,10 @@ public class GameStartedServiceMessage extends ServiceMessage<Client> implements
         this.players = players;
     }
 
+    /**
+     * Setup observers on client
+     * @param client
+     */
     public void execute(Client client){
         client.setupMVC(players);
         client.sendToSocket(new ClientReadyServiceMessage());

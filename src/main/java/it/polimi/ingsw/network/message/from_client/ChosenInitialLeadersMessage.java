@@ -19,6 +19,11 @@ public class ChosenInitialLeadersMessage extends Message<ServerController> imple
         this.playerUsername = username;
     }
 
+    /**
+     * Execute choose initial leader action on server
+     * @param target
+     * @throws Exception
+     */
     public void execute(ServerController target) throws Exception {
         target.chooseInitialLeaders(leadersChosen, playerUsername);
     }

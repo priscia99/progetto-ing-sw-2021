@@ -20,6 +20,10 @@ public class ChooseInitialResourcesMessage extends Message<ClientController> imp
         super.setPlayerUsername(playerUsername);
     }
 
+    /**
+     * Display pane to choose initial resources on client
+     * @param target
+     */
     @Override
     public void execute(ClientController target) {
         target.viewChooseInitialResources(toChoose, super.getPlayerUsername());

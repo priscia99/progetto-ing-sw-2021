@@ -20,6 +20,10 @@ public class CardsMarketMessage extends Message<ClientController> implements Ser
         this.decks = clientMarket.getDecks();
     }
 
+    /**
+     * Update card market data on client
+     * @param target
+     */
     public void execute(ClientController target) {
         target.refreshCardMarket(decks);
     }

@@ -23,6 +23,11 @@ public class BuyDevelopmentCardMessage extends Message<ServerController> impleme
         this.toConsume = toConsume;
     }
 
+    /**
+     * Execute buy development card action on server
+     * @param target
+     * @throws Exception
+     */
     public void execute(ServerController target) throws Exception {
         target.buyDevelopmentCard(cardId, deckIndex, toConsume);
     }

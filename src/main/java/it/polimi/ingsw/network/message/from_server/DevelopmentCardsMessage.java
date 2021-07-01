@@ -23,6 +23,10 @@ public class DevelopmentCardsMessage extends Message<ClientController> implement
         this.developmentCard = new ClientDevelopmentCard(developmentCard);
     }
 
+    /**
+     * Update development cards data for current player on client
+     * @param target
+     */
     public void execute(ClientController target) {
          String currentPlayer = target.getGame().getCurrentPlayer();
          target.getGame().getPlayerBoardMap().get(currentPlayer)

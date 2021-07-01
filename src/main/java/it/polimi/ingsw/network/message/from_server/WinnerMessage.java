@@ -16,6 +16,10 @@ public class WinnerMessage extends Message<ClientController> implements Serializ
         this.winners = playersUsername;
     }
 
+    /**
+     * Display winner and ends game on client
+     * @param target
+     */
     public void execute(ClientController target) {
         for(String winnerName : winners){
             target.viewInfoMessage("Winner is: " + winnerName);

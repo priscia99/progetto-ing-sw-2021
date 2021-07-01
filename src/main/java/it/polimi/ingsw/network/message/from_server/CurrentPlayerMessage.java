@@ -14,6 +14,10 @@ public class CurrentPlayerMessage extends Message<ClientController> implements S
         this.username = username;
     }
 
+    /**
+     * Update current player on client
+     * @param target
+     */
     public void execute(ClientController target) {
         target.setCurrentPlayer(username);
     }

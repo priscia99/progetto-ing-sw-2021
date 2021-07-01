@@ -20,6 +20,10 @@ public class ChooseInitialLeadersMessage extends Message<ClientController> imple
         super.setPlayerUsername(playerUsername);
     }
 
+    /**
+     * Update leader cards data on client and display pane to choose initial ones
+     * @param target
+     */
     @Override
     public void execute(ClientController target) {
         target.refreshLeaderCards(leaderCards, super.getPlayerUsername());

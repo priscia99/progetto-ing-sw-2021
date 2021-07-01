@@ -12,9 +12,12 @@ public class GameReadyMessage extends Message<ClientController> implements Seria
     public GameReadyMessage(){
     }
 
+    /**
+     * Enable read of command from client
+     * @param target
+     */
     @Override
     public void execute(ClientController target) {
-        System.out.println("Game ready " + target);
         target.startListening();
     }
 }

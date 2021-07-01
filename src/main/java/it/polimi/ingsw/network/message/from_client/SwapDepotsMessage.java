@@ -22,6 +22,11 @@ public class SwapDepotsMessage extends Message<ServerController> implements Seri
         this.secondIndex = second;
     }
 
+    /**
+     * Execute swap depots action on server
+     * @param target
+     * @throws Exception
+     */
     public void execute(ServerController target) throws Exception {
         target.swapDepots(firstIndex, secondIndex);
     }

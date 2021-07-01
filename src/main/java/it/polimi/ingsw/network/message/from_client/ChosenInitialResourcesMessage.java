@@ -20,6 +20,11 @@ public class ChosenInitialResourcesMessage extends Message<ServerController> imp
         this.username = username;
     }
 
+    /**
+     * Execute choose initial resources action on server
+     * @param target
+     * @throws Exception
+     */
     public void execute(ServerController target) throws Exception {
         target.chooseInitialResources(resourcesToAdd, username);
     }

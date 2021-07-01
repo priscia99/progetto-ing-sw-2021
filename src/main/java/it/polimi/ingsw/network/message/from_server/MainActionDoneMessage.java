@@ -14,6 +14,10 @@ public class MainActionDoneMessage extends Message<ClientController> implements 
         this.done = done;
     }
 
+    /**
+     * Update mainActionDone flag for current player on client
+     * @param target
+     */
     @Override
     public void execute(ClientController target) {
         target.setMainActionDone(this.done);

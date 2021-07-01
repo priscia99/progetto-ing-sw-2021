@@ -17,6 +17,10 @@ public class BlackCrossMessage extends Message<ClientController> implements Seri
         this.position = position;
     }
 
+    /**
+     * Update faith path data on client
+     * @param target
+     */
     @Override
     public void execute(ClientController target) {
         target.refreshFaithPath(popeFavors, position);

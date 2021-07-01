@@ -17,6 +17,10 @@ public class WarehouseMessage extends Message<ClientController> implements Seria
         super.setPlayerUsername(playerUsername);
     }
 
+    /**
+     * Update warehouse on client
+     * @param target
+     */
     public void execute(ClientController target) {
         target.refreshWarehouse(resourceDepots, super.getPlayerUsername());
     }

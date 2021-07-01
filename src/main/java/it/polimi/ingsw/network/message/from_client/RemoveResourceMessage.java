@@ -17,6 +17,11 @@ public class RemoveResourceMessage extends Message<ServerController> {
         this.removeFrom = removeFrom;
     }
 
+    /**
+     * Execute remove resource action on server
+     * @param target
+     * @throws Exception
+     */
     public void execute(ServerController target) throws Exception {
         target.removeResource(removeFrom);
     }

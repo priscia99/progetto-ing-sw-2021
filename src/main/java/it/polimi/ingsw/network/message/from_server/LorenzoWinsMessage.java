@@ -12,6 +12,10 @@ public class LorenzoWinsMessage extends Message<ClientController> implements Ser
 
     public LorenzoWinsMessage(){}
 
+    /**
+     * Inform client that Lorenzo has won the game
+     * @param target
+     */
     @Override
     public void execute(ClientController target) {
         target.setMagnificoAsWinner();

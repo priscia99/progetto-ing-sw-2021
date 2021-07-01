@@ -18,6 +18,10 @@ public class StrongboxMessage extends Message<ClientController> implements Seria
         super.setPlayerUsername(playerUsername);
     }
 
+    /**
+     * Update strongbox message on client
+     * @param target
+     */
     public void execute(ClientController target) {
         target.refreshStrongbox(resourceStocks, playerUsername);
     }

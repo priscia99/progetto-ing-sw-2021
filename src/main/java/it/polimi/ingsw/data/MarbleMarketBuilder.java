@@ -54,7 +54,9 @@ public class MarbleMarketBuilder {
         }
     }
 
-    // Build a new market using the list of parsed marbles from json file
+    /**
+     * Builds a new Marble Market using data from file
+     */
     private void buildMarket(){
         if(Objects.isNull(parsedMarbles)) parseMarbles();
         Random random = new Random();
@@ -75,12 +77,19 @@ public class MarbleMarketBuilder {
         }
     }
 
-    // Get the only marble excluded from the market matrix - not for sale marble
+
+    /**
+     *
+     * @return Marble not for sale in maket
+     */
     public Marble getNotForSale(){
         return notForSale;
     }
 
-    // Get market as Marbles matrix
+    /**
+     *
+     * @return matrix of marble available in market
+     */
     public Marble[][] getMarket(){
         return market;
     }

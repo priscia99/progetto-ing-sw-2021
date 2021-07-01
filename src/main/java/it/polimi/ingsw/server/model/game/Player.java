@@ -181,7 +181,6 @@ public class Player extends Observable<Message<ClientController>> {
 
         // TODO merge in LeadersReadyMessage ore delete it
         notify(new LeaderCardsMessage(playerBoard.getLeaderCardsDeck().getLeaderCards(), username));
-        notify(new LeadersReadyMessage(true));
     }
 
     public void pickedInitialResources(ConsumeTarget toAdd) throws Exception {
@@ -192,14 +191,12 @@ public class Player extends Observable<Message<ClientController>> {
         initialResourcesReady = true;
         Warehouse warehouse = getPlayerBoard().getWarehouse();
 
-        // TODO merge in ResourceReadyMessage ore delete it
         notify(new WarehouseMessage(
                 warehouse.getResourceStocks()
                         .stream().map(resourceStock -> (ResourceDepot) resourceStock)
                         .collect(Collectors.toCollection(ArrayList::new)),
                 username
         ));
-        notify(new ResourceReadyMessage(true));
     }
 
     public boolean hasLeaderCards(){

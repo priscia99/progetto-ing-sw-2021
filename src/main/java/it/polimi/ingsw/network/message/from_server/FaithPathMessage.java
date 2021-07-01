@@ -21,6 +21,10 @@ public class FaithPathMessage extends Message<ClientController> implements Seria
         this.popeFavors = faithPath.getAcquiredPopeFavours();
     }
 
+    /**
+     * Update faith path data on client
+     * @param target
+     */
     public void execute(ClientController target) {
         target.refreshFaithPath(faithPoints, popeFavors, super.playerUsername);
     }

@@ -15,6 +15,11 @@ public class PlayLeaderCardMessage extends Message<ServerController> implements 
         this.cardId = id;
     }
 
+    /**
+     * Execute play leader card action on server
+     * @param target
+     * @throws Exception
+     */
     public void execute(ServerController target) throws Exception {
        target.playLeaderCard(cardId);
     }

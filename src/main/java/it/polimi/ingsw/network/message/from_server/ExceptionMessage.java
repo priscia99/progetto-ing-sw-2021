@@ -19,6 +19,10 @@ public class ExceptionMessage extends Message<ClientController> implements Seria
         this.errorMessage = exception;
     }
 
+    /**
+     * Display error message on client
+     * @param target
+     */
     public void execute(ClientController target) {
         if(target.getGame().getMyUsername().equals(player)) target.viewErrorMessage(errorMessage);
     }

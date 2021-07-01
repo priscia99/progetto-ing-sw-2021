@@ -18,6 +18,10 @@ public class MarbleMarketMessage extends Message<ClientController> implements Se
         this.notForSale = market.getNotForSale();
     }
 
+    /**
+     * Update data for marble market on client
+     * @param target
+     */
     public void execute(ClientController target) {
         target.getGame().getClientMarbleMarket().refreshMarbleMarket(onSale, notForSale);
         target.viewMarbleMarket();

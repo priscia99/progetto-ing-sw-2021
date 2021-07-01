@@ -23,6 +23,10 @@ public class LeaderCardsMessage extends Message<ClientController> implements Ser
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     * Update leader cards data on client
+     * @param target
+     */
     public void execute(ClientController target) {
         target.refreshLeaderCards(leaderCards, super.playerUsername);
     }

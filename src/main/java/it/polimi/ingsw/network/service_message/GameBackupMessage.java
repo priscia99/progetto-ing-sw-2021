@@ -18,6 +18,11 @@ public class GameBackupMessage extends ServiceMessage<Client> implements Seriali
         this.backup = ClientGame.fromGame(backup);
     }
 
+    /**
+     * Apply game backup on client
+     * @param client
+     * @throws Exception
+     */
     public void execute(Client client) throws Exception {
         client.applyGameBackup(backup);
     }

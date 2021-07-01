@@ -92,6 +92,12 @@ public class DevCardMarketBuilder {
         }
     }
 
+    /**
+     * Return stack of development cards by selected color and level
+     * @param level
+     * @param color
+     * @return
+     */
     public static Stack<DevelopmentCard> getStackByLevelColor(int level, Color color){
         if(Objects.isNull(marketDecks)) initBuilder();
         Stack<DevelopmentCard> clonedStack = (Stack<DevelopmentCard>) marketDecks[level-1][color.ordinal()].clone();
