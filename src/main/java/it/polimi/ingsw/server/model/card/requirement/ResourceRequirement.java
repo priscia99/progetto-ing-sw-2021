@@ -53,6 +53,11 @@ public class ResourceRequirement extends Requirement implements Serializable {
                          player.countByResource(resourcePile.getResourceType()) >= resourcePile.getQuantity());
     }
 
+    /**
+     * Check if consume target provided match exactly with resource requirements
+     * @param toConsume Resources to consume to match requirement
+     * @return
+     */
     public boolean matchRequirement(ConsumeTarget toConsume){
         if(this.resourceStocks.size()==0 && toConsume.countResources() != 0) return false;
         return !this.resourceStocks.stream().map(
@@ -75,7 +80,6 @@ public class ResourceRequirement extends Requirement implements Serializable {
      * @return the requirement obtained after the merging process
      * @throws Exception
      */
-    // TODO il creatore di questa funzione verifichi la correttezza del commento
     static public ResourceRequirement merge(ArrayList<ResourceStock> requirements) throws Exception {
         ArrayList<ResourceStock> stocks = new ArrayList<>();
         for(ResourceStock stock : requirements){

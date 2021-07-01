@@ -410,9 +410,9 @@ public class ServerController {
      * @param disconnected
      */
     public void playerDisconnected(String disconnected) {
-        tryAction(()->game.addDead(disconnected));
+        tryAction(()->game.addDisconnected(disconnected));
         if(game.getCurrentPlayer().getNickname().equals(disconnected)){
-            if(game.getPlayers().size() != game.countDeads()){
+            if(game.getPlayers().size() != game.countDisconnected()){
                 tryAction(this::nextTurn);
             }
         }
@@ -423,6 +423,6 @@ public class ServerController {
      * @param connected
      */
     public void playerReconnected(String connected){
-        tryAction(()->game.removeDead(connected));
+        tryAction(()->game.removeDisconnected(connected));
     }
 }

@@ -77,7 +77,6 @@ public class ProductionEffect implements Effect, Serializable {
 
     @Override
     public String toString() {
-        // FIXME consider to fix in/out format
         String inString = ResourceStock.stocksToString(inStocks);
         String outString = ResourceStock.stocksToString(outStocks);
         return String.format(PRODUCTION_EFFECT_FORMAT, inString, outString);

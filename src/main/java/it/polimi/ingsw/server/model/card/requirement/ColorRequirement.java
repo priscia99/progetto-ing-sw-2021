@@ -25,13 +25,6 @@ public class ColorRequirement extends Requirement implements Serializable {
 
 
     public ColorRequirement(){}
-    /**
-     *
-     * @return the required color piles.
-     */
-    public ArrayList<ColorPile> getColorPiles() {
-        return colorPiles;
-    }
 
     @Override
     public boolean isFulfilled(Player player) {

@@ -11,7 +11,6 @@ import it.polimi.ingsw.server.model.market.MarbleMarket;
 import it.polimi.ingsw.server.model.player_board.LeaderCardsDeck;
 import it.polimi.ingsw.utils.CustomLogger;
 
-import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,16 +23,21 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     protected MarbleMarket marbleMarket;
     protected boolean isLastRound;
     private boolean started = false;
-    private ArrayList<Player> deads;
+    private ArrayList<Player> disconnecteds;
 
     public Game() {
         CustomLogger.getLogger().info("Creating Game");
         this.isLastRound = false;
         this.currentPlayerIndex = -1;
-        this.deads = new ArrayList<>();
+        this.disconnecteds = new ArrayList<>();
         CustomLogger.getLogger().info("Game created");
     }
 
+    /**
+     * Setups structures of the game
+     * @param players Players that are playing in this game
+     * @throws Exception
+     */
     public void setup(ArrayList<Player> players) throws Exception {
         this.setPlayers(players);
         this.setupVictoryObservations();
@@ -42,6 +46,11 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         this.setupMarbleMarket();
     }
 
+    /**
+     * Create a copy of the game to use as backup
+     * @return the backup of this game
+     * @throws Exception
+     */
     public Game getBackup() throws Exception {
         Game backup = new Game();
         ArrayList<Player> playersBackup = new ArrayList<>();
@@ -95,11 +104,14 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     public LeaderCardsDeck getLeaderCardsDeck(){return leaderCardsDeck;}
 
 
-
+    /**
+     * Change current player and check is game has to end
+     * @throws Exception
+     */
     public void nextTurn() throws Exception {
         currentPlayerIndex++;
         currentPlayerIndex = currentPlayerIndex % players.size();
-        if(deads.contains(getCurrentPlayer())) {
+        if(disconnecteds.contains(getCurrentPlayer())) {
             nextTurn();
             return;
         }
@@ -111,6 +123,10 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         }
     }
 
+    /**
+     * Calculate all victory points and choose the winner
+     * @throws Exception
+     */
     private void finalizeGame() throws Exception {
         for (Player player : this.players) {
             notify(new VictoryPointsMessage(player.getVictoryPoints(), player.getNickname()));
@@ -118,6 +134,11 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         notify(new WinnerMessage(this.getWinnersUsername()));
     }
 
+    /**
+     * Choose the winner
+     * @return The names of winner players ( multiple in case of draw )
+     * @throws Exception
+     */
     private ArrayList<String> getWinnersUsername() throws Exception{
         ArrayList<Player> sorted = this.players.stream().sorted(Comparator.comparing(Player::getVictoryPoints)).collect(Collectors.toCollection(ArrayList::new));
         int maxVictoryPoints = sorted.get(0).getVictoryPoints();
@@ -146,6 +167,10 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         throw new Exception("No player found with that username: " + username);
     }
 
+    /**
+     * Assign initial leader cards to player, from which they will have to choose
+     * @throws Exception
+     */
     public void giveLeaderCardsToPlayers() throws Exception {
         final int numberCardsToGive = 4;
         for(Player player : players){
@@ -158,6 +183,10 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         }
     }
 
+    /**
+     * If all players has chosen initial assets, start the game
+     * @throws Exception
+     */
     public void tryStart() throws Exception {
         if(isReady()) {
             notify(new GameReadyMessage());
@@ -168,12 +197,20 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         }
     }
 
+    /**
+     *
+     * @return Check if all players have chosen initial assets
+     */
     private boolean isReady(){
         return allPlayersHasChosenInitialResources() && allPlayersHaveStartingLeaderCards();
     }
 
     public boolean isStarted(){return started;}
 
+    /**
+     *
+     * @return check if all players have chosen initial leader cards
+     */
     public boolean allPlayersHaveStartingLeaderCards(){
         return !players.stream()
                 .map(Player::isInitialLeadersReady)
@@ -181,6 +218,10 @@ public class Game extends Observable<Message<ClientController>> implements Obser
                 .contains(false);
     }
 
+    /**
+     *
+     * @return check if all players has chosen initial resources
+     */
     public boolean allPlayersHasChosenInitialResources(){
         return !players.stream()
                 .map(Player::isInitialResourcesReady)
@@ -188,6 +229,9 @@ public class Game extends Observable<Message<ClientController>> implements Obser
                 .contains(false);
     }
 
+    /**
+     * Assign initial resources when game is starting
+     */
     public void giveInitialResources() {
         players.get(0).setInitialResourcesReady(true);
         if(players.size()>1){
@@ -203,6 +247,11 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         }
     }
 
+    /**
+     * Adds faith points to player and check pope favour activation
+     * @param target Player targeted
+     * @param points Points to add
+     */
     public void addFaithPointsToPlayer(Player target, int points){
         for(int i = 0; i<points; i++){
             int position = target.addFaithPoint();
@@ -213,11 +262,18 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         notify(new UpdateVictoryPointsMessage(target.getVictoryPoints(), target.getNickname()));
     }
 
+    /**
+     * Add faith points to all players excepts for the current one
+     */
     public void currentPlayerDropsResource(){
         players.stream().filter(player-> player != getCurrentPlayer())
                 .forEach(player -> addFaithPointsToPlayer(player, 1));
     }
 
+    /**
+     * Setup observation to development cards and faith path of players
+     * to check victory conditions
+     */
     public void setupVictoryObservations(){
         players.forEach((player)->{
             player.getPlayerBoard().getFaithPath().addObserver(this);
@@ -243,6 +299,10 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         this.leaderCardsDeck.shuffle();
     }
 
+    /**
+     * Check victory condition when development card or faith path of players changes
+     * @param object Can be DevelopmentCardsDeck or FaithPath
+     */
     @Override
     public void update(Object object) {
         players.forEach((player)->{
@@ -253,19 +313,38 @@ public class Game extends Observable<Message<ClientController>> implements Obser
         });
     }
 
+    /**
+     * Create error message to send to players
+     * @param errorMessage Error to show
+     * @param player Player that has triggered the error
+     */
     public void notifyError(String errorMessage, String player){
         notify(new ExceptionMessage(errorMessage, player));
     }
 
-    public void addDead(String dead) throws Exception {
-        this.deads.add(getPlayerByUsername(dead));
+    /**
+     * Add a disconnected player to list of disconnected
+     * @param disconnected Name of player disconnected
+     * @throws Exception
+     */
+    public void addDisconnected(String disconnected) throws Exception {
+        this.disconnecteds.add(getPlayerByUsername(disconnected));
     }
 
-    public void removeDead(String revived) throws Exception {
-        this.deads.remove(getPlayerByUsername(revived));
+    /**
+     * Remove a disconnected player from list of disconnected
+     * @param connected Name of player reconnected
+     * @throws Exception
+     */
+    public void removeDisconnected(String connected) throws Exception {
+        this.disconnecteds.remove(getPlayerByUsername(connected));
     }
 
-    public int countDeads(){
-        return this.deads.size();
+    /**
+     *
+     * @return Number of players disconnected
+     */
+    public int countDisconnected(){
+        return this.disconnecteds.size();
     }
 }
