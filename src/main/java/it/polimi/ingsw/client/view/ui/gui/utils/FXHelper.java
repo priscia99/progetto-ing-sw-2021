@@ -13,6 +13,12 @@ public class FXHelper {
         target.setStyle("-fx-background-image: url(" + path + ");");
     }
 
+
+    /**
+     * Set the background of selected target centered
+     * @param target target which background needs to be updated
+     * @param path background image path
+     */
     public static void setCenteredBackground(Node target, String path){
         target.setStyle("-fx-background-image: url(" + path + ");" +
                 "-fx-background-size: contain;" +
