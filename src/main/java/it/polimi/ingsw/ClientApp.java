@@ -38,6 +38,7 @@ public class ClientApp
     }
 
     private static void startGUIClient(){
+        JavaFXClient.setIp(ClientApp.ip);
         Application.launch(JavaFXClient.class);
     }
 
