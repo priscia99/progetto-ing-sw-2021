@@ -108,6 +108,11 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
         }
     }
 
+    /**
+     * @param effect Effect type to retrieve
+     * @param <T> Concrete effect wanted
+     * @return List of effects of selected type from active leaders
+     */
     public <T> ArrayList<T> getActiveEffects(EffectType effect){
         return this.leaderCards.stream().filter(LeaderCard::isActive)
                 .filter(card->card.getEffect().getEffectType().equals(effect))
@@ -115,6 +120,11 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     *
+     * @param type Resource type to count
+     * @return Quantity of resources with selected type in leader depots
+     */
     public int countByResourceType(ResourceType type){
         ArrayList<DepotEffect> additionalDepots = getActiveEffects(EffectType.DEPOT);
         int count = 0;
@@ -124,6 +134,10 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
         return count;
     }
 
+    /**
+     *
+     * @return Quantity of resources present in leader depots
+     */
     public int countResources(){
         ArrayList<DepotEffect> additionalDepots = getActiveEffects(EffectType.DEPOT);
         int count = 0;

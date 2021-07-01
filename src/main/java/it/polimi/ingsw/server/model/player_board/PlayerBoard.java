@@ -71,12 +71,6 @@ public class PlayerBoard {
 
     private void setFaithPath(FaithPath faithPath){this.faithPath = faithPath;}
     /**
-     *
-     * @return the basic production effect of the player board (2 generic resources, for 1 generic resource)
-     */
-    public ProductionEffect getBasicProduction() {
-        return basicProduction;
-    }
 
     /**
      *
@@ -182,17 +176,30 @@ public class PlayerBoard {
         return sum;
     }
 
+    /**
+     *
+     * @param resourceType Resource type to count
+     * @return Quantity of resource selected in playerboard objects
+     */
     public int countByResourceType(ResourceType resourceType) {
         return this.warehouse.countByResourceType(resourceType)
                 + this.strongbox.countByResourceType(resourceType)
                 + this.leaderCardsDeck.countByResourceType(resourceType);
     }
 
+    /**
+     *
+     * @return List of additional depots from active leaders
+     */
     public ArrayList<ResourceDepot> getAdditionalDepots(){
         ArrayList<DepotEffect> effects = this.leaderCardsDeck.getActiveEffects(EffectType.DEPOT);
         return effects.stream().map(DepotEffect::getDepot).collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     *
+     * @return copy of additional depots from acrive leaders
+     */
     public ArrayList<ResourceDepot> getAdditionalDepotsCopy(){
         ArrayList<DepotEffect> effects = this.leaderCardsDeck.getActiveEffects(EffectType.DEPOT);
         ArrayList<ResourceDepot> depotCopies = new ArrayList<>();
@@ -205,16 +212,34 @@ public class PlayerBoard {
         return depotCopies;
     }
 
+    /**
+     * Add resource to additional leader depot
+     * @param type Resource type to add
+     * @param index Index of additional depot
+     * @throws Exception
+     */
     public void addToAdditionalDepot(ResourceType type, int index) throws Exception {
         this.getAdditionalDepots().get(index).incrementResource(type);
     }
 
+    /**
+     *
+     * @param index Index of additional depot
+     * @param stock Resources to consume
+     * @return Check if can be consumed selected resources from additional depot
+     */
     public boolean canConsumeFromLeaderDepot(int index, ResourceStock stock){
         boolean isCorrectResource = this.getAdditionalDepots().get(index).getResourceType() == stock.getResourceType();
         boolean areEnoughResources = this.getAdditionalDepots().get(index).getQuantity() >= stock.getQuantity();
         return isCorrectResource && areEnoughResources;
     }
 
+    /**
+     * Consume selected resources from leader depot
+     * @param index Index of additional depot
+     * @param toConsume Resources to consume
+     * @throws Exception
+     */
     public void consumeFromLeaderDepot(int index, ResourceStock toConsume) throws Exception {
         ResourceDepot consumed = this.getAdditionalDepots().get(index);
         for(int i = 0; i<toConsume.getQuantity(); i++) consumed.decrementResource(toConsume.getResourceType());

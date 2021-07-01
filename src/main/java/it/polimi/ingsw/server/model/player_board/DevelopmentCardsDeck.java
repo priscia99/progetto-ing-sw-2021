@@ -81,6 +81,11 @@ public class DevelopmentCardsDeck extends Observable<Object> implements Serializ
         return deck.get(deck.size()-1);
     }
 
+    /**
+     *
+     * @param card Card to add
+     * @return Check if is possible to add specific card to this deck
+     */
     public boolean canAddCard(DevelopmentCard card){
         boolean isFirstLevelOne =  (deck.size() == 0 && card.getLevel() == 1);
         boolean hasCorrectLevel = (deck.size() != 0 && getTopCard().getLevel() == card.getLevel()-1);

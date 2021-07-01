@@ -6,7 +6,6 @@ import it.polimi.ingsw.network.message.from_server.PlayersOrderMessage;
 import java.io.Serializable;
 import java.util.*;
 
-// TODO commentare
 public class ConsumeTarget implements Serializable {
 
     private final HashMap<ResourcePosition, ArrayList<ResourceStock>> toConsume = new HashMap<>();

@@ -149,6 +149,10 @@ public class CardsMarket extends Observable<Message<ClientController>> {
         notify(new CardsMarketMessage(this));
     }
 
+    /**
+     *
+     * @return Check if a color of development card is missing from market
+     */
     public boolean hasEmptyColor(){
         Stack<DevelopmentCard>[][] stacks = this.getDecks();
         for(Stack<DevelopmentCard>[] color : stacks){

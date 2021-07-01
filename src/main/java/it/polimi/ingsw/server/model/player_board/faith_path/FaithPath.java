@@ -22,11 +22,19 @@ public class FaithPath extends Observable<Object>implements Serializable {
         this.faithPoints = 0;
     }
 
+    /**
+     *
+     * @return Faith path structure accordingly to game rules
+     */
     public static FaithPath getStandardFaithPath(){
         return new FaithPath(FaithPathBuilder.getPath());
     }
 
 
+    /**
+     *
+     * @return a copy of this faith path
+     */
     public FaithPath getCopy(){
         FaithPath copy = new FaithPath(this.cells);
         copy.setFaithPoints(this.faithPoints);
@@ -43,6 +51,10 @@ public class FaithPath extends Observable<Object>implements Serializable {
 
     public void setFaithPoints(int points){ this.faithPoints = points;}
 
+    /**
+     *
+     * @return List of acquired pope favours
+     */
     public ArrayList<Boolean> getAcquiredPopeFavours(){
         return Arrays.stream(this.getCells())
                 .filter(cell -> cell instanceof PopeCell)
@@ -50,6 +62,10 @@ public class FaithPath extends Observable<Object>implements Serializable {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     *
+     * @return Victory points produced with this faith path
+     */
     public int getVictoryPoints() {
         int points = 0;
         for(int i=0; i<=faithPoints; i++){
@@ -58,6 +74,9 @@ public class FaithPath extends Observable<Object>implements Serializable {
         return points;
     }
 
+    /**
+     * Activate cell in faith path and increase points
+     */
     public void goToNextCell() {
         this.cells[this.faithPoints].reach();
         faithPoints++;
@@ -65,6 +84,11 @@ public class FaithPath extends Observable<Object>implements Serializable {
     }
 
 
+    /**
+     * Check pope favour activation
+     * @param index Position to check
+     * @return Pope favour activated
+     */
     public boolean checkPopeFavor(int index){
         if(!(cells[index] instanceof PopeCell))
             return false;

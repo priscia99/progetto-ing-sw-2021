@@ -96,6 +96,11 @@ public class Warehouse extends Storage {
     }
 
 
+    /**
+     * Remove the selected resources from the warehouse
+     * @param toConsume the stock to consume
+     * @throws Exception
+     */
     @Override
     public void consume(ResourceStock toConsume) throws Exception {
         super.consume(toConsume);
@@ -121,6 +126,11 @@ public class Warehouse extends Storage {
                 .reduce(0, Integer::sum);
     }
 
+    /**
+     *
+     * @param resourceType Resource type selected
+     * @return check if warehouse contains resource selected
+     */
     public boolean contains(ResourceType resourceType) {
         return this.resourceStocks
                 .stream()
@@ -145,6 +155,12 @@ public class Warehouse extends Storage {
     }
 
 
+    /**
+     *
+     * @param depot Depot selected
+     * @param resources Resources selected
+     * @return Check if resources selected are present in depot selected
+     */
     public boolean canConsumeFromDepot(ResourcePosition depot, ResourceStock resources){
         boolean isCorrectResource = this.resourceStocks.get(depot.ordinal()).getResourceType() == resources.getResourceType();
         boolean areEnoughResources = this.resourceStocks.get(depot.ordinal()).getQuantity() >= resources.getQuantity();

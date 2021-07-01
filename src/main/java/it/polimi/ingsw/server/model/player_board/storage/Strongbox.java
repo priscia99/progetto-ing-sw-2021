@@ -84,6 +84,11 @@ public class Strongbox extends Storage {
                 .anyMatch(resourceStock -> resourceStock.getResourceType().equals(resourceType) && resourceStock.getQuantity() > 0);
     }
 
+    /**
+     *
+     * @param toConsume Resources selected
+     * @return Check if strongbox can provide all selected resources
+     */
     public boolean canConsume(ResourceStock toConsume){
         return this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType().equals(toConsume.getResourceType()))

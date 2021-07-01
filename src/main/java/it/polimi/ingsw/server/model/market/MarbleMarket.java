@@ -31,6 +31,10 @@ public class MarbleMarket extends Observable<Message<ClientController>> {
         this.notForSale = notForSale;
     }
 
+    /**
+     *
+     * @return a copy of the market
+     */
     public MarbleMarket getCopy(){
         int rows = onSale.length;
         int columns = onSale[0].length;
@@ -52,6 +56,11 @@ public class MarbleMarket extends Observable<Message<ClientController>> {
         return notForSale;
     }
 
+    /**
+     * Extract from market marble using player selection
+     * @param selection Player selection
+     * @return Marbles selected
+     */
     public ArrayList<Marble> getSelectedMarbles(MarbleSelection selection){
         int index = selection.getIndex();
         if (selection.getOrientation().equals(Orientation.HORIZONTAL)) {
@@ -63,6 +72,11 @@ public class MarbleMarket extends Observable<Message<ClientController>> {
         }
     }
 
+    /**
+     * Apply a player selection, moving marbles accordingly to game rules
+     * @param selection Player selection
+     * @return Marbles selected by player
+     */
     public ArrayList<Marble> sell(MarbleSelection selection) {
         if (selection.getOrientation().equals(Orientation.HORIZONTAL)) {
             int index = selection.getIndex();
