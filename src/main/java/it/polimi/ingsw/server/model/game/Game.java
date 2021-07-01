@@ -139,9 +139,9 @@ public class Game extends Observable<Message<ClientController>> implements Obser
      * @return The names of winner players ( multiple in case of draw )
      * @throws Exception
      */
-    private ArrayList<String> getWinnersUsername() throws Exception{
+    public ArrayList<String> getWinnersUsername() throws Exception{
         ArrayList<Player> sorted = this.players.stream().sorted(Comparator.comparing(Player::getVictoryPoints)).collect(Collectors.toCollection(ArrayList::new));
-        int maxVictoryPoints = sorted.get(0).getVictoryPoints();
+        int maxVictoryPoints = sorted.get(sorted.size()-1).getVictoryPoints();
         sorted = sorted.stream().filter(player->player.getVictoryPoints() == maxVictoryPoints).collect(Collectors.toCollection(ArrayList::new));
         OptionalInt maxResourcesResult = sorted.stream().mapToInt(Player::getResourceCount).max();
         if(maxResourcesResult.isEmpty()) throw new Exception("No players found to assign victory!");
