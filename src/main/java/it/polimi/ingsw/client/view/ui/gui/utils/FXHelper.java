@@ -13,6 +13,13 @@ public class FXHelper {
         target.setStyle("-fx-background-image: url(" + path + ");");
     }
 
+    public static void setCenteredBackground(Node target, String path){
+        target.setStyle("-fx-background-image: url(" + path + ");" +
+                "-fx-background-size: contain;" +
+                "-fx-background-position: center;" +
+                "-fx-background-repeat: no-repeat;");
+    }
+
     /**
      * Clear all backgrounds for a selected target
      * @param target target which background needs to be removed

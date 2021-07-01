@@ -2,27 +2,21 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientFaithPath;
+import it.polimi.ingsw.client.view.ui.gui.utils.AssetsHelper;
 import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class FaithPathController extends GenericGUIController {
     private static int CELLS_NUMBER = 24;                           // number of faith path cells
-    private static final String CROSS_PATH = "/img/croce.png";      // cross image path
-    private static final String LORENZO_PATH = "/img/lorenzo.png";
-    private static final String CROSSES_PATH = "/img/crosses.png";
-    private static final String FAVOR_1_PATH_INACTIVE = "/img/favor-1-inactive.png";
-    private static final String FAVOR_2_PATH_INACTIVE = "/img/favor-2-inactive.png";
-    private static final String FAVOR_3_PATH_INACTIVE = "/img/favor-3-inactive.png";
-    private static final String FAVOR_1_PATH_ACTIVE = "/img/favor-1-active.png";
-    private static final String FAVOR_2_PATH_ACTIVE = "/img/favor-2-active.png";
-    private static final String FAVOR_3_PATH_ACTIVE = "/img/favor-3-active.png";
 
-    private final Pane popeFavor1, popeFavor2, popeFavor3;
+
+    private final ArrayList<Pane> popeFavors;
     GridPane faithPathPane;                                         // faith path generic pane
     ObservableList<Node> cellsPaneList;                             // list of position panes
 
@@ -30,9 +24,10 @@ public class FaithPathController extends GenericGUIController {
         super(clientController);
         this.faithPathPane = faithPathPane;
         this.cellsPaneList = faithPathPane.getChildren();
-        this.popeFavor1 = popeFavor1;
-        this.popeFavor2 = popeFavor2;
-        this.popeFavor3 = popeFavor3;
+        this.popeFavors = new ArrayList<>();
+        popeFavors.add(popeFavor1);
+        popeFavors.add(popeFavor2);
+        popeFavors.add(popeFavor3);
         cellsPaneList.remove(0);    // remove title label from children list
     }
 
@@ -45,41 +40,24 @@ public class FaithPathController extends GenericGUIController {
             Pane tempCell = (Pane) faithPathPane.lookup("#fc-" + i);
             String imageUrl = null;
             if(i==faithPath.getBlackCrossPosition() && i != 0){
-                imageUrl = LORENZO_PATH;
+                imageUrl = AssetsHelper.getLorenzoPath();
             }
             if (i==faithPath.getFaithPoints()){
-                imageUrl = CROSS_PATH;
+                imageUrl = AssetsHelper.getCrossPath();
             }
             if(i==faithPath.getFaithPoints() && i == faithPath.getBlackCrossPosition()  && i != 0){
-                imageUrl = CROSSES_PATH;
+                imageUrl = AssetsHelper.getCrossesPath();
             }
             if(imageUrl!=null){
-                tempCell.setStyle("-fx-background-image: url(" + imageUrl + ");" +
-                        "-fx-background-size: contain;" +
-                        "-fx-background-position: center;" +
-                        "-fx-background-repeat: no-repeat;");
+                FXHelper.setCenteredBackground(tempCell, imageUrl);
             } else {
-                tempCell.setStyle("-fx-background-image: null;");
+                FXHelper.cleanBackground(tempCell);
             }
         }
 
-        if(faithPath.getPopeFavor(0)){
-            FXHelper.setBackground(popeFavor1, FAVOR_1_PATH_ACTIVE);
-        }else{
-            FXHelper.setBackground(popeFavor1, FAVOR_1_PATH_INACTIVE);
-        }
-
-
-        if(faithPath.getPopeFavor(1)){
-            FXHelper.setBackground(popeFavor2, FAVOR_2_PATH_ACTIVE);
-        }else{
-            FXHelper.setBackground(popeFavor2, FAVOR_2_PATH_INACTIVE);
-        }
-
-        if(faithPath.getPopeFavor(2)){
-            FXHelper.setBackground(popeFavor3, FAVOR_3_PATH_ACTIVE);
-        }else{
-            FXHelper.setBackground(popeFavor3, FAVOR_3_PATH_INACTIVE);
+        for(int i = 0; i<3; i++){
+            String path = AssetsHelper.getPopeFavourPath(i+1, faithPath.getPopeFavor(i));
+            FXHelper.setBackground(popeFavors.get(i), path);
         }
 
     }

@@ -3,6 +3,8 @@ package it.polimi.ingsw.client.view.ui.gui.controllers;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientMarbleMarket;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
+import it.polimi.ingsw.client.view.ui.gui.utils.AssetsHelper;
+import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.marble.Orientation;
@@ -20,12 +22,7 @@ import java.util.Objects;
 
 public class MarbleMarketController extends GenericGUIController{
 
-    private static final String BLUE_MARBLE_PATH = "/img/ico/blue_marble.png";          // shield
-    private static final String GRAY_MARBLE_PATH = "/img/ico/gray_marble.png";          // stone
-    private static final String PURPLE_MARBLE_PATH = "/img/ico/purple_marble.png";      // servant
-    private static final String RED_MARBLE_PATH = "/img/ico/red_marble.png";            // faith
-    private static final String WHITE_MARBLE_PATH = "/img/ico/white_marble.png";        // white
-    private static final String YELLOW_MARBLE_PATH = "/img/ico/yellow_marble.png";      // coin
+
 
     private GridPane marbleMarketPane;
     private Pane notForSaleMarble;
@@ -48,12 +45,10 @@ public class MarbleMarketController extends GenericGUIController{
      *
      */
     public void refreshMarbleMarket(){
-        String marbleImagePath = null;
-        Image marbleImage = null;
-        BackgroundImage bgImg = null;
+        String marbleImagePath ;
 
         // refreshing not for sale marble
-        marbleImagePath = this.getAssetLink(marbleMarket.getNotForSale());
+        marbleImagePath = AssetsHelper.getMarblePath(marbleMarket.getNotForSale());
         notForSaleMarble.setStyle("-fx-background-image: url(" + marbleImagePath + ");");
 
         // refreshing all other marbles
@@ -63,11 +58,9 @@ public class MarbleMarketController extends GenericGUIController{
         for(int i=0; i<marketPositions.length; i++){
             // iterate through marble cols
             for(int j=0; j<marketPositions[i].length; j++){
-                Marble tempMarble = marketPositions[i][j];  // getting temp marble
-                Pane tempPane = (Pane) marbleMarketPane.lookup("#mm-" + String.valueOf(i+1) + "-" + String.valueOf(j+1));
-                marbleImagePath = this.getAssetLink(tempMarble);
-                tempPane.setStyle("-fx-background-image: url(" + marbleImagePath + ");");
-
+                Pane tempPane = (Pane) marbleMarketPane.lookup("#mm-" + (i+1) + "-" + (j+1));
+                marbleImagePath = AssetsHelper.getMarblePath(marketPositions[i][j]);
+                FXHelper.setBackground(tempPane, marbleImagePath);
             }
         }
         tabPane.requestLayout();
@@ -104,30 +97,6 @@ public class MarbleMarketController extends GenericGUIController{
         // returning to client controller handling the marble market selection
         super.getClientController().pickCommandHandler(new MarbleSelection(choiceOrientation, choiceIndex-1));
     };
-
-    /**
-     * Retrieve the proper asset link based on marble type
-     * @param marble Marble to return path
-     * @return Image asset link
-     */
-    private String getAssetLink(Marble marble){
-        String path = null;
-        switch (marble.getResourceType()){
-            case SHIELD:    path = BLUE_MARBLE_PATH;
-                            break;
-            case COIN:      path = YELLOW_MARBLE_PATH;
-                            break;
-            case STONE:     path = GRAY_MARBLE_PATH;
-                            break;
-            case SERVANT:   path = PURPLE_MARBLE_PATH;
-                            break;
-            case FAITH:     path = RED_MARBLE_PATH;
-                            break;
-            case BLANK:     path = WHITE_MARBLE_PATH;
-                            break;
-        }
-        return path;
-    }
 
     /**
      * Sets the marble market tab

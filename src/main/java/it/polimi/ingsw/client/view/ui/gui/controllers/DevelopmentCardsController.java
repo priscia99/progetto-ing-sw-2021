@@ -4,6 +4,8 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientDevelopmentCard;
 import it.polimi.ingsw.client.model.ClientDevelopmentCardDecks;
 import it.polimi.ingsw.client.view.ui.gui.scene.SceneController;
+import it.polimi.ingsw.client.view.ui.gui.utils.AssetsHelper;
+import it.polimi.ingsw.client.view.ui.gui.utils.FXHelper;
 import it.polimi.ingsw.server.model.resource.ResourcePosition;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -17,8 +19,6 @@ import java.util.ArrayList;
 
 public class DevelopmentCardsController extends GenericGUIController {
 
-    private static final String DEV_CARDS_FRONT_PATH = "/img/cards/front/development-card-";
-    private static final String DEV_CARDS_BACK_PATH = "/img/cards/back/development-card-";
 
     private final ArrayList<ObservableList<Node>> cardsSlots;
     private final Button produceButton;
@@ -48,11 +48,10 @@ public class DevelopmentCardsController extends GenericGUIController {
                     tempPane = (Pane) cardsSlots.get(i).get(j);
                     if (j < decks.getDeck(i).size()) {
                         // current slot position is occupied by a card (set front background image)
-                        String cardImagePath = DEV_CARDS_FRONT_PATH + decks.getDeck(i).get(j).getAssetLink() + ".png";
-                        tempPane.setStyle("-fx-background-image: url(" + cardImagePath + ");");
+                        FXHelper.setBackground(tempPane, AssetsHelper.getDevelopmentFrontPath(decks.getDeck(i).get(j)));
                     } else {
                         // current slot position is free (set empty background image)
-                        tempPane.setStyle("-fx-background-image: none;");
+                        FXHelper.cleanBackground(tempPane);
                     }
                 }
             }
