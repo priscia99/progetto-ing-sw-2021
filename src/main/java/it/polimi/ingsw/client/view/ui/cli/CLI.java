@@ -436,8 +436,11 @@ public class CLI implements UI {
             StringBuilder playersList = new StringBuilder();
             names.forEach(player -> {
                 if(names.get(names.size()-1).equals(player)){
+                    playersList.append(player);
+                } else {
                     playersList.append(player).append(" -> ");
-                }});
+                }
+            });
             this.displayInfo("[" + playersList + "]");
             this.displayInfo("Current player is: " + current);
         }
