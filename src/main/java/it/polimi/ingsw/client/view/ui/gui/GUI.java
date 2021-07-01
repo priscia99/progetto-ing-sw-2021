@@ -38,6 +38,10 @@ public class GUI implements UI{
         Platform.runLater(() -> SceneController.requestAuth(primaryStage, client));
     }
 
+    /**
+     * Empty method for GUI
+     * @return
+     */
     @Override
     public AuthData requestAuth() {return null;}
 
@@ -46,6 +50,10 @@ public class GUI implements UI{
         this.controller = controller;
     }
 
+    /**
+     * Display error from unsuccessful authentication
+     * @param errType type of authentication error
+     */
     @Override
     public void displayAuthFail(String errType) {
         String errorMessage;
@@ -58,6 +66,10 @@ public class GUI implements UI{
         Platform.runLater(() -> ((TextField)primaryStage.getScene().lookup("#login-message")).setText(errorMessage));
     }
 
+    /**
+     * Display message when lobby creation is successful
+     * @param lobbyId successfully created lobby id
+     */
     @Override
     public void displayLobbyCreated(String lobbyId) {
         primaryStage.getScene().lookup("#join-button").setDisable(true);
@@ -65,6 +77,10 @@ public class GUI implements UI{
         Platform.runLater(() -> ((TextField)primaryStage.getScene().lookup("#login-message")).setText("Created lobby " + lobbyId));
     }
 
+    /**
+     * Display message when lobby joining is successful
+     * @param lobbyId successfully joined lobby id
+     */
     @Override
     public void displayLobbyJoined(String lobbyId) {
         primaryStage.getScene().lookup("#join-button").setDisable(true);
@@ -74,6 +90,11 @@ public class GUI implements UI{
         }
     }
 
+    /**
+     * Set the GUI state to the one needed when starting a player turn
+     * @param player username of the player in turn
+     * @param myTurn set true if player is current player turn
+     */
     @Override
     public void displayNewTurn(String player, Boolean myTurn) {
         Platform.runLater(() -> {
@@ -93,6 +114,10 @@ public class GUI implements UI{
         }
     }
 
+    /**
+     * Display panel to choose initial resources
+     * @param toChoose number of resources to choose
+     */
     @Override
     public void displayChooseInitialResourcesMenu(int toChoose) {
         Platform.runLater(() -> {
@@ -100,6 +125,10 @@ public class GUI implements UI{
         });
     }
 
+    /**
+     * Display panel to choose initial leaders
+     * @param cardsIDs IDs of card to choose from
+     */
     @Override
     public void displayInitialLeadersMenu(ArrayList<String> cardsIDs) {
         Platform.runLater(() -> {
@@ -108,6 +137,11 @@ public class GUI implements UI{
     }
 
 
+    /**
+     * Refresh warehouse content
+     * @param warehouse warehouse to display
+     * @param username name of the warehouse's owner
+     */
     @Override
     public void displayWarehouse(ClientWarehouse warehouse, String username) {
         if(isToRefresh(username)) {
@@ -129,31 +163,55 @@ public class GUI implements UI{
         }
     }
 
+    /**
+     * Empty method for GUI
+     */
     @Override
     public void startListening() {
     }
 
+    /**
+     * Display popup showing error message
+     * @param error error to display
+     */
     @Override
     public void displayError(String error) {
         CustomLogger.getLogger().severe(error);
         Platform.runLater(() -> SceneController.displayPopupError(primaryStage, error));
     }
 
+    /**
+     * Display popup showing info message
+     * @param info info to display
+     */
     @Override
     public void displayInfo(String info) {
         Platform.runLater(() -> SceneController.displayPopupMessage(primaryStage, info));
     }
 
+    /**
+     * Refresh marble marlet content
+     * @param market marble market to display
+     */
     @Override
     public void displayMarbleMarket(ClientMarbleMarket market) {
         Platform.runLater(() -> SceneController.getMainGUIController().getMarbleMarketController().setMarbleMarket(market));
     }
 
+    /**
+     * Refresh card market content
+     * @param market development cards market to display
+     */
     @Override
     public void displayCardMarket(ClientCardsMarket market) {
         Platform.runLater(() -> SceneController.getMainGUIController().getDevelopmentCardMarketController().setCardsMarket(market));
     }
 
+    /**
+     * Refresh strongbox content
+     * @param strongbox strongbox to display
+     * @param username name of the strongbox's owner
+     */
     @Override
     public void displayStrongBox(ClientStrongbox strongbox, String username) {
         if (isToRefresh(username)) {
@@ -161,6 +219,11 @@ public class GUI implements UI{
         }
     }
 
+    /**
+     * Refresh faith path content
+     * @param path faith path to display
+     * @param username name of the faith path's owner
+     */
     @Override
     public void displayFaithPath(ClientFaithPath path, String username) {
         if (isToRefresh(username)) {
@@ -171,6 +234,11 @@ public class GUI implements UI{
         }
     }
 
+    /**
+     * Refresh development cards content
+     * @param deck player development cards deck to display
+     * @param username name of the decks' owner
+     */
     @Override
     public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck, String username) {
         if (isToRefresh(username)) {
@@ -181,36 +249,71 @@ public class GUI implements UI{
         }
     }
 
+    /**
+     * Empty method in GUI
+     * @param usernames list of usernames
+     */
     @Override
     public void displayOtherPlayersUsername(ArrayList<String> usernames) {
 
     }
 
+    /**
+     * Empty method in GUI
+     */
     @Override
     public void displayHelpMessage() {
 
     }
 
+    /**
+     * Empty method in GUI
+     * @param names list of usernames
+     * @param current username of the player in turn
+     */
     @Override
     public void displayTurnInfo(ArrayList<String> names, String current) {
 
     }
 
+    /**
+     * Empty method in GUI
+     * @param myTurn set true if it's the player's turn
+     * @param mainActionDone set true if the main action has already done in this turn
+     */
     @Override
     public void displayPossibleActions(boolean myTurn, boolean mainActionDone) {
 
     }
 
+    /**
+     * Set the GUI state to the one needed to select resources from positions
+     * @param selection selected marble market row / column orientation
+     * @param selected selected marbles from the market
+     * @param changeEffects list of optional conversions for white marbles
+     * @param depotEffects list of activated leader cards with depot effects
+     */
     @Override
     public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ClientLeaderCard> changeEffects, ArrayList<ClientLeaderCard> depotEffects) {
         SceneController.getMainGUIController().getWarehouseController().insertResourcesToDepot(selection, selected, changeEffects, depotEffects);
     }
 
+    /**
+     * Empty for GUI
+     * @param id card id that player wants to buy
+     * @param discounts list of activated leader cards that have a discount effect
+     * @param depotEffects list of activated leader cards with depot effects
+     */
     @Override
     public void displayBuyDevelopmentCardMenu(String id, ArrayList<ClientLeaderCard> discounts, ArrayList<ClientLeaderCard> depotEffects) {
 
     }
 
+    /**
+     * Display panel to choose productions to activate
+     * @param effects list of activated leader cards that have a production effect
+     * @param depotEffects list of activated leader cards that have a depot effect
+     */
     @Override
     public void displayProduceMenu(ArrayList<ClientLeaderCard> effects, ArrayList<ClientLeaderCard> depotEffects) {
         Platform.runLater(() -> {
@@ -218,6 +321,10 @@ public class GUI implements UI{
         });
     }
 
+    /**
+     * Initialize GUI with current game data
+     * @param game the client game
+     */
     @Override
     public void startUI(ClientGame game) {
         this.selectedPlayerBoard = game.getMyUsername();
@@ -241,6 +348,10 @@ public class GUI implements UI{
         });
     }
 
+    /**
+     * Refresh user stats section
+     * @param playerBoard user's playerboard
+     */
     @Override
     public void displayUserStats(ClientPlayerBoard playerBoard) {
         if(!arePlayerStatsInitialized){
@@ -258,6 +369,9 @@ public class GUI implements UI{
         }
     }
 
+    /**
+     * Display alert when game is ended
+     */
     @Override
     public void showGameIsEnded() {
         Platform.runLater( () -> SceneController.displayEndGame());

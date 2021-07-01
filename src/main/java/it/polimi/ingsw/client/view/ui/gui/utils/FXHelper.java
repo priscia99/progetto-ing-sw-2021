@@ -31,7 +31,7 @@ public class FXHelper {
 
     /**
      * Highlights effect for a selected target
-     * @param target target which JAVAFX effect needs to be highlighted
+     * @param target target which needs to be highlighted
      */
     public static void highlight(Node target){
         target.setEffect(new Glow(0.8));
