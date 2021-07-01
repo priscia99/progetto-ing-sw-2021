@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.exceptions.ValidationException;
-import it.polimi.ingsw.network.message.from_server.VictoryPointsMessage;
 import it.polimi.ingsw.server.model.BackupManager;
 import it.polimi.ingsw.server.model.card.DevelopmentCard;
 import it.polimi.ingsw.server.model.card.LeaderCard;
@@ -60,7 +59,7 @@ public class ServerController {
     /**
      * Execute action sent by client, apply backup in case of errors unknown,
      * send error to client in case of validation error
-     * @param action
+     * @param action Action to execute on game
      */
     public void tryAction(CustomRunnable action){
         tryCreateBackup();
@@ -93,7 +92,7 @@ public class ServerController {
 
     /**
      * Catch exception and convert it to validation exception
-     * @param validation
+     * @param validation Validation method to execute
      * @throws ValidationException
      */
     private void throwOnlyValidationExceptions(CustomRunnable validation) throws ValidationException {
@@ -106,9 +105,9 @@ public class ServerController {
 
     /**
      * Validation for buy development card action
-     * @param cardId
-     * @param deckIndex
-     * @param toConsume
+     * @param cardId ID of card to buy
+     * @param deckIndex Index of deck into which insert new card
+     * @param toConsume Resources to consume to buy card
      * @throws ValidationException
      */
     private void validateBuyDevelopmentCard(String cardId, int deckIndex, ConsumeTarget toConsume) throws ValidationException {
@@ -128,9 +127,9 @@ public class ServerController {
 
     /**
      * Execute buy development card action on game
-     * @param cardId
-     * @param deckIndex
-     * @param toConsume
+     * @param cardId ID of card to buy
+     * @param deckIndex Index of deck into which insert new card
+     * @param toConsume Resources to consume to buy card
      * @throws Exception
      */
     public void buyDevelopmentCard(String cardId, int deckIndex, ConsumeTarget toConsume) throws Exception {
@@ -144,8 +143,8 @@ public class ServerController {
 
     /**
      * Execute choose initial leader action on game
-     * @param leadersChosen
-     * @param playerUsername
+     * @param leadersChosen List of IDs of leader cards chosen
+     * @param playerUsername Username who made the choice
      * @throws Exception
      */
     public void chooseInitialLeaders(ArrayList<String> leadersChosen, String playerUsername) throws Exception {
@@ -154,9 +153,9 @@ public class ServerController {
     }
 
     /**
-     * Execute initial resourse action on game
-     * @param resourcesToAdd
-     * @param username
+     * Execute initial resource action on game
+     * @param resourcesToAdd Resources and position into which add them
+     * @param username Username who made the choice
      * @throws Exception
      */
     public void chooseInitialResources(ConsumeTarget resourcesToAdd, String username) throws Exception {
@@ -166,7 +165,7 @@ public class ServerController {
 
     /**
      * Validation method for drop leader card action
-     * @param cardId
+     * @param cardId ID of leader card to drop
      * @throws ValidationException
      */
     private void validateDropLeader(String cardId) throws ValidationException {
@@ -180,7 +179,7 @@ public class ServerController {
 
     /**
      * Execute drop leader card action on game
-     * @param cardId
+     * @param cardId ID of leader card to drop
      * @throws Exception
      */
     public void dropLeaderCard(String cardId) throws Exception {
@@ -191,9 +190,9 @@ public class ServerController {
 
     /**
      * Validation method for pick resources action
-     * @param marbleSelection
-     * @param positions
-     * @param converted
+     * @param marbleSelection marble market selection
+     * @param positions Position into which insert new resources
+     * @param converted Conversions made in case of leader change effect and white marble
      * @throws ValidationException
      */
     private void validatePickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) throws ValidationException {
@@ -233,9 +232,9 @@ public class ServerController {
 
     /**
      * Execute pick resources action on game
-     * @param marbleSelection
-     * @param positions
-     * @param converted
+     * @param marbleSelection marble market selection
+     * @param positions Position into which insert new resources
+     * @param converted Conversions made in case of leader change effect and white marble
      * @throws Exception
      */
     public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) throws Exception {
@@ -272,8 +271,8 @@ public class ServerController {
 
     /**
      * Validation method for start production action
-     * @param consumedResources
-     * @param productionsToActivate
+     * @param consumedResources Resources to use as input for productions
+     * @param productionsToActivate List of production effects to activate
      * @throws ValidationException
      */
     private void validateStartProduction(ConsumeTarget consumedResources, ArrayList<ProductionEffect> productionsToActivate) throws ValidationException {
@@ -294,8 +293,8 @@ public class ServerController {
 
     /**
      * Execute start production action on game
-     * @param consumedResources
-     * @param productionsToActivate
+     * @param consumedResources Resources to use as input for productions
+     * @param productionsToActivate List of production effects to activate
      * @throws Exception
      */
     public void startProduction(ConsumeTarget consumedResources, ArrayList<ProductionEffect> productionsToActivate) throws Exception {
@@ -316,10 +315,10 @@ public class ServerController {
 
     /**
      * Validation method for play leader card action
-     * @param cardId
+     * @param cardId ID of leader cart to activate
      * @throws ValidationException
      */
-    private void validatePlayLeaderCard(String cardId) throws ValidationException {
+    private void validatActivateLeaderCard(String cardId) throws ValidationException {
         throwOnlyValidationExceptions(
                 ()->{
                     Optional<LeaderCard> toActivate = game.getCurrentPlayer()
@@ -333,18 +332,18 @@ public class ServerController {
 
     /**
      * Execute play leader card on game
-     * @param cardId
+     * @param cardId ID of leader cart to activate
      * @throws Exception
      */
-    public void playLeaderCard(String cardId) throws Exception {
-        validatePlayLeaderCard(cardId);
+    public void activateLeaderCard(String cardId) throws Exception {
+        validatActivateLeaderCard(cardId);
         game.getCurrentPlayer().playLeaderCardById(cardId);
     }
 
     /**
      * Validation method for swap depots action
-     * @param first
-     * @param second
+     * @param first Index of first depot to swap
+     * @param second Index of second depot to swap
      * @throws ValidationException
      */
     private void validateSwapDepots(int first, int second) throws ValidationException {
@@ -359,8 +358,8 @@ public class ServerController {
 
     /**
      * Execute swap depots on game
-     * @param first
-     * @param second
+     * @param first Index of first depot to swap
+     * @param second Index of second depot to swap
      * @throws Exception
      */
     public void swapDepots(int first, int second) throws Exception {
@@ -378,7 +377,7 @@ public class ServerController {
 
     /**
      * Validation for remove resources action
-     * @param depot
+     * @param depot Depot from which remove resource
      * @throws ValidationException
      */
     private void validateRemoveResource(ResourcePosition depot) throws ValidationException {
@@ -393,7 +392,7 @@ public class ServerController {
 
     /**
      * Execute remove resources action on game
-     * @param depot
+     * @param depot Depot from which remove resource
      * @throws Exception
      */
     public void removeResource(ResourcePosition depot) throws Exception {
@@ -408,11 +407,11 @@ public class ServerController {
 
     /**
      * Manage player disconnection
-     * @param dead
+     * @param disconnected
      */
-    public void playerDisconnected(String dead) {
-        tryAction(()->game.addDead(dead));
-        if(game.getCurrentPlayer().getNickname().equals(dead)){
+    public void playerDisconnected(String disconnected) {
+        tryAction(()->game.addDead(disconnected));
+        if(game.getCurrentPlayer().getNickname().equals(disconnected)){
             if(game.getPlayers().size() != game.countDeads()){
                 tryAction(this::nextTurn);
             }
@@ -421,9 +420,9 @@ public class ServerController {
 
     /**
      * Manage player reconnection
-     * @param revived
+     * @param connected
      */
-    public void playerReconnected(String revived){
-        tryAction(()->game.removeDead(revived));
+    public void playerReconnected(String connected){
+        tryAction(()->game.removeDead(connected));
     }
 }

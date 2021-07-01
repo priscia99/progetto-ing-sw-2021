@@ -21,6 +21,6 @@ public class PlayLeaderCardMessage extends Message<ServerController> implements 
      * @throws Exception
      */
     public void execute(ServerController target) throws Exception {
-       target.playLeaderCard(cardId);
+       target.activateLeaderCard(cardId);
     }
 }
