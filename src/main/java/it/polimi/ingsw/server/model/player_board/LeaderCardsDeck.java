@@ -124,5 +124,14 @@ public class LeaderCardsDeck extends Observable<Message<ClientController>> {
         return count;
     }
 
+    public int countResources(){
+        ArrayList<DepotEffect> additionalDepots = getActiveEffects(EffectType.DEPOT);
+        int count = 0;
+        for(DepotEffect depot : additionalDepots){
+            count += depot.getDepot().getQuantity();
+        }
+        return count;
+    }
+
 
 }

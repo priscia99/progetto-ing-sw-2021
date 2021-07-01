@@ -12,7 +12,6 @@ import it.polimi.ingsw.server.model.card.effect.EffectType;
 import it.polimi.ingsw.server.model.player_board.DevelopmentCardsDeck;
 import it.polimi.ingsw.server.model.player_board.PlayerBoard;
 import it.polimi.ingsw.server.model.player_board.faith_path.FaithPath;
-import it.polimi.ingsw.server.model.player_board.storage.Strongbox;
 import it.polimi.ingsw.server.model.player_board.storage.Warehouse;
 import it.polimi.ingsw.server.model.resource.*;
 import it.polimi.ingsw.utils.CustomLogger;
@@ -264,7 +263,11 @@ public class Player extends Observable<Message<ClientController>> {
         return this.playerBoard.countByResourceType(resourceType);
     }
 
-    // count in developmentCardsDecks where cards' color is equal to the given color
+    /**
+     *
+     * @param color Color of development card to count
+     * @return Quantity of development cards owned by player with selected color
+     */
     public int countByColor(Color color) {
         int result = 0;
 
@@ -278,7 +281,12 @@ public class Player extends Observable<Message<ClientController>> {
         return result;
     }
 
-    // count in developmentCardsDecks where cards' level is equal to the given level
+
+    /**
+     *
+     * @param level Level of development card to count
+     * @return Quantity of development card owned by player with selected level
+     */
     public int countByLevel(int level) {
         int result = 0;
 
@@ -292,6 +300,10 @@ public class Player extends Observable<Message<ClientController>> {
         return result;
     }
 
+    /**
+     * Trigger pope favour cell if present in position
+     * @param position
+     */
     public void checkPopeFavour(int position){
         boolean activated = this.getPlayerBoard().getFaithPath().checkPopeFavor(position);
         if(activated){
@@ -299,6 +311,11 @@ public class Player extends Observable<Message<ClientController>> {
         }
     }
 
+    /**
+     *
+     * @param level Level of development cards to consider
+     * @return Colors of development cards with level selected
+     */
     public ArrayList<Color> colorByLevel(int level) {
         if (level < 0 || level > 3) {
             throw new IllegalArgumentException("level must be in [0;3]");
@@ -320,19 +337,31 @@ public class Player extends Observable<Message<ClientController>> {
         return colors;
     }
 
+    /**
+     * Remove leader card with matching ID
+     * @param id ID of leader card to remove
+     * @throws Exception
+     */
     public void dropLeaderCardById(String id) throws Exception {
         this.playerBoard.getLeaderCardsDeck().removeLeaderCardById(id);
         notify(new LeaderCardsMessage(this.playerBoard.getLeaderCardsDeck().getLeaderCards(), username));
     }
 
-
-    public void playLeaderCardById(String cardId) {
+    /**
+     * Activate leader card with matching ID
+     * @param cardId ID of leader card to activate
+     */
+    public void activateLeaderCardById(String cardId) {
         this.playerBoard.getLeaderCardsDeck().activateLeaderCardById(cardId);
         notify(new LeaderCardsMessage(this.getPlayerBoard().getLeaderCardsDeck().getLeaderCards(), username));
         notify(new UpdateVictoryPointsMessage(getVictoryPoints(), username));
     }
 
 
+    /**
+     * Add faith point to player
+     * @return position of player in faith path
+     */
     public int addFaithPoint(){
         this.playerBoard.addFaithPoints(1);
         FaithPath faithPath = this.playerBoard.getFaithPath();
@@ -340,23 +369,33 @@ public class Player extends Observable<Message<ClientController>> {
         return this.playerBoard.getFaithPath().getFaithPoints();
     }
 
-
+    /**
+     *
+     * @return Victory points of player
+     */
     public int getVictoryPoints(){
         int developmentCardsPoints = Arrays.stream(this.playerBoard.getDevelopmentCardsDecks()).mapToInt(deck-> deck.getDeck().stream().mapToInt(DevelopmentCard::getVictoryPoints).sum()).sum();
         int faithPoints = this.playerBoard.getFaithPath().getVictoryPoints();
         int leaderPoints = this.playerBoard.getLeaderCardsDeck().getLeaderCards().stream().mapToInt(leader-> leader.isActive() ? leader.getVictoryPoints() : 0).sum();
-        int resourcePoints = (int) (Math.floor(this.playerBoard.getStrongbox().getResourceCount()/5.0) + Math.floor(this.playerBoard.getWarehouse().getResourceCount()/5.0));
+        int resourcePoints = (int) (Math.floor(this.playerBoard.getStrongbox().countResources()/5.0) + Math.floor(this.playerBoard.getWarehouse().countResources()/5.0));
         return developmentCardsPoints + faithPoints + leaderPoints + resourcePoints;
-    }
-
-    public int getResourceCount(){
-        return this.playerBoard.getStrongbox().getResourceCount() + this.playerBoard.getWarehouse().getResourceCount();
     }
 
     /**
      *
-     * @param index1
-     * @param index2
+     * @return Quantity of resources owned by player
+     */
+    public int getResourceCount(){
+        return
+                this.playerBoard.getStrongbox().countResources() +
+                this.playerBoard.getWarehouse().countResources() +
+                this.playerBoard.getLeaderCardsDeck().countResources();
+    }
+
+    /**
+     * Swap depots of player
+     * @param index1 Index of firsts depot to swap
+     * @param index2 Index of second depot to swap
      */
     public void swapDepots(int index1, int index2) throws Exception {
         playerBoard.getWarehouse().swap(index1, index2);
@@ -371,29 +410,22 @@ public class Player extends Observable<Message<ClientController>> {
         ));
     }
 
+
     /**
      *
-     * @param index
-     * @param resourceType
+     * @param card Card to add
+     * @param index Depot index into which player want to insert card
+     * @return Check if player can add selected card in selected depot
      */
-    public void addToDepot(int index, ResourceType resourceType) throws Exception{
-        Warehouse warehouse = playerBoard.getWarehouse();
-
-        warehouse.addToDepot(index, resourceType);
-        notify(new WarehouseMessage(
-                warehouse.getResourceStocks()
-                        .stream().map(resourceStock -> (ResourceDepot) resourceStock)
-                        .collect(Collectors.toCollection(ArrayList::new)),
-                username
-                ));
-    }
-
-
-
     public boolean canAddDevelopmentCard(DevelopmentCard card, int index){
         return this.playerBoard.getDevelopmentCardsDecks()[index].canAddCard(card);
     }
 
+    /**
+     *
+     * @param toConsume Resources with positions
+     * @return Check if player can consume selected resources from selected positions
+     */
     public boolean canConsume(ConsumeTarget toConsume){
         return !toConsume.getPositions().stream().map(position -> {
             if(position.equals(ResourcePosition.STRONG_BOX)){
@@ -414,6 +446,11 @@ public class Player extends Observable<Message<ClientController>> {
         }).collect(Collectors.toList()).contains(false);
     }
 
+    /**
+     * Consume selected resources from the selected positions
+     * @param toConsume Resources and positions selected
+     * @throws Exception
+     */
     public void consumeResources(ConsumeTarget toConsume) throws Exception {
         for(ResourcePosition position : toConsume.getPositions()){
             if(position == ResourcePosition.STRONG_BOX){
@@ -438,12 +475,22 @@ public class Player extends Observable<Message<ClientController>> {
         ));
     }
 
+    /**
+     * Add development card to player
+     * @param card Card to add
+     * @param deckIndex Deck into which card has to be added
+     * @throws Exception
+     */
     public void addDevelopmentCard(DevelopmentCard card, int deckIndex) throws Exception {
         this.playerBoard.addDevelopmentCard(card, deckIndex);
         notify(new DevelopmentCardsMessage(card, deckIndex, username));
         notify(new UpdateVictoryPointsMessage(getVictoryPoints(), username));
     }
 
+    /**
+     *
+     * @return List of discounts available by player
+     */
     public ArrayList<DiscountEffect> getDiscounts(){
         return this.playerBoard.getLeaderCardsDeck()
                 .getLeaderCards().stream().filter(LeaderCard::isActive)

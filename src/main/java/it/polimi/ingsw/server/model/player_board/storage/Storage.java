@@ -60,7 +60,7 @@ public abstract class Storage extends Observable<Message<ClientController>> {
     /**
      * @return the quantity of resources contained into the storage
      */
-    public int getResourceCount(){
+    public int countResources(){
         return this.resourceStocks.stream().mapToInt(ResourceStock::getQuantity).sum();
     }
 

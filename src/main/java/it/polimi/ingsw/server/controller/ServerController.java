@@ -337,7 +337,7 @@ public class ServerController {
      */
     public void activateLeaderCard(String cardId) throws Exception {
         validatActivateLeaderCard(cardId);
-        game.getCurrentPlayer().playLeaderCardById(cardId);
+        game.getCurrentPlayer().activateLeaderCardById(cardId);
     }
 
     /**
