@@ -264,4 +264,8 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     public void removeDead(String revived) throws Exception {
         this.deads.remove(getPlayerByUsername(revived));
     }
+
+    public int countDeads(){
+        return this.deads.size();
+    }
 }

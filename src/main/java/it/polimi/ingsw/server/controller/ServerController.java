@@ -291,7 +291,9 @@ public class ServerController {
     public void playerDied(String dead) {
         tryAction(()->game.addDead(dead));
         if(game.getCurrentPlayer().getNickname().equals(dead)){
-            tryAction(this::nextTurn);
+            if(game.getPlayers().size() != game.countDeads()){
+                tryAction(this::nextTurn);
+            }
         }
     }
 

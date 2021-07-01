@@ -615,7 +615,6 @@ public class CLI implements UI {
         try{
             int index = askDevelopmentDeckIndex();
             displayUserDiscounts(discounts);
-            // TODO optional empty? how can i buy a card if i can't have any resource to pick?
             Optional<Integer> specificQuantity = Optional.empty();
             ConsumeTarget resourcesSelected = askResourcesToUse(specificQuantity, depotEffects);
             controller.buyDevelopmentCard(id, index, resourcesSelected);
@@ -655,8 +654,10 @@ public class CLI implements UI {
             genericProduction = askForGenericProduction(consumed, depotEffects);
             leaderProductions = askForLeaderProduction(productionEffects);
             cardIds = askForListOfIds();
-            ConsumeTarget toConsume = askResourcesToUse(Optional.empty(), depotEffects);
-            consumed.putAll(toConsume);
+            if(cardIds.size()!=0){
+                ConsumeTarget toConsume = askResourcesToUse(Optional.empty(), depotEffects);
+                consumed.putAll(toConsume);
+            }
             controller.produceResources(consumed, cardIds, genericProduction, leaderProductions);
         } catch (Exception e){
             displayError(e.getMessage());
@@ -676,8 +677,9 @@ public class CLI implements UI {
 
     private ArrayList<String> askForListOfIds() throws Exception {
         try{
-            displayInfo("Insert IDs of card to use, separated by space: ");
+            displayInfo("Insert IDs of card to use, separated by space: (or ok to continue)");
             String productionsRaw = in.nextLine();
+            if(productionsRaw.equals("ok")) return new ArrayList<>();
             return new ArrayList(Arrays.asList(productionsRaw.split(" ")));
         } catch (Exception e){
             e.printStackTrace();
@@ -736,7 +738,8 @@ public class CLI implements UI {
     private ConsumeTarget askResourcesToUse(Optional<Integer> needed, ArrayList<DepotEffect> depotEffects) throws Exception {
         ConsumeTarget resourcesSelected = new ConsumeTarget();
         String confirmString = "add";
-        while(!confirmString.equals("ok") && !(needed.isEmpty() || (needed.get() == resourcesSelected.countStocks()))){
+        if(needed.isPresent()) displayInfo("You have to choose " + needed.get() + " resources.");
+        while(!confirmString.equals("ok") && (needed.isEmpty() || (needed.get() != resourcesSelected.countResources()))){
             displayInfo("Add resource stock: <position> <quantity> <type> ('quit' to choose another action)");
             displayPossibleResourcePositions(depotEffects, true);
             String rawInput = in.nextLine();
@@ -749,12 +752,12 @@ public class CLI implements UI {
                 ResourceStock stockSelected = new ResourceStock(typeSelected, quantitySelected);
                 resourcesSelected.put(positionSelected, stockSelected);
                 if(needed.isPresent()){
-                    if(resourcesSelected.countStocks() == needed.get()) return resourcesSelected;
+                    if(resourcesSelected.countResources() == needed.get()) return resourcesSelected;
+                    if(resourcesSelected.countResources() > needed.get()) throw new Exception("Resources selected exceed needed!");
                 }
-                if(needed.isPresent() && needed.get() < resourcesSelected.countResources()) throw new Exception("Exceeded resources that you can provide!");
                 displayInfo("Stock added correctly, press enter to add another stock, 'ok' to continue.");
             } catch(Exception e ){
-                throw new Exception("Error while parsing resources.");
+                throw new Exception(e.getMessage());
             }
             confirmString = in.nextLine();
         }
