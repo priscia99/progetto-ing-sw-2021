@@ -90,16 +90,6 @@ public class ClientLeaderCardDeck extends Observable<Pair<ClientLeaderCardDeck, 
     }
 
     /**
-     * Adds a card to the player's leader cards deck
-     * @param card leader card that has to be added
-     */
-    public void addCard(ClientLeaderCard card) {
-        this.clientLeaderCards.add(card);
-
-        notify(new Pair<>(this, owner));
-    }
-
-    /**
      * Sets the client leader cards
      * @param clientLeaderCards list of player leader cards
      * @param displayToView set true if the UI needs to be updated

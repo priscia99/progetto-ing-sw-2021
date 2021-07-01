@@ -70,10 +70,17 @@ public class ClientFaithPath extends Observable<Pair<ClientFaithPath, String>> i
         return popeFavors.get(index);
     }
 
+    /**
+     * Notify observers to trigger display of the deck
+     */
     public void show(){
         notify(new Pair<>(this, owner));
     }
 
+    /**
+     * Notify observers to trigger display of the deck
+     * @param toView flag used to optionally limit the displaying of the path
+     */
     public void show(boolean toView){
         if(toView) notify(new Pair<>(this, owner));
     }

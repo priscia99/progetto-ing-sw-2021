@@ -55,14 +55,6 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
         return developmentCards;
     }
 
-    /**
-     * Retrieves the selected development card
-     * @param coordinates development card coordinates in the deck
-     * @return the selected development card
-     */
-    public ClientDevelopmentCard getCard(Pair<Integer, Integer> coordinates) {
-        return this.developmentCards.get(coordinates.getFirst()).get(coordinates.getSecond());
-    }
 
     /**
      * Retrieves the selected development card deck
@@ -90,28 +82,6 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
     }
 
     /**
-     * Add a list of development cards to the selected deck
-     * @param cards list of development cards to add
-     * @param index index of the deck in which the cards need to be placed
-     */
-    public void addCards(ArrayList<ClientDevelopmentCard> cards, int index) {
-        this.developmentCards.get(index).addAll(cards);
-
-        notify(new Pair<>(this, owner));
-    }
-
-    /**
-     * Remove a development card from one of the decks
-     * @param coordinates the coordinates in which the card to be removed is located
-     */
-    public void removeCard(Pair<Integer, Integer> coordinates) {
-        ClientDevelopmentCard cardToRemove = this.developmentCards.get(coordinates.getFirst()).get(coordinates.getSecond());
-        this.developmentCards.get(coordinates.getFirst()).remove(cardToRemove);
-
-        notify(new Pair<>(this, owner));
-    }
-
-    /**
      * Retrieves the number of development cards stored in the decks
      * @return the number of development cards stored in the decks
      */
@@ -123,6 +93,9 @@ public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmen
         return cardsNumber;
     }
 
+    /**
+     * Notify observers to trigger display of the deck
+     */
     public void show(){
         notify(new Pair<>(this, owner));
     }

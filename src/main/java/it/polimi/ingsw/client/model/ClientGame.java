@@ -103,6 +103,10 @@ public class ClientGame extends Observable<Pair<String, Boolean>> implements Ser
         });
     }
 
+    /**
+     * Set isMine attribute for objects owned by player
+     * @param username
+     */
     public void setMyProperty(String username){
         this.myUsername = username;
         ClientPlayerBoard myPlayerBoard = this.playerBoardMap.get(username);

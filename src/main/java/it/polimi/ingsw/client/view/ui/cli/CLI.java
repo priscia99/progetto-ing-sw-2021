@@ -1,23 +1,17 @@
 package it.polimi.ingsw.client.view.ui.cli;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.sun.management.HotSpotDiagnosticMXBean;
-import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.*;
 import it.polimi.ingsw.client.view.representation.RepresentationBuilder;
 import it.polimi.ingsw.client.view.ui.*;
-import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.network.auth_data.*;
-import it.polimi.ingsw.network.message.from_client.ChosenInitialLeadersMessage;
 import it.polimi.ingsw.server.model.card.effect.ChangeEffect;
 import it.polimi.ingsw.server.model.card.effect.DepotEffect;
 import it.polimi.ingsw.server.model.card.effect.DiscountEffect;
 import it.polimi.ingsw.server.model.card.effect.ProductionEffect;
-import it.polimi.ingsw.server.model.game.Game;
 import it.polimi.ingsw.server.model.marble.Marble;
 import it.polimi.ingsw.server.model.marble.MarbleSelection;
 import it.polimi.ingsw.server.model.marble.Orientation;
@@ -100,10 +94,14 @@ public class CLI implements UI {
     private final ArrayList<Command> commands = new ArrayList<>();
     Scanner in = new Scanner(System.in);
 
+
     public CLI() {
         initCommands();
     }
 
+    /**
+     * Loads commands available for CLI
+     */
     private void initCommands(){
         this.commands.addAll(CLICommandsBuilder.getCommands());
     }
@@ -112,6 +110,10 @@ public class CLI implements UI {
         this.controller = c;
     }
 
+    /**
+     * Start management of lobby creation and joining
+     * @return
+     */
     @Override
     public AuthData requestAuth(){
         AuthData authData = null;
@@ -153,6 +155,10 @@ public class CLI implements UI {
         return authData;
     }
 
+    /**
+     * Display errors info when lobby joining is not successful
+     * @param errType type of authentication error
+     */
     @Override
     public void displayAuthFail(String errType) {
         synchronized (outSemaphore) {
@@ -166,6 +172,10 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     * Displays successful lobby joining
+     * @param lobbyId successfully joined lobby id
+     */
     @Override
     public void displayLobbyJoined(String lobbyId){
         synchronized (outSemaphore) {
@@ -173,6 +183,10 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     * Displays successful lobby creation
+     * @param lobbyId successfully created lobby id
+     */
     @Override
     public void displayLobbyCreated(String lobbyId){
         synchronized (outSemaphore) {
@@ -180,6 +194,11 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     * Display new turn message
+     * @param player username of the player in turn
+     * @param myTurn true if player corresponds to current playing turn
+     */
     @Override
     public void displayNewTurn(String player, Boolean myTurn){
             synchronized (outSemaphore) {
@@ -191,17 +210,20 @@ public class CLI implements UI {
             }
     }
 
+    /**
+     * Manage choice of starting resources
+     * @param toChoose number of resources to choose
+     */
     public void displayChooseInitialResourcesMenu(int toChoose) {
         ConsumeTarget resources = new ConsumeTarget();
         synchronized (outSemaphore) {
             int chosenResources = 0;
-            boolean validSelection = true;
+            boolean validSelection;
             ResourcePosition resourcePosition = null;
             ResourceType resourceType = null;
 
-            System.out.println("You have to choose " + toChoose + " resource/s!");
+            displayInfo("You have to choose " + toChoose + " resource/s!");
             while (chosenResources < toChoose) {
-                validSelection = true;
                 do {
                     try{
                         displayInfo("Select between: | COIN | SERVANT | SHIELD | STONE |");
@@ -242,6 +264,10 @@ public class CLI implements UI {
         controller.chooseInitialResources(resources);
     }
 
+    /**
+     * Manage choice of starting leader cards
+     * @param cardsIDs IDs of cards to choose from
+     */
     public void displayInitialLeadersMenu(ArrayList<String> cardsIDs){
         ArrayList<String> chosenLeaderCards = new ArrayList<>();
         synchronized (outSemaphore) {
@@ -270,6 +296,11 @@ public class CLI implements UI {
         controller.chooseInitialLeaders(chosenLeaderCards);
     }
 
+    /**
+     *
+     * @param clientLeaderCardDeck
+     * @param username name of the deck's owner
+     */
     @Override
     public void displayLeaderCardDeck(ClientLeaderCardDeck clientLeaderCardDeck, String username) {
         synchronized (outSemaphore) {
@@ -278,7 +309,11 @@ public class CLI implements UI {
     }
 
 
-
+    /**
+     *
+     * @param warehouse warehouse to display
+     * @param username name of the warehouse's owner
+     */
     @Override
     public void displayWarehouse(ClientWarehouse warehouse, String username) {
         synchronized (outSemaphore){
@@ -286,6 +321,9 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     * Start listen to user commands and executing them
+     */
     public void startListening(){
         if(!gameStarted){
             gameStarted = true;
@@ -295,7 +333,7 @@ public class CLI implements UI {
                     System.out.println(ANSI_BRIGHT_BG_GREEN + ANSI_BRIGHT_WHITE + " You can now type commands. Type 'help' for commands list. " + ANSI_RESET);
                 }
                 while (true) {
-                    String requestedCommand = null;
+                    String requestedCommand;
                         requestedCommand = in.nextLine();
                         Pair<String, HashMap<String, String>> formattedCommand = this.getFormattedCommand(requestedCommand);
                         if (formattedCommand != null) {
@@ -306,18 +344,30 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     *
+     * @param error error to display
+     */
     public void displayError(String error){
         synchronized (outSemaphore){
             System.out.println(ANSI_BG_RED + error + ANSI_RESET);
         }
     }
 
+    /**
+     *
+     * @param info info to display
+     */
     public void displayInfo(String info){
         synchronized (outSemaphore){
             System.out.println(ANSI_BLUE + info + ANSI_RESET);
         }
     }
 
+    /**
+     *
+     * @param market marble market to display
+     */
     @Override
     public void displayMarbleMarket(ClientMarbleMarket market) {
         synchronized (outSemaphore){
@@ -325,6 +375,11 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     *
+     * @param strongbox strongbox to display
+     * @param username name of the strongbox's owner
+     */
     @Override
     public void displayStrongBox(ClientStrongbox strongbox, String username) {
         synchronized (outSemaphore){
@@ -332,6 +387,11 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     *
+     * @param path faith path to display
+     * @param username name of the faith path's owner
+     */
     @Override
     public void displayFaithPath(ClientFaithPath path, String username) {
         synchronized (outSemaphore){
@@ -339,6 +399,11 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     *
+     * @param deck player development cards deck to display
+     * @param username name of the decks' owner
+     */
     @Override
     public void displayDevelopmentCardDecks(ClientDevelopmentCardDecks deck, String username){
         synchronized (outSemaphore){
@@ -346,6 +411,10 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     *
+     * @param names of other players
+     */
     @Override
     public void displayOtherPlayersUsername(ArrayList<String> names) {
         synchronized (outSemaphore){
@@ -356,6 +425,11 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     *
+     * @param names list of usernames
+     * @param current username of the player in turn
+     */
     @Override
     public void displayTurnInfo(ArrayList<String> names, String current){
         synchronized (outSemaphore){
@@ -369,6 +443,10 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     *
+     * @param market development cards market to display
+     */
     @Override
     public void displayCardMarket(ClientCardsMarket market) {
             synchronized (outSemaphore){
@@ -376,17 +454,27 @@ public class CLI implements UI {
             }
     }
 
+    /**
+     *
+     * @param isMyTurn flag used to filter possible actions
+     * @param isMainActionDone flag used to filter possible actions
+     */
     @Override
     public void displayPossibleActions(boolean isMyTurn, boolean isMainActionDone){
         if(!isMyTurn){
             displayInfo("Wait for your turn to make actions.");
         } else {
             displayInfo("Possible actions:");
-            String actions = isMainActionDone ? "activate | drop" : "activate | drop | produce | buy | pick";
+            String actions = isMainActionDone ? "activate | drop | remove" : "activate | drop | produce | buy | pick";
             displayInfo(actions);
         }
     }
 
+    /**
+     *
+     * @param inputCommand
+     * @return Command content split
+     */
     public Pair<String, HashMap<String, String>> getFormattedCommand(String inputCommand){
 
         if(inputCommand.equalsIgnoreCase("") || inputCommand.equalsIgnoreCase("\n")){
@@ -428,9 +516,13 @@ public class CLI implements UI {
             return null;
         }
 
-        return new Pair<String, HashMap<String, String>>(requestedCommand.getKey(), inputCommandParameters);
+        return new Pair<>(requestedCommand.getKey(), inputCommandParameters);
     }
 
+    /**
+     * Execute handler of command written
+     * @param inputCommand
+     */
     public void executeCommand(Pair<String, HashMap<String, String>> inputCommand){
         switch (inputCommand.getFirst()) {
             case "view" -> viewCommandHandler(inputCommand.getSecond());
@@ -443,13 +535,17 @@ public class CLI implements UI {
             case "cardmarket" -> cardMarketCommandHandler();
             case "endturn" -> endTurnCommandHandler();
             case "swap" -> swapCommandHandler(inputCommand.getSecond());
-            case "buy" -> buyCommandParser(inputCommand.getSecond());
-            case "pick" -> pickCommandParser(inputCommand.getSecond());
+            case "buy" -> buyCommandHandler(inputCommand.getSecond());
+            case "pick" -> pickCommandHandler(inputCommand.getSecond());
             case "produce" -> controller.produceCommandHandler();
             case "remove" -> removeResourceCommandHandler(inputCommand.getSecond());
         }
     }
 
+    /**
+     * Handler of remove resource command
+     * @param params command params
+     */
     private void removeResourceCommandHandler(HashMap<String, String> params) {
         try{
 
@@ -468,6 +564,10 @@ public class CLI implements UI {
 
     }
 
+    /**
+     * Handler of view command
+     * @param params commands params
+     */
     private void viewCommandHandler(HashMap<String, String> params) {
             String targetedPlayer = params.get("p");
             String targetedContent = params.get("t");
@@ -489,6 +589,9 @@ public class CLI implements UI {
             }
     }
 
+    /**
+     * Display help message
+     */
     @Override
     public void displayHelpMessage(){
         commands.forEach(command->{
@@ -502,40 +605,70 @@ public class CLI implements UI {
         });
     }
 
+    /**
+     * Handler of help command
+     */
     private void helpCommandHandler(){
         controller.viewHelpMessage();
     }
 
+    /**
+     * Handler of turn command
+     */
     private void turnCommandHandler(){
         controller.viewTurnInfo();
     }
 
+    /**
+     * Handler of actions command
+     */
     private void actionsCommandHandler(){
         controller.viewPossibleActions();
     }
 
+    /**
+     * Handler of activate leader card command
+     * @param params command params
+     */
     private void activateCommandHandler(HashMap<String, String> params){
         String cardId = params.get("c");
         controller.activateLeaderCard(cardId);
     }
 
+    /**
+     * Handler of drop leader card command
+     * @param params command params
+     */
     private void dropCommandHandler(HashMap<String, String> params){
         String cardId = params.get("c");
         controller.dropLeaderCard(cardId);
     }
 
+    /**
+     * Handler of marble market command
+     */
     private void marbleMarketCommandHandler(){
         controller.viewMarbleMarket();
     }
 
+    /**
+     * Handler of card market command
+     */
     private void cardMarketCommandHandler(){
         controller.viewCardMarket();
     }
 
+    /**
+     * Handler of end turn command
+     */
     private void endTurnCommandHandler(){
         controller.endTurn();
     }
 
+    /**
+     * Handler of swap command handler
+     * @param params
+     */
     private void swapCommandHandler(HashMap<String, String> params){
         try{
             int first = ResourcePosition.valueOf(params.get("a")).ordinal();
@@ -547,12 +680,20 @@ public class CLI implements UI {
 
     }
 
-    private void buyCommandParser(HashMap<String, String> params){
+    /**
+     * Handler of buy development card command
+     * @param params command params
+     */
+    private void buyCommandHandler(HashMap<String, String> params){
         String cardId = params.get("c");
         controller.buyCommandHandler(cardId);
     }
 
-    private void pickCommandParser(HashMap<String, String> params){
+    /**
+     * Handler of pick resources command
+     * @param params
+     */
+    private void pickCommandHandler(HashMap<String, String> params){
         MarbleSelection selection;
         try{
             Orientation orientation = Orientation.valueOf(params.get("o"));
@@ -564,6 +705,13 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     * Manage pick resource command data retrieval
+     * @param selection selected marble market row / column orientation
+     * @param selected selected marbles from the market
+     * @param changeEffectsCards
+     * @param depotEffectsCards
+     */
     public void displayPickResourceMenu(MarbleSelection selection, ArrayList<Marble> selected, ArrayList<ClientLeaderCard> changeEffectsCards, ArrayList<ClientLeaderCard> depotEffectsCards){
         ArrayList<ChangeEffect> changeEffects = changeEffectsCards.stream().map(card -> (ChangeEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
         ArrayList<DepotEffect> depotEffects = depotEffectsCards.stream().map(card -> (DepotEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
@@ -589,6 +737,11 @@ public class CLI implements UI {
             }
     }
 
+    /**
+     * Display possible position for resources
+     * @param additionalDepots Depots from leader cards effects
+     * @param strongbox Flag to insert strongbox in possible positions
+     */
     private void displayPossibleResourcePositions(ArrayList<DepotEffect> additionalDepots, boolean strongbox){
         String message = "Select between: | FIRST_DEPOT | SECOND_DEPOT | THIRD_DEPOT | DROPPED |";
         if(strongbox) message += " STRONGBOX |";
@@ -596,6 +749,13 @@ public class CLI implements UI {
         if(additionalDepots.size()==2) message += " FIRST_LEADER_DEPOT | SECOND_LEADER_DEPOT ";
         displayInfo(message);
     }
+
+    /**
+     * Manage choice of marble conversion in case of two active leader cards with change effect
+     * @param changeEffects
+     * @return the resource selected
+     * @throws Exception
+     */
     private ResourceType askForConversions(ArrayList<ChangeEffect> changeEffects) throws Exception {
         switch (changeEffects.size()){
             case 1:
@@ -609,9 +769,15 @@ public class CLI implements UI {
         throw new Exception("Invalid size of change effects.");
     }
 
-    public void displayBuyDevelopmentCardMenu(String id, ArrayList<ClientLeaderCard> discountsCard, ArrayList<ClientLeaderCard> depotEffectsCard){
-        ArrayList<DepotEffect> depotEffects = depotEffectsCard.stream().map(card -> (DepotEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
-        ArrayList<DiscountEffect> discounts = discountsCard.stream().map(card -> (DiscountEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
+    /**
+     * Manages buy development cards command data retrieval
+     * @param id Card id that player wants to buy
+     * @param discountsCards Leader cards with discount effect
+     * @param depotEffectsCards Leader cards with depot effect
+     */
+    public void displayBuyDevelopmentCardMenu(String id, ArrayList<ClientLeaderCard> discountsCards, ArrayList<ClientLeaderCard> depotEffectsCards){
+        ArrayList<DepotEffect> depotEffects = depotEffectsCards.stream().map(card -> (DepotEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<DiscountEffect> discounts = discountsCards.stream().map(card -> (DiscountEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
         try{
             int index = askDevelopmentDeckIndex();
             displayUserDiscounts(discounts);
@@ -623,6 +789,10 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     * Display info's about player available discounts
+     * @param discounts available discounts effects
+     */
     private void displayUserDiscounts(ArrayList<DiscountEffect> discounts){
         if(!discounts.isEmpty()){
             displayInfo("When choosing resources, consider having the following discounts:");
@@ -632,6 +802,11 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     * Manage the retrieval of development deck index
+     * @return
+     * @throws Exception
+     */
     private int askDevelopmentDeckIndex() throws Exception {
         displayInfo("Insert deck in which to add card. | 0 | 1 | 2 | ");
         String deckIndex = in.nextLine();
@@ -642,8 +817,13 @@ public class CLI implements UI {
         }
     }
 
-    public void displayProduceMenu(ArrayList<ClientLeaderCard> productionCards, ArrayList<ClientLeaderCard> depotEffectsCard){
-        ArrayList<ProductionEffect> productionEffects = productionCards.stream().map(card -> (ProductionEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
+    /**
+     * Manage the retrieval of information for produce command
+     * @param productionEffectsCards Leader cards with production effect
+     * @param depotEffectsCard Leader cards with depot effect
+     */
+    public void displayProduceMenu(ArrayList<ClientLeaderCard> productionEffectsCards, ArrayList<ClientLeaderCard> depotEffectsCard){
+        ArrayList<ProductionEffect> productionEffects = productionEffectsCards.stream().map(card -> (ProductionEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
         ArrayList<DepotEffect> depotEffects = depotEffectsCard.stream().map(card -> (DepotEffect) card.getEffect()).collect(Collectors.toCollection(ArrayList::new));
 
         try{
@@ -665,16 +845,29 @@ public class CLI implements UI {
 
     }
 
+    /**
+     * Empty method for CLI
+     * @param game the client game
+     */
     @Override
     public void startUI(ClientGame game) {
 
     }
 
+    /**
+     * Empty method for CLI
+     * @param playerBoard user's playerboard
+     */
     @Override
     public void displayUserStats(ClientPlayerBoard playerBoard) {
 
     }
 
+    /**
+     * Manage the retrieve of string IDs
+     * @return List of chosen IDs
+     * @throws Exception
+     */
     private ArrayList<String> askForListOfIds() throws Exception {
         try{
             displayInfo("Insert IDs of card to use, separated by space: (or ok to continue)");
@@ -687,6 +880,11 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     * Manage the retrieval of production effects selected from leader effects
+     * @param leadersEffect Production effects available
+     * @return List of production selected
+     */
     private ArrayList<ProductionEffect> askForLeaderProduction(ArrayList<ProductionEffect> leadersEffect){
         ArrayList<ProductionEffect> productionsSelected = new ArrayList<>();
         for(ProductionEffect effect : leadersEffect){
@@ -705,6 +903,13 @@ public class CLI implements UI {
         return productionsSelected;
     }
 
+    /**
+     * Manages the retrieval of data to manage the generic production
+     * @param consumed Resources to consume into which will be added selected resources
+     * @param depotEffects Depot leader effects available
+     * @return Generic production effect, Optional.empty if not selected
+     * @throws Exception
+     */
     private Optional<ProductionEffect> askForGenericProduction(ConsumeTarget consumed, ArrayList<DepotEffect> depotEffects) throws Exception {
         displayInfo("If you want to use generic production, type the resource type to produce, else 'next':" );
             String selectedRaw = in.nextLine();
@@ -719,6 +924,12 @@ public class CLI implements UI {
             return Optional.empty();
     }
 
+    /**
+     * Manage possible errors from parsing String -> ResourcePosition
+     * @param raw String representing position selected
+     * @return Resource position parsed
+     * @throws Exception
+     */
     private ResourcePosition parseResourcePosition(String raw) throws Exception {
         try{
             return ResourcePosition.valueOf(raw);
@@ -727,6 +938,12 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     * Manage possible errors from parsing String -> ResourceType
+     * @param raw String representing resource type selected
+     * @return Resource type parsed
+     * @throws Exception
+     */
     private ResourceType parseResourceType(String raw) throws Exception {
         try{
             return ResourceType.valueOf(raw);
@@ -735,6 +952,13 @@ public class CLI implements UI {
         }
     }
 
+    /**
+     * Manages the retrieval of information needed to consume resources for actions
+     * @param needed Quantity of resources to choose
+     * @param depotEffects Depot effects available
+     * @return Object containing information needed to consume correct resources
+     * @throws Exception
+     */
     private ConsumeTarget askResourcesToUse(Optional<Integer> needed, ArrayList<DepotEffect> depotEffects) throws Exception {
         ConsumeTarget resourcesSelected = new ConsumeTarget();
         String confirmString = "add";
@@ -764,9 +988,12 @@ public class CLI implements UI {
         return resourcesSelected;
     }
 
+    /**
+     * Display game is ended message
+     */
     public void showGameIsEnded(){
         displayInfo("Game is ended, press any key to close.");
-        String ok = in.nextLine();
+        String wait = in.nextLine();
         System.exit(0);
     }
 }

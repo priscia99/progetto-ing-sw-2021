@@ -64,14 +64,6 @@ public class ClientController extends Observable<Message<ServerController>> {
     }
 
     /**
-     * Apply the game backup
-     * @param backup client game backup
-     */
-    public void applyGameBackup(ClientGame backup){
-        this.game = backup;
-    }
-
-    /**
      * Tells the user interface to choose initial resources
      * @param toChoose number of resources to choose
      * @param username name of the username who has to choose resources
