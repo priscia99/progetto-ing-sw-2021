@@ -32,6 +32,9 @@ public class ServerController {
         this.backupManager = manager;
     }
 
+    /**
+     * Create and save backup, manage error if thrown
+     */
     private void tryCreateBackup(){
         if(game.isStarted()){
             try{
@@ -43,6 +46,9 @@ public class ServerController {
         }
     }
 
+    /**
+     * Apply backup to client, manage error if thrown
+     */
     private void tryApplyBackup(){
             try {
                 backupManager.applyBackup();
@@ -51,6 +57,11 @@ public class ServerController {
             }
     }
 
+    /**
+     * Execute action sent by client, apply backup in case of errors unknown,
+     * send error to client in case of validation error
+     * @param action
+     */
     public void tryAction(CustomRunnable action){
         tryCreateBackup();
         try{
@@ -70,12 +81,21 @@ public class ServerController {
       game.setup(players);
     }
 
+    /**
+     * Execute starting game rules
+     * @throws Exception
+     */
     public void giveInitialAssets() throws Exception {
         game.setFirstPlayer();
         game.giveLeaderCardsToPlayers();
         game.giveInitialResources();
     }
 
+    /**
+     * Catch exception and convert it to validation exception
+     * @param validation
+     * @throws ValidationException
+     */
     private void throwOnlyValidationExceptions(CustomRunnable validation) throws ValidationException {
         try{
             validation.tryRun();
@@ -84,6 +104,13 @@ public class ServerController {
         }
     }
 
+    /**
+     * Validation for buy development card action
+     * @param cardId
+     * @param deckIndex
+     * @param toConsume
+     * @throws ValidationException
+     */
     private void validateBuyDevelopmentCard(String cardId, int deckIndex, ConsumeTarget toConsume) throws ValidationException {
         throwOnlyValidationExceptions(
                 ()->{
@@ -99,6 +126,13 @@ public class ServerController {
         );
     }
 
+    /**
+     * Execute buy development card action on game
+     * @param cardId
+     * @param deckIndex
+     * @param toConsume
+     * @throws Exception
+     */
     public void buyDevelopmentCard(String cardId, int deckIndex, ConsumeTarget toConsume) throws Exception {
         validateBuyDevelopmentCard(cardId, deckIndex, toConsume);
         Player currentPlayer = game.getCurrentPlayer();
@@ -108,16 +142,33 @@ public class ServerController {
         currentPlayer.setHasDoneMainAction(true);
     }
 
+    /**
+     * Execute choose initial leader action on game
+     * @param leadersChosen
+     * @param playerUsername
+     * @throws Exception
+     */
     public void chooseInitialLeaders(ArrayList<String> leadersChosen, String playerUsername) throws Exception {
         game.getPlayerByUsername(playerUsername).pickedLeaderCards(leadersChosen);
         game.tryStart();
     }
 
+    /**
+     * Execute initial resourse action on game
+     * @param resourcesToAdd
+     * @param username
+     * @throws Exception
+     */
     public void chooseInitialResources(ConsumeTarget resourcesToAdd, String username) throws Exception {
         game.getPlayerByUsername(username).pickedInitialResources(resourcesToAdd);
         game.tryStart();
     }
 
+    /**
+     * Validation method for drop leader card action
+     * @param cardId
+     * @throws ValidationException
+     */
     private void validateDropLeader(String cardId) throws ValidationException {
         throwOnlyValidationExceptions(
                 ()->{
@@ -127,12 +178,24 @@ public class ServerController {
         );
     }
 
+    /**
+     * Execute drop leader card action on game
+     * @param cardId
+     * @throws Exception
+     */
     public void dropLeaderCard(String cardId) throws Exception {
         validateDropLeader(cardId);
         game.getCurrentPlayer().dropLeaderCardById(cardId);
         game.addFaithPointsToPlayer(game.getCurrentPlayer(), 1);
     }
 
+    /**
+     * Validation method for pick resources action
+     * @param marbleSelection
+     * @param positions
+     * @param converted
+     * @throws ValidationException
+     */
     private void validatePickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) throws ValidationException {
         throwOnlyValidationExceptions(
                 ()->{
@@ -168,6 +231,13 @@ public class ServerController {
         );
     }
 
+    /**
+     * Execute pick resources action on game
+     * @param marbleSelection
+     * @param positions
+     * @param converted
+     * @throws Exception
+     */
     public void pickResources(MarbleSelection marbleSelection, ArrayList<ResourcePosition> positions,  ArrayList<ResourceType> converted) throws Exception {
         validatePickResources(marbleSelection, positions, converted);
         Player currentPlayer = game.getCurrentPlayer();
@@ -200,6 +270,12 @@ public class ServerController {
         currentPlayer.setHasDoneMainAction(true);
     }
 
+    /**
+     * Validation method for start production action
+     * @param consumedResources
+     * @param productionsToActivate
+     * @throws ValidationException
+     */
     private void validateStartProduction(ConsumeTarget consumedResources, ArrayList<ProductionEffect> productionsToActivate) throws ValidationException {
         throwOnlyValidationExceptions(
             ()->{
@@ -216,6 +292,12 @@ public class ServerController {
         );
     }
 
+    /**
+     * Execute start production action on game
+     * @param consumedResources
+     * @param productionsToActivate
+     * @throws Exception
+     */
     public void startProduction(ConsumeTarget consumedResources, ArrayList<ProductionEffect> productionsToActivate) throws Exception {
         validateStartProduction(consumedResources, productionsToActivate);
         Player currentPlayer = game.getCurrentPlayer();
@@ -232,6 +314,11 @@ public class ServerController {
         game.getCurrentPlayer().setHasDoneMainAction(true);
     }
 
+    /**
+     * Validation method for play leader card action
+     * @param cardId
+     * @throws ValidationException
+     */
     private void validatePlayLeaderCard(String cardId) throws ValidationException {
         throwOnlyValidationExceptions(
                 ()->{
@@ -244,11 +331,22 @@ public class ServerController {
         );
     }
 
+    /**
+     * Execute play leader card on game
+     * @param cardId
+     * @throws Exception
+     */
     public void playLeaderCard(String cardId) throws Exception {
         validatePlayLeaderCard(cardId);
         game.getCurrentPlayer().playLeaderCardById(cardId);
     }
 
+    /**
+     * Validation method for swap depots action
+     * @param first
+     * @param second
+     * @throws ValidationException
+     */
     private void validateSwapDepots(int first, int second) throws ValidationException {
         throwOnlyValidationExceptions(
                 ()->{
@@ -259,15 +357,30 @@ public class ServerController {
         );
     }
 
+    /**
+     * Execute swap depots on game
+     * @param first
+     * @param second
+     * @throws Exception
+     */
     public void swapDepots(int first, int second) throws Exception {
         validateSwapDepots(first, second);
         game.getCurrentPlayer().swapDepots(first, second);
     }
 
+    /**
+     * Execute next turn on game
+     * @throws Exception
+     */
     public void nextTurn() throws Exception {
         game.nextTurn();
     }
 
+    /**
+     * Validation for remove resources action
+     * @param depot
+     * @throws ValidationException
+     */
     private void validateRemoveResource(ResourcePosition depot) throws ValidationException {
         throwOnlyValidationExceptions(
                 ()->{
@@ -278,6 +391,11 @@ public class ServerController {
         );
     }
 
+    /**
+     * Execute remove resources action on game
+     * @param depot
+     * @throws Exception
+     */
     public void removeResource(ResourcePosition depot) throws Exception {
         validateRemoveResource(depot);
         Player currentPlayer = game.getCurrentPlayer();
@@ -288,7 +406,11 @@ public class ServerController {
         game.currentPlayerDropsResource();
     }
 
-    public void playerDied(String dead) {
+    /**
+     * Manage player disconnection
+     * @param dead
+     */
+    public void playerDisconnected(String dead) {
         tryAction(()->game.addDead(dead));
         if(game.getCurrentPlayer().getNickname().equals(dead)){
             if(game.getPlayers().size() != game.countDeads()){
@@ -297,7 +419,11 @@ public class ServerController {
         }
     }
 
-    public void playerRevived(String revived){
+    /**
+     * Manage player reconnection
+     * @param revived
+     */
+    public void playerReconnected(String revived){
         tryAction(()->game.removeDead(revived));
     }
 }

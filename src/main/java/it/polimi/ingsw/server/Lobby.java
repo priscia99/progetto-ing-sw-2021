@@ -214,10 +214,10 @@ public class Lobby extends Observable<Message> {
     }
 
     public void playerDied(String dead){
-        gameController.playerDied(dead);
+        gameController.playerDisconnected(dead);
     }
 
     public void playerRevived(String username){
-        gameController.playerRevived(username);
+        gameController.playerReconnected(username);
     }
 }
