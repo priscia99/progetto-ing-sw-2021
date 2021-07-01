@@ -22,6 +22,10 @@ public class ServerMessageDecoder implements Observer<Message<ServerController>>
     }
 
 
+    /**
+     * Try to apply message execution on game controller
+     * @param message
+     */
     @Override
     public void update(Message<ServerController> message) {
         controller.tryAction(() -> message.execute(controller));

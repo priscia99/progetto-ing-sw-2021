@@ -83,7 +83,6 @@ public class Server {
             if (entry.getValue().contains(toRemove)) {
                 String dead = ((SocketClientConnection) toRemove).getClientUsername();
                 CustomLogger.getLogger().info("[" + entry.getValue().getLobbyId() + "]" + "Unregistering " + dead);
-                entry.getValue().playerDied(dead);
                 entry.getValue().removeClientConnection(toRemove);
             }
         }
@@ -112,7 +111,7 @@ public class Server {
     }
 
     /**
-     * Thread-like run function.
+     * Loop where server accepts new connections
      */
     public void run() {
         while (true) {

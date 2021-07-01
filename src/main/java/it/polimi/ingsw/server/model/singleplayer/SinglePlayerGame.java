@@ -14,12 +14,20 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Stack;
 
+/**
+ * Extension of multiplayer game, applied when player is only one.
+ */
 public class SinglePlayerGame extends Game {
     private ArrayList<ActionToken> actions;
     private int currentActionIndex;
     private boolean isFirstTurn;
     private int blackCrossPosition = 0;
 
+    /**
+     * Setup of game structures and action tokens
+     * @param players Players that are playing in this game
+     * @throws Exception
+     */
     @Override
     public void setup(ArrayList<Player> players) throws Exception {
         super.setup(players);
@@ -47,11 +55,17 @@ public class SinglePlayerGame extends Game {
         this.actions = actions;
     }
 
+
     private void setupActionTokens(){
         this.actions = ActionToken.getStartingTokens();
         this.shuffleTokens();
     }
 
+    /**
+     *
+     * @return Copy of this game
+     * @throws Exception
+     */
     @Override
     public SinglePlayerGame getBackup() throws Exception {
         SinglePlayerGame backup = new SinglePlayerGame();
@@ -72,6 +86,10 @@ public class SinglePlayerGame extends Game {
         return backup;
     }
 
+    /**
+     * Apply next turn rule and activate action token
+     * @throws Exception
+     */
     @Override
     public void nextTurn() throws Exception {
         if(isFirstTurn){
@@ -89,14 +107,26 @@ public class SinglePlayerGame extends Game {
     }
 
 
+    /**
+     *
+     * @return Check if Lorenzo has ended faith path
+     */
     private boolean lorenzoEndedFaithPath(){
         return this.blackCrossPosition >= getCurrentPlayer().getPlayerBoard().getFaithPath().getCells().length;
     }
 
+    /**
+     *
+     * @return Check if a card color is missing from card market
+     */
     private boolean developmentCardUnavailable(){
         return this.getCardMarket().hasEmptyColor();
     }
 
+    /**
+     * Increase position of black cross
+     * @param quantity Quantity of faith points to add to Lorenzo
+     */
     public void advanceBlackCross(int quantity){
         for(int i = 0; i<quantity; i++){
             this.blackCrossPosition++;
@@ -105,6 +135,9 @@ public class SinglePlayerGame extends Game {
         notify(new BlackCrossMessage(this.blackCrossPosition, getCurrentPlayer().getPlayerBoard().getFaithPath().getAcquiredPopeFavours()));
     }
 
+    /**
+     * Shuffles action tokens
+     */
     public void shuffleTokens(){
         Collections.shuffle(this.actions);
         currentActionIndex = 0;

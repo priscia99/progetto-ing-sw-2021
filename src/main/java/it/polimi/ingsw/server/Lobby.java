@@ -59,7 +59,7 @@ public class Lobby extends Observable<Message> {
             clientConnectionMap.put(username, clientConnection);
             ((SocketClientConnection) clientConnection).addObserver(serverMessageDecoder);
             disconnectedUsernames.remove(username);
-            this.playerRevived(username);
+            this.playerReconnected(username);
             GameBackupMessage backup;
             try{
                 backup = new GameBackupMessage(backupManager.getBackup());
@@ -80,10 +80,6 @@ public class Lobby extends Observable<Message> {
         if (!this.isEmpty()) {
             clientConnectionMap.entrySet().removeIf(entry -> entry.getValue().equals(clientConnection));
         }
-    }
-
-    public int getDimension() {
-        return dimension;
     }
 
     /**
@@ -209,15 +205,21 @@ public class Lobby extends Observable<Message> {
         return lobbyId;
     }
 
+    /**
+     * Add a disconnected player
+     * @param username Username of player disconnected
+     */
     public void addDisconnected(String username) {
         this.disconnectedUsernames.add(username);
+        gameController.playerDisconnected(username);
     }
 
-    public void playerDied(String dead){
-        gameController.playerDisconnected(dead);
-    }
 
-    public void playerRevived(String username){
+    /**
+     * Manage player reconnection
+     * @param username Username of reconnected player
+     */
+    public void playerReconnected(String username){
         gameController.playerReconnected(username);
     }
 }

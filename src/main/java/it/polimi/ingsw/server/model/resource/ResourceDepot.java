@@ -70,6 +70,11 @@ public class ResourceDepot extends ResourceStock implements Serializable{
         this.resourceType = resourceType;
     }
 
+    /**
+     * Increment quantity of resources stored in depot
+     * @param resourceType the type of the new resource
+     * @throws Exception
+     */
     @Override
     public void incrementResource(ResourceType resourceType) throws Exception {
         if (this.isFull()) {

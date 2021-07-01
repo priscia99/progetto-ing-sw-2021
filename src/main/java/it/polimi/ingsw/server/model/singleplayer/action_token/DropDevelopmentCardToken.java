@@ -15,6 +15,10 @@ public class DropDevelopmentCardToken extends ActionToken{
     }
 
 
+    /**
+     * Remove two development card with selected color from market
+     * @param toApplyOn Game into which apply token effect
+     */
     @Override
     public void applyOn(SinglePlayerGame toApplyOn) {
         toApplyOn.getCardMarket().removeByColor(developmentCardColor, 2);
