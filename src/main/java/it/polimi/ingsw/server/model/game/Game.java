@@ -306,7 +306,7 @@ public class Game extends Observable<Message<ClientController>> implements Obser
     @Override
     public void update(Object object) {
         players.forEach((player)->{
-            if(player.finishedFaithPath() || player.getTotalDevelopmentCards()>6) {
+            if(player.hasFinishedFaithPath() || player.getTotalDevelopmentCards()>6) {
                 isLastRound = true;
                 notify(new LastRoundMessage());
             }
