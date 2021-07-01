@@ -226,7 +226,7 @@ public class RepresentationBuilder {
         int servantCount = strongbox.getResourceStock(1).getQuantity();
         int shieldCount = strongbox.getResourceStock(2).getQuantity();
         int stoneCount = strongbox.getResourceStock(3).getQuantity();
-        return String.format(STRONGBOX_FORMAT, coinCount, servantCount, shieldCount, stoneCount);
+        return String.format(STRONGBOX_FORMAT, coinCount, stoneCount, shieldCount, servantCount);
     }
 
     private static String hiddenText(String text) {

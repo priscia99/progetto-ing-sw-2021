@@ -17,6 +17,14 @@ The UML diagrams can be accessed via the following links:
 - Initial UML
 - Final UML
 
+### Libraries and plugins
+
+| Library/Plugin  | Short description |
+| ------------- | ------------- |
+| JavaFX  | Graphic library used for GUI implementation |
+| Maven  |  A build automation tool used primarily for Java projects |
+| JUnit  | Unit testing framework |
+
 ### Javadoc
 
 For most methods, the relevant Javadoc documentation can be found within the source code.
@@ -26,6 +34,7 @@ For most methods, the relevant Javadoc documentation can be found within the sou
 The most important methods of the model and the server controller were tested. 
 No tests have been carried out for getters/setters and toString() methods.
 Below is provided a screenshot with the coverage results for the tested classes.
+*Last update: 2021/07/01 19:23*
 
 | Element  | Class [%] | Method [%] | Line [%] |
 | ------------- | ------------- | ------------- | ------------- |
@@ -36,7 +45,7 @@ Below is provided a screenshot with the coverage results for the tested classes.
 
 - **Complete rules**
 - **CLI** (Command Line Interface)
-- **GUI** (Graphical User Interface)
+- **GUI** (Graphical User Interface) - created using JavaFX
 - 2 FA (additional functionalities):
   - **Multiple games**: 
     The server can handle several games simultaneously. Players can create or join lobbies by giving a valid Lobby ID.
