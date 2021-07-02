@@ -25,7 +25,7 @@ public class Strongbox extends Storage {
      * Adds a single resource unit of the given type to the strongbox.
      * @param resourceType the type of the resource to be added
      */
-    // FIXME implement resource quantity increment
+
     public void addResource(ResourceType resourceType) throws Exception {
         for(ResourceStock resourceStock : this.resourceStocks.stream()
                 .filter(resourceStock -> resourceStock.getResourceType()

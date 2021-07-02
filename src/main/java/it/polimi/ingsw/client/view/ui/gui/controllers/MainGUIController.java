@@ -264,7 +264,6 @@ public class MainGUIController {
      * Disable all possible actions if it's not the user's turn
      */
     public void disableAllActions() {
-        // TODO complete with other actions to disable
         warehouseController.setSwapMenuEnable(false);
         developmentCardsController.setProduceButtonEnable(false);
         leaderCardsController.disableLeaderCardsHandlers();

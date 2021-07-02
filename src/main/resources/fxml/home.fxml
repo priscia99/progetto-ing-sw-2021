@@ -19,8 +19,6 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<!-- TODO: add class to blur the main grid and toggle display of the zoom anchor (disable unused layers) -->
-
 <AnchorPane maxHeight="1080.0" maxWidth="1920.0" minHeight="360.0" minWidth="640.0" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.ui.gui.controllers.MainGUIController">
    <children>
       <GridPane id="main" layoutX="266.0" layoutY="161.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -505,7 +503,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: whitesmoke; -fx-background-radius: 5; -fx-border-color: red;">
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: whitesmoke; -fx-background-radius: 5;">
                                        <children>
                                           <GridPane fx:id="firstPlayerStatsPane" hgap="5.0" layoutX="12.0" layoutY="2.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="220.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
