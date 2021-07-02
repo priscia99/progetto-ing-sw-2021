@@ -24,6 +24,7 @@ The UML diagrams can be accessed via the following links:
 | JavaFX  | Graphic library used for GUI implementation |
 | Maven  |  A build automation tool used primarily for Java projects |
 | JUnit  | Unit testing framework |
+| gson | A Java library that can be used to convert Java Objects into their JSON representation |
 
 ### Javadoc
 
@@ -34,12 +35,12 @@ For most methods, the relevant Javadoc documentation can be found within the sou
 The most important methods of the model and the server controller were tested. 
 No tests have been carried out for getters/setters and toString() methods.
 Below is provided a screenshot with the coverage results for the tested classes.
-*Last update: 2021/07/01 19:23*
+*Last update: 2021/07/02 15:48*
 
 | Element  | Class [%] | Method [%] | Line [%] |
 | ------------- | ------------- | ------------- | ------------- |
 | Controller  | 100% (2/2) | 71% (25/35) | 66% (127/192) |
-| Model  | 97%  (44/45) | 71% (249/350) | 66% (761/1138) |
+| Model  | 97%  (44/45) | 71% (249/348) | 67% (767/1138) |
 
 ## Functionalities
 
