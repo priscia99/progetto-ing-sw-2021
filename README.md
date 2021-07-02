@@ -14,7 +14,7 @@ Clients can connect to the server and play either via command line (CLI) or grap
 
 The UML diagrams can be accessed via the following links:
 
-- [Initial UML]
+- [Initial UML](https://github.com/priscia99/ing-sw-2021-prisciantelli-romagnoni-pizzamiglio/tree/master/resources/uml/initial)
 - [Final UML](https://github.com/priscia99/ing-sw-2021-prisciantelli-romagnoni-pizzamiglio/tree/master/resources/uml/final/)
 
 ### Libraries and plugins
@@ -40,8 +40,8 @@ Below is provided a screenshot with the coverage results for the tested classes.
 
 | Element  | Class [%] | Method [%] | Line [%] |
 | ------------- | ------------- | ------------- | ------------- |
-| Controller  | 100% (2/2) | 71% (25/35) | 66% (127/192) |
-| Model  | 97%  (44/45) | 71% (249/348) | 67% (767/1138) |
+| Controller  | 100% (2/2) | 72% (27/37) | 66% (132/198) |
+| Model  | 97%  (44/45) | 72% (253/348) | 67% (773/1138) |
 
 ## Functionalities
 
