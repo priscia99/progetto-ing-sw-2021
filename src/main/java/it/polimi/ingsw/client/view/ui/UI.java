@@ -196,4 +196,5 @@ public interface UI {
      * Displays to the UI that the game is ended
      */
     void showGameIsEnded();
+
 }

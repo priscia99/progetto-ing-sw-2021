@@ -374,7 +374,7 @@ public class GUI implements UI{
      */
     @Override
     public void showGameIsEnded() {
-        Platform.runLater( () -> SceneController.displayEndGame());
+        Platform.runLater(SceneController::displayEndGame);
     }
 
     /**

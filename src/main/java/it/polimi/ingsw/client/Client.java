@@ -166,7 +166,6 @@ public class Client {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
                         if(inputObject instanceof String){
-                            //FIXME switch from String to ServiceMessage in auth
                             manageAuth((String) inputObject);
                         }
                         else if(inputObject instanceof ServiceMessage){
