@@ -28,7 +28,8 @@ The UML diagrams can be accessed via the following links:
 
 ### Javadoc
 
-For most methods, the relevant Javadoc documentation can be found within the source code.
+For most methods, the relevant Javadoc documentation can be found within the source code.<br/>
+An HTML version of the Javadoc can be found [here](https://github.com/priscia99/ing-sw-2021-prisciantelli-romagnoni-pizzamiglio/blob/master/resources/javadoc/).
 
 ### Coverage report
 
