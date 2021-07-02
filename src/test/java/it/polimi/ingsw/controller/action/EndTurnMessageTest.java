@@ -25,7 +25,8 @@ public class EndTurnMessageTest {
     @Test
     @DisplayName("Test player ends its turn correctly")
     public void testPlayerEndsTurn(){
-        Player currentPlayer = game.getCurrentPlayer(); // retrieving the current player
+        Player currentPlayer = game.getCurrentPlayer();
+        currentPlayer.setHasDoneMainAction(true);
         EndTurnMessage message = new EndTurnMessage();
 
         // Check if player is now still in turn
