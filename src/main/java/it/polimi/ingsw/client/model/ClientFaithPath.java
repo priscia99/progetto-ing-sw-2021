@@ -10,6 +10,7 @@ import it.polimi.ingsw.utils.Pair;
 
 public class ClientFaithPath extends Observable<Pair<ClientFaithPath, String>> implements Serializable {
 
+    private static final long serialVersionUID = 1507L;
     private int faithPoints;
     private ArrayList<Boolean> popeFavors;
     private Integer blackCrossPosition;

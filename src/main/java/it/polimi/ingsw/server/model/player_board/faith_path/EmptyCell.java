@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class EmptyCell extends Cell implements Serializable {
 
+    private static final long serialVersionUID = 1002L;
     public EmptyCell() {
         super();
     }

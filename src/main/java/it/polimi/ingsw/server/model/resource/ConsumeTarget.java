@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class ConsumeTarget implements Serializable {
 
+    private static final long serialVersionUID = 1010L;
     private final HashMap<ResourcePosition, ArrayList<ResourceStock>> toConsume = new HashMap<>();
 
     public ConsumeTarget(){}

@@ -11,6 +11,7 @@ import it.polimi.ingsw.utils.Pair;
 
 public class ClientWarehouse extends Observable<Pair<ClientWarehouse, String>> implements Serializable {
 
+    private static final long serialVersionUID = 1500L;
     private ArrayList<ResourceDepot> resourceDepots;
     private String owner;
 

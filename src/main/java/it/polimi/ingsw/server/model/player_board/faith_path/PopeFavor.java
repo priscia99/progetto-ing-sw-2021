@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class PopeFavor implements Serializable {
 
+    private static final long serialVersionUID = 1006L;
     private final int first_cell_index;
     private final int points;
     private boolean acquired;

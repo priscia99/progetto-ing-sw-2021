@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 public class ClientDevelopmentCardDecks extends Observable<Pair<ClientDevelopmentCardDecks, String>> implements Serializable {
 
+    private static final long serialVersionUID = 1508L;
     private final ArrayList<ArrayList<ClientDevelopmentCard>> developmentCards;
     private String owner;
 

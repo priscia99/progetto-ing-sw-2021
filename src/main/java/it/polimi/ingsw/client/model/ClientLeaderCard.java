@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class ClientLeaderCard extends ClientCard implements ClientAsset, Serializable {
 
+    private static final long serialVersionUID = 1505L;
     private boolean active;
 
     /**

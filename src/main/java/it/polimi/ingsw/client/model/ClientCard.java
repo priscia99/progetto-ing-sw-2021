@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public abstract class ClientCard implements Serializable {
 
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 1511L;
     private final String id;
     private final Requirement requirement;
     private final Effect effect;

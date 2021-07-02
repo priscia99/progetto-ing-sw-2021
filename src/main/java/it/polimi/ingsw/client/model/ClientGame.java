@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class ClientGame extends Observable<Pair<String, Boolean>> implements Serializable {
 
+    private static final long serialVersionUID = 1506L;
     private String currentPlayer;
     private boolean isMainActionDone;
     private  String myUsername;

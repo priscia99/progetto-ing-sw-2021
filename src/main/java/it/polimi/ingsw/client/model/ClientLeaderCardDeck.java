@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class ClientLeaderCardDeck extends Observable<Pair<ClientLeaderCardDeck, String>> implements Serializable {
 
+    private static final long serialVersionUID = 1504L;
     private final String owner;
     private ArrayList<ClientLeaderCard> clientLeaderCards;
     private boolean mine;

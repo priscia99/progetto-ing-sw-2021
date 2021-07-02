@@ -8,6 +8,7 @@ import java.util.*;
 
 public class ClientPlayerBoard extends Observable<ClientPlayerBoard> implements Serializable {
 
+    private static final long serialVersionUID = 1502L;
     private boolean isMine;
     private final ClientFaithPath faithPath;
     private final ClientWarehouse warehouse;

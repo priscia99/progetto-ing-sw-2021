@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public class ResourceDepot extends ResourceStock implements Serializable{
 
+    private static final long serialVersionUID = 1011L;
     private int capacity;
 
     /**

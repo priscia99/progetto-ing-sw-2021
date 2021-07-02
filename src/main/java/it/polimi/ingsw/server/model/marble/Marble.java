@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public class Marble implements Serializable {
 
+    private static final long serialVersionUID = 1000L;
     private final ResourceType resourceType;
 
     /**

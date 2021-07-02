@@ -10,6 +10,7 @@ import it.polimi.ingsw.utils.Pair;
 
 public class ClientStrongbox extends Observable<Pair<ClientStrongbox, String>> implements Serializable {
 
+    private static final long serialVersionUID = 1501L;
     private ArrayList<ResourceStock> resourceStocks;
     private String owner;
 

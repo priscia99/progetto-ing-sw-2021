@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 public class ClientDevelopmentCard extends ClientCard implements ClientAsset, Serializable {
 
+    private static final long serialVersionUID = 1509L;
     private final Color color;
     private final int level;
 

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 public class FaithPath extends Observable<Object>implements Serializable {
 
+    private static final long serialVersionUID = 1003L;
     private final Cell[] cells;
     private int faithPoints;
 

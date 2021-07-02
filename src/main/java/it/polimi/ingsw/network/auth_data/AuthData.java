@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class AuthData implements Serializable {
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 1050L;
     String username;    // username chosen by client
     String lobby;       // lobby code given by client
     boolean createNewLobby;

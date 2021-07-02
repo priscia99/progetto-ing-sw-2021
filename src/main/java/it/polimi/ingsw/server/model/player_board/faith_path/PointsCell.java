@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class PointsCell extends Cell implements Serializable {
 
+    private static final long serialVersionUID = 1004L;
     private final int points;
 
     public PointsCell(int points) {

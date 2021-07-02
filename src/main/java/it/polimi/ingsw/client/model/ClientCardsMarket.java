@@ -9,6 +9,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ClientCardsMarket extends Observable<ClientCardsMarket> implements Serializable {
+
+    private static final long serialVersionUID = 1510L;
     private ArrayList<ArrayList<ArrayList<ClientDevelopmentCard>>> decks = new ArrayList<>();
 
     public ClientCardsMarket() {}
