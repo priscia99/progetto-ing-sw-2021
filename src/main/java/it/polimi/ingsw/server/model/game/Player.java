@@ -377,7 +377,7 @@ public class Player extends Observable<Message<ClientController>> {
         int developmentCardsPoints = Arrays.stream(this.playerBoard.getDevelopmentCardsDecks()).mapToInt(deck-> deck.getDeck().stream().mapToInt(DevelopmentCard::getVictoryPoints).sum()).sum();
         int faithPoints = this.playerBoard.getFaithPath().getVictoryPoints();
         int leaderPoints = this.playerBoard.getLeaderCardsDeck().getLeaderCards().stream().mapToInt(leader-> leader.isActive() ? leader.getVictoryPoints() : 0).sum();
-        int resourcePoints = (int) (Math.floor(this.playerBoard.getStrongbox().countResources()/5.0) + Math.floor(this.playerBoard.getWarehouse().countResources()/5.0));
+        int resourcePoints = (int) (Math.floor(this.getResourceCount()/5.0));
         return developmentCardsPoints + faithPoints + leaderPoints + resourcePoints;
     }
 
