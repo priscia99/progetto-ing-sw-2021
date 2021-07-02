@@ -14,8 +14,8 @@ Clients can connect to the server and play either via command line (CLI) or grap
 
 The UML diagrams can be accessed via the following links:
 
-- Initial UML
-- Final UML
+- [Initial UML]
+- [Final UML](https://github.com/priscia99/ing-sw-2021-prisciantelli-romagnoni-pizzamiglio/tree/master/resources/uml/final/)
 
 ### Libraries and plugins
 
