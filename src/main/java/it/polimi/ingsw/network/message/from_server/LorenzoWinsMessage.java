@@ -19,5 +19,6 @@ public class LorenzoWinsMessage extends Message<ClientController> implements Ser
     @Override
     public void execute(ClientController target) {
         target.setMagnificoAsWinner();
+        target.endGame();
     }
 }
