@@ -96,7 +96,6 @@ public class LeaderCardsController extends GenericGUIController{
      */
     public void disableLeaderCardsHandlers() {
         // disable leader cards handlers
-        System.out.println("Disabled leader cards handlers");
         for(Pane cardPane: new ArrayList<>(mappedCards.keySet())){
             cardPane.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClickedLeaderCard);
         }
@@ -107,7 +106,6 @@ public class LeaderCardsController extends GenericGUIController{
      */
     public void enableLeaderCardsHandlers(){
         // enable leader cards handlers
-        System.out.println("Enabled leader cards handlers");
         for(Pane cardPane: new ArrayList<>(mappedCards.keySet())){
             cardPane.addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedLeaderCard);
         }
