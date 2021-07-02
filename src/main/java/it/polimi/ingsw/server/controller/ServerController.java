@@ -368,10 +368,25 @@ public class ServerController {
     }
 
     /**
+     * Validation method for next turn
+     * @throws ValidationException
+     */
+    private void validateNextTurn() throws ValidationException {
+        throwOnlyValidationExceptions(
+                ()->{
+                    if(!game.getCurrentPlayer().hasDoneMainAction()) {
+                        throw new Exception("You must do a main action during turn!");
+                    }
+                }
+        );
+    }
+
+    /**
      * Execute next turn on game
      * @throws Exception
      */
     public void nextTurn() throws Exception {
+        validateNextTurn();
         game.nextTurn();
     }
 
@@ -413,7 +428,7 @@ public class ServerController {
         tryAction(()->game.addDisconnected(disconnected));
         if(game.getCurrentPlayer().getNickname().equals(disconnected)){
             if(game.getPlayers().size() != game.countDisconnected()){
-                tryAction(this::nextTurn);
+                tryAction(game::nextTurn);
             }
         }
     }
