@@ -1,12 +1,15 @@
-# ing-sw-2021-prisciantelli-romagnoni-pizzamiglio
+# Final Examination - Software Engineering Project - A.Y. 2020/2021
 
 # Prova finale - Progetto di Ingegneria del Software - A.A. 2020/2021
 
 Implementation of the board game 'Masters of the Renaissance' for PC.
+The main goal of this project is the replica
 
-The project consists in the creation of a system composed by a single server, capable of managing several games (organised in lobbies), to which several clients can connect.
+The project consists of the creation of a system composed of a single server, capable of managing several games (organized in lobbies), to which several clients can connect.
 
 Clients can connect to the server and play either via command line (CLI) or graphical interface (GUI).
+
+The project was graded **29/30**.
 
 ## Documentation
 
@@ -77,21 +80,27 @@ java -jar masters_of_the_renaissance.jar [cli|gui|server] [IP]
     - ```gui``` to play the game as a client with a Graphical User Interface (GUI)
     - ```server``` if you want to set up a server instance
 - Server IP:
-    - Provide the IP of the server, only for ```cli|gui```
+    - Provide the IP of the server, only available for ```cli|gui``` UI options
 
 #### Examples
 
 If you want run the client as CLI, with the server hosted at ```192.168.1.55```, execute the Jar as follows:
 
-```java -jar masters_of_the_renaissance.jar cli 192.168.1.55```
+```
+java -jar masters_of_the_renaissance.jar cli 192.168.1.55
+```
 
 If you want run the client as GUI, with the server hosted at ```192.168.1.55```, execute the Jar as follows:
 
-```java -jar masters_of_the_renaissance.jar gui 192.168.1.55```
+```
+java -jar masters_of_the_renaissance.jar gui 192.168.1.55
+```
 
 If you want run a new server instance, execute the Jar as follows
 
-```java -jar masters_of_the_renaissance.jar server```
+```
+java -jar masters_of_the_renaissance.jar server
+```
     
 ## Cross-platform compatibility
 
