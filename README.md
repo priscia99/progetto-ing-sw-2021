@@ -1,6 +1,4 @@
 # Final Examination - Software Engineering Project - A.Y. 2020/2021
-
-# Prova finale - Progetto di Ingegneria del Software - A.A. 2020/2021
 ![Alt text](https://github.com/priscia99/ing-sw-2021-prisciantelli-romagnoni-pizzamiglio/blob/master/src/main/resources/img/background.jpg "a title")
 Implementation of the board game 'Masters of the Renaissance' for PC.
 
